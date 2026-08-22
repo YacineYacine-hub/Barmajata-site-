@@ -25,6 +25,10 @@ export function Header() {
   return (
     <header className="border-b border-sand-200 bg-sand-50">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 ps-6 pe-6 py-4">
+        {/* Emplacement du futur logo (Lot 3, non fait — public/brand/
+            n'existe pas encore) : le conteneur du logo devra porter
+            dir="ltr" quel que soit dir sur <html>, un logo ne se
+            miroir pas en RTL. Texte de secours en attendant. */}
         <Link
           href="/"
           className="font-serif text-xl text-ink-900"
