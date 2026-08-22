@@ -1,0 +1,91 @@
+{
+  "site": {
+    "name": "Barma Jata",
+    "tagline": "Maison d'édition"
+  },
+  "nav": {
+    "home": "Accueil",
+    "author": "L'autrice",
+    "books": "Livres",
+    "method": "Méthode",
+    "spirituality": "Spiritualité",
+    "commitment": "Engagement",
+    "journal": "Journal",
+    "contact": "Contact"
+  },
+  "home": {
+    "heroEyebrow": "Maison d'édition Barma Jata",
+    "heroTitle": "Daya Layla",
+    "heroSubtitle": "Contenu à venir.",
+    "pillarsTitle": "Quatre piliers",
+    "pillars": {
+      "method": {
+        "title": "Méthode",
+        "description": "Contenu à venir."
+      },
+      "spirituality": {
+        "title": "Spiritualité",
+        "description": "Contenu à venir."
+      },
+      "commitment": {
+        "title": "Engagement",
+        "description": "Contenu à venir."
+      },
+      "journal": {
+        "title": "Journal",
+        "description": "Contenu à venir."
+      }
+    }
+  },
+  "pages": {
+    "author": {
+      "title": "L'autrice",
+      "body": "Contenu à venir."
+    },
+    "books": {
+      "title": "Livres",
+      "body": "Contenu à venir."
+    },
+    "method": {
+      "title": "Méthode",
+      "body": "Contenu à venir."
+    },
+    "spirituality": {
+      "title": "Spiritualité",
+      "body": "Contenu à venir."
+    },
+    "commitment": {
+      "title": "Engagement",
+      "body": "Contenu à venir."
+    },
+    "journal": {
+      "title": "Journal",
+      "body": "Contenu à venir."
+    },
+    "contact": {
+      "title": "Contact",
+      "body": "Contenu à venir."
+    }
+  },
+  "legal": {
+    "legalNotice": {
+      "title": "Mentions légales",
+      "body": "Contenu à venir."
+    },
+    "termsOfSale": {
+      "title": "Conditions générales de vente",
+      "body": "Contenu à venir."
+    },
+    "privacyPolicy": {
+      "title": "Confidentialité",
+      "body": "Contenu à venir."
+    },
+    "shippingReturns": {
+      "title": "Livraison et retours",
+      "body": "Contenu à venir."
+    }
+  },
+  "footer": {
+    "rights": "Tous droits réservés."
+  }
+}

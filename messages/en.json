@@ -1,0 +1,91 @@
+{
+  "site": {
+    "name": "Barma Jata",
+    "tagline": "Publishing house"
+  },
+  "nav": {
+    "home": "Home",
+    "author": "Author",
+    "books": "Books",
+    "method": "Method",
+    "spirituality": "Spirituality",
+    "commitment": "Commitment",
+    "journal": "Journal",
+    "contact": "Contact"
+  },
+  "home": {
+    "heroEyebrow": "Barma Jata Publishing House",
+    "heroTitle": "Daya Layla",
+    "heroSubtitle": "Content coming soon.",
+    "pillarsTitle": "Four pillars",
+    "pillars": {
+      "method": {
+        "title": "Method",
+        "description": "Content coming soon."
+      },
+      "spirituality": {
+        "title": "Spirituality",
+        "description": "Content coming soon."
+      },
+      "commitment": {
+        "title": "Commitment",
+        "description": "Content coming soon."
+      },
+      "journal": {
+        "title": "Journal",
+        "description": "Content coming soon."
+      }
+    }
+  },
+  "pages": {
+    "author": {
+      "title": "Author",
+      "body": "Content coming soon."
+    },
+    "books": {
+      "title": "Books",
+      "body": "Content coming soon."
+    },
+    "method": {
+      "title": "Method",
+      "body": "Content coming soon."
+    },
+    "spirituality": {
+      "title": "Spirituality",
+      "body": "Content coming soon."
+    },
+    "commitment": {
+      "title": "Commitment",
+      "body": "Content coming soon."
+    },
+    "journal": {
+      "title": "Journal",
+      "body": "Content coming soon."
+    },
+    "contact": {
+      "title": "Contact",
+      "body": "Content coming soon."
+    }
+  },
+  "legal": {
+    "legalNotice": {
+      "title": "Legal Notice",
+      "body": "Content coming soon."
+    },
+    "termsOfSale": {
+      "title": "Terms of Sale",
+      "body": "Content coming soon."
+    },
+    "privacyPolicy": {
+      "title": "Privacy Policy",
+      "body": "Content coming soon."
+    },
+    "shippingReturns": {
+      "title": "Shipping & Returns",
+      "body": "Content coming soon."
+    }
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  }
+}

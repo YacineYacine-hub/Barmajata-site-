@@ -1,0 +1,91 @@
+{
+  "site": {
+    "name": "برما جاتا",
+    "tagline": "دار نشر"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "author": "الكاتبة",
+    "books": "الكتب",
+    "method": "المنهج",
+    "spirituality": "الروحانية",
+    "commitment": "الالتزام",
+    "journal": "المدونة",
+    "contact": "اتصل"
+  },
+  "home": {
+    "heroEyebrow": "دار نشر برما جاتا",
+    "heroTitle": "دايا ليلى",
+    "heroSubtitle": "المحتوى قادم قريبًا.",
+    "pillarsTitle": "أربعة أركان",
+    "pillars": {
+      "method": {
+        "title": "المنهج",
+        "description": "المحتوى قادم قريبًا."
+      },
+      "spirituality": {
+        "title": "الروحانية",
+        "description": "المحتوى قادم قريبًا."
+      },
+      "commitment": {
+        "title": "الالتزام",
+        "description": "المحتوى قادم قريبًا."
+      },
+      "journal": {
+        "title": "المدونة",
+        "description": "المحتوى قادم قريبًا."
+      }
+    }
+  },
+  "pages": {
+    "author": {
+      "title": "الكاتبة",
+      "body": "المحتوى قادم قريبًا."
+    },
+    "books": {
+      "title": "الكتب",
+      "body": "المحتوى قادم قريبًا."
+    },
+    "method": {
+      "title": "المنهج",
+      "body": "المحتوى قادم قريبًا."
+    },
+    "spirituality": {
+      "title": "الروحانية",
+      "body": "المحتوى قادم قريبًا."
+    },
+    "commitment": {
+      "title": "الالتزام",
+      "body": "المحتوى قادم قريبًا."
+    },
+    "journal": {
+      "title": "المدونة",
+      "body": "المحتوى قادم قريبًا."
+    },
+    "contact": {
+      "title": "اتصل",
+      "body": "المحتوى قادم قريبًا."
+    }
+  },
+  "legal": {
+    "legalNotice": {
+      "title": "الإشعار القانوني",
+      "body": "المحتوى قادم قريبًا."
+    },
+    "termsOfSale": {
+      "title": "شروط البيع",
+      "body": "المحتوى قادم قريبًا."
+    },
+    "privacyPolicy": {
+      "title": "الخصوصية",
+      "body": "المحتوى قادم قريبًا."
+    },
+    "shippingReturns": {
+      "title": "الشحن والإرجاع",
+      "body": "المحتوى قادم قريبًا."
+    }
+  },
+  "footer": {
+    "rights": "جميع الحقوق محفوظة."
+  }
+}
