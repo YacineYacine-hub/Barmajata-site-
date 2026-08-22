@@ -5,6 +5,7 @@ import { getAuthorBySlug, getVisibleBookBySlug, getVisibleBooks } from "@/lib/co
 import { getMinPrice, resolveEdition, type ContentLocale } from "@/lib/content/schema";
 import { buildBookJsonLd } from "@/lib/content/jsonld";
 import { AmazonBuyButton } from "@/components/AmazonBuyButton";
+import { NotifyMe } from "@/components/NotifyMe";
 import { SITE_URL } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -146,6 +147,12 @@ export default async function BookPage({
           ))}
         </div>
       ) : null}
+
+      {edition.statut === "a_paraitre" && (
+        <div className="mt-6">
+          <NotifyMe slug={book.slug} langue={edition.langue} />
+        </div>
+      )}
     </main>
   );
 }

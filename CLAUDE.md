@@ -42,8 +42,10 @@ nom.
 - Statut d'une édition (`statut`) conditionne tout son affichage :
   - `brouillon` → invisible partout (catalogue, fiche, sitemap), même par
     URL directe.
-  - `a_paraitre` → fiche visible, `dateParution` affichée, pas de bouton
-    d'achat.
+  - `a_paraitre` → fiche visible, `dateParution` affichée, CTA
+    `NotifyMe` (`src/components/NotifyMe.tsx`) vers `/club?book=&langue=`
+    à la place du bouton d'achat — jamais d'URL externe dans les fichiers
+    de contenu.
   - `publie` → bouton "Acheter sur Amazon" par format vendable (voir
     ci-dessous), prix toujours affiché avec la mention "À partir de"
     (jamais un prix sec — `getMinPrice()` dans `schema.ts`).
@@ -60,6 +62,13 @@ nom.
 - JSON-LD schema.org : `Book` sur la fiche livre, `Person` sur la fiche
   auteur, `Organization` sur `/la-maison`, `ItemList` sur le catalogue
   livres — générés dans `src/lib/content/jsonld.ts`.
+- `/club` (`src/app/[locale]/club/page.tsx`) : page d'inscription unique
+  (e-mail seul), pas de backend en Phase 1 — `ClubForm.tsx` est un
+  formulaire inerte (`TODO(club-backend)` dans le code) qui affiche un
+  message d'attente après soumission. Reste statique malgré `?book=`/
+  `?langue=` : la liste (slug, langue, titre) des éditions visibles est
+  calculée côté serveur et la résolution du paramètre se fait côté client
+  via `useSearchParams()`, pour ne pas forcer la page en rendu dynamique.
 
 ## Stack
 

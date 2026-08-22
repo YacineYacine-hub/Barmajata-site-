@@ -71,7 +71,8 @@
     "cta": {
       "buy": "Buy on Amazon",
       "backToCatalogue": "Back to catalogue",
-      "marketplace": "Choose the Amazon marketplace"
+      "marketplace": "Choose the Amazon marketplace",
+      "notifyMe": "Get notified on release"
     },
     "fields": {
       "author": "Author",
@@ -108,6 +109,14 @@
     "cta": {
       "backToCatalogue": "Back to authors"
     }
+  },
+  "club": {
+    "title": "The club",
+    "intro": "Leave your email to be notified about upcoming releases.",
+    "bookNotice": "You'll be notified when this is released: {title}",
+    "emailLabel": "Email address",
+    "submit": "Sign up",
+    "pending": "Thank you! Sign-ups will be activated soon — this feature is still in the works."
   },
   "legal": {
     "legalNotice": {

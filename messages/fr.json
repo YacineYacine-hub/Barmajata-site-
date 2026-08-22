@@ -71,7 +71,8 @@
     "cta": {
       "buy": "Acheter sur Amazon",
       "backToCatalogue": "Retour au catalogue",
-      "marketplace": "Choisir la marketplace Amazon"
+      "marketplace": "Choisir la marketplace Amazon",
+      "notifyMe": "Être informé·e de la sortie"
     },
     "fields": {
       "author": "Auteur",
@@ -108,6 +109,14 @@
     "cta": {
       "backToCatalogue": "Retour aux auteurs"
     }
+  },
+  "club": {
+    "title": "Le club",
+    "intro": "Laissez votre e-mail pour être informé·e des prochaines sorties.",
+    "bookNotice": "Vous serez informé·e à la sortie de : {title}",
+    "emailLabel": "Adresse e-mail",
+    "submit": "S'inscrire",
+    "pending": "Merci ! L'inscription sera activée prochainement : cette fonctionnalité est en préparation."
   },
   "legal": {
     "legalNotice": {

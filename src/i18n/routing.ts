@@ -31,6 +31,11 @@ export const routing = defineRouting({
       en: "/about",
       ar: "/من-نحن",
     },
+    "/club": {
+      fr: "/club",
+      en: "/club",
+      ar: "/النادي",
+    },
     // Page construite mais hors menu et en noindex — voir le commentaire
     // dans src/app/[locale]/commitment/page.tsx.
     "/commitment": {
