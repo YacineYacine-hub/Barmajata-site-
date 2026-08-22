@@ -53,11 +53,14 @@ Tons éditoriaux : `ink` (encre, texte), `sand` (fonds), `gold` (accent),
 Le fichier de middleware suit la convention `src/proxy.ts` (et non
 `middleware.ts`, dépréciée depuis Next 16).
 
-## Docker
+## Déploiement
 
-`Dockerfile` multi-stage avec `output: "standalone"` (défini dans
-`next.config.ts`). Non validé par un build local — Docker n'est pas
-installé sur la machine de développement à la date du scaffold Phase 1.
+Pas de Docker : le `Dockerfile`, `.dockerignore` et `output: "standalone"`
+(next.config.ts) ont été retirés. Déploiement prévu directement sur un
+VPS (`npm run build` puis `npm run start`), stratégie exacte à définir
+quand le VPS sera provisionné. `.github/workflows/ci.yml` vérifie
+uniquement le build (`tsc --noEmit` + `next build`) sur chaque push —
+aucun déploiement automatique n'est configuré.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
