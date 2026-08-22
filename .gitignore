@@ -4,6 +4,8 @@ out
 build
 .env*
 !.env.example
+*.pem
+*.key
 npm-debug.log*
 .DS_Store
 *.tsbuildinfo
