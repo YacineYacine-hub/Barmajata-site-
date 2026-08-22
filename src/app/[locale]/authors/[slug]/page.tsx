@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link, getPathname } from "@/i18n/navigation";
@@ -5,9 +6,19 @@ import { getAllAuthors, getAuthorBySlug, getBooksByAuthor } from "@/lib/content"
 import { resolveEdition, type Book, type ContentLocale, type Edition } from "@/lib/content/schema";
 import { buildAuthorJsonLd } from "@/lib/content/jsonld";
 import { SITE_URL } from "@/lib/site";
+import { buildAlternates } from "@/lib/seo";
 
 export function generateStaticParams() {
   return getAllAuthors().map((author) => ({ slug: author.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  return { alternates: buildAlternates({ pathname: "/authors/[slug]", params: { slug } }) };
 }
 
 export default async function AuthorPage({

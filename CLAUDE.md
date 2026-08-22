@@ -20,6 +20,19 @@ nom.
   volontairement **hors menu et en noindex** tant que le partenariat
   associé n'est pas fixé — voir le commentaire dans
   `src/app/[locale]/commitment/page.tsx`.
+- Anciennes routes (ex-site mono-autrice), gérées dans `src/proxy.ts`
+  (avant next-intl, car `nextUrl.pathname` n'est jamais décodé — les
+  segments non-ASCII y restent en `%XX`) :
+  - `/autrice`, `/author`, `/الكاتبة` → 301 vers l'équivalent `/auteurs`
+    dans la même locale (contenu déplacé).
+  - `/methode`, `/spiritualite` et leurs traductions → 410 Gone (contenu
+    retiré définitivement, absorbé par la fiche livre concernée).
+- SEO : `src/lib/seo.ts` définit `PUBLIC_LOCALES` (`fr`, `en` — `ar` reste
+  pleinement accessible sur le site mais volontairement absent des
+  `hreflang`/`alternates.languages` tant qu'il n'est pas jugé prêt pour
+  l'indexation) et `buildAlternates(href)`, utilisé dans le
+  `generateMetadata` de **chaque page** (y compris `/engagement`, malgré
+  son noindex, et les pages dynamiques `[slug]`).
 
 ## Modèle de contenu — livres et auteurs
 

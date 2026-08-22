@@ -1,8 +1,14 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getVisibleBooks } from "@/lib/content";
 import { isVisibleStatus, type ContentLocale } from "@/lib/content/schema";
 import { ClubForm } from "@/components/ClubForm";
+import { buildAlternates } from "@/lib/seo";
+
+export function generateMetadata(): Metadata {
+  return { alternates: buildAlternates("/club") };
+}
 
 export default async function ClubPage({
   params,

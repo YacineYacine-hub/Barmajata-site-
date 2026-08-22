@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { buildAlternates } from "@/lib/seo";
 
 const PILLARS = ["books", "authors", "house", "journal"] as const;
+
+export function generateMetadata(): Metadata {
+  return { alternates: buildAlternates("/") };
+}
 
 export default async function HomePage({
   params,

@@ -1,9 +1,15 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link, getPathname } from "@/i18n/navigation";
 import { getVisibleBooks } from "@/lib/content";
 import { getMinPrice, resolveEdition, type Book, type ContentLocale, type Edition } from "@/lib/content/schema";
 import { buildBookListJsonLd } from "@/lib/content/jsonld";
 import { SITE_URL } from "@/lib/site";
+import { buildAlternates } from "@/lib/seo";
+
+export function generateMetadata(): Metadata {
+  return { alternates: buildAlternates("/books") };
+}
 
 export default async function BooksPage({
   params,

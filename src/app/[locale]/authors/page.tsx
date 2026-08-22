@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getAllAuthors } from "@/lib/content";
 import type { ContentLocale } from "@/lib/content/schema";
+import { buildAlternates } from "@/lib/seo";
+
+export function generateMetadata(): Metadata {
+  return { alternates: buildAlternates("/authors") };
+}
 
 export default async function AuthorsPage({
   params,

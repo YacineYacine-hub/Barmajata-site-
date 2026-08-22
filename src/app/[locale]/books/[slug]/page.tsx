@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link, getPathname } from "@/i18n/navigation";
@@ -7,9 +8,19 @@ import { buildBookJsonLd } from "@/lib/content/jsonld";
 import { AmazonBuyButton } from "@/components/AmazonBuyButton";
 import { NotifyMe } from "@/components/NotifyMe";
 import { SITE_URL } from "@/lib/site";
+import { buildAlternates } from "@/lib/seo";
 
 export function generateStaticParams() {
   return getVisibleBooks().map((book) => ({ slug: book.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  return { alternates: buildAlternates({ pathname: "/books/[slug]", params: { slug } }) };
 }
 
 export default async function BookPage({
