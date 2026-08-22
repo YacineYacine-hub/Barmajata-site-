@@ -5,30 +5,28 @@
   },
   "nav": {
     "home": "الرئيسية",
-    "author": "الكاتبة",
     "books": "الكتب",
-    "method": "المنهج",
-    "spirituality": "الروحانية",
-    "commitment": "الالتزام",
+    "authors": "المؤلفون",
+    "house": "الدار",
     "journal": "المدونة",
     "contact": "اتصل"
   },
   "home": {
     "heroEyebrow": "دار نشر برما جاتا",
-    "heroTitle": "دايا ليلى",
+    "heroTitle": "برما جاتا",
     "heroSubtitle": "المحتوى قادم قريبًا.",
-    "pillarsTitle": "أربعة أركان",
+    "pillarsTitle": "استكشاف",
     "pillars": {
-      "method": {
-        "title": "المنهج",
+      "books": {
+        "title": "الكتب",
         "description": "المحتوى قادم قريبًا."
       },
-      "spirituality": {
-        "title": "الروحانية",
+      "authors": {
+        "title": "المؤلفون",
         "description": "المحتوى قادم قريبًا."
       },
-      "commitment": {
-        "title": "الالتزام",
+      "house": {
+        "title": "الدار",
         "description": "المحتوى قادم قريبًا."
       },
       "journal": {
@@ -38,20 +36,16 @@
     }
   },
   "pages": {
-    "author": {
-      "title": "الكاتبة",
-      "body": "المحتوى قادم قريبًا."
-    },
     "books": {
       "title": "الكتب",
       "body": "المحتوى قادم قريبًا."
     },
-    "method": {
-      "title": "المنهج",
+    "authors": {
+      "title": "المؤلفون",
       "body": "المحتوى قادم قريبًا."
     },
-    "spirituality": {
-      "title": "الروحانية",
+    "house": {
+      "title": "الدار",
       "body": "المحتوى قادم قريبًا."
     },
     "commitment": {
@@ -65,6 +59,54 @@
     "contact": {
       "title": "اتصل",
       "body": "المحتوى قادم قريبًا."
+    }
+  },
+  "books": {
+    "empty": "لا توجد كتب متاحة حاليًا.",
+    "priceFrom": "ابتداءً من {price}",
+    "status": {
+      "a_paraitre": "قريبًا",
+      "publie": "منشور"
+    },
+    "cta": {
+      "buy": "الشراء على أمازون",
+      "backToCatalogue": "العودة إلى الكتالوج",
+      "marketplace": "اختر متجر أمازون"
+    },
+    "fields": {
+      "author": "المؤلف",
+      "format": "الصيغة",
+      "pages": "صفحة",
+      "isbn": "الرقم الدولي المعياري",
+      "publicationDate": "تاريخ النشر",
+      "announcedDate": "التاريخ المعلن"
+    },
+    "formats": {
+      "broche": "غلاف ورقي",
+      "epub": "كتاب إلكتروني (ePub)",
+      "pdf": "PDF"
+    },
+    "languages": {
+      "fr": "الفرنسية",
+      "en": "الإنجليزية",
+      "ar": "العربية"
+    },
+    "marketplaces": {
+      "fr": "Amazon.fr",
+      "ca": "Amazon.ca",
+      "be": "Amazon.com.be",
+      "com": "Amazon.com",
+      "co_uk": "Amazon.co.uk",
+      "com_au": "Amazon.com.au",
+      "es": "Amazon.es",
+      "com_mx": "Amazon.com.mx"
+    }
+  },
+  "authors": {
+    "empty": "لا يوجد مؤلفون متاحون حاليًا.",
+    "booksTitle": "كتب هذا المؤلف",
+    "cta": {
+      "backToCatalogue": "العودة إلى المؤلفين"
     }
   },
   "legal": {

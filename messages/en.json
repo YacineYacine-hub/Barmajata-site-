@@ -5,30 +5,28 @@
   },
   "nav": {
     "home": "Home",
-    "author": "Author",
     "books": "Books",
-    "method": "Method",
-    "spirituality": "Spirituality",
-    "commitment": "Commitment",
+    "authors": "Authors",
+    "house": "The house",
     "journal": "Journal",
     "contact": "Contact"
   },
   "home": {
     "heroEyebrow": "Barma Jata Publishing House",
-    "heroTitle": "Daya Layla",
+    "heroTitle": "Barma Jata",
     "heroSubtitle": "Content coming soon.",
-    "pillarsTitle": "Four pillars",
+    "pillarsTitle": "Explore",
     "pillars": {
-      "method": {
-        "title": "Method",
+      "books": {
+        "title": "Books",
         "description": "Content coming soon."
       },
-      "spirituality": {
-        "title": "Spirituality",
+      "authors": {
+        "title": "Authors",
         "description": "Content coming soon."
       },
-      "commitment": {
-        "title": "Commitment",
+      "house": {
+        "title": "The house",
         "description": "Content coming soon."
       },
       "journal": {
@@ -38,20 +36,16 @@
     }
   },
   "pages": {
-    "author": {
-      "title": "Author",
-      "body": "Content coming soon."
-    },
     "books": {
       "title": "Books",
       "body": "Content coming soon."
     },
-    "method": {
-      "title": "Method",
+    "authors": {
+      "title": "Authors",
       "body": "Content coming soon."
     },
-    "spirituality": {
-      "title": "Spirituality",
+    "house": {
+      "title": "The house",
       "body": "Content coming soon."
     },
     "commitment": {
@@ -65,6 +59,54 @@
     "contact": {
       "title": "Contact",
       "body": "Content coming soon."
+    }
+  },
+  "books": {
+    "empty": "No books available yet.",
+    "priceFrom": "From {price}",
+    "status": {
+      "a_paraitre": "Upcoming",
+      "publie": "Published"
+    },
+    "cta": {
+      "buy": "Buy on Amazon",
+      "backToCatalogue": "Back to catalogue",
+      "marketplace": "Choose the Amazon marketplace"
+    },
+    "fields": {
+      "author": "Author",
+      "format": "Format",
+      "pages": "pages",
+      "isbn": "ISBN",
+      "publicationDate": "Publication date",
+      "announcedDate": "Announced date"
+    },
+    "formats": {
+      "broche": "Paperback",
+      "epub": "ePub",
+      "pdf": "PDF"
+    },
+    "languages": {
+      "fr": "French",
+      "en": "English",
+      "ar": "Arabic"
+    },
+    "marketplaces": {
+      "fr": "Amazon.fr",
+      "ca": "Amazon.ca",
+      "be": "Amazon.com.be",
+      "com": "Amazon.com",
+      "co_uk": "Amazon.co.uk",
+      "com_au": "Amazon.com.au",
+      "es": "Amazon.es",
+      "com_mx": "Amazon.com.mx"
+    }
+  },
+  "authors": {
+    "empty": "No authors available yet.",
+    "booksTitle": "Books by this author",
+    "cta": {
+      "backToCatalogue": "Back to authors"
     }
   },
   "legal": {

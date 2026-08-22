@@ -1,17 +1,65 @@
 # Barma Jata
 
-Site vitrine de Barma Jata, maison d'édition, mettant en avant son autrice
-Daya Layla. **Ce n'est pas un site de bar/restaurant** malgré le nom.
+Site vitrine de Barma Jata, maison d'édition qui publiera plusieurs livres
+de plusieurs auteurs. **Ce n'est pas un site de bar/restaurant** malgré le
+nom.
 
 ## Phase 1 — périmètre
 
-- Aucune base de données, aucun paiement.
-- Contenu éditorial réel non encore fourni : toutes les pages utilisent des
-  placeholders neutres ("Contenu à venir." / "Content coming soon." /
-  "المحتوى قادم قريبًا."). Ne jamais inventer de texte biographique sur
-  l'autrice.
-- Quatre piliers de contenu, mis en avant sur l'accueil et déclinés en
-  pages dédiées : Méthode, Spiritualité, Engagement, Journal.
+- Aucune base de données. Vente **exclusivement par redirection Amazon**
+  (pas de paiement ni panier en direct sur le site) — voir
+  `src/components/AmazonBuyButton.tsx`.
+- Contenu éditorial réel non encore fourni : toutes les pages statiques
+  utilisent des placeholders neutres ("Contenu à venir." / "Content coming
+  soon." / "المحتوى قادم قريبًا."). Ne jamais inventer de texte
+  biographique ou éditorial sur un auteur ou un livre. Les catalogues
+  livres/auteurs (`src/content/`) sont vides par conception — voir
+  "Modèle de contenu" ci-dessous.
+- Pages : Livres (`/livres`), Auteurs (`/auteurs`), La maison
+  (`/la-maison`), Journal, Contact, légales. `/engagement` existe mais est
+  volontairement **hors menu et en noindex** tant que le partenariat
+  associé n'est pas fixé — voir le commentaire dans
+  `src/app/[locale]/commitment/page.tsx`.
+
+## Modèle de contenu — livres et auteurs
+
+- `src/content/books/*.json` et `src/content/authors/*.json` : un fichier
+  par entrée, aucune base de données. Chaque dossier contient un
+  `_template.json` commenté (tous champs vides) qui sert de gabarit à
+  copier — il est ignoré par le loader (tout fichier préfixé `_` est
+  exclu).
+- Validation Zod dans `src/lib/content/schema.ts`, lecture/tri/filtres
+  dans `src/lib/content/index.ts` (aucun accès disque ailleurs).
+- Un livre (`slug`, `auteurSlug`, `couverture`, `seo`) porte un tableau
+  `editions[]` : une entrée par langue, chacune avec son propre `statut`,
+  son contenu (`titre`, `resumeCourt`, `resumeLong`...), sa `dateParution`
+  et ses `formats[]` — un même livre peut être `publie` en français et
+  `a_paraitre` en anglais. `resolveEdition(book, locale)` dans
+  `schema.ts` choisit l'édition à afficher : celle de la locale active si
+  elle existe et n'est pas `brouillon`, sinon la première édition visible
+  du tableau ("édition d'origine"), à charge pour la page d'afficher la
+  mention de sa langue.
+- Statut d'une édition (`statut`) conditionne tout son affichage :
+  - `brouillon` → invisible partout (catalogue, fiche, sitemap), même par
+    URL directe.
+  - `a_paraitre` → fiche visible, `dateParution` affichée, pas de bouton
+    d'achat.
+  - `publie` → bouton "Acheter sur Amazon" par format vendable (voir
+    ci-dessous), prix toujours affiché avec la mention "À partir de"
+    (jamais un prix sec — `getMinPrice()` dans `schema.ts`).
+- `auteurSlug` d'un livre doit référencer un auteur existant : le build
+  échoue sinon (vérifié dans `getAllBooks()`).
+- Vente Amazon : chaque format porte un `asin` optionnel (+ `urlOverride`
+  en échappatoire). `src/lib/amazon/marketplaces.ts` définit la table des
+  marketplaces (dont `ae`/`sa` désactivées, `actif: false`) et
+  `buildAmazonUrl(asin, marketplace, tag?)`. Marketplace par défaut selon
+  la locale du site (`fr`→`fr`, `en`/`ar`→`com`) ; le choix de l'utilisateur
+  est mémorisé en cookie côté client uniquement (`AmazonBuyButton.tsx`) —
+  jamais de géo-IP, jamais de lecture de cookie côté serveur (la page
+  resterait sinon dynamique au lieu de statique).
+- JSON-LD schema.org : `Book` sur la fiche livre, `Person` sur la fiche
+  auteur, `Organization` sur `/la-maison`, `ItemList` sur le catalogue
+  livres — générés dans `src/lib/content/jsonld.ts`.
 
 ## Stack
 
@@ -27,7 +75,7 @@ Daya Layla. **Ce n'est pas un site de bar/restaurant** malgré le nom.
 
 - Locales : `fr` (défaut), `en`, `ar`.
 - Slugs traduits par locale (voir `src/i18n/routing.ts`), ex.
-  `/autrice` (fr) / `/author` (en) / `/الكاتبة` (ar).
+  `/auteurs` (fr) / `/authors` (en) / `/المؤلفون` (ar).
 - `ar` est RTL (`dir="rtl"` posé dans `src/app/[locale]/layout.tsx`).
   Contrainte stricte : n'utiliser que des classes Tailwind logiques
   (`ms-*`, `me-*`, `ps-*`, `pe-*`, `text-start`, `text-end`) — jamais

@@ -6,26 +6,33 @@ export const routing = defineRouting({
   localePrefix: "always",
   pathnames: {
     "/": "/",
-    "/author": {
-      fr: "/autrice",
-      en: "/author",
-      ar: "/الكاتبة",
+    "/authors": {
+      fr: "/auteurs",
+      en: "/authors",
+      ar: "/المؤلفون",
+    },
+    "/authors/[slug]": {
+      fr: "/auteurs/[slug]",
+      en: "/authors/[slug]",
+      ar: "/المؤلفون/[slug]",
     },
     "/books": {
       fr: "/livres",
       en: "/books",
       ar: "/الكتب",
     },
-    "/method": {
-      fr: "/methode",
-      en: "/method",
-      ar: "/المنهج",
+    "/books/[slug]": {
+      fr: "/livres/[slug]",
+      en: "/books/[slug]",
+      ar: "/الكتب/[slug]",
     },
-    "/spirituality": {
-      fr: "/spiritualite",
-      en: "/spirituality",
-      ar: "/الروحانية",
+    "/house": {
+      fr: "/la-maison",
+      en: "/about",
+      ar: "/من-نحن",
     },
+    // Page construite mais hors menu et en noindex — voir le commentaire
+    // dans src/app/[locale]/commitment/page.tsx.
     "/commitment": {
       fr: "/engagement",
       en: "/commitment",

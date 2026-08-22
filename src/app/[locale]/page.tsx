@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 
-const PILLARS = ["method", "spirituality", "commitment", "journal"] as const;
+const PILLARS = ["books", "authors", "house", "journal"] as const;
 
 export default async function HomePage({
   params,

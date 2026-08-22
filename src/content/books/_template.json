@@ -1,0 +1,80 @@
+// Gabarit d'un fichier livre — src/lib/content/schema.ts (bookSchema)
+//
+// Ce fichier N'EST PAS lu par le catalogue : src/lib/content/index.ts
+// ignore tout fichier dont le nom commence par "_". Il sert uniquement de
+// modèle à copier (renommer en <slug>.json) pour créer une nouvelle fiche
+// livre. Comme il contient des commentaires, ce n'est volontairement pas
+// du JSON strict — ne pas essayer de le parser tel quel.
+//
+// Un livre porte une ou plusieurs éditions (une par langue). Le statut,
+// la date, les formats et les prix sont propres à CHAQUE édition : un même
+// livre peut être publié en français et à paraître en anglais.
+//
+// Champs obligatoires au niveau du livre : slug, auteurSlug, editions
+// (au moins une). `auteurSlug` doit correspondre au `slug` d'un fichier
+// existant dans src/content/authors/, sinon le build échoue.
+//
+// Champs obligatoires par édition : langue, titre, resumeCourt, resumeLong,
+// statut. Champs obligatoires SELON LE STATUT (vérifiés par le
+// .superRefine() de editionSchema) :
+//   - "a_paraitre" → dateParution requis.
+//   - "publie"     → au moins un format avec asin (ou urlOverride) requis.
+{
+  // Identifiant unique, kebab-case (minuscules, chiffres, tirets),
+  // utilisé dans l'URL de la fiche : /[locale]/books/[slug]. Doit
+  // correspondre au nom du fichier (sans l'extension .json). Indépendant
+  // des langues des éditions.
+  "slug": "",
+
+  // Slug de la fiche auteur (src/content/authors/<auteurSlug>.json).
+  "auteurSlug": "",
+
+  "couverture": "",   // chemin ou URL de la couverture — optionnel, niveau livre.
+
+  // Surcharges SEO optionnelles (title/description de la fiche), une
+  // entrée par langue présente dans `editions`. À défaut, la page retombe
+  // sur titre / resumeCourt de l'édition affichée.
+  "seo": {
+    // "fr": { "titre": "", "description": "" }
+  },
+
+  // Une entrée par langue d'édition disponible. La fiche affiche
+  // l'édition de la locale active si elle existe (et n'est pas
+  // "brouillon"), sinon la première édition visible du tableau
+  // ("édition d'origine"), avec mention de sa langue.
+  "editions": [
+    {
+      // "fr" | "en" | "ar"
+      "langue": "fr",
+
+      // "brouillon"    → invisible partout (catalogue, fiche, sitemap), même par URL directe.
+      // "a_paraitre"   → visible, date annoncée (dateParution), pas de bouton d'achat.
+      // "publie"       → visible, bouton "Acheter sur Amazon", prix affiché "À partir de ...".
+      "statut": "brouillon",
+
+      // Ne jamais inventer de contenu éditorial réel tant qu'il n'a pas
+      // été fourni.
+      "titre": "",
+      "sousTitre": "",          // optionnel.
+      "resumeCourt": "",        // court, utilisé sur la carte du catalogue.
+      "resumeLong": "",         // long, utilisé sur la fiche livre.
+
+      // Format ISO 8601 "AAAA-MM-JJ" — date annoncée si "a_paraitre",
+      // date réelle si "publie".
+      "dateParution": "",
+
+      // Un objet par édition physique/numérique disponible pour CETTE
+      // langue. `type` ∈ "broche" | "epub" | "pdf". `isbn` optionnel (10
+      // ou 13 caractères). `asin` : identifiant produit Amazon (10
+      // caractères alphanumériques majuscules), utilisé par
+      // buildAmazonUrl() pour générer le lien vers la marketplace choisie.
+      // `urlOverride` : lien de vente direct, prioritaire sur `asin` (pour
+      // une marketplace hors table ou un lien de campagne). `prixIndicatif`
+      // obligatoire par format présent — jamais le prix Amazon réel, qui
+      // est dynamique et hors de notre contrôle.
+      "formats": [
+        // { "type": "broche", "isbn": "", "asin": "", "pages": 0, "prixIndicatif": 0, "urlOverride": "" }
+      ]
+    }
+  ]
+}

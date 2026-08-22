@@ -1,0 +1,34 @@
+// Gabarit d'un fichier auteur — src/lib/content/schema.ts (authorSchema)
+//
+// Ce fichier N'EST PAS lu par le catalogue : src/lib/content/index.ts
+// ignore tout fichier dont le nom commence par "_". Il sert uniquement de
+// modèle à copier (renommer en <slug>.json) pour créer une nouvelle fiche
+// auteur. Comme il contient des commentaires, ce n'est volontairement pas
+// du JSON strict — ne pas essayer de le parser tel quel.
+//
+// Champs obligatoires : slug, nom, bioCourte, bioLongue. Le reste est
+// optionnel. Contrairement aux livres, une fiche auteur n'a pas de statut
+// "brouillon" : dès qu'un fichier existe ici (hors "_template.json"), il
+// est visible sur /auteurs et /auteurs/[slug].
+{
+  // Identifiant unique, kebab-case (minuscules, chiffres, tirets),
+  // utilisé dans l'URL de la fiche : /[locale]/authors/[slug]. Doit
+  // correspondre au nom du fichier (sans l'extension .json), et c'est
+  // cette valeur qu'on référence dans `auteurSlug` côté livre.
+  "slug": "",
+
+  // Nom affiché, non traduit (nom propre).
+  "nom": "",
+
+  // Champs traduits : une valeur par locale du site (fr/en/ar). Ne jamais
+  // inventer de contenu biographique réel tant qu'il n'a pas été fourni.
+  "bioCourte": { "fr": "", "en": "", "ar": "" },   // courte, utilisée sur la carte du catalogue auteurs.
+  "bioLongue": { "fr": "", "en": "", "ar": "" },    // longue, utilisée sur la fiche auteur.
+
+  "portrait": "",   // chemin ou URL du portrait — optionnel.
+
+  // Liens externes (site personnel, réseaux sociaux...) — optionnel.
+  "liens": [
+    // { "label": "", "url": "" }
+  ]
+}

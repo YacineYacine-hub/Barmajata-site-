@@ -5,26 +5,19 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 
-type PillarHref =
-  | "/author"
-  | "/books"
-  | "/method"
-  | "/spirituality"
-  | "/commitment"
-  | "/journal"
-  | "/contact";
+type NavHref = "/books" | "/authors" | "/house" | "/journal" | "/contact";
 
 export function Header() {
   const t = useTranslations("nav");
   const tSite = useTranslations("site");
   const [isOpen, setIsOpen] = useState(false);
 
-  const links: Array<{ href: PillarHref; label: string }> = [
-    { href: "/author", label: t("author") },
+  // "/commitment" (engagement) est volontairement absent : page hors menu
+  // tant que le partenariat n'est pas fixé, voir commitment/page.tsx.
+  const links: Array<{ href: NavHref; label: string }> = [
     { href: "/books", label: t("books") },
-    { href: "/method", label: t("method") },
-    { href: "/spirituality", label: t("spirituality") },
-    { href: "/commitment", label: t("commitment") },
+    { href: "/authors", label: t("authors") },
+    { href: "/house", label: t("house") },
     { href: "/journal", label: t("journal") },
     { href: "/contact", label: t("contact") },
   ];
