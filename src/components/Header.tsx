@@ -9,7 +9,6 @@ type NavHref = "/books" | "/authors" | "/house" | "/journal" | "/contact";
 
 export function Header() {
   const t = useTranslations("nav");
-  const tSite = useTranslations("site");
   const [isOpen, setIsOpen] = useState(false);
 
   // "/commitment" (engagement) est volontairement absent : page hors menu
@@ -25,16 +24,18 @@ export function Header() {
   return (
     <header className="border-b border-sand-200 bg-sand-50">
       <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 ps-6 pe-6 py-4">
-        {/* Emplacement du futur logo (Lot 3, non fait — public/brand/
-            n'existe pas encore) : le conteneur du logo devra porter
-            dir="ltr" quel que soit dir sur <html>, un logo ne se
-            miroir pas en RTL. Texte de secours en attendant. */}
-        <Link
-          href="/"
-          className="font-serif text-xl text-ink-900"
-          onClick={() => setIsOpen(false)}
-        >
-          {tSite("name")}
+        {/* dir="ltr" fixe : le logo ne doit jamais se miroiter ni se
+            réordonner en RTL (voir CLAUDE.md, Lot 3). alt volontairement
+            en dur, identique dans toutes les langues — jamais dans les
+            fichiers de traduction. */}
+        <Link href="/" dir="ltr" className="inline-flex shrink-0" onClick={() => setIsOpen(false)}>
+          <img
+            src="/brand/logo-horizontal.svg"
+            alt="Barmajata Éditions"
+            width={220}
+            height={40}
+            className="h-8 w-auto md:h-10"
+          />
         </Link>
 
         <nav aria-label={t("home")} className="hidden md:block">

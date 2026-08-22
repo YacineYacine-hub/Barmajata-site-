@@ -119,6 +119,7 @@ export function buildOrganizationJsonLd({
     url: siteUrl,
     name,
     description,
+    logo: absoluteUrl(siteUrl, "/brand/logo-512.png"),
   };
 }
 

@@ -34,6 +34,28 @@ nom.
   `generateMetadata` de **chaque page** (y compris `/engagement`, malgré
   son noindex, et les pages dynamiques `[slug]`).
 
+## Identité visuelle (Lot 3)
+
+- `public/brand/` : `logo-horizontal.svg` (header), `logo-lockup.svg` /
+  `logo-lockup-dark.svg` (footer, selon fond clair/sombre — seul le clair
+  est câblé, le footer étant toujours `bg-sand-50` aujourd'hui),
+  `favicon.svg`, `apple-touch-icon.png` (180×180), `og-image.png`
+  (1200×630), `logo-512.png` (512×512, JSON-LD Organization).
+  **Ce sont des placeholders générés par Claude** (lettrage "BARMA JATA" +
+  monogramme "B", palette du site) — à remplacer par les fichiers
+  définitifs du designer, mêmes noms de fichiers.
+- Le logo est toujours référencé via `<img src="/brand/...">` (jamais
+  inliné en `<svg>`) : une image externe rend dans son propre contexte,
+  totalement isolé du `dir` de la page qui l'affiche — c'est ce qui
+  garantit structurellement qu'il ne se miroite ni ne se réordonne en
+  RTL, indépendamment du `dir="ltr"` (défensif) posé sur son conteneur.
+- `alt="Barmajata Éditions"` du logo header : toujours en dur dans
+  `Header.tsx`, jamais dans `messages/*.json` (identique dans les 3
+  langues, contrairement à `site.name` qui, lui, est traduit).
+- `metadataBase` (vers `SITE_URL`) posé dans
+  `src/app/[locale]/layout.tsx` pour que `openGraph.images` résolve en
+  URL absolue (requis par le protocole Open Graph).
+
 ## Modèle de contenu — livres et auteurs
 
 - `src/content/books/*.json` et `src/content/authors/*.json` : un fichier
