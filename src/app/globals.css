@@ -18,23 +18,140 @@
    *   et comme accent hover-only par-dessus roche-700/sable-300/lin-50
    *   (état transitoire, pas l'état par défaut affiché).
    * - Bouton principal : fond nuit-900, texte lin-50 (jamais or-500).
+   *
+   * Couleurs exprimées en OKLCH depuis le Lot H1 : espace perceptivement
+   * uniforme, indispensable pour que color-mix() et les dégradés en
+   * couches ne traversent pas de zone terne. Les valeurs hexadécimales
+   * en commentaire sont les couleurs d'origine — la conversion est un
+   * aller-retour exact, aucune couleur du site n'a bougé.
    */
-  --color-lin-50: #fbf8f2;
-  --color-lin-100: #f0e9dc;
-  --color-sable-300: #d9c7a8;
-  --color-or-500: #b99b72;
-  --color-gres-600: #8e7963;
-  --color-roche-700: #5a5048;
-  --color-nuit-900: #2a2521;
+  --color-lin-50: oklch(97.98% 0.0086 84.57); /* #fbf8f2 */
+  --color-lin-100: oklch(93.6% 0.0189 83.06); /* #f0e9dc */
+  --color-sable-300: oklch(83.66% 0.0463 81.28); /* #d9c7a8 */
+  --color-or-500: oklch(70.66% 0.0662 75.04); /* #b99b72 */
+  --color-gres-600: oklch(58.97% 0.0414 68.19); /* #8e7963 */
+  --color-roche-700: oklch(43.86% 0.0185 60.97); /* #5a5048 */
+  --color-nuit-900: oklch(26.86% 0.0105 61.02); /* #2a2521 */
+
+  /* Fond profond de la devanture « Encre » (Lot H2) : un cran sous
+     nuit-900, pour que nuit-900 puisse servir de surface posée dessus. */
+  --color-nuit-950: oklch(20.38% 0.0087 59.14); /* #1a1613 */
 
   --font-serif: var(--font-cormorant), ui-serif, serif;
   --font-sans: var(--font-inter), ui-sans-serif, sans-serif;
   --font-arabic: var(--font-noto-naskh), ui-serif, serif;
+
+  /*
+   * Échelle typographique fluide (Lot H1). Le site plafonnait à
+   * text-5xl (3rem) : insuffisant pour la devanture. Ces trois pas
+   * s'interpolent au viewport, il n'y a donc aucun palier de rupture
+   * entre mobile et grand écran.
+   *
+   * - enseigne : réservé au titre de la devanture (accueil). Un seul par
+   *   page, jamais deux.
+   * - titre : bandeaux de section et titres de fiche.
+   * - sous-titre : intertitres.
+   *
+   * L'échelle Tailwind par défaut (text-sm … text-2xl) reste en usage
+   * pour tout le reste — ces pas ne la remplacent pas, ils la prolongent
+   * vers le haut.
+   */
+  --text-enseigne: clamp(3.4rem, 13vw, 10rem);
+  --text-enseigne--line-height: 0.86;
+  --text-enseigne--letter-spacing: -0.02em;
+
+  --text-titre: clamp(2.2rem, 6vw, 4rem);
+  --text-titre--line-height: 0.98;
+  --text-titre--letter-spacing: -0.015em;
+
+  --text-sous-titre: clamp(1.4rem, 3vw, 2rem);
+  --text-sous-titre--line-height: 1.15;
+
+  /*
+   * Profondeur (Lot H1). Le projet n'avait que deux shadow-lg et une
+   * ombre sur la barre mobile — d'où l'impression de pages plates.
+   *
+   * - tome : livre en volume sur fond sombre. Ombre décalée vers la
+   *   gauche (la lumière vient de la droite, comme dans BookBand) et
+   *   liseré interne clair qui détoure la tranche.
+   * - carte : élévation d'une carte sur fond clair « Papier ».
+   * - nappe : élévation ambiante très basse, pour un bloc posé sans
+   *   qu'on lise une ombre.
+   */
+  --shadow-tome: -14px 22px 42px oklch(20.38% 0.0087 59.14 / 0.52),
+    inset 0 0 0 1px oklch(97.98% 0.0086 84.57 / 0.09);
+  --shadow-carte: -8px 14px 30px oklch(26.86% 0.0105 61.02 / 0.2);
+  --shadow-nappe: 0 1px 2px oklch(26.86% 0.0105 61.02 / 0.06),
+    0 10px 28px oklch(26.86% 0.0105 61.02 / 0.08);
+
+  /*
+   * Grain de papier (Lot H1) — le liant visuel entre les deux registres
+   * « Encre » et « Papier ». Bruit fractal SVG en data-URI : aucune
+   * requête réseau, aucun fichier à servir, se répète sans couture
+   * (stitchTiles) sur n'importe quelle surface.
+   */
+  --texture-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 body {
   background-color: var(--color-lin-50);
   color: var(--color-nuit-900);
+}
+
+/* Les titres ne doivent jamais laisser un mot orphelin sur la dernière
+   ligne — d'autant plus visible aux tailles « enseigne »/« titre ». */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+/*
+ * Grain, en deux variantes selon le fond. Posé en ::after sur la surface
+ * elle-même : `isolation: isolate` empêche le mix-blend-mode de déborder
+ * sur ce qu'il y a derrière la surface.
+ *
+ * - grain-encre : sur fond sombre, en `screen` (le bruit éclaircit).
+ * - grain-papier : sur fond clair, en `multiply` (le bruit assombrit,
+ *   c'est le grain de la fibre).
+ */
+.grain-encre,
+.grain-papier {
+  position: relative;
+  isolation: isolate;
+}
+
+.grain-encre::after,
+.grain-papier::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--texture-grain);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.grain-encre::after {
+  opacity: 0.055;
+  mix-blend-mode: screen;
+}
+
+.grain-papier::after {
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+}
+
+/*
+ * Réglure d'imprimeur — l'autre moitié du liant. Le pas se règle par
+ * --reglure-pas, l'opacité par --reglure-encre, pour qu'une même classe
+ * serve sur fond clair comme sur fond sombre.
+ */
+.reglure {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    color-mix(in oklab, currentColor var(--reglure-encre, 5%), transparent) 0 1px,
+    transparent 1px var(--reglure-pas, 34px)
+  );
 }
 
 /* Fondu de transition entre pages (src/components/PageTransition.tsx),
@@ -46,6 +163,47 @@ body {
   }
   to {
     opacity: 1;
+  }
+}
+
+/*
+ * Apparition au défilement (src/components/Reveal.tsx). Depuis le Lot H1,
+ * pilotée par la position de l'élément dans le scroll (`animation-timeline:
+ * view()`) : plus d'IntersectionObserver, plus de JavaScript, le composant
+ * est redevenu un composant serveur.
+ *
+ * Animations sobres : fondu + translation, jamais de rebond ni de
+ * rotation. `--reveal-decalage` échelonne une grille (cascade).
+ *
+ * DEUX PIÈGES, d'où la double garde ci-dessous :
+ *
+ * 1. La règle prefers-reduced-motion globale plus bas ne suffit PAS ici :
+ *    elle force `animation-duration`, or une animation liée à une
+ *    timeline de scroll ignore sa durée — elle continuerait de jouer.
+ *    D'où le `@media (prefers-reduced-motion: no-preference)` explicite.
+ * 2. L'état masqué est appliqué UNIQUEMENT dans le `@supports` : un
+ *    navigateur sans `animation-timeline` affiche le contenu normalement
+ *    au lieu de le laisser à opacité 0 pour toujours.
+ */
+@keyframes reveal-monte {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-monte linear both;
+      animation-timeline: view();
+      animation-range: entry calc(6% + var(--reveal-decalage, 0%)) cover
+        calc(32% + var(--reveal-decalage, 0%));
+    }
   }
 }
 

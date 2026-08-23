@@ -149,14 +149,19 @@ considération technique.
   force le remontage à chaque navigation pour rejouer l'animation ;
   coupée pour `prefers-reduced-motion` par la règle globale existante
   (aucune logique dédiée à ce composant).
-- `Reveal.tsx` : fondu + `translate-y-3` (12px), `duration-[400ms]`,
-  jamais de rebond ni de rotation. `delayMs={index * 80}` pour la cascade
-  des grilles catalogue (`books/page.tsx`, `authors/page.tsx`) et de la
-  grille de piliers sur `/`. `prefers-reduced-motion` géré à deux
-  niveaux : `globals.css` coupe `transition-duration`/`animation-duration`
-  pour tout le monde, et `Reveal` évite en plus tout état masqué initial
-  pour ces utilisateurs (rendu visible dès le premier passage, pas de
-  flash) via `window.matchMedia`.
+- `Reveal.tsx` : fondu + translation de 14px, jamais de rebond ni de
+  rotation. **Réécrit au Lot H1** — toute la mécanique est passée dans
+  `globals.css` (`.reveal`, `animation-timeline: view()`) : plus de
+  `"use client"`, plus d'`IntersectionObserver`, plus de
+  `useSyncExternalStore`, c'est redevenu un composant serveur qui n'envoie
+  aucun JavaScript. La prop `delayMs` est devenue `index` (`index={i}`) :
+  sur une timeline de défilement un délai en millisecondes n'a plus de
+  sens, la cascade se décale dans la timeline via `--reveal-decalage`,
+  plafonnée au 8e rang. Appelé par les grilles catalogue
+  (`books/page.tsx`, `authors/page.tsx`) et la grille de piliers sur `/`.
+  `prefers-reduced-motion` : voir les deux pièges documentés dans
+  `globals.css` (la règle globale ne suffit pas pour une animation liée au
+  scroll).
 
 ## Modèle de contenu — livres et auteurs
 
@@ -526,22 +531,55 @@ container queries ; `text-wrap: balance`.
 **Écarté volontairement** : les View Transitions de Next 16 passent par un
 drapeau `experimental` — exclu par la règle « aucune préversion ».
 
+### Fondations posées par H1 (`src/app/globals.css`)
+
+- **Échelle typographique fluide** : `text-enseigne`
+  (`clamp(3.4rem, 13vw, 10rem)`, interligne 0.86 — réservé au titre de la
+  devanture, **un seul par page**), `text-titre`, `text-sous-titre`. Elles
+  **prolongent** l'échelle Tailwind par défaut vers le haut, elles ne la
+  remplacent pas. Le site plafonnait à `text-5xl` (3rem).
+- **Profondeur** : `shadow-tome` (livre en volume sur fond sombre, ombre
+  décalée vers la gauche + liseré interne clair qui détoure la tranche),
+  `shadow-carte` (carte sur fond clair), `shadow-nappe` (élévation
+  ambiante très basse).
+- **Grain** : `--texture-grain`, bruit fractal SVG en data-URI (aucune
+  requête réseau, se répète sans couture). Deux classes selon le fond :
+  `.grain-encre` (mode `screen`, opacité 0.055) et `.grain-papier` (mode
+  `multiply`, opacité 0.5). `isolation: isolate` sur la surface empêche le
+  `mix-blend-mode` de déborder sur ce qu'il y a derrière.
+- **Réglure** : `.reglure`, pilotée par `--reglure-pas` (défaut 34px) et
+  `--reglure-encre` (défaut 5%). Construite sur `currentColor`, donc la
+  même classe sert sur fond clair et sur fond sombre.
+- `text-wrap: balance` sur `h1`/`h2`/`h3` — un mot orphelin en dernière
+  ligne se voit d'autant plus aux tailles « enseigne ».
+
+**Tailwind v4 élague les tokens `@theme` non utilisés** : tant qu'aucun
+composant n'écrit `text-enseigne` ou `shadow-tome`, ces utilitaires
+n'existent pas dans la feuille produite. Ce n'est pas un bug. Ils ont été
+éprouvés pendant le lot avec un fichier sonde temporaire (créé, build,
+vérification dans le CSS produit, supprimé) — les 7 utilitaires sont
+générés correctement, interlignage et approche compris.
+
 ### Découpage restant
 
 | Lot | Contenu | État |
 |---|---|---|
 | H0 | 10 livres + 10 auteurs + 10 couvertures de démo | **fait** |
-| H1 | Fondations : échelle typo, tokens OKLCH, grain et réglure réutilisables, profondeur, bascule `Reveal` → scroll CSS | à faire |
+| H1 | Fondations : échelle typo, tokens OKLCH, grain et réglure réutilisables, profondeur, bascule `Reveal` → scroll CSS | **fait** |
 | H2 | Devanture « Encre » : accueil, Header, Footer | à faire |
 | H3 | Intérieur « Papier » : la maison, journal, fiches livre et auteur | à faire |
 
-### Règle à réécrire au moment de H1
+### Règle d'animation : vérifiée, aucun changement nécessaire
 
-La règle « jamais de rebond ni de rotation » (section BookBand/BookSolid et
-`Reveal`) devient incompatible avec les livres en volume de la direction
-retenue, qui tournent (`rotateY`). Remplacement proposé, **à valider avant
-d'être appliqué** : *pas d'animation gratuite ; le mouvement sert à donner
-du volume ou à guider le regard, jamais à décorer.*
+Une note écrite ici avant le Lot H1 annonçait que la règle « jamais de
+rebond ni de rotation » devrait être réécrite, au motif qu'elle
+interdirait les livres en volume. **C'était faux, et la vérification l'a
+montré** : cette règle est scopée à `Reveal` (l'apparition au défilement)
+— voir sa formulation d'origine plus haut et le commentaire de
+`globals.css`. Elle n'a jamais concerné `BookBand`, qui tourne déjà de
+±38° en Y par spec. La règle est donc **conservée telle quelle**, H2
+compris. Exemple utile de la règle « vérifier avant d'affirmer » : la note
+erronée venait d'une mémoire de conversation, pas d'une lecture du code.
 
 En revanche la règle de contraste `or-500` (Lot F) **reste inchangée** :
 l'or est valide en texte sur `nuit-900` (~5,8:1), donc utilisable en
@@ -588,6 +626,17 @@ Tons éditoriaux : `lin` (fonds clairs), `sable`/`gres` (tons intermédiaires,
 (texte principal / fond du header et des boutons principaux). Règles
 d'usage détaillées en commentaire dans le `@theme`. Valeurs exactes dans
 `src/app/globals.css`.
+
+Depuis le Lot H1 les couleurs sont **écrites en OKLCH** (conversion
+aller-retour exacte, aucune couleur n'a bougé d'un pixel — vérifié).
+Nuance à connaître : Lightning CSS **retranscrit ces valeurs en
+hexadécimal** dans la feuille produite, selon les cibles navigateurs. Le
+gain n'est donc pas dans le fichier livré mais dans la source — palette
+modifiable perceptivement — et dans les mélanges, qui eux interpolent bien
+en OKLab (`color-mix(in oklab, …)`, utilisé par `.reglure`).
+
+`nuit-950` s'ajoute pour la devanture « Encre » : un cran sous `nuit-900`,
+afin que `nuit-900` puisse servir de surface posée dessus.
 
 ## Routes techniques hors préfixe locale
 

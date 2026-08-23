@@ -1,79 +1,43 @@
-"use client";
-
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-
-const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
-
-function subscribeToReducedMotion(callback: () => void) {
-  const mql = window.matchMedia(REDUCED_MOTION_QUERY);
-  mql.addEventListener("change", callback);
-  return () => mql.removeEventListener("change", callback);
-}
-function getReducedMotionSnapshot() {
-  return window.matchMedia(REDUCED_MOTION_QUERY).matches;
-}
-function getReducedMotionServerSnapshot() {
-  return false;
-}
+import type { CSSProperties } from "react";
 
 /**
- * Apparition sobre au scroll : fondu + translation de 12px (translate-y-3),
- * 400ms. Jamais de rebond ni de rotation. `delayMs` sert à échelonner une
- * grille (ex. cascade de 80ms : delayMs={index * 80}).
+ * Apparition sobre au défilement : fondu + translation de 14px, jamais de
+ * rebond ni de rotation.
  *
- * Respecte prefers-reduced-motion à deux niveaux : globals.css coupe les
- * transitions pour tout le monde, et ce composant évite en plus tout état
- * "masqué" initial pour ces utilisateurs (rien à révéler, l'élément est
- * visible dès le rendu, pas de flash) — lu via useSyncExternalStore
- * (matchMedia a un vrai événement "change" à écouter), pas un effet qui
- * appellerait setState en synchrone.
+ * Depuis le Lot H1, toute la mécanique vit dans `globals.css` (classe
+ * `.reveal`, `animation-timeline: view()`). Ce composant n'est plus qu'un
+ * conteneur : **plus de "use client", plus d'IntersectionObserver, plus de
+ * `useSyncExternalStore`, zéro JavaScript envoyé au navigateur.** C'est
+ * redevenu un composant serveur.
+ *
+ * `index` remplace l'ancien `delayMs` : sur une timeline de défilement, un
+ * délai en millisecondes n'a plus de sens (l'animation avance avec le
+ * scroll, pas avec le temps). La cascade d'une grille se décale donc dans
+ * la timeline, pas dans le temps — `index={i}` suffit à l'appel.
+ *
+ * Le décalage est plafonné : au-delà de la 8e carte, l'échelonnement
+ * cesse de croître, sinon les dernières cartes d'une longue grille
+ * n'auraient toujours pas commencé leur fondu une fois à l'écran.
  */
+const DECALAGE_PAR_RANG_POURCENT = 2;
+const RANG_MAX = 8;
+
 export function Reveal({
   children,
-  delayMs = 0,
+  index = 0,
   className = "",
 }: {
   children: React.ReactNode;
-  delayMs?: number;
+  index?: number;
   className?: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [intersected, setIntersected] = useState(false);
-  const prefersReducedMotion = useSyncExternalStore(
-    subscribeToReducedMotion,
-    getReducedMotionSnapshot,
-    getReducedMotionServerSnapshot,
-  );
-
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-
-    const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIntersected(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.15 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [prefersReducedMotion]);
-
-  const visible = prefersReducedMotion || intersected;
+  const rang = Math.min(Math.max(index, 0), RANG_MAX);
+  const style = rang
+    ? ({ "--reveal-decalage": `${rang * DECALAGE_PAR_RANG_POURCENT}%` } as CSSProperties)
+    : undefined;
 
   return (
-    <div
-      ref={ref}
-      style={{ transitionDelay: `${delayMs}ms` }}
-      className={`transition-[opacity,transform] duration-[400ms] ease-out ${
-        visible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
-      } ${className}`}
-    >
+    <div className={`reveal ${className}`} style={style}>
       {children}
     </div>
   );

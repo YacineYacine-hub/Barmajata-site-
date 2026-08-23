@@ -57,7 +57,7 @@ function HomeContent({ bandItems }: { bandItems: BandItem[] }) {
         </h2>
         <div className="mt-8 grid gap-6 sm:grid-cols-2">
           {PILLARS.map((pillar, index) => (
-            <Reveal key={pillar} delayMs={index * 80}>
+            <Reveal key={pillar} index={index}>
               <Link
                 href={`/${pillar}`}
                 className="block rounded-lg border border-sable-300 bg-lin-100 ps-6 pe-6 py-6 text-start transition hover:border-or-500"

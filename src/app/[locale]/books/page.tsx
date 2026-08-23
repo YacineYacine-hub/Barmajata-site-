@@ -104,7 +104,7 @@ export default async function BooksPage({
                 key={book.slug}
                 className="overflow-hidden rounded-lg border border-sable-300 bg-lin-50"
               >
-                <Reveal delayMs={index * 80}>
+                <Reveal index={index}>
                   <Link
                     href={{ pathname: "/books/[slug]", params: { slug: book.slug } }}
                     className="block"

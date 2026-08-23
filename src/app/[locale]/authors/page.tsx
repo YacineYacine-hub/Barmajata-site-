@@ -49,7 +49,7 @@ export default async function AuthorsPage({
                 key={author.slug}
                 className="rounded-lg border border-sable-300 bg-lin-50 p-6"
               >
-                <Reveal delayMs={index * 80}>
+                <Reveal index={index}>
                   <Link
                     href={{ pathname: "/authors/[slug]", params: { slug: author.slug } }}
                     className="block"
