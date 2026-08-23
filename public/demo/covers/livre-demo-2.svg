@@ -1,0 +1,11 @@
+<!-- Couverture de démonstration — aucun contenu réel -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" role="img" aria-hidden="true">
+  <rect width="400" height="600" fill="#e5dbcb"/>
+  <rect x="24" y="24" width="352" height="552" fill="none" stroke="#b08d4f" stroke-width="1.5"/>
+  <text x="200" y="270" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="34" font-weight="600" fill="#14110f">
+    <tspan x="200" dy="0">Livre de</tspan>
+    <tspan x="200" dy="42">démonstration 2</tspan>
+  </text>
+  <text x="200" y="360" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="#34302c">Auteur de démonstration 2</text>
+  <text x="376" y="592" text-anchor="end" font-family="Georgia, serif" font-size="12" letter-spacing="2" fill="#96763d">DÉMO</text>
+</svg>

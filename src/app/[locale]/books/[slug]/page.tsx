@@ -83,6 +83,14 @@ export default async function BookPage({
         {t("cta.backToCatalogue")}
       </Link>
 
+      {book.couverture && (
+        <img
+          src={book.couverture}
+          alt=""
+          className="mt-6 aspect-[2/3] w-48 rounded-md object-cover shadow-sm sm:w-56"
+        />
+      )}
+
       <div className="mt-6 flex flex-wrap items-center gap-3">
         <span className="inline-block rounded-full bg-gold-500/10 px-3 py-1 text-xs font-medium text-gold-600">
           {t(`status.${edition.statut}`)}

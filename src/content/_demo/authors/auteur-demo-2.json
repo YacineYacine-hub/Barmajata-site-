@@ -1,0 +1,15 @@
+{
+  "slug": "auteur-demo-2",
+  "nom": "Auteur de démonstration 2",
+  "bioCourte": {
+    "fr": "Autre bio courte factice, à usage de démonstration uniquement.",
+    "en": "Another fake short bio, for demonstration purposes only.",
+    "ar": "سيرة ذاتية قصيرة وهمية أخرى، لأغراض العرض التوضيحي فقط."
+  },
+  "bioLongue": {
+    "fr": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Bio longue entièrement factice, aucun contenu biographique réel.",
+    "en": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Entirely fake long bio, no real biographical content.",
+    "ar": "نص لوريم إيبسوم وهمي طويل آخر لأغراض العرض التوضيحي فقط، لا يمثل أي محتوى سيرة ذاتية حقيقي."
+  },
+  "liens": []
+}

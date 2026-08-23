@@ -1,0 +1,14 @@
+{
+  "slug": "livre-demo-3",
+  "auteurSlug": "auteur-demo-1",
+  "couverture": "/demo/covers/livre-demo-3.svg",
+  "editions": [
+    {
+      "langue": "fr",
+      "statut": "brouillon",
+      "titre": "Livre de démonstration 3 (brouillon)",
+      "resumeCourt": "Ne doit jamais apparaître publiquement — sert à vérifier l'exclusion des brouillons.",
+      "resumeLong": "Contenu factice de brouillon. Ne doit être visible nulle part sur le site public (catalogue, fiche, sitemap), même avec le contenu de démonstration activé."
+    }
+  ]
+}

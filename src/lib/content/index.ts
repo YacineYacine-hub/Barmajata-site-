@@ -3,14 +3,33 @@ import path from "node:path";
 import { z } from "zod";
 import { authorSchema, bookSchema, hasVisibleEdition, type Author, type Book } from "./schema";
 
-const BOOKS_DIR = path.join(process.cwd(), "src/content/books");
-const AUTHORS_DIR = path.join(process.cwd(), "src/content/authors");
+// Contenu de démonstration (src/content/_demo/) : chargé uniquement quand
+// NEXT_PUBLIC_DEMO_CONTENT=true (fixé au build, comme toute variable
+// NEXT_PUBLIC_*). Absent/false → dossiers _demo/ jamais lus, comportement
+// strictement identique à avant. À ne jamais activer sur Vercel en
+// production — voir CLAUDE.md.
+const DEMO_CONTENT_ENABLED = process.env.NEXT_PUBLIC_DEMO_CONTENT === "true";
+
+const BOOKS_DIRS = [
+  path.join(process.cwd(), "src/content/books"),
+  ...(DEMO_CONTENT_ENABLED ? [path.join(process.cwd(), "src/content/_demo/books")] : []),
+];
+const AUTHORS_DIRS = [
+  path.join(process.cwd(), "src/content/authors"),
+  ...(DEMO_CONTENT_ENABLED ? [path.join(process.cwd(), "src/content/_demo/authors")] : []),
+];
 
 function readContentFiles(dir: string): string[] {
   if (!fs.existsSync(dir)) return [];
   return fs
     .readdirSync(dir)
     .filter((file) => file.endsWith(".json") && !file.startsWith("_"));
+}
+
+function loadAllFromDirs<T>(dirs: string[], schema: z.ZodType<T>, kind: string): T[] {
+  return dirs.flatMap((dir) =>
+    readContentFiles(dir).map((file) => loadEntry(dir, file, schema, kind)),
+  );
 }
 
 function loadEntry<T>(dir: string, file: string, schema: z.ZodType<T>, kind: string): T {
@@ -36,9 +55,9 @@ function loadEntry<T>(dir: string, file: string, schema: z.ZodType<T>, kind: str
 
 /** Tous les auteurs du dossier de contenu, triés par slug. */
 export function getAllAuthors(): Author[] {
-  return readContentFiles(AUTHORS_DIR)
-    .map((file) => loadEntry(AUTHORS_DIR, file, authorSchema, "auteur"))
-    .sort((a, b) => a.slug.localeCompare(b.slug));
+  return loadAllFromDirs(AUTHORS_DIRS, authorSchema, "auteur").sort((a, b) =>
+    a.slug.localeCompare(b.slug),
+  );
 }
 
 export function getAuthorBySlug(slug: string): Author | undefined {
@@ -66,9 +85,7 @@ function compareBooks(a: Book, b: Book): number {
 /** Tous les livres du dossier de contenu, éditions "brouillon" incluses, triés. */
 export function getAllBooks(): Book[] {
   const authors = getAllAuthors();
-  const books = readContentFiles(BOOKS_DIR).map((file) =>
-    loadEntry(BOOKS_DIR, file, bookSchema, "livre"),
-  );
+  const books = loadAllFromDirs(BOOKS_DIRS, bookSchema, "livre");
 
   for (const book of books) {
     if (hasVisibleEdition(book) && !authors.some((author) => author.slug === book.auteurSlug)) {

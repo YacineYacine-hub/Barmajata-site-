@@ -50,7 +50,7 @@ déposée) — jamais "Barma Jata" en deux mots.
   totalement isolé du `dir` de la page qui l'affiche — c'est ce qui
   garantit structurellement qu'il ne se miroite ni ne se réordonne en
   RTL, indépendamment du `dir="ltr"` (défensif) posé sur son conteneur.
-- `alt="Barmajata Éditions"` du logo header : toujours en dur dans
+- `alt="BARMAJATA Éditions"` du logo header : toujours en dur dans
   `Header.tsx`, jamais dans `messages/*.json` (identique dans les 3
   langues, contrairement à `site.name` qui, lui, est traduit).
 - `metadataBase` (vers `SITE_URL`) posé dans
@@ -98,6 +98,29 @@ déposée) — jamais "Barma Jata" en deux mots.
 - JSON-LD schema.org : `Book` sur la fiche livre, `Person` sur la fiche
   auteur, `Organization` sur `/la-maison`, `ItemList` sur le catalogue
   livres — générés dans `src/lib/content/jsonld.ts`.
+- Couvertures (`book.couverture`) affichées sur la carte catalogue et la
+  fiche livre via `<img>` — champ optionnel, pas de rendu si absent.
+
+## Contenu de démonstration (`NEXT_PUBLIC_DEMO_CONTENT`)
+
+- `src/content/_demo/books/*.json` et `src/content/_demo/authors/*.json` :
+  3 livres factices (`publie` à 3 formats, `a_paraitre`, `brouillon`) + 2
+  auteurs factices, textes explicitement lorem ipsum, ASIN/ISBN fictifs
+  mais au bon format. Couvertures SVG générées dans
+  `public/demo/covers/` (aplat sable, titre en `font-family:
+  'Cormorant Garamond'` — sans import de police externe, donc dépendant
+  des polices déjà chargées par la page qui affiche l'image).
+- Chargé uniquement quand `NEXT_PUBLIC_DEMO_CONTENT=true`
+  (`src/lib/content/index.ts`) : dossiers `_demo/` en plus des dossiers
+  réels. Absent/`false` (défaut) → comportement strictement identique à
+  avant, catalogue vide. Voir `.env.example`.
+- Fixé **au build** (préfixe `NEXT_PUBLIC_` = inliné par Next.js à la
+  compilation, pas lu au runtime) : `NEXT_PUBLIC_DEMO_CONTENT=true npm run
+  build` puis `npm run start` pour juger le rendu ; un `npm run build`
+  sans la variable régénère le site en catalogue vide.
+- **Jamais activé sur Vercel en production** — variable d'environnement à
+  ne pas définir sur le projet de prod, uniquement en local/preview au
+  besoin.
 - `/club` (`src/app/[locale]/club/page.tsx`) : page d'inscription unique
   (e-mail seul), pas de backend en Phase 1 — `ClubForm.tsx` est un
   formulaire inerte (`TODO(club-backend)` dans le code) qui affiche un

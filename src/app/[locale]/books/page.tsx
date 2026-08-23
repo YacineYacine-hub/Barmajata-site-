@@ -56,36 +56,45 @@ export default async function BooksPage({
             return (
               <li
                 key={book.slug}
-                className="rounded-lg border border-sand-200 bg-sand-50 p-6"
+                className="overflow-hidden rounded-lg border border-sand-200 bg-sand-50"
               >
                 <Link
                   href={{ pathname: "/books/[slug]", params: { slug: book.slug } }}
                   className="block"
                 >
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="inline-block rounded-full bg-gold-500/10 px-3 py-1 text-xs font-medium text-gold-600">
-                      {tBooks(`status.${edition.statut}`)}
-                    </span>
-                    {isOtherLanguage && (
-                      <span className="inline-block rounded-full bg-sand-200 px-3 py-1 text-xs font-medium text-ink-700">
-                        {tBooks(`languages.${edition.langue}`)}
+                  {book.couverture && (
+                    <img
+                      src={book.couverture}
+                      alt=""
+                      className="aspect-[2/3] w-full object-cover"
+                    />
+                  )}
+                  <div className="p-6">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="inline-block rounded-full bg-gold-500/10 px-3 py-1 text-xs font-medium text-gold-600">
+                        {tBooks(`status.${edition.statut}`)}
                       </span>
+                      {isOtherLanguage && (
+                        <span className="inline-block rounded-full bg-sand-200 px-3 py-1 text-xs font-medium text-ink-700">
+                          {tBooks(`languages.${edition.langue}`)}
+                        </span>
+                      )}
+                    </div>
+                    <h2 className="mt-4 font-serif text-xl text-ink-900 text-start">
+                      {edition.titre}
+                    </h2>
+                    <p className="mt-2 text-sm text-ink-700 text-start">{edition.resumeCourt}</p>
+                    {edition.statut === "publie" && minPrice !== undefined && (
+                      <p className="mt-3 text-sm font-medium text-ink-900 text-start">
+                        {tBooks("priceFrom", {
+                          price: new Intl.NumberFormat(locale, {
+                            style: "currency",
+                            currency: "EUR",
+                          }).format(minPrice),
+                        })}
+                      </p>
                     )}
                   </div>
-                  <h2 className="mt-4 font-serif text-xl text-ink-900 text-start">
-                    {edition.titre}
-                  </h2>
-                  <p className="mt-2 text-sm text-ink-700 text-start">{edition.resumeCourt}</p>
-                  {edition.statut === "publie" && minPrice !== undefined && (
-                    <p className="mt-3 text-sm font-medium text-ink-900 text-start">
-                      {tBooks("priceFrom", {
-                        price: new Intl.NumberFormat(locale, {
-                          style: "currency",
-                          currency: "EUR",
-                        }).format(minPrice),
-                      })}
-                    </p>
-                  )}
                 </Link>
               </li>
             );

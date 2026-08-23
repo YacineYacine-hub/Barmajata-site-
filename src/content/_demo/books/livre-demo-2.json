@@ -1,0 +1,15 @@
+{
+  "slug": "livre-demo-2",
+  "auteurSlug": "auteur-demo-2",
+  "couverture": "/demo/covers/livre-demo-2.svg",
+  "editions": [
+    {
+      "langue": "fr",
+      "statut": "a_paraitre",
+      "titre": "Livre de démonstration 2",
+      "resumeCourt": "Résumé court factice pour ce livre à paraître.",
+      "resumeLong": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident. Contenu entièrement factice, à usage de démonstration uniquement — aucun texte éditorial réel.",
+      "dateParution": "2026-11-01"
+    }
+  ]
+}
