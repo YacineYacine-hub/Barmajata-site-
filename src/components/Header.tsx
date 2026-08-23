@@ -38,6 +38,7 @@ export function Header() {
   useEffect(() => {
     if (!isOpen) return;
 
+    const trigger = triggerRef.current;
     closeButtonRef.current?.focus();
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -70,7 +71,7 @@ export function Header() {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = previousOverflow;
-      triggerRef.current?.focus();
+      trigger?.focus();
     };
   }, [isOpen]);
 

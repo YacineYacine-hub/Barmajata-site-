@@ -1,6 +1,20 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribeToReducedMotion(callback: () => void) {
+  const mql = window.matchMedia(REDUCED_MOTION_QUERY);
+  mql.addEventListener("change", callback);
+  return () => mql.removeEventListener("change", callback);
+}
+function getReducedMotionSnapshot() {
+  return window.matchMedia(REDUCED_MOTION_QUERY).matches;
+}
+function getReducedMotionServerSnapshot() {
+  return false;
+}
 
 /**
  * Apparition sobre au scroll : fondu + translation de 12px (translate-y-3),
@@ -10,7 +24,9 @@ import { useEffect, useRef, useState } from "react";
  * Respecte prefers-reduced-motion à deux niveaux : globals.css coupe les
  * transitions pour tout le monde, et ce composant évite en plus tout état
  * "masqué" initial pour ces utilisateurs (rien à révéler, l'élément est
- * visible dès le rendu, pas de flash).
+ * visible dès le rendu, pas de flash) — lu via useSyncExternalStore
+ * (matchMedia a un vrai événement "change" à écouter), pas un effet qui
+ * appellerait setState en synchrone.
  */
 export function Reveal({
   children,
@@ -22,13 +38,15 @@ export function Reveal({
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [intersected, setIntersected] = useState(false);
+  const prefersReducedMotion = useSyncExternalStore(
+    subscribeToReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot,
+  );
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setVisible(true);
-      return;
-    }
+    if (prefersReducedMotion) return;
 
     const el = ref.current;
     if (!el) return;
@@ -36,7 +54,7 @@ export function Reveal({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setVisible(true);
+          setIntersected(true);
           observer.disconnect();
         }
       },
@@ -44,7 +62,9 @@ export function Reveal({
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [prefersReducedMotion]);
+
+  const visible = prefersReducedMotion || intersected;
 
   return (
     <div

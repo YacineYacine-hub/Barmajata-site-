@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import {
   AMAZON_MARKETPLACES,
@@ -13,15 +13,27 @@ import type { ContentLocale } from "@/lib/content/schema";
 
 const COOKIE_NAME = "amazon_marketplace";
 
-function readMarketplaceCookie(): MarketplaceCode | undefined {
-  if (typeof document === "undefined") return undefined;
-  const match = document.cookie.match(new RegExp(`(?:^|; )${COOKIE_NAME}=([^;]+)`));
+function parseMarketplaceCookie(cookieString: string): MarketplaceCode | undefined {
+  const match = cookieString.match(new RegExp(`(?:^|; )${COOKIE_NAME}=([^;]+)`));
   const value = match?.[1];
   return value && value in AMAZON_MARKETPLACES ? (value as MarketplaceCode) : undefined;
 }
 
 function writeMarketplaceCookie(marketplace: MarketplaceCode) {
   document.cookie = `${COOKIE_NAME}=${marketplace}; path=/; max-age=31536000; SameSite=Lax`;
+}
+
+// document.cookie n'a pas d'événement de changement fiable à écouter :
+// subscribe reste un no-op (pattern documenté par React pour une source
+// externe qu'on lit une fois, sans mises à jour poussées).
+function subscribeToCookie() {
+  return () => {};
+}
+function getCookieSnapshot() {
+  return document.cookie;
+}
+function getCookieServerSnapshot() {
+  return "";
 }
 
 export function AmazonBuyButton({
@@ -36,20 +48,25 @@ export function AmazonBuyButton({
   const t = useTranslations("books");
   const active = getActiveMarketplaces();
 
-  const [marketplace, setMarketplace] = useState<MarketplaceCode>(
-    DEFAULT_MARKETPLACE_BY_LOCALE[locale],
+  // Lecture du cookie via useSyncExternalStore plutôt qu'un effet +
+  // setState : hydratation sûre (snapshot serveur "" vs. snapshot client
+  // réel) sans rendu en cascade — la page reste statique (pas de lecture
+  // de cookie côté serveur, pas de géo-IP).
+  const cookieString = useSyncExternalStore(
+    subscribeToCookie,
+    getCookieSnapshot,
+    getCookieServerSnapshot,
   );
+  const cookieMarketplace = parseMarketplaceCookie(cookieString);
+  const cookieIsValid =
+    cookieMarketplace && active.some((marketplaceConfig) => marketplaceConfig.code === cookieMarketplace);
 
-  // Lecture du cookie uniquement côté client, après hydratation : la page
-  // reste statique (pas de lecture de cookie côté serveur, pas de
-  // géo-IP), on applique la préférence mémorisée une fois montée.
-  useEffect(() => {
-    const cookieValue = readMarketplaceCookie();
-    if (cookieValue && active.some((marketplaceConfig) => marketplaceConfig.code === cookieValue)) {
-      setMarketplace(cookieValue);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // Choix explicite de l'utilisateur pendant cette session, prioritaire
+  // sur le cookie (qui vient de se faire écrire au moment du choix, donc
+  // les deux convergent, mais évite d'attendre un re-render du snapshot).
+  const [override, setOverride] = useState<MarketplaceCode | null>(null);
+  const marketplace =
+    override ?? (cookieIsValid ? (cookieMarketplace as MarketplaceCode) : DEFAULT_MARKETPLACE_BY_LOCALE[locale]);
 
   if (urlOverride) {
     return (
@@ -69,7 +86,7 @@ export function AmazonBuyButton({
   }
 
   function handleChange(next: MarketplaceCode) {
-    setMarketplace(next);
+    setOverride(next);
     writeMarketplaceCookie(next);
   }
 

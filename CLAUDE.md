@@ -181,7 +181,16 @@ déposée) — jamais "Barma Jata" en deux mots.
 
 ## Stack
 
-- Next.js 16 (App Router, Turbopack), TypeScript.
+- Next.js 16 (App Router, Turbopack), TypeScript **5.9** (pas TS 7 natif :
+  `typescript-eslint` refuse explicitement de tourner sur TS ≥7, voir
+  https://github.com/typescript-eslint/typescript-eslint/issues/10940 —
+  rétrogradé pour pouvoir lint le projet ; `tsc --noEmit` et `npm run
+  build` inchangés par ce choix).
+- ESLint (flat config, `eslint.config.mjs` — `eslint-config-next` seul,
+  aucune règle maison, aucun Prettier). `npm run lint` dans la CI, entre
+  `tsc --noEmit` et `npm run build`. Versions **stables uniquement** dans
+  ce projet — jamais d'alpha/bêta/RC, y compris pour contourner un
+  blocage de compatibilité (voir ci-dessus).
 - next-intl v4 pour l'i18n : routing avec `pathnames` traduits, préfixe de
   locale toujours présent (`localePrefix: "always"`).
 - Tailwind CSS v4, configuration CSS-first via `@theme` dans
