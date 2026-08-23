@@ -167,6 +167,22 @@ déposée) — jamais "Barma Jata" en deux mots.
   `dosImage`, toutes par édition) et `epaisseurMm` (dérivée des pages du
   format broché × 0,07 via `getEpaisseurMm()` si absente) — distinctes de
   `book.couverture`, consommées par `BookSolid` (voir plus bas).
+- `extrait` (par édition, optionnel) : court passage du texte, affiché en
+  citation sur la fiche livre. Distinct de `resumeCourt`/`resumeLong`
+  (résumés éditoriaux, pas un extrait du texte lui-même).
+- `getAdjacentBooks(book)` (`src/lib/content/index.ts`) : livre précédent/
+  suivant sur la fiche, dans l'ordre du catalogue (`compareBooks`), parmi
+  les livres visibles partageant **au moins une** catégorie avec `book`
+  (un livre peut en avoir plusieurs). Sans catégorie sur `book`, ou sans
+  aucun livre visible partageant une catégorie, aucun voisin n'est
+  affiché — pas de repli sur l'ordre global du catalogue.
+- Fiche livre (`/livres/[slug]`) : fil d'Ariane (Accueil / Livres / titre,
+  doublé d'un JSON-LD `BreadcrumbList` via `buildBreadcrumbListJsonLd()`
+  dans `src/lib/content/jsonld.ts`), extrait en citation, bloc auteur
+  (portrait rond via `next/image` — initiale de repli sans `portrait` —,
+  nom, `bioCourte[locale]`, lien vers la fiche auteur), navigation livre
+  précédent/suivant. **Aucun avis, aucune étoile** : volontairement hors
+  périmètre tant qu'aucune décision n'a été prise sur le sujet.
 
 ## BookBand et BookSolid
 

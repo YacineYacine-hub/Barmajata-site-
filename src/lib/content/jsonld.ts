@@ -123,6 +123,21 @@ export function buildOrganizationJsonLd({
   };
 }
 
+/** Représentation schema.org/BreadcrumbList à partir d'une liste ordonnée
+ * (accueil en premier). */
+export function buildBreadcrumbListJsonLd(items: Array<{ url: string; name: string }>) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+}
+
 /** Représentation schema.org/ItemList du catalogue de livres visibles. */
 export function buildBookListJsonLd(books: Array<{ url: string; name: string }>) {
   return {

@@ -11,6 +11,7 @@
       "sousTitre": "Sous-titre factice pour la démonstration",
       "resumeCourt": "Résumé court factice. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "resumeLong": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Contenu entièrement factice, à usage de démonstration uniquement — aucun texte éditorial réel.",
+      "extrait": "Extrait factice. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua — texte de démonstration uniquement.",
       "dateParution": "2026-06-15",
       "couvertureImage": "/demo/covers/livre-demo-1.svg",
       "formats": [

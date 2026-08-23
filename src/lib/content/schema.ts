@@ -83,6 +83,7 @@ const editionSchema = z
     sousTitre: z.string().optional(),
     resumeCourt: z.string().min(1),
     resumeLong: z.string().min(1),
+    extrait: z.string().optional(),
     statut: z.enum(CONTENT_STATUSES),
     dateParution: isoDateSchema.optional(),
     formats: z.array(formatSchema).optional(),

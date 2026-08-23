@@ -120,3 +120,25 @@ export function getVisibleBookBySlug(slug: string): Book | undefined {
 export function getBooksByAuthor(auteurSlug: string): Book[] {
   return getVisibleBooks({ auteurSlug });
 }
+
+/**
+ * Livre précédent/suivant partageant au moins une catégorie avec `book`,
+ * dans l'ordre du catalogue (compareBooks). Sans catégorie sur `book`,
+ * aucun voisin n'est retourné (rien de pertinent à comparer).
+ */
+export function getAdjacentBooks(book: Book): { previous?: Book; next?: Book } {
+  if (!book.categories?.length) return {};
+
+  const siblings = getVisibleBooks().filter(
+    (candidate) =>
+      candidate.slug !== book.slug &&
+      candidate.categories?.some((category) => book.categories?.includes(category)),
+  );
+  const ordered = [...siblings, book].sort(compareBooks);
+  const index = ordered.findIndex((candidate) => candidate.slug === book.slug);
+
+  return {
+    previous: index > 0 ? ordered[index - 1] : undefined,
+    next: index < ordered.length - 1 ? ordered[index + 1] : undefined,
+  };
+}

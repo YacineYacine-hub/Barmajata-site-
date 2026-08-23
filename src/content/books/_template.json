@@ -63,6 +63,7 @@
       "sousTitre": "",          // optionnel.
       "resumeCourt": "",        // court, utilisé sur la carte du catalogue.
       "resumeLong": "",         // long, utilisé sur la fiche livre.
+      "extrait": "",            // optionnel, court passage du texte affiché sur la fiche livre.
 
       // Format ISO 8601 "AAAA-MM-JJ" — date annoncée si "a_paraitre",
       // date réelle si "publie".

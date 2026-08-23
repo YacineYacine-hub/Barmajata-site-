@@ -96,7 +96,8 @@
       "buy": "الشراء على أمازون",
       "backToCatalogue": "العودة إلى الكتالوج",
       "marketplace": "اختر متجر أمازون",
-      "notifyMe": "أعلمني عند الصدور"
+      "notifyMe": "أعلمني عند الصدور",
+      "viewAuthorProfile": "عرض الملف الشخصي"
     },
     "fields": {
       "author": "المؤلف",
@@ -105,6 +106,10 @@
       "isbn": "الرقم الدولي المعياري",
       "publicationDate": "تاريخ النشر",
       "announcedDate": "التاريخ المعلن"
+    },
+    "nav": {
+      "previousBook": "الكتاب السابق",
+      "nextBook": "الكتاب التالي"
     },
     "formats": {
       "broche": "غلاف ورقي",

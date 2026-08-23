@@ -96,7 +96,8 @@
       "buy": "Buy on Amazon",
       "backToCatalogue": "Back to catalogue",
       "marketplace": "Choose the Amazon marketplace",
-      "notifyMe": "Get notified on release"
+      "notifyMe": "Get notified on release",
+      "viewAuthorProfile": "View profile"
     },
     "fields": {
       "author": "Author",
@@ -105,6 +106,10 @@
       "isbn": "ISBN",
       "publicationDate": "Publication date",
       "announcedDate": "Announced date"
+    },
+    "nav": {
+      "previousBook": "Previous book",
+      "nextBook": "Next book"
     },
     "formats": {
       "broche": "Paperback",
