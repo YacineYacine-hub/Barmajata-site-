@@ -765,6 +765,63 @@ emplacements qu'elle remplacera — la structure ne bougera pas.
 `h1` en `text-enseigne`, et il doit le rester pour se détacher sur la
 photo à venir.
 
+## Lot H5 — l'accueil devient un livre ouvert
+
+Changement de cap demandé après avoir vu le rendu réel : **la devanture
+sombre du Lot H2 et le livre en perspective du Lot H4 sont abandonnés.**
+
+- Le sombre ne subsiste que dans **deux bandes fines** : l'en-tête et le
+  pied de page, toutes deux portant la réglure d'imprimeur. Le pied a été
+  resserré (`py-10` → `py-4`, logo `h-10` → `h-6`).
+- Entre elles, l'accueil est **un livre ouvert vu de face** : `.page-livre`
+  (papier vieilli par quatre auréoles décentrées, d'intensités et de
+  tailles différentes — une page qui a vécu n'est jamais salie
+  uniformément) et `.page-livre-gouttiere` (la marge centrale).
+- **Rien derrière l'écriture.** Le `Hero` a perdu son fond : plus de
+  `.champ-encre`, le papier transparaît et le texte repasse en encre
+  (`nuit-900`, `roche-700`).
+- La vue 3D en perspective a été explicitement écartée comme trop
+  compliquée.
+
+**Code mort supprimé, pas laissé en place** : `.champ-encre` (984 o),
+les six règles `.livre-*` (3 168 o), le composant `LivreARas.tsx` et la
+prop `registre` de `BookBand` — plus aucun appelant ne passait `"encre"`.
+Le CSS écrit à la main n'est pas élagué par Tailwind (qui n'élague que ses
+propres tokens) : il serait parti dans la feuille livrée.
+
+### Deux pièges de mise en œuvre
+
+**La gouttière masquait les clics.** Elle couvre toute la hauteur de la
+page ; sans `pointer-events: none` elle interceptait tout ce qui se trouve
+dans la colonne centrale, bande de couvertures comprise.
+
+**Un élément positionné passe au-dessus du contenu en flux**, même sans
+`z-index`. La gouttière est donc posée avant le contenu, et le contenu
+enveloppé dans un bloc `relative z-10` — sinon la marge masquait le texte.
+
+### Le papier a été recalibré par la mesure, pas à l'œil
+
+La première recette (base `lin-100`, auréoles 26/42/20 %, marge 20 %)
+faisait tomber `roche-700` à **4,31:1 sur le papier et 3,03:1 sous la
+marge** — sous le seuil AA pour du texte normal. Réduire la seule marge ne
+suffisait pas : même à 6 % le papier était déjà trop chargé pour laisser
+de la réserve.
+
+Recette retenue après recherche : **base `lin-50`, auréoles 14/18/10 %,
+marge 10 %**. Papier au pire point `#e4daca`, sous la marge `#d1c8b9` —
+`nuit-900` 11,0:1 / 9,2:1, `roche-700` 5,7:1 / 4,7:1. Toute modification
+de ces valeurs doit être remesurée : la réserve est mince.
+
+### Reste à faire
+
+- **L'image de fond unifiante** n'existe toujours pas. Les surfaces
+  génératives sont ses emplacements.
+- **« Explorer »** (les quatre onglets) est **explicitement reporté** : il
+  sera repris en écriture manuscrite sur la page. Son traitement actuel
+  (filets `gres-600`, 3,00:1 — juste au seuil du non-textuel) n'est là que
+  pour rester lisible, ce n'est pas une proposition de mise en forme.
+- Le lettrage BARMAJATA reste un `h1` en `text-enseigne`, jamais une image.
+
 ## Stack
 
 - Next.js 16 (App Router, Turbopack), TypeScript **5.9** (pas TS 7 natif :

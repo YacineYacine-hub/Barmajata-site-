@@ -9,9 +9,9 @@ export type HeroSlide = {
   eyebrow?: string;
   title: string;
   subtitle?: string;
-  /** Sans image : le champ maillé sombre `.champ-encre` + grain. Avec
-   *  image : la photo est couverte d'un voile dégradé, le texte de la
-   *  devanture étant clair. */
+  /** Sans image (Lot H5) : rien derrière l'écriture — le papier de
+   *  `.page-livre` transparaît, le texte est en encre. Avec image : la
+   *  photo est couverte d'un voile dégradé et le texte passe au clair. */
   image?: { src: string; alt: string };
 };
 
@@ -73,7 +73,7 @@ export function Hero({ slides }: HeroProps) {
       onKeyDown={handleKeyDown}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="relative aspect-[4/5] w-full overflow-hidden bg-nuit-900 sm:aspect-[16/9]"
+      className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-[16/9]"
     >
       <div
         className="flex h-full transition-transform duration-500 ease-out"
@@ -104,20 +104,15 @@ export function Hero({ slides }: HeroProps) {
                   className="absolute inset-0 bg-gradient-to-t from-nuit-950/85 via-nuit-950/45 to-nuit-950/20"
                 />
               </>
-            ) : (
-              /* Sans image : le champ maillé, jamais un aplat. */
-              <div className="champ-encre grain-encre absolute inset-0" />
-            )}
+            ) : null}
 
             <div className="relative z-10 mx-auto flex h-full max-w-3xl flex-col items-start justify-center ps-6 pe-6 text-start">
               <Reveal>
-                {/* sable-300 et non or-500 : la règle « or-500 valide sur
-                    nuit-900 » (5,8:1) ne vaut PAS sur le champ maillé, plus
-                    clair là où passe la lueur dorée — l'or y retombe à
-                    3,2:1, sous le seuil AA pour ce text-sm. sable-300 tient
-                    5,1:1 au pire point du champ. Mesuré, voir CLAUDE.md. */}
+                {/* roche-700 et non or-500 : sur papier clair l'or mesure
+                    ~2,5:1, sous le seuil AA même en grand texte (règle du
+                    Lot F). roche-700 tient 7,4:1 sur lin-50. */}
                 {slide.eyebrow && (
-                  <p className="text-sm uppercase tracking-[0.18em] text-sable-300">
+                  <p className="text-sm uppercase tracking-[0.18em] text-roche-700">
                     {slide.eyebrow}
                   </p>
                 )}
@@ -125,16 +120,16 @@ export function Hero({ slides }: HeroProps) {
                     par page (voir globals.css). font-light parce qu'à
                     cette taille, un Cormorant en 400 devient lourd. */}
                 {slideIndex === 0 ? (
-                  <h1 className="mt-4 font-serif text-enseigne font-light text-lin-50">
+                  <h1 className="mt-4 font-serif text-enseigne font-light text-nuit-900">
                     {slide.title}
                   </h1>
                 ) : (
-                  <p className="mt-4 font-serif text-enseigne font-light text-lin-50">
+                  <p className="mt-4 font-serif text-enseigne font-light text-nuit-900">
                     {slide.title}
                   </p>
                 )}
                 {slide.subtitle && (
-                  <p className="mt-6 max-w-xl text-lin-100">{slide.subtitle}</p>
+                  <p className="mt-6 max-w-xl text-roche-700">{slide.subtitle}</p>
                 )}
               </Reveal>
             </div>
@@ -149,7 +144,7 @@ export function Hero({ slides }: HeroProps) {
             onClick={() => goTo(index - 1)}
             disabled={index === 0}
             aria-label={t("previous")}
-            className="absolute inset-y-0 start-0 z-20 flex w-12 items-center justify-center text-sable-300 transition-colors hover:text-or-500 disabled:opacity-25"
+            className="absolute inset-y-0 start-0 z-20 flex w-12 items-center justify-center text-roche-700 transition-colors hover:text-nuit-900 disabled:opacity-25"
           >
             <svg viewBox="0 0 24 24" className="h-6 w-6 rtl:-scale-x-100" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 6l-6 6 6 6" />
@@ -160,7 +155,7 @@ export function Hero({ slides }: HeroProps) {
             onClick={() => goTo(index + 1)}
             disabled={index === slides.length - 1}
             aria-label={t("next")}
-            className="absolute inset-y-0 end-0 z-20 flex w-12 items-center justify-center text-sable-300 transition-colors hover:text-or-500 disabled:opacity-25"
+            className="absolute inset-y-0 end-0 z-20 flex w-12 items-center justify-center text-roche-700 transition-colors hover:text-nuit-900 disabled:opacity-25"
           >
             <svg viewBox="0 0 24 24" className="h-6 w-6 rtl:-scale-x-100" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 6l6 6-6 6" />
@@ -176,7 +171,7 @@ export function Hero({ slides }: HeroProps) {
                 aria-label={t("goTo", { n: slideIndex + 1 })}
                 aria-current={slideIndex === index}
                 className={`h-1 flex-1 rounded-full transition-colors duration-200 ${
-                  slideIndex === index ? "bg-or-500" : "bg-lin-50/25"
+                  slideIndex === index ? "bg-nuit-900" : "bg-nuit-900/25"
                 }`}
               />
             ))}
