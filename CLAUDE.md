@@ -586,6 +586,32 @@ l'or est valide en texte sur `nuit-900` (~5,8:1), donc utilisable en
 devanture ; sur les pages « Papier » il reste décoratif et ne porte jamais
 de texte courant.
 
+## Piège : `next build` sort en 0 malgré des erreurs
+
+**Mesuré sur ce projet, pas supposé.** Retirer `pages.books.description`
+de `messages/fr.json` fait imprimer `Error: MISSING_MESSAGE` pendant la
+génération statique — et `npm run build` sort quand même en **code 0**.
+
+Conséquences, dans l'ordre d'importance :
+
+1. **La CI ne voit pas les clés de traduction manquantes.** Le workflow
+   (`.github/workflows/ci.yml`) enchaîne `tsc --noEmit`, `eslint` et
+   `npm run build` : les trois sortent en 0 alors que des pages se rendent
+   sans leur `description`. C'est ainsi que le Lot F a pu livrer des pages
+   incomplètes sans que rien ne l'accuse. **La CI n'était donc pas rouge** —
+   une affirmation contraire a été faite en séance puis corrigée ici.
+2. **Tout garde-fou fondé sur le seul code de sortie est inutile** contre
+   cette classe de panne. `.claude/push-si-vert.sh` inspecte pour cette
+   raison la *sortie* de chaque contrôle (`MISSING_MESSAGE`, lignes
+   `Error:`, marqueur `⨯`) en plus du code de retour.
+3. Le build est incrémental : une page inchangée n'est pas régénérée, donc
+   son erreur n'est pas réimprimée. Un contrôle exhaustif demande un cache
+   vide (`rm -rf .next`).
+
+**À faire :** appliquer la même inspection de sortie au workflow CI — il
+reste aujourd'hui aveugle à ce défaut. Le script de push protège le poste
+de travail, pas le dépôt.
+
 ## Stack
 
 - Next.js 16 (App Router, Turbopack), TypeScript **5.9** (pas TS 7 natif :
