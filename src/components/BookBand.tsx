@@ -22,6 +22,19 @@ const SETTLE_DURATION_MS = 420;
 const DRAG_CLICK_THRESHOLD_PX = 6; // au-delà, un pointerup n'est plus un clic
 const WHEEL_IDLE_MS = 120; // silence molette avant de caler
 
+// Inertie au lâcher (« on pousse, ça continue »). Vitesses en unités de
+// position par milliseconde — 1 unité = une couverture.
+//
+// La distance parcourue par une décroissance exponentielle vaut
+// vitesse / friction : au plafond, 0,028 / 0,0035 ≈ 8 couvertures. Assez
+// pour que le geste porte, trop peu pour traverser le catalogue d'un coup
+// et perdre le lecteur.
+const INERTIE_FRICTION_PAR_MS = 0.0035;
+const INERTIE_VITESSE_MAX = 0.028; // plafond d'un geste vif
+const INERTIE_VITESSE_LANCEMENT = 0.002; // en dessous, on cale sans lancer
+const INERTIE_VITESSE_ARRET = 0.0012; // en dessous, l'inertie s'arrête
+const INERTIE_LISSAGE = 0.72; // part de l'ancienne vitesse conservée
+
 function subscribeReducedMotion(callback: () => void) {
   const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
   mql.addEventListener("change", callback);
@@ -97,7 +110,14 @@ export function BookBand({
   const positionRef = useRef(0);
   const [centerIndex, setCenterIndex] = useState(0);
 
-  const dragRef = useRef<{ startX: number; startPosition: number; moved: number } | null>(null);
+  const dragRef = useRef<{
+    startX: number;
+    startPosition: number;
+    moved: number;
+    dernierX: number;
+    dernierT: number;
+    vitesse: number;
+  } | null>(null);
   const clickSuppressRef = useRef(false);
   const settleAnimRef = useRef<number | null>(null);
   const wheelIdleTimerRef = useRef<number | null>(null);
@@ -177,6 +197,39 @@ export function BookBand({
     [applyTransforms, prefersReducedMotion],
   );
 
+  // L'identifiant d'animation est volontairement rangé dans settleAnimRef :
+  // tous les points qui annulent déjà un calage en cours (pointerdown,
+  // molette, clavier, clic pour centrer) annulent ainsi l'inertie sans
+  // qu'aucun d'eux n'ait à être modifié.
+  const lancerInertie = useCallback(
+    (vitesseInitiale: number) => {
+      let vitesse = Math.max(
+        -INERTIE_VITESSE_MAX,
+        Math.min(INERTIE_VITESSE_MAX, vitesseInitiale),
+      );
+      let precedent = performance.now();
+
+      function pas(maintenant: number) {
+        const dt = maintenant - precedent;
+        precedent = maintenant;
+
+        positionRef.current += vitesse * dt;
+        vitesse *= Math.exp(-INERTIE_FRICTION_PAR_MS * dt);
+        applyTransforms();
+
+        if (Math.abs(vitesse) > INERTIE_VITESSE_ARRET) {
+          settleAnimRef.current = requestAnimationFrame(pas);
+        } else {
+          settleAnimRef.current = null;
+          settleTo(Math.round(positionRef.current), false);
+        }
+      }
+
+      settleAnimRef.current = requestAnimationFrame(pas);
+    },
+    [applyTransforms, settleTo],
+  );
+
   function focusItem(index: number) {
     const el = itemRefs.current[normalizeIndex(index, count)];
     el?.querySelector("a")?.focus();
@@ -190,7 +243,14 @@ export function BookBand({
       settleAnimRef.current = null;
     }
     clickSuppressRef.current = false;
-    dragRef.current = { startX: event.clientX, startPosition: positionRef.current, moved: 0 };
+    dragRef.current = {
+      startX: event.clientX,
+      startPosition: positionRef.current,
+      moved: 0,
+      dernierX: event.clientX,
+      dernierT: performance.now(),
+      vitesse: 0,
+    };
   }
 
   function handlePointerMove(event: React.PointerEvent<HTMLDivElement>) {
@@ -200,12 +260,36 @@ export function BookBand({
     drag.moved = Math.max(drag.moved, Math.abs(dx));
     if (drag.moved > DRAG_CLICK_THRESHOLD_PX) clickSuppressRef.current = true;
     positionRef.current = drag.startPosition - dx / ITEM_SPACING_PX;
+
+    // Vitesse instantanée, lissée : un seul échantillon suffirait à faire
+    // partir la bande de travers sur un micro-soubresaut en fin de geste.
+    // Le signe est inversé comme ci-dessus — pointeur vers la droite fait
+    // décroître la position.
+    const maintenant = performance.now();
+    const dt = maintenant - drag.dernierT;
+    if (dt > 0) {
+      const instantanee = -(event.clientX - drag.dernierX) / ITEM_SPACING_PX / dt;
+      drag.vitesse = drag.vitesse * INERTIE_LISSAGE + instantanee * (1 - INERTIE_LISSAGE);
+      drag.dernierX = event.clientX;
+      drag.dernierT = maintenant;
+    }
+
     applyTransforms();
   }
 
   function handlePointerUp() {
-    if (!dragRef.current) return;
+    const drag = dragRef.current;
+    if (!drag) return;
     dragRef.current = null;
+
+    // Un geste vif prolonge le défilement ; un geste lent, ou un doigt
+    // resté immobile avant de lâcher, cale directement. Coupé net pour
+    // qui demande moins de mouvement.
+    const vitesse = drag.vitesse;
+    if (!prefersReducedMotion && Math.abs(vitesse) > INERTIE_VITESSE_LANCEMENT) {
+      lancerInertie(vitesse);
+      return;
+    }
     settleTo(Math.round(positionRef.current), false);
   }
 

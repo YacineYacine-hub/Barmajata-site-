@@ -228,6 +228,99 @@ h3 {
  * serve sur fond clair comme sur fond sombre.
  */
 /*
+ * Livre ouvert vu à ras (Lot H4) — le pied de la devanture.
+ *
+ * L'œil est posé au niveau de la table : on ne voit pas le livre de
+ * dessus, on regarde sa tranche. D'où trois indices, et seulement trois,
+ * qui suffisent à le faire lire comme un livre :
+ *
+ *   1. deux blocs très larges et très bas, au sommet légèrement bombé —
+ *      les pages qui s'écartent ;
+ *   2. une réglure serrée sur leur épaisseur — la tranche des feuilles
+ *      empilées, ce que les filets évoquaient déjà depuis le début ;
+ *   3. une gouttière sombre au centre, là où les deux pages plongent.
+ *
+ * Aucune photographie, aucune dépendance. Ces surfaces sont exactement
+ * les emplacements que remplacera l'image de fond quand elle existera.
+ */
+.livre-a-ras {
+  position: relative;
+  overflow: hidden;
+  height: clamp(150px, 22vw, 320px);
+}
+
+/* Un bloc de pages. Le sommet bombé vient d'un border-radius elliptique
+   très écrasé : 100% de rayon horizontal pour une poignée de % vertical,
+   ce qui donne la courbe longue et molle d'une page qui s'affaisse. */
+.livre-page {
+  position: absolute;
+  bottom: 0;
+  width: 58%;
+  height: 100%;
+  border-radius: 100% 100% 0 0 / 22% 22% 0 0;
+  background-color: var(--color-sable-300);
+  background-image:
+    /* tranche des feuilles : réglure très serrée, pas de 3px */
+    repeating-linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--color-nuit-900) 26%, transparent) 0 1px,
+      transparent 1px 3px
+    ),
+    /* lumière rasante : le haut de la tranche capte, le bas s'éteint */
+    linear-gradient(
+      to bottom,
+      color-mix(in oklab, var(--color-lin-100) 88%, transparent) 0%,
+      color-mix(in oklab, var(--color-or-500) 62%, transparent) 26%,
+      color-mix(in oklab, var(--color-gres-600) 70%, transparent) 58%,
+      var(--color-nuit-950) 100%
+    );
+}
+
+.livre-page-gauche {
+  left: -6%;
+  transform: rotate(-0.7deg);
+  transform-origin: 100% 100%;
+}
+
+.livre-page-droite {
+  right: -6%;
+  transform: rotate(0.7deg);
+  transform-origin: 0 100%;
+}
+
+/* Gouttière : les deux pages plongent l'une vers l'autre. Assombrissement
+   radial plutôt qu'un trait, pour qu'aucune arête nette ne trahisse le
+   procédé. */
+.livre-gouttiere {
+  position: absolute;
+  inset-block: 0;
+  left: 50%;
+  width: 26%;
+  transform: translateX(-50%);
+  background-image: radial-gradient(
+    50% 78% at 50% 8%,
+    var(--color-nuit-950) 0%,
+    color-mix(in oklab, var(--color-nuit-950) 74%, transparent) 42%,
+    transparent 72%
+  );
+}
+
+/* Fondu du haut : le livre ne doit pas commencer par une arête franche,
+   il doit émerger du fond de la devanture. */
+.livre-fondu {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 42%;
+  background-image: linear-gradient(
+    to bottom,
+    var(--color-nuit-950) 0%,
+    color-mix(in oklab, var(--color-nuit-950) 55%, transparent) 46%,
+    transparent 100%
+  );
+}
+
+/*
  * Réglure seule, pour une surface qui n'a PAS de champ (ex. la section des
  * piliers sur l'accueil). À ne jamais combiner avec `.champ-encre` ou
  * `.champ-papier` : les deux écrivent `background-image`, cette classe

@@ -6,6 +6,7 @@ import { buildAlternates } from "@/lib/seo";
 import { Hero } from "@/components/Hero";
 import { Reveal } from "@/components/Reveal";
 import { BookBand, type BandItem } from "@/components/BookBand";
+import { LivreARas } from "@/components/LivreARas";
 import { getVisibleBooks } from "@/lib/content";
 import { resolveEdition, type Book, type ContentLocale, type Edition } from "@/lib/content/schema";
 
@@ -56,8 +57,11 @@ function HomeContent({ bandItems }: { bandItems: BandItem[] }) {
 
       {/* Réglure d'imprimeur : le liant entre les deux registres. En
           currentColor, donc réglée ici par la couleur du texte du bloc. */}
+      {/* Les onglets sont tassés vers le bas : beaucoup d'air au-dessus,
+          très peu en dessous, pour qu'ils viennent se poser sur le livre
+          qui suit au lieu de flotter au milieu de la page. */}
       <section className="reglure grain-encre border-t border-lin-50/10 text-lin-50">
-        <div className="mx-auto max-w-5xl ps-6 pe-6 py-24">
+        <div className="mx-auto max-w-5xl ps-6 pe-6 pt-32 pb-10">
           <h2 className="font-serif text-sous-titre text-lin-50 text-start">
             {t("pillarsTitle")}
           </h2>
@@ -80,6 +84,11 @@ function HomeContent({ bandItems }: { bandItems: BandItem[] }) {
           </div>
         </div>
       </section>
+
+      {/* Pied de la devanture : le livre vu à ras, pleine largeur. Il
+          ferme la page sur le sujet même du site, et sert d'assise aux
+          onglets tassés juste au-dessus. */}
+      <LivreARas />
     </main>
   );
 }

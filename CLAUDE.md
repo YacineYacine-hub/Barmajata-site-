@@ -701,6 +701,70 @@ la CI devrait cloner avant de l'exécuter, pour trois lignes de `grep`.
 Le build de la CI part d'un `checkout` neuf, donc sans cache : il ne
 souffre pas de la génération incrémentale décrite au point 3.
 
+## Lot H4 — inertie, frise, et le livre vu à ras
+
+Demandes issues d'un retour sur le rendu réel de l'accueil.
+
+### Inertie de la bande (`BookBand.tsx`)
+
+Au lâcher, la bande se calait immédiatement sur la couverture la plus
+proche (`settleTo(Math.round(...))`). Elle prolonge désormais le geste :
+
+- la vitesse est mesurée pendant le glissement et **lissée**
+  (`INERTIE_LISSAGE`, 72 % d'ancienne vitesse conservée) — un échantillon
+  unique suffirait à faire partir la bande de travers sur un
+  micro-soubresaut en fin de geste ;
+- au `pointerup`, décroissance exponentielle. La distance parcourue vaut
+  `vitesse / friction` : au plafond, `0,028 / 0,0035 ≈ 8` couvertures.
+  Assez pour que le geste porte, trop peu pour traverser le catalogue
+  d'un coup ;
+- sous `INERTIE_VITESSE_LANCEMENT`, ou si l'utilisateur demande moins de
+  mouvement, calage direct comme avant.
+
+**L'identifiant d'animation est rangé dans `settleAnimRef`**, celui du
+calage : tous les points qui annulaient déjà un calage en cours
+(pointerdown, molette, clavier, clic pour centrer) annulent ainsi
+l'inertie, sans qu'aucun d'eux n'ait eu à être modifié.
+
+### Frise supérieure (`Header.tsx`)
+
+La barre `bg-nuit-900` porte la réglure d'imprimeur : elle lit comme un
+bandeau texturé, plus comme un aplat, et se relie au livre du pied de
+page. `text-lin-50` y est **fonctionnel, pas décoratif** — la réglure est
+bâtie sur `currentColor`, c'est lui qui la rend visible.
+
+### Le livre vu à ras (`LivreARas.tsx`, `.livre-*`)
+
+Pied de la devanture, pleine largeur : l'œil est posé au niveau de la
+table, on regarde la tranche du livre ouvert. Trois indices suffisent à le
+faire lire, et il n'y en a pas d'autres :
+
+1. deux blocs très larges et très bas au sommet légèrement bombé
+   (`border-radius: 100% 100% 0 0 / 22% 22% 0 0` — rayon horizontal
+   complet pour une poignée de % vertical, d'où la courbe longue et molle
+   d'une page qui s'affaisse), inclinés de ±0,7° ;
+2. une réglure au pas de 3px sur leur épaisseur — la tranche des feuilles
+   empilées, ce que les filets évoquaient depuis le début ;
+3. une gouttière centrale en assombrissement **radial** et non en trait :
+   aucune arête nette ne doit trahir le procédé.
+
+Décoratif intégralement, donc `aria-hidden` et aucun texte.
+
+Les onglets de l'accueil sont tassés vers le bas (`pt-32 pb-10`) pour venir
+se poser sur ce livre au lieu de flotter au milieu de la page.
+
+### Ce qui reste à faire sur ce lot
+
+**L'image de fond unifiante n'existe pas encore.** L'intention : une image
+courant du livre du pied jusqu'à la frise supérieure, passant *derrière* la
+bande de couvertures et derrière le lettrage BARMAJATA. Les surfaces
+génératives actuelles (`.champ-encre`, `.livre-*`) sont exactement les
+emplacements qu'elle remplacera — la structure ne bougera pas.
+
+**Le lettrage BARMAJATA doit rester du texte**, jamais une image : c'est un
+`h1` en `text-enseigne`, et il doit le rester pour se détacher sur la
+photo à venir.
+
 ## Stack
 
 - Next.js 16 (App Router, Turbopack), TypeScript **5.9** (pas TS 7 natif :
