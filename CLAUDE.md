@@ -482,6 +482,72 @@ un layout racine et de convertir `[locale]/layout.tsx` et
 arbitrer séparément. Le 410 n'est pas concerné : il sort du middleware,
 entièrement rendu côté serveur.
 
+## Refonte visuelle (Lot H) — direction arrêtée
+
+Déclencheur : le site donnait une impression datée. Causes identifiées en
+lisant le code, pas en supposant :
+
+1. **Aucune image nulle part.** `[locale]/page.tsx` appelle `Hero` avec un
+   seul slide **sans `image`** : il tombe sur le repli
+   `bg-gradient-to-br from-lin-100 via-sable-300 to-gres-600`, un aplat
+   beige plein écran. C'est la première chose que voit un visiteur.
+2. **Zéro profondeur** : dans tout le projet, 2 `shadow-lg` et 1 ombre sur
+   la barre mobile. Aucun `blur`, aucun `backdrop-filter`, aucune
+   superposition, aucune texture.
+3. **Mouvement bridé par la règle « jamais de rebond ni de rotation »**
+   (fondu + 12 px, 400 ms).
+4. **Colonne centrée partout** (`max-w-3xl` / `max-w-5xl`), sections
+   empilées, typo plafonnée à `text-5xl`.
+
+### La direction retenue : système à deux registres
+
+Deux directions ont été maquettées et arbitrées par l'utilisateur —
+maquette : https://claude.ai/code/artifact/5f571895-4fad-4f8e-8a2c-d16468618977
+
+- **« Encre » en devanture** — accueil, hero, Header, Footer. Fond
+  `nuit-900` dominant (et non plus seulement l'en-tête), titre monumental
+  (`clamp` jusqu'à ~11rem), or en accent, livres en volume avec ombres
+  portées dures.
+- **« Papier » à l'intérieur** — les pages où l'on *lit* : la maison,
+  journal, fiche livre, fiche auteur. Fond clair conservé, mais travaillé :
+  dégradés maillés chauds, jamais l'aplat actuel.
+- **La réglure d'imprimeur et le papier usé sont le liant** — présents
+  dans les deux registres. C'est ce qui empêche le site de se lire comme
+  deux sites collés. Déjà appliqué aux couvertures de démonstration
+  (Lot H0) : grain `feTurbulence`, dégradé d'usure, réglure, double filet.
+
+### Techniques retenues — natif, aucune dépendance ajoutée
+
+Animations pilotées par le scroll (`animation-timeline: view()`, avec repli
+`@supports` et coupure `prefers-reduced-motion`) en remplacement de
+`Reveal` ; dégradés en couches + grain SVG ; OKLCH et `color-mix()` ;
+container queries ; `text-wrap: balance`.
+
+**Écarté volontairement** : les View Transitions de Next 16 passent par un
+drapeau `experimental` — exclu par la règle « aucune préversion ».
+
+### Découpage restant
+
+| Lot | Contenu | État |
+|---|---|---|
+| H0 | 10 livres + 10 auteurs + 10 couvertures de démo | **fait** |
+| H1 | Fondations : échelle typo, tokens OKLCH, grain et réglure réutilisables, profondeur, bascule `Reveal` → scroll CSS | à faire |
+| H2 | Devanture « Encre » : accueil, Header, Footer | à faire |
+| H3 | Intérieur « Papier » : la maison, journal, fiches livre et auteur | à faire |
+
+### Règle à réécrire au moment de H1
+
+La règle « jamais de rebond ni de rotation » (section BookBand/BookSolid et
+`Reveal`) devient incompatible avec les livres en volume de la direction
+retenue, qui tournent (`rotateY`). Remplacement proposé, **à valider avant
+d'être appliqué** : *pas d'animation gratuite ; le mouvement sert à donner
+du volume ou à guider le regard, jamais à décorer.*
+
+En revanche la règle de contraste `or-500` (Lot F) **reste inchangée** :
+l'or est valide en texte sur `nuit-900` (~5,8:1), donc utilisable en
+devanture ; sur les pages « Papier » il reste décoratif et ne porte jamais
+de texte courant.
+
 ## Stack
 
 - Next.js 16 (App Router, Turbopack), TypeScript **5.9** (pas TS 7 natif :
