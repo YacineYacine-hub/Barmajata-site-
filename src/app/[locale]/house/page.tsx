@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { EditorialPage } from "@/components/EditorialPage";
 import { buildOrganizationJsonLd } from "@/lib/content/jsonld";
 import { SITE_URL } from "@/lib/site";
 import { buildAlternates } from "@/lib/seo";
@@ -25,14 +26,20 @@ export default async function HousePage({
     description: tSite("tagline"),
   });
 
+  const sections = t.raw("sections") as Array<{ heading: string; body: string }>;
+
   return (
-    <main className="mx-auto max-w-3xl ps-6 pe-6 py-16">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <h1 className="font-serif text-4xl text-nuit-900 text-start">{t("title")}</h1>
-      <p className="mt-6 text-roche-700 text-start">{t("body")}</p>
-    </main>
+      <EditorialPage
+        eyebrow={t("eyebrow")}
+        title={t("title")}
+        lede={t("lede")}
+        sections={sections}
+      />
+    </>
   );
 }

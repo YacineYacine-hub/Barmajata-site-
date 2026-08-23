@@ -53,20 +53,57 @@
       "body": "Content coming soon."
     },
     "house": {
+      "eyebrow": "Publishing house",
       "title": "The house",
-      "body": "Content coming soon."
+      "lede": "Three principles guide our editorial work: sincerity, rigour, transmission. Demo text, real content coming soon.",
+      "sections": [
+        {
+          "heading": "Our story",
+          "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Demo text, no real editorial content."
+        },
+        {
+          "heading": "Our catalogue",
+          "body": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Demo text, no real editorial content."
+        },
+        {
+          "heading": "Our commitment",
+          "body": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Demo text, no real editorial content."
+        }
+      ]
     },
     "commitment": {
       "title": "Commitment",
       "body": "Content coming soon."
     },
     "journal": {
+      "eyebrow": "Journal",
       "title": "Journal",
-      "body": "Content coming soon."
+      "lede": "Notes, behind the scenes and news from the house. Demo text, real content coming soon.",
+      "sections": [
+        {
+          "heading": "About this journal",
+          "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Demo text, no real editorial content."
+        },
+        {
+          "heading": "First posts",
+          "body": "No article has been published yet. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Demo text, no real editorial content."
+        }
+      ]
     },
     "contact": {
+      "eyebrow": "Contact",
       "title": "Contact",
-      "body": "Content coming soon."
+      "lede": "We're happy to answer your questions. Demo text, real content coming soon.",
+      "sections": [
+        {
+          "heading": "Write to us",
+          "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Demo text, no real editorial content."
+        },
+        {
+          "heading": "Details",
+          "body": "Content coming soon."
+        }
+      ]
     }
   },
   "categories": {

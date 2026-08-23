@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { SectionPage } from "@/components/SectionPage";
+import { EditorialPage } from "@/components/EditorialPage";
 import { buildAlternates } from "@/lib/seo";
 
 export function generateMetadata(): Metadata {
@@ -16,6 +16,9 @@ export default async function ContactPage({
   setRequestLocale(locale);
 
   const t = await getTranslations("pages.contact");
+  const sections = t.raw("sections") as Array<{ heading: string; body: string }>;
 
-  return <SectionPage title={t("title")} body={t("body")} />;
+  return (
+    <EditorialPage eyebrow={t("eyebrow")} title={t("title")} lede={t("lede")} sections={sections} />
+  );
 }

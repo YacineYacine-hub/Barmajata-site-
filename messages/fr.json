@@ -53,20 +53,57 @@
       "body": "Contenu à venir."
     },
     "house": {
+      "eyebrow": "Maison d'édition",
       "title": "La maison",
-      "body": "Contenu à venir."
+      "lede": "Trois exigences guident notre travail éditorial : la sincérité, la rigueur, la transmission. Texte de démonstration, contenu réel à venir.",
+      "sections": [
+        {
+          "heading": "Notre histoire",
+          "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Texte de démonstration, aucun contenu éditorial réel."
+        },
+        {
+          "heading": "Notre catalogue",
+          "body": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Texte de démonstration, aucun contenu éditorial réel."
+        },
+        {
+          "heading": "Notre engagement",
+          "body": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Texte de démonstration, aucun contenu éditorial réel."
+        }
+      ]
     },
     "commitment": {
       "title": "Engagement",
       "body": "Contenu à venir."
     },
     "journal": {
+      "eyebrow": "Journal",
       "title": "Journal",
-      "body": "Contenu à venir."
+      "lede": "Carnets, coulisses et actualités de la maison. Texte de démonstration, contenu réel à venir.",
+      "sections": [
+        {
+          "heading": "À propos de ce journal",
+          "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Texte de démonstration, aucun contenu éditorial réel."
+        },
+        {
+          "heading": "Premiers billets",
+          "body": "Aucun article n'est publié pour l'instant. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Texte de démonstration, aucun contenu éditorial réel."
+        }
+      ]
     },
     "contact": {
+      "eyebrow": "Contact",
       "title": "Contact",
-      "body": "Contenu à venir."
+      "lede": "Nous répondons avec plaisir à vos questions. Texte de démonstration, contenu réel à venir.",
+      "sections": [
+        {
+          "heading": "Nous écrire",
+          "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Texte de démonstration, aucun contenu éditorial réel."
+        },
+        {
+          "heading": "Coordonnées",
+          "body": "Contenu à venir."
+        }
+      ]
     }
   },
   "categories": {

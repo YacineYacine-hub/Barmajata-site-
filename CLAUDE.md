@@ -21,6 +21,17 @@ déposée) — jamais "Barma Jata" en deux mots.
   volontairement **hors menu et en noindex** tant que le partenariat
   associé n'est pas fixé — voir le commentaire dans
   `src/app/[locale]/commitment/page.tsx`.
+- Pages éditoriales du Lot C (`/la-maison`, `/journal`, `/contact`) :
+  `EditorialPage.tsx` (bandeau `SectionBanner.tsx` en `bg-nuit-900` +
+  sections numérotées sur `lin-50`, via `t.raw("sections")`). Texte de
+  remplissage **explicitement fictif** (lorem, "Texte de démonstration,
+  aucun contenu éditorial réel" — voir `messages/*.json` →
+  `pages.house/journal/contact`), à remplacer par du contenu réel quand
+  il sera fourni. Distinct de `SectionPage.tsx` (une ligne, réservé aux
+  pages légales, non touché par le Lot C). `/auteurs` et `/auteurs/[slug]`
+  reprennent le même bandeau `SectionBanner` pour la cohérence visuelle
+  mais **sans texte fictif** : ils n'affichent que des données réelles
+  (`author.nom`, `bioCourte`/`bioLongue`) ou les états "vide" existants.
 - Anciennes routes (ex-site mono-autrice), gérées dans `src/proxy.ts`
   (avant next-intl, car `nextUrl.pathname` n'est jamais décodé — les
   segments non-ASCII y restent en `%XX`) :
