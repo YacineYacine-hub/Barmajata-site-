@@ -281,13 +281,62 @@ déposée) — jamais "Barma Jata" en deux mots.
 - **Jamais activé sur Vercel en production** — variable d'environnement à
   ne pas définir sur le projet de prod, uniquement en local/preview au
   besoin.
-- `/club` (`src/app/[locale]/club/page.tsx`) : page d'inscription unique
-  (e-mail seul), pas de backend en Phase 1 — `ClubForm.tsx` est un
-  formulaire inerte (`TODO(club-backend)` dans le code) qui affiche un
-  message d'attente après soumission. Reste statique malgré `?book=`/
-  `?langue=` : la liste (slug, langue, titre) des éditions visibles est
-  calculée côté serveur et la résolution du paramètre se fait côté client
-  via `useSearchParams()`, pour ne pas forcer la page en rendu dynamique.
+- `/club` (`src/app/[locale]/club/page.tsx`) : inscription (e-mail +
+  case de consentement, jamais pré-cochée) avec **double opt-in réel**
+  (Lot E), voir "Club (double opt-in)" ci-dessous. Reste statique malgré
+  `?book=`/`?langue=` : la liste (slug, langue, titre) des éditions
+  visibles est calculée côté serveur et la résolution du paramètre se
+  fait côté client via `useSearchParams()`, pour ne pas forcer la page en
+  rendu dynamique.
+
+## Club (double opt-in, Lot E)
+
+- Aucune base de données (contrainte Phase 1 inchangée) : le
+  consentement en attente n'est stocké nulle part côté serveur, il est
+  entièrement porté par un **jeton signé HMAC** (`src/lib/club/token.ts`,
+  `CLUB_CONFIRM_SECRET`, 48h d'expiration) — `{ email, bookSlug?,
+  langue?, exp }` encodé + signature, vérifié en temps constant
+  (`crypto.timingSafeEqual`). `verifyConfirmToken()` ne lance jamais
+  (secret absent, jeton malformé, expiré ou falsifié → `undefined`,
+  jamais une exception) : un lien de confirmation cliqué des mois plus
+  tard, ou sur un déploiement mal configuré, ne doit jamais faire planter
+  la route — juste rediriger vers `?confirm=invalid`.
+- `src/lib/club/providers.ts` : abstraction Brevo/Resend, un seul actif
+  à la fois (`BREVO_API_KEY` prioritaire si les deux sont définies).
+  `sendTransactionalEmail()` (e-mail de confirmation) et
+  `addConfirmedContact()` (ajout réel à la liste — Brevo `/v3/contacts`
+  + `BREVO_LIST_ID` optionnel, Resend `/audiences/{id}/contacts` +
+  `RESEND_AUDIENCE_ID` requis) sont **deux étapes séparées** : le contact
+  n'est ajouté à la liste qu'à la confirmation, jamais à l'inscription
+  initiale — c'est ce qui fait du double opt-in un vrai double
+  consentement plutôt qu'un simple e-mail de bienvenue.
+- Flux : `POST /api/club/subscribe` (email + `consent: true` obligatoire
+  + locale, Zod) → si aucun fournisseur configuré, 503 immédiat ; sinon
+  crée le jeton et envoie l'e-mail de confirmation
+  (`src/lib/club/email.ts`, gabarit HTML par locale, RTL pour l'arabe).
+  `GET /api/club/confirm?token=&locale=` (lien cliqué dans l'e-mail) →
+  vérifie le jeton, appelle `addConfirmedContact()`, puis redirige vers
+  `/club?confirm=success|invalid|error`.
+- `ClubForm.tsx` reçoit `serviceEnabled` (calculé côté serveur via
+  `getConfiguredProvider() !== undefined`, **au moment du rendu statique**
+  — comme `NEXT_PUBLIC_DEMO_CONTENT`, une bascule de fournisseur exige un
+  nouveau build/déploiement). Sans fournisseur configuré, le formulaire
+  reste inerte (champs et bouton désactivés) avec un message clair
+  (`club.serviceUnavailable`) — pas d'échec silencieux à la soumission.
+  Case de consentement RGPD jamais pré-cochée (`useState(false)`), texte
+  de consentement + note RGPD toujours affichés
+  (`club.consentLabel`/`club.gdprNote`), lien vers `/privacy-policy`.
+- Variables d'environnement : voir `.env.example` — `BREVO_API_KEY` +
+  `BREVO_LIST_ID` **ou** `RESEND_API_KEY` + `RESEND_AUDIENCE_ID`,
+  `CLUB_FROM_EMAIL` + `CLUB_FROM_NAME`, `CLUB_CONFIRM_SECRET`.
+- **Non testé avec de vraies clés** : aucun accès réseau sortant ni
+  navigateur dans cette session. Le format des requêtes Brevo/Resend a
+  été vérifié par relecture de leur documentation d'API, pas par un envoi
+  réel. Le flux jeton (création, vérification, expiration) et les codes
+  HTTP (503 sans fournisseur, 502 sur échec d'envoi, 400 sur corps
+  invalide, redirections `?confirm=`) ont, eux, été vérifiés en local
+  avec de fausses clés (échec attendu à l'appel réseau réel, capturé
+  proprement).
 
 ## Stack
 

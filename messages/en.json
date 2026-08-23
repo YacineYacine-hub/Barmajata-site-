@@ -182,7 +182,15 @@
     "bookNotice": "You'll be notified when this is released: {title}",
     "emailLabel": "Email address",
     "submit": "Sign up",
-    "pending": "Thank you! Sign-ups will be activated soon — this feature is still in the works."
+    "pending": "Thank you! Sign-ups will be activated soon — this feature is still in the works.",
+    "consentLabel": "I agree to receive emails from BARMAJATA and I have read the <privacyLink>privacy policy</privacyLink>.",
+    "gdprNote": "Your data is only used for this subscription and is never shared with third parties. Under GDPR, you have the right to access, correct, and delete your data, and you can unsubscribe at any time via the link in every email.",
+    "confirmPending": "Thank you! A confirmation email has just been sent to you — click the link inside to validate your subscription (double opt-in).",
+    "serviceUnavailable": "Sign-ups aren't available yet: the email sending service isn't configured.",
+    "errorGeneric": "Something went wrong, please try again later.",
+    "confirmSuccess": "Your subscription is confirmed. Welcome to the club!",
+    "confirmInvalid": "This confirmation link is no longer valid (expired or already used).",
+    "confirmError": "Something went wrong during confirmation. Please try again or contact us."
   },
   "legal": {
     "legalNotice": {

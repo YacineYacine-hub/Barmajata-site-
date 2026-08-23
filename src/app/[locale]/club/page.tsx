@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getVisibleBooks } from "@/lib/content";
 import { isVisibleStatus, type ContentLocale } from "@/lib/content/schema";
 import { ClubForm } from "@/components/ClubForm";
+import { getConfiguredProvider } from "@/lib/club/providers";
 import { buildAlternates } from "@/lib/seo";
 
 export function generateMetadata(): Metadata {
@@ -37,7 +38,7 @@ export default async function ClubPage({
       <p className="mt-4 text-roche-700 text-start">{t("intro")}</p>
 
       <Suspense fallback={null}>
-        <ClubForm books={books} />
+        <ClubForm books={books} serviceEnabled={getConfiguredProvider() !== undefined} />
       </Suspense>
     </main>
   );

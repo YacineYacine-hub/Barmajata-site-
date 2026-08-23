@@ -182,7 +182,15 @@
     "bookNotice": "Vous serez informé·e à la sortie de : {title}",
     "emailLabel": "Adresse e-mail",
     "submit": "S'inscrire",
-    "pending": "Merci ! L'inscription sera activée prochainement : cette fonctionnalité est en préparation."
+    "pending": "Merci ! L'inscription sera activée prochainement : cette fonctionnalité est en préparation.",
+    "consentLabel": "J'accepte de recevoir des e-mails de BARMAJATA et j'ai lu la <privacyLink>politique de confidentialité</privacyLink>.",
+    "gdprNote": "Vos données ne servent qu'à cette inscription et ne sont jamais partagées avec des tiers. Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression, et pouvez vous désinscrire à tout moment via le lien présent dans chaque e-mail.",
+    "confirmPending": "Merci ! Un e-mail de confirmation vient de vous être envoyé — cliquez sur le lien qu'il contient pour valider votre inscription (double consentement).",
+    "serviceUnavailable": "L'inscription n'est pas encore disponible : le service d'envoi d'e-mails n'est pas configuré.",
+    "errorGeneric": "Une erreur est survenue, réessayez plus tard.",
+    "confirmSuccess": "Votre inscription est confirmée. Bienvenue dans le club !",
+    "confirmInvalid": "Ce lien de confirmation n'est plus valide (expiré ou déjà utilisé).",
+    "confirmError": "Une erreur est survenue lors de la confirmation. Réessayez ou contactez-nous."
   },
   "legal": {
     "legalNotice": {
