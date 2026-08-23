@@ -971,6 +971,61 @@ un titre généreux **aligné au fer à gauche** (et non centré, le centrage
 appartient au registre classique), un filet d'accent unique, le nom de
 l'auteur. Les dix fonds sombres du Lot H7 sont conservés.
 
+## Lot H11 — fiche livre en deux colonnes, et le prix rétabli
+
+### Correction d'un conseil erroné : la loi Lang
+
+Il avait été conseillé en séance de **ne pas afficher les prix**, au motif
+que le prix Amazon varie et qu'un prix figé deviendrait trompeur. **C'est
+faux en France, et l'inverse est vrai.**
+
+La [loi du 10 août 1981 dite loi Lang](https://fr.wikipedia.org/wiki/Loi_relative_au_prix_du_livre),
+toujours en vigueur : **c'est l'éditeur qui fixe un prix public unique**,
+avec obligation de le marquer sur la couverture, et aucun détaillant —
+Amazon compris — ne peut accorder plus de **5 % de rabais**.
+
+Conséquences pour ce projet :
+
+- Le prix affiché sur le site **fait autorité**, il n'est pas indicatif.
+- Chaque format a **son** prix : la fiche livre les affiche par format, et
+  le « à partir de » reste réservé au catalogue, où il résume.
+- Le champ `prixIndicatif` du schéma est **mal nommé** — c'est un prix
+  public éditeur. Renommage non fait pour ne pas casser les fichiers de
+  contenu ; à traiter si le schéma bouge par ailleurs.
+
+Le risque juridique réel n'est donc pas d'afficher le prix, mais de **ne
+pas dire que la vente se conclut ailleurs** : `books.amazonNotice` le dit
+désormais, sous les boutons, avant le clic.
+
+### La fiche en deux colonnes (modèle Stripe Press)
+
+Vérification faite, les pages livre de Stripe Press ne sont **pas** en deux
+colonnes fixes : c'est une colonne unique qui défile. La demande était
+autre — « toute l'écriture sur le côté, de haut en bas » — et c'est ce qui
+a été construit :
+
+- **Colonne collante** (`lg:sticky lg:top-28`) : le livre en volume et
+  l'acte d'achat. Le livre reste manipulable pendant qu'on lit — c'est
+  tout l'intérêt d'un objet qu'on peut tourner.
+- **Colonne de texte** : statut, titre, auteur, « À propos », extrait,
+  caractéristiques en liste de définitions, bloc auteur, précédent/suivant.
+- Sous 1024px, grille en une seule colonne et **collant désactivé** : sur
+  mobile, un objet collant mangerait la moitié de l'écran pendant toute la
+  lecture.
+- L'ordre des colonnes suit la direction d'écriture — CSS Grid le fait
+  nativement, le livre passe donc à droite en arabe sans code dédié.
+
+### Ce que les sites d'éditeurs ont et que ce site n'a pas
+
+Relevé pour mémoire, **rien n'est fait** : page manuscrits et soumissions,
+espace presse (communiqués, visuels HD, contact), page droits et cessions
+(étranger, audio, adaptation), page libraires et revendeurs, catalogue PDF
+téléchargeable, citations de presse sur la fiche livre.
+
+Côté légal, les quatre pages existent mais sont vides : il manque aussi
+les mentions d'éditeur (SIRET, directeur de publication, hébergeur) et une
+politique cookies.
+
 ## Stack
 
 - Next.js 16 (App Router, Turbopack), TypeScript **5.9** (pas TS 7 natif :

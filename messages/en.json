@@ -170,7 +170,11 @@
       "com_au": "Amazon.com.au",
       "es": "Amazon.es",
       "com_mx": "Amazon.com.mx"
-    }
+    },
+    "amazonNotice": "The sale is completed by Amazon, on its own site and under its own terms. BARMAJATA is not involved in payment, delivery or after-sales service.",
+    "aboutTitle": "About this book",
+    "detailsTitle": "Details",
+    "extractTitle": "Extract"
   },
   "authors": {
     "empty": "No authors available yet.",

@@ -170,7 +170,11 @@
       "com_au": "Amazon.com.au",
       "es": "Amazon.es",
       "com_mx": "Amazon.com.mx"
-    }
+    },
+    "amazonNotice": "تتم عملية البيع عبر أمازون، على موقعها ووفق شروطها. لا تتدخل برماجاتا في الدفع أو التوصيل أو خدمة ما بعد البيع.",
+    "aboutTitle": "عن هذا الكتاب",
+    "detailsTitle": "التفاصيل",
+    "extractTitle": "مقتطف"
   },
   "authors": {
     "empty": "لا يوجد مؤلفون متاحون حاليًا.",
