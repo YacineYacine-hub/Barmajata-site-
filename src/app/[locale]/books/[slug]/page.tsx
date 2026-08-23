@@ -6,6 +6,7 @@ import { getAuthorBySlug, getVisibleBookBySlug, getVisibleBooks } from "@/lib/co
 import { getMinPrice, resolveEdition, type ContentLocale } from "@/lib/content/schema";
 import { buildBookJsonLd } from "@/lib/content/jsonld";
 import { AmazonBuyButton } from "@/components/AmazonBuyButton";
+import { StickyBuyBar } from "@/components/StickyBuyBar";
 import { NotifyMe } from "@/components/NotifyMe";
 import { SITE_URL } from "@/lib/site";
 import { buildAlternates } from "@/lib/seo";
@@ -67,13 +68,22 @@ export default async function BookPage({
   });
 
   const minPrice = getMinPrice(edition);
+  const priceLabel =
+    edition.statut === "publie" && minPrice !== undefined
+      ? t("priceFrom", {
+          price: new Intl.NumberFormat(locale, { style: "currency", currency: "EUR" }).format(
+            minPrice,
+          ),
+        })
+      : undefined;
   const isOtherLanguage = edition.langue !== contentLocale;
   const sellableFormats = edition.formats?.filter(
     (format) => format.asin || format.urlOverride,
   );
+  const primarySellableFormat = sellableFormats?.[0];
 
   return (
-    <main className="mx-auto max-w-3xl ps-6 pe-6 py-16">
+    <main className="mx-auto max-w-3xl ps-6 pe-6 py-16 pb-28 md:pb-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -139,15 +149,8 @@ export default async function BookPage({
         </p>
       )}
 
-      {edition.statut === "publie" && minPrice !== undefined && (
-        <p className="mt-6 text-lg font-medium text-nuit-900 text-start">
-          {t("priceFrom", {
-            price: new Intl.NumberFormat(locale, {
-              style: "currency",
-              currency: "EUR",
-            }).format(minPrice),
-          })}
-        </p>
+      {priceLabel && (
+        <p className="mt-6 text-lg font-medium text-nuit-900 text-start">{priceLabel}</p>
       )}
 
       {edition.statut === "publie" && sellableFormats?.length ? (
@@ -171,6 +174,16 @@ export default async function BookPage({
         <div className="mt-6">
           <NotifyMe slug={book.slug} langue={edition.langue} />
         </div>
+      )}
+
+      {edition.statut === "publie" && primarySellableFormat && (
+        <StickyBuyBar
+          title={edition.titre}
+          price={priceLabel}
+          asin={primarySellableFormat.asin}
+          urlOverride={primarySellableFormat.urlOverride}
+          locale={contentLocale}
+        />
       )}
     </main>
   );

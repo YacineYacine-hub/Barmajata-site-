@@ -1,18 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 
-type NavHref = "/books" | "/authors" | "/house" | "/journal" | "/contact";
+type NavHref = "/authors" | "/house" | "/journal" | "/contact";
 
 const SCROLL_SHRINK_THRESHOLD = 80;
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 export function Header() {
   const t = useTranslations("nav");
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
   // Bandeau plein nuit-900, toujours séparé du héro (jamais en overlay
   // transparent dessus) : sticky pour rester visible, réduit sa hauteur
@@ -26,10 +32,52 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Panneau plein écran : Échap ferme, Tab/Shift+Tab piégés dedans, focus
+  // posé sur le bouton de fermeture à l'ouverture puis restitué au
+  // déclencheur à la fermeture, défilement de la page bloqué pendant.
+  useEffect(() => {
+    if (!isOpen) return;
+
+    closeButtonRef.current?.focus();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+
+      const panel = panelRef.current;
+      if (!panel) return;
+      const focusable = Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR));
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      triggerRef.current?.focus();
+    };
+  }, [isOpen]);
+
   // "/commitment" (engagement) est volontairement absent : page hors menu
   // tant que le partenariat n'est pas fixé, voir commitment/page.tsx.
-  const links: Array<{ href: NavHref; label: string }> = [
-    { href: "/books", label: t("books") },
+  // "/books" n'est pas dans le panneau : lien direct dans le bandeau.
+  const panelLinks: Array<{ href: NavHref; label: string }> = [
     { href: "/authors", label: t("authors") },
     { href: "/house", label: t("house") },
     { href: "/journal", label: t("journal") },
@@ -43,10 +91,10 @@ export function Header() {
           isScrolled ? "py-2" : "py-4"
         }`}
       >
-        {/* dir="ltr" fixe : le logo ne doit jamais se miroiter ni se
-            réordonner en RTL (voir CLAUDE.md, Lot 3). alt volontairement
-            en dur, identique dans toutes les langues — jamais dans les
-            fichiers de traduction. */}
+        {/* dir="ltr" fixe : le logo (sceau + nom) ne doit jamais se
+            miroiter ni se réordonner en RTL (voir CLAUDE.md, Lot 3). alt
+            volontairement en dur, identique dans toutes les langues —
+            jamais dans les fichiers de traduction. */}
         <Link href="/" dir="ltr" className="inline-flex shrink-0" onClick={() => setIsOpen(false)}>
           <img
             src="/brand/logo-horizontal-light.svg"
@@ -57,62 +105,66 @@ export function Header() {
           />
         </Link>
 
-        <nav aria-label={t("home")} className="hidden md:block">
-          <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-sable-300">
-            {links.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className="hover:text-lin-50">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <div className="hidden md:block">
+        <div className="flex items-center gap-5">
           <LocaleSwitcher />
-        </div>
 
-        <button
-          type="button"
-          onClick={() => setIsOpen((open) => !open)}
-          aria-expanded={isOpen}
-          aria-controls="mobile-nav"
-          aria-label={t("home")}
-          className="flex h-9 w-9 items-center justify-center rounded-md border border-sable-300 text-lin-50 md:hidden"
-        >
-          <span className="sr-only">Menu</span>
-          {isOpen ? (
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
-            </svg>
-          ) : (
+          <Link href="/books" className="text-sm text-sable-300 hover:text-lin-50">
+            {t("books")}
+          </Link>
+
+          <button
+            ref={triggerRef}
+            type="button"
+            onClick={() => setIsOpen(true)}
+            aria-label={t("menu")}
+            aria-expanded={isOpen}
+            aria-controls="nav-panel"
+            className="flex h-9 w-9 items-center justify-center rounded-md border border-sable-300 text-lin-50"
+          >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />
             </svg>
-          )}
-        </button>
+          </button>
+        </div>
       </div>
 
       {isOpen && (
-        <div id="mobile-nav" className="border-t border-sable-300/30 md:hidden">
-          <nav aria-label={t("home")} className="ps-6 pe-6 py-4">
-            <ul className="flex flex-col gap-3 text-sm text-sable-300">
-              {links.map((link) => (
+        <div
+          ref={panelRef}
+          id="nav-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-label={t("menu")}
+          className="fixed inset-0 z-[60] flex flex-col bg-nuit-900 ps-6 pe-6 py-6"
+        >
+          <div className="flex items-center justify-end">
+            <button
+              ref={closeButtonRef}
+              type="button"
+              onClick={() => setIsOpen(false)}
+              aria-label={t("closeMenu")}
+              className="flex h-9 w-9 items-center justify-center rounded-md border border-sable-300 text-lin-50"
+            >
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
+              </svg>
+            </button>
+          </div>
+
+          <nav aria-label={t("menu")} className="mt-16 flex-1">
+            <ul className="flex flex-col gap-6">
+              {panelLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="block text-start hover:text-lin-50"
                     onClick={() => setIsOpen(false)}
+                    className="font-serif text-3xl text-lin-50 hover:text-or-500"
                   >
                     {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
-            <div className="mt-4">
-              <LocaleSwitcher />
-            </div>
           </nav>
         </div>
       )}

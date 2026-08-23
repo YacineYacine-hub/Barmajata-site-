@@ -60,21 +60,44 @@ déposée) — jamais "Barma Jata" en deux mots.
   `src/app/[locale]/layout.tsx` pour que `openGraph.images` résolve en
   URL absolue (requis par le protocole Open Graph).
 
-## Header, Hero, animations
+## Header, Hero/carrousel, footer, animations
 
 - `Header.tsx` : bandeau plein `bg-nuit-900`, `sticky top-0`, toujours
   visuellement séparé du Hero (jamais en overlay transparent dessus).
   Au-delà de 80px de scroll (`SCROLL_SHRINK_THRESHOLD`), hauteur/logo
-  réduits, `transition-[...] duration-200`. `LocaleSwitcher.tsx` a des
-  couleurs figées pour fond sombre (couplé au Header — à revoir s'il est
-  réutilisé ailleurs).
-- `Hero.tsx` : composant réutilisable (`eyebrow?`, `title`, `subtitle?`,
-  `image?: { src, alt }`). Sans image : dégradé
+  réduits, `transition-[...] duration-200`. Disposition : sceau+nom
+  (`logo-horizontal-light.svg`) à gauche ; sélecteur de langue, lien
+  "Livres" en clair puis bouton menu (3 traits) à droite — identique à
+  toutes les tailles d'écran, plus de nav desktop séparée. Le bouton ouvre
+  un panneau plein écran (`role="dialog" aria-modal`, `Auteurs`/`La
+  maison`/`Journal`/`Contact` — pas "Livres", déjà direct dans le
+  bandeau) : Échap ferme, Tab/Shift+Tab piégés dedans (`FOCUSABLE_SELECTOR`),
+  focus posé sur le bouton de fermeture à l'ouverture puis restitué au
+  déclencheur à la fermeture, scroll de la page bloqué pendant.
+  `LocaleSwitcher.tsx` a des couleurs figées pour fond sombre (utilisé
+  dans Header **et** Footer, tous deux `bg-nuit-900`).
+- `Hero.tsx` : carrousel manuel uniquement — **jamais** de défilement
+  automatique. `slides: HeroSlide[]` (`eyebrow?`, `title`, `subtitle?`,
+  `image?: { src, alt }`) ; toutes les diapositives restent dans le HTML
+  (indexation), seule une `transform: translateX` masque celles qui ne
+  sont pas actives. Navigation : flèches clavier (sens inversé en RTL,
+  détecté via `document.documentElement.dir`), balayage tactile
+  (`SWIPE_THRESHOLD_PX`), traits de progression cliquables — masqués s'il
+  n'y a qu'une diapositive. Sans image : dégradé
   `from-lin-100 via-sable-300 to-gres-600`. Avec image : `next/image`
   `fill priority sizes="100vw"`. Ratio `aspect-[4/5]` mobile,
-  `sm:aspect-[16/9]` desktop. Titre toujours `text-nuit-900`, y compris
-  avec image (pas de scrim — à ajouter si une vraie photo pose un
-  problème de contraste). Utilisé sur `/` pour l'instant.
+  `sm:aspect-[16/9]` desktop. Titre toujours `text-nuit-900` (pas de scrim
+  — à ajouter si une vraie photo pose un problème de contraste). Un seul
+  slide réel utilisé sur `/` pour l'instant (aucun contenu réel
+  supplémentaire à inventer).
+- `StickyBuyBar.tsx` : barre collante mobile (titre, prix, premier format
+  vendable) sur la fiche livre publiée. Apparaît après 200px de scroll,
+  `md:hidden` (donc masquée ≥768px — coïncide avec le breakpoint `md` de
+  Tailwind). `<main>` a un `pb-28 md:pb-16` pour ne pas être recouvert.
+- `Footer.tsx` : bandeau `bg-nuit-900` (desktop et mobile) →
+  `logo-lockup-dark.svg`, copyright, liens sociaux (`src/lib/social.ts`,
+  `SOCIAL_LINKS` vide par conception — section masquée tant qu'aucun lien
+  réel n'est fourni), sélecteur de langue.
 - `Reveal.tsx` : fondu + `translate-y-3` (12px), `duration-[400ms]`,
   jamais de rebond ni de rotation. `delayMs={index * 80}` pour la cascade
   des grilles catalogue (`books/page.tsx`, `authors/page.tsx`) et de la

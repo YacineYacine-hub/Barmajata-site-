@@ -9,12 +9,20 @@
     "authors": "المؤلفون",
     "house": "الدار",
     "journal": "المدونة",
-    "contact": "اتصل"
+    "contact": "اتصل",
+    "menu": "القائمة",
+    "closeMenu": "إغلاق القائمة"
   },
   "home": {
     "heroEyebrow": "دار نشر برما جاتا",
     "heroTitle": "برما جاتا",
     "heroSubtitle": "المحتوى قادم قريبًا.",
+    "carousel": {
+      "region": "أبرز المحتوى",
+      "previous": "الشريحة السابقة",
+      "next": "الشريحة التالية",
+      "goTo": "الانتقال إلى الشريحة {n}"
+    },
     "pillarsTitle": "استكشاف",
     "pillars": {
       "books": {

@@ -10,9 +10,9 @@ const LOCALE_LABELS: Record<string, string> = {
   ar: "AR",
 };
 
-// Couleurs figées pour fond sombre : n'est utilisé que dans Header.tsx
-// (bg-nuit-900 depuis la refonte de palette). À revoir si jamais réutilisé
-// sur un fond clair ailleurs.
+// Couleurs figées pour fond sombre : utilisé dans Header.tsx et
+// Footer.tsx, tous deux bg-nuit-900. À revoir si jamais réutilisé sur un
+// fond clair ailleurs.
 export function LocaleSwitcher() {
   const pathname = usePathname();
   const params = useParams();

@@ -28,7 +28,11 @@ function HomeContent() {
 
   return (
     <main>
-      <Hero eyebrow={t("heroEyebrow")} title={t("heroTitle")} subtitle={t("heroSubtitle")} />
+      <Hero
+        slides={[
+          { eyebrow: t("heroEyebrow"), title: t("heroTitle"), subtitle: t("heroSubtitle") },
+        ]}
+      />
 
       <section className="mx-auto max-w-5xl ps-6 pe-6 py-20">
         <h2 className="font-serif text-2xl text-nuit-900 text-start">

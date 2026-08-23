@@ -1,19 +1,20 @@
 import { useTranslations } from "next-intl";
+import { LocaleSwitcher } from "./LocaleSwitcher";
+import { SOCIAL_LINKS } from "@/lib/social";
 
-// Fond du footer toujours clair (bg-lin-50) actuellement → logo-lockup.svg.
-// Si un fond sombre est introduit un jour (ex. bg-nuit-900), utiliser
-// logo-lockup-dark.svg à la place. Même règle dir="ltr" que le header (voir
-// CLAUDE.md, Lot 3) : le logo ne se miroite ni ne se réordonne en RTL.
+// Bandeau nuit-900 (desktop et mobile) → logo-lockup-dark.svg. Même règle
+// dir="ltr" que le header (voir CLAUDE.md, Lot 3) : le logo ne se miroite
+// ni ne se réordonne en RTL.
 export function Footer() {
   const t = useTranslations("footer");
   const tSite = useTranslations("site");
 
   return (
-    <footer className="border-t border-sable-300 bg-lin-50">
-      <div className="mx-auto flex max-w-5xl flex-col items-center gap-4 ps-6 pe-6 py-8 text-sm text-roche-700 sm:flex-row sm:justify-between">
+    <footer className="bg-nuit-900">
+      <div className="mx-auto flex max-w-5xl flex-col items-center gap-6 ps-6 pe-6 py-10 text-sm text-sable-300 sm:flex-row sm:justify-between">
         <div dir="ltr">
           <img
-            src="/brand/logo-lockup.svg"
+            src="/brand/logo-lockup-dark.svg"
             alt=""
             aria-hidden="true"
             width={160}
@@ -21,9 +22,29 @@ export function Footer() {
             className="h-10 w-auto"
           />
         </div>
+
         <p>
           {tSite("name")} — {t("rights")}
         </p>
+
+        {SOCIAL_LINKS.length > 0 && (
+          <ul className="flex items-center gap-4">
+            {SOCIAL_LINKS.map((link) => (
+              <li key={link.url}>
+                <a
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-lin-50"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <LocaleSwitcher />
       </div>
     </footer>
   );

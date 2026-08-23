@@ -9,12 +9,20 @@
     "authors": "Auteurs",
     "house": "La maison",
     "journal": "Journal",
-    "contact": "Contact"
+    "contact": "Contact",
+    "menu": "Menu",
+    "closeMenu": "Fermer le menu"
   },
   "home": {
     "heroEyebrow": "Maison d'édition BARMAJATA",
     "heroTitle": "BARMAJATA",
     "heroSubtitle": "Contenu à venir.",
+    "carousel": {
+      "region": "Présentation",
+      "previous": "Diapositive précédente",
+      "next": "Diapositive suivante",
+      "goTo": "Aller à la diapositive {n}"
+    },
     "pillarsTitle": "Explorer",
     "pillars": {
       "books": {
