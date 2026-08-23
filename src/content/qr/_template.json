@@ -1,0 +1,18 @@
+// Gabarit d'une entrée de src/content/qr/codes.json — ce fichier N'EST PAS
+// lu (getAllQrCodes() lit uniquement codes.json, un tableau d'entrées, pas
+// un fichier par entrée comme pour les livres/auteurs). Contient des
+// commentaires, ce n'est donc volontairement pas du JSON strict.
+{
+  // Identifiant du QR code, tel qu'imprimé/encodé dans l'URL /b/<code>.
+  "code": "",
+
+  // Slug de la page /bonus/<destination> déverrouillée par ce code.
+  "destination": "",
+
+  // Titre affiché sur la page /bonus/<destination>.
+  "libelle": "",
+
+  // false → /b/<code> redirige vers l'accueil (jamais une 404), et
+  // /bonus/<destination> reste introuvable (notFound()) même par URL directe.
+  "actif": true
+}

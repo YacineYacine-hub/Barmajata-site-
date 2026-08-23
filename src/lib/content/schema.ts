@@ -222,3 +222,13 @@ export const authorSchema = z.object({
   liens: z.array(authorLinkSchema).optional(),
 });
 export type Author = z.infer<typeof authorSchema>;
+
+/** Entrée de src/content/qr/codes.json — un QR code physique (livre, carte,
+ * etc.) redirigeant /b/[code] vers /bonus/[destination]. */
+export const qrCodeSchema = z.object({
+  code: z.string().min(1),
+  destination: z.string().min(1),
+  libelle: z.string().min(1),
+  actif: z.boolean(),
+});
+export type QrCode = z.infer<typeof qrCodeSchema>;

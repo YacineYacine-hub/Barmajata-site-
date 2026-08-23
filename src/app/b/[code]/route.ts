@@ -1,18 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { routing } from "@/i18n/routing";
-
-// Placeholder lookup table for Phase 1 — no database yet.
-// Maps a QR-code identifier to the (locale-prefixed) bonus page it redirects to.
-const BONUS_TARGETS: Record<string, string> = {
-  demo: `/${routing.defaultLocale}`,
-};
+import { getQrCodeByCode } from "@/lib/content";
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ code: string }> },
 ) {
   const { code } = await params;
-  const target = BONUS_TARGETS[code] ?? `/${routing.defaultLocale}`;
+  const entry = getQrCodeByCode(code);
+  // Code inconnu ou explicitement inactif → accueil, jamais une 404 (le
+  // support physique du QR code peut survivre à sa désactivation).
+  const target = entry?.actif ? `/bonus/${entry.destination}` : `/${routing.defaultLocale}`;
 
   return NextResponse.redirect(new URL(target, request.url), 302);
 }

@@ -46,8 +46,9 @@ export default function proxy(request: NextRequest) {
 
 export const config = {
   // Runs on every path except: api routes, Next internals, the QR-code
-  // redirect (/b/...), the generated sitemap/robots files, and files with
-  // an extension (static assets). Those are intentionally kept outside the
-  // locale-prefixed routing scheme.
-  matcher: ["/((?!api|_next|_vercel|b/|sitemap\\.xml|robots\\.txt|.*\\..*).*)"],
+  // redirect (/b/...) and its unlocked-content target (/bonus/...), the
+  // generated sitemap/robots files, and files with an extension (static
+  // assets). Those are intentionally kept outside the locale-prefixed
+  // routing scheme.
+  matcher: ["/((?!api|_next|_vercel|b/|bonus/|sitemap\\.xml|robots\\.txt|.*\\..*).*)"],
 };

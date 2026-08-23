@@ -1,7 +1,15 @@
 import fs from "node:fs";
 import path from "node:path";
 import { z } from "zod";
-import { authorSchema, bookSchema, hasVisibleEdition, type Author, type Book } from "./schema";
+import {
+  authorSchema,
+  bookSchema,
+  hasVisibleEdition,
+  qrCodeSchema,
+  type Author,
+  type Book,
+  type QrCode,
+} from "./schema";
 
 // Contenu de démonstration (src/content/_demo/) : chargé uniquement quand
 // NEXT_PUBLIC_DEMO_CONTENT=true (fixé au build, comme toute variable
@@ -141,4 +149,35 @@ export function getAdjacentBooks(book: Book): { previous?: Book; next?: Book } {
     previous: index > 0 ? ordered[index - 1] : undefined,
     next: index < ordered.length - 1 ? ordered[index + 1] : undefined,
   };
+}
+
+const QR_CODES_FILE = path.join(process.cwd(), "src/content/qr/codes.json");
+
+/** Tous les codes QR déclarés (src/content/qr/codes.json), actifs ou non. */
+export function getAllQrCodes(): QrCode[] {
+  if (!fs.existsSync(QR_CODES_FILE)) return [];
+
+  const raw = fs.readFileSync(QR_CODES_FILE, "utf-8");
+  let json: unknown;
+  try {
+    json = JSON.parse(raw);
+  } catch (cause) {
+    throw new Error("Fichier codes QR invalide (JSON illisible) : src/content/qr/codes.json", {
+      cause,
+    });
+  }
+
+  const result = z.array(qrCodeSchema).safeParse(json);
+  if (!result.success) {
+    const details = result.error.issues
+      .map((issue) => `- ${issue.path.join(".") || "(racine)"}: ${issue.message}`)
+      .join("\n");
+    throw new Error(`Fichier codes QR invalide : src/content/qr/codes.json\n${details}`);
+  }
+
+  return result.data;
+}
+
+export function getQrCodeByCode(code: string): QrCode | undefined {
+  return getAllQrCodes().find((entry) => entry.code === code);
 }

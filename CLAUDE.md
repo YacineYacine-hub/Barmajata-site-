@@ -333,9 +333,28 @@ d'usage détaillées en commentaire dans le `@theme`. Valeurs exactes dans
 ## Routes techniques hors préfixe locale
 
 - `/b/[code]` — redirection 302 QR code (`src/app/b/[code]/route.ts`),
-  table de correspondance en dur pour l'instant (pas de DB en Phase 1).
+  lit `src/content/qr/codes.json` (`getQrCodeByCode()`, `getAllQrCodes()`
+  dans `src/lib/content/index.ts`, schéma `qrCodeSchema` dans
+  `schema.ts`) : `{ code, destination, libelle, actif }`. Code inconnu ou
+  `actif: false` → redirection vers l'accueil (jamais une 404, le support
+  physique du QR code peut survivre à sa désactivation). Code actif →
+  `/bonus/<destination>`. `codes.json` est un tableau vide par conception
+  (pas de code réel imprimé pour l'instant) ; `_template.json` à côté
+  documente le format d'une entrée (ignoré par le loader, qui ne lit que
+  `codes.json`).
+- `/bonus/[slug]` (`src/app/bonus/[slug]/page.tsx`) — contenu déverrouillé
+  par un QR code actif dont `destination === slug` ; `notFound()` sinon
+  (code inconnu, inactif, ou accès direct sans code). Sobre, **sans
+  menu ni pied de page** : `src/app/bonus/layout.tsx` déclare son propre
+  `<html>`/`<body>` (segment hors `[locale]`, pas de layout racine
+  partagé — voir Stack ci-dessous) et n'inclut ni `Header` ni `Footer` ni
+  `NextIntlClientProvider`. `noindex` (page non destinée à l'indexation),
+  en plus d'être exclue de `robots.ts` (`disallow: ["/b/", "/bonus/"]`).
+  **Important** : le matcher de `src/proxy.ts` doit exclure `bonus/` (comme
+  `b/`) sous peine que le middleware next-intl le préfixe en `/fr/bonus/...`
+  et le fasse 404 (piège rencontré et corrigé pendant le développement).
 - `/sitemap.xml`, `/robots.txt` — générés (`src/app/sitemap.ts`,
-  `src/app/robots.ts`), excluent `/b/`.
+  `src/app/robots.ts`), excluent `/b/` et `/bonus/`.
 
 ## Convention Next.js 16
 
