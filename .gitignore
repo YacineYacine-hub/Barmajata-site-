@@ -12,3 +12,4 @@ npm-debug.log*
 next-env.d.ts
 # ignore les reglages Claude Code personnels
 .claude/settings.local.json
+build.log

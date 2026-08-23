@@ -608,9 +608,20 @@ Conséquences, dans l'ordre d'importance :
    son erreur n'est pas réimprimée. Un contrôle exhaustif demande un cache
    vide (`rm -rf .next`).
 
-**À faire :** appliquer la même inspection de sortie au workflow CI — il
-reste aujourd'hui aveugle à ce défaut. Le script de push protège le poste
-de travail, pas le dépôt.
+Les deux garde-fous appliquent désormais cette inspection :
+
+- `.github/workflows/ci.yml`, étape « Build (échoue aussi sur une erreur
+  signalée en code 0) » : `tee` dans `build.log`, `grep` sur les motifs,
+  `exit 1` si l'un ressort. Vérifié en simulant l'étape localement dans
+  bash — code 0 sur un dépôt sain, code 1 avec la clé retirée.
+- `.claude/push-si-vert.sh`, en local avant tout push.
+
+Les motifs sont dupliqués dans les deux fichiers, chacun renvoyant à
+l'autre en commentaire : les factoriser demanderait un script partagé que
+la CI devrait cloner avant de l'exécuter, pour trois lignes de `grep`.
+
+Le build de la CI part d'un `checkout` neuf, donc sans cache : il ne
+souffre pas de la génération incrémentale décrite au point 3.
 
 ## Stack
 

@@ -19,4 +19,21 @@ jobs:
       - run: npm ci
       - run: npx tsc --noEmit
       - run: npm run lint
-      - run: npm run build
+
+      # `next build` imprime certaines erreurs et sort quand même en 0 :
+      # une clé de traduction manquante produit « Error: MISSING_MESSAGE »
+      # pendant la génération statique sans faire échouer le build. Se fier
+      # au seul code de sortie a laissé passer des pages incomplètes au
+      # Lot F. On inspecte donc aussi la sortie.
+      #
+      # Mêmes motifs que .claude/push-si-vert.sh, qui applique le contrôle
+      # en local avant un push. Voir CLAUDE.md, « Piège : next build sort
+      # en 0 malgré des erreurs ».
+      - name: Build (échoue aussi sur une erreur signalée en code 0)
+        run: |
+          set -o pipefail
+          npm run build 2>&1 | tee build.log
+          if grep -nE 'MISSING_MESSAGE|^Error:|^[[:space:]]*⨯' build.log; then
+            echo "::error::Le build a signalé les erreurs ci-dessus malgré un code de sortie 0."
+            exit 1
+          fi
