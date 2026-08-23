@@ -215,5 +215,21 @@
   },
   "footer": {
     "rights": "All rights reserved."
+  },
+  "errors": {
+    "notFound": {
+      "code": "Error 404",
+      "title": "Page not found",
+      "lede": "This address does not match any page on the site. The link may be outdated, or the address mistyped.",
+      "backHome": "Back to the home page",
+      "browseBooks": "Browse the books"
+    },
+    "serverError": {
+      "code": "Error 500",
+      "title": "Something went wrong",
+      "lede": "This page could not be displayed. You can try again, or go back to the home page.",
+      "retry": "Try again",
+      "backHome": "Back to the home page"
+    }
   }
 }

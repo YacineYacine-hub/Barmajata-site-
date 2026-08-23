@@ -425,6 +425,63 @@ considération technique.
   confirmer avec un audit outillé (axe DevTools, Lighthouse) par un
   humain.
 
+## Pages d'erreur (Lot G)
+
+Avant ce lot, `notFound()` était appelé à cinq endroits sans qu'aucun
+`not-found.tsx` n'existe : toutes les 404 tombaient sur la page par défaut
+de Next.js (anglaise, sans style, sans Header/Footer), et le 410 renvoyait
+un corps vide (page blanche).
+
+- `[locale]/not-found.tsx` : 404 traduite, rendue dans le layout localisé
+  (Header/Footer, provider next-intl). `not-found.tsx` ne reçoit pas de
+  `params` — impossible d'y appeler `setRequestLocale()` — donc la locale
+  vient de `useTranslations` (isomorphe, valide en composant serveur) et
+  la page est rendue dynamiquement. Pour la même raison elle ne peut pas
+  exporter de `metadata` : son `<title>` reste celui du layout.
+- `[locale]/[...rest]/page.tsx` : catch-all qui appelle `notFound()`, pour
+  qu'une URL inconnue **sous une locale valide** (`/fr/nimporte-quoi`)
+  atteigne la 404 traduite au lieu de remonter à la 404 racine. Les routes
+  réelles restent prioritaires (un catch-all n'est retenu qu'en dernier).
+- `src/app/not-found.tsx` : 404 de dernier recours hors segment localisé
+  (préfixe de locale invalide). Comme `bonus/layout.tsx`, elle déclare
+  elle-même `<html>`/`<body>` et ses polices — le projet n'a pas de
+  `src/app/layout.tsx`.
+- `src/app/bonus/not-found.tsx` : 404 du segment QR, dans `bonus/layout.tsx`.
+- `[locale]/error.tsx` : frontière d'erreur du segment (client, traduite
+  via le provider du layout). Le message de l'exception n'est jamais
+  affiché — seulement journalisé en console.
+- `src/app/global-error.tsx` : filet ultime (erreur dans un layout
+  racine). Sans next-intl, sans `globals.css`, sans `next/font` — l'erreur
+  peut venir de leur chargement : styles en ligne, palette en dur,
+  français, et lien `<a>` volontaire (rechargement complet du document).
+  Affiche `error.digest` comme référence de support.
+- **410** (`src/proxy.ts`) : `goneResponse()` renvoie désormais une page
+  HTML autonome au lieu d'un corps vide. Le middleware ne peut ni rendre
+  un composant React ni changer le statut d'un `rewrite` (Next.js ne
+  l'autorise que pour les en-têtes) : le HTML est donc écrit à la main,
+  styles en ligne, et les trois libellés sont dupliqués dans `proxy.ts`
+  plutôt que lus dans `messages/*.json` — importer les fichiers de
+  traduction alourdirait un bundle exécuté à chaque requête. `lang`/`dir`
+  suivent le préfixe de locale du chemin.
+
+### Limite connue : les 404 ne sont pas rendues côté serveur
+
+Le HTML servi pour une 404 est une coquille vide (`<html
+id="__next_error__">`, `<body>` sans contenu) : le corps n'existe que dans
+le payload RSC et n'apparaît qu'après hydratation. **Comportement
+antérieur à ce lot** (vérifié en rebuildant `HEAD` seul : même coquille
+vide), et il concerne aussi bien `[locale]/not-found.tsx` que
+`bonus/not-found.tsx`. Cause : Next.js exige un `src/app/layout.tsx`
+racine pour rendre la frontière `not-found` côté serveur, et ce projet
+n'en a pas (chaque sous-arbre déclare son propre `<html>`/`<body>`).
+Conséquence : un visiteur sans JavaScript voit une page blanche sur une
+404, et l'attribut `lang` manque sur ces réponses. Le statut HTTP 404,
+lui, est correct. Corriger demanderait de remonter `<html>`/`<body>` dans
+un layout racine et de convertir `[locale]/layout.tsx` et
+`bonus/layout.tsx` en simples enveloppes — refactor non fait ici, à
+arbitrer séparément. Le 410 n'est pas concerné : il sort du middleware,
+entièrement rendu côté serveur.
+
 ## Stack
 
 - Next.js 16 (App Router, Turbopack), TypeScript **5.9** (pas TS 7 natif :

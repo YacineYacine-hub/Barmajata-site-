@@ -215,5 +215,21 @@
   },
   "footer": {
     "rights": "Tous droits réservés."
+  },
+  "errors": {
+    "notFound": {
+      "code": "Erreur 404",
+      "title": "Page introuvable",
+      "lede": "Cette adresse ne correspond à aucune page du site. Le lien est peut-être ancien, ou l'adresse a été mal recopiée.",
+      "backHome": "Retour à l'accueil",
+      "browseBooks": "Voir les livres"
+    },
+    "serverError": {
+      "code": "Erreur 500",
+      "title": "Une erreur est survenue",
+      "lede": "La page n'a pas pu être affichée. Vous pouvez réessayer, ou revenir à l'accueil.",
+      "retry": "Réessayer",
+      "backHome": "Retour à l'accueil"
+    }
   }
 }
