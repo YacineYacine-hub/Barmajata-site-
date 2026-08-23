@@ -3,7 +3,8 @@ import { SectionBanner } from "@/components/SectionBanner";
 type Section = { heading: string; body: string };
 
 /**
- * Page éditoriale complète (bandeau nuit-900 + sections sur lin-50),
+ * Page éditoriale complète (bandeau du registre Papier + sections sur
+ * lin-50 — voir SectionBanner, passé au clair au Lot H3),
  * distincte de SectionPage (une seule ligne, réutilisée par les pages
  * légales). Réservée aux pages du Lot C — La maison, Journal, Contact.
  * Le bandeau (h1) est un enfant direct de <main>, pas un frère : un

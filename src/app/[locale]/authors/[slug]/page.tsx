@@ -67,7 +67,7 @@ export default async function AuthorPage({
 
       <main>
         <SectionBanner title={author.nom}>
-          <Link href="/authors" className="text-sm text-sable-300 hover:text-or-500">
+          <Link href="/authors" className="text-sm text-roche-700 underline hover:text-nuit-900">
             {t("cta.backToCatalogue")}
           </Link>
         </SectionBanner>

@@ -14,7 +14,9 @@
    *   lin-100 (contraste mesuré ~2,5:1, sous le seuil AA même pour du
    *   grand texte — audit Lot F) : y utiliser roche-700 à la place
    *   (7,4:1 sur lin-50). or-500 en texte reste correct sur nuit-900
-   *   (~5,8:1) — c'est déjà l'usage dans Header/Footer/SectionBanner —
+   *   (~5,8:1) — c'est l'usage dans Header et Footer ; SectionBanner est
+   *   passé au fond clair au Lot H3 et n'en relève plus. Voir aussi la
+   *   règle du champ maillé plus bas : l'or n'y tient pas non plus —
    *   et comme accent hover-only par-dessus roche-700/sable-300/lin-50
    *   (état transitoire, pas l'état par défaut affiché).
    * - Bouton principal : fond nuit-900, texte lin-50 (jamais or-500).
@@ -91,6 +93,23 @@
    * (stitchTiles) sur n'importe quelle surface.
    */
   --texture-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /*
+   * Réglure d'imprimeur, déclarée comme COUCHE de fond réutilisable et non
+   * comme classe : les champs (`.champ-encre`, `.champ-papier`) doivent
+   * pouvoir l'empiler par-dessus leurs dégradés. Deux classes écrivant
+   * chacune `background-image` s'annuleraient — la dernière déclarée
+   * gagnerait, et le champ disparaîtrait.
+   *
+   * Bâtie sur `currentColor` : la même couche sert sur fond clair comme
+   * sur fond sombre. Réglable là où elle est posée, par `--reglure-pas`
+   * (défaut 34px) et `--reglure-encre` (défaut 5%).
+   */
+  --reglure-couche: repeating-linear-gradient(
+    to bottom,
+    color-mix(in oklab, currentColor var(--reglure-encre, 5%), transparent) 0 1px,
+    transparent 1px var(--reglure-pas, 34px)
+  );
 }
 
 body {
@@ -154,6 +173,7 @@ h3 {
 .champ-encre {
   background-color: var(--color-nuit-900);
   background-image:
+    var(--reglure-couche),
     radial-gradient(
       46% 38% at 74% 22%,
       color-mix(in oklab, var(--color-or-500) 32%, transparent),
@@ -172,16 +192,49 @@ h3 {
 }
 
 /*
+ * Champ « Papier » (Lot H3) — le pendant clair du champ Encre, pour les
+ * pages où l'on lit. Même construction, valeurs inversées : les lueurs
+ * sont poussées à droite et en bas, de sorte que la colonne de texte
+ * (alignée au début de ligne) reste au plus près de lin-50 et garde son
+ * contraste maximal.
+ *
+ * Ce n'est PAS un simple `bg-lin-50` : c'est ce qui distingue le registre
+ * Papier de l'aplat plat d'origine.
+ */
+.champ-papier {
+  background-color: var(--color-lin-50);
+  background-image:
+    var(--reglure-couche),
+    radial-gradient(
+      42% 46% at 84% 26%,
+      color-mix(in oklab, var(--color-or-500) 34%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      36% 40% at 94% 80%,
+      color-mix(in oklab, var(--color-gres-600) 20%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      52% 44% at 14% 96%,
+      color-mix(in oklab, var(--color-sable-300) 46%, transparent),
+      transparent 68%
+    );
+}
+
+/*
  * Réglure d'imprimeur — l'autre moitié du liant. Le pas se règle par
  * --reglure-pas, l'opacité par --reglure-encre, pour qu'une même classe
  * serve sur fond clair comme sur fond sombre.
  */
+/*
+ * Réglure seule, pour une surface qui n'a PAS de champ (ex. la section des
+ * piliers sur l'accueil). À ne jamais combiner avec `.champ-encre` ou
+ * `.champ-papier` : les deux écrivent `background-image`, cette classe
+ * gagnerait et effacerait le champ. Les champs intègrent déjà la couche.
+ */
 .reglure {
-  background-image: repeating-linear-gradient(
-    to bottom,
-    color-mix(in oklab, currentColor var(--reglure-encre, 5%), transparent) 0 1px,
-    transparent 1px var(--reglure-pas, 34px)
-  );
+  background-image: var(--reglure-couche);
 }
 
 /* Fondu de transition entre pages (src/components/PageTransition.tsx),

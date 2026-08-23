@@ -600,6 +600,44 @@ aplat) ou `lin-100`/`lin-50`. `or-500` y reste admis pour du **non
 textuel** (les puces du carrousel : 3,2:1 dépasse le seuil de 3:1 des
 composants d'interface).
 
+### Ce que H3 a posé (intérieur « Papier »)
+
+- `.champ-papier` : pendant clair du champ Encre. Lueurs poussées à droite
+  et en bas, pour que la colonne de texte (alignée au début de ligne) reste
+  au plus près de `lin-50` et garde son contraste maximal.
+- **`SectionBanner` est passé du sombre au clair.** C'était un aplat
+  `bg-nuit-900` à texte `lin-50` ; il porte désormais `.champ-papier` +
+  `.grain-papier`, titre en `text-titre`. Décision de fond : si chaque page
+  intérieure s'ouvrait elle aussi sur une plaque sombre, **la devanture
+  cesserait d'être distincte** et le système à deux registres n'aurait plus
+  d'objet. `/` reste la seule page au fond sombre intégral.
+- `/livres` s'ouvrait sur un simple `h1` posé sur le fond par défaut, sans
+  tête de page : il reprend le bandeau, comme `/auteurs`. Il **reste
+  clair** — même raison — et garde `registre="papier"` sur sa bande.
+- Conséquence à ne pas manquer : tout ce qui était passé en `children` du
+  bandeau était coloré pour un fond sombre. Le lien retour de
+  `/auteurs/[slug]` (`text-sable-300`) devenait illisible ; basculé en
+  `roche-700` + `underline`.
+
+#### Piège CSS : deux classes ne peuvent pas écrire le même `background-image`
+
+`.reglure` et `.champ-*` posaient toutes deux `background-image`. Combinées
+sur un même élément, la dernière déclarée dans la feuille gagne — la
+réglure aurait silencieusement effacé le champ. Repéré avant livraison.
+
+La réglure est donc devenue une **couche** (`--reglure-couche`, déclarée
+dans `@theme`), que les champs empilent en première position de leur liste
+de `background-image`. `.reglure` subsiste pour une surface sans champ (la
+section des piliers sur l'accueil) et consomme la même couche. **Ne jamais
+combiner `.reglure` avec un `.champ-*`.**
+
+#### Contraste mesuré sur le champ Papier
+
+Point le plus sombre du champ (lueur d'or à 34 % puis sable à 46 %) :
+`#dfd0b8`. Sur ce fond — `nuit-900` 10,0:1, `roche-700` 5,2:1 (les deux
+seules couleurs de texte employées) ; `or-500` y tombe à 1,7:1 et
+`gres-600` à 2,7:1, tous deux proscrits, ce qui confirme la règle du Lot F.
+
 ### Découpage restant
 
 | Lot | Contenu | État |
@@ -607,7 +645,7 @@ composants d'interface).
 | H0 | 10 livres + 10 auteurs + 10 couvertures de démo | **fait** |
 | H1 | Fondations : échelle typo, tokens OKLCH, grain et réglure réutilisables, profondeur, bascule `Reveal` → scroll CSS | **fait** |
 | H2 | Devanture « Encre » : accueil, Header, Footer | **fait** |
-| H3 | Intérieur « Papier » : la maison, journal, fiches livre et auteur | à faire |
+| H3 | Intérieur « Papier » : la maison, journal, fiches livre et auteur | **fait** |
 
 ### Règle d'animation : vérifiée, aucun changement nécessaire
 
