@@ -54,9 +54,22 @@ A_POUSSER="$(git log --oneline '@{u}..HEAD' | wc -l | tr -d ' ')"
 # traduction manquante, et toute ligne `Error:` en début de ligne.
 MOTIFS_ECHEC='MISSING_MESSAGE|^Error:|^\s*⨯'
 
+# Montre les lignes qui accusent, pas la fin du journal : `next build`
+# imprime son tableau de routes après les erreurs, donc un simple `tail`
+# afficherait la liste des routes au lieu de la panne.
+extrait_utile() {
+  local trouve
+  trouve="$(grep -nE "$MOTIFS_ECHEC" "$JOURNAL" | head -n 8)"
+  if [ -n "$trouve" ]; then
+    printf '%s' "$trouve"
+  else
+    tail -n 15 "$JOURNAL"
+  fi
+}
+
 echouer() {
   rendre_compte "$(printf 'Push auto ANNULÉ — %s\n\n%s\n\nRien n'"'"'a été publié : %s commit(s) restent en local.' \
-    "$1" "$(tail -n 15 "$JOURNAL")" "$A_POUSSER")"
+    "$1" "$(extrait_utile)" "$A_POUSSER")"
   exit 0
 }
 
