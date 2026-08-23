@@ -3,7 +3,7 @@ type SupportedLocale = "fr" | "en" | "ar";
 const SUBJECT: Record<SupportedLocale, string> = {
   fr: "Confirmez votre inscription au club BARMAJATA",
   en: "Confirm your BARMAJATA club subscription",
-  ar: "أكّدوا اشتراككم في نادي برما جاتا",
+  ar: "أكّدوا اشتراككم في نادي برماجاتا",
 };
 
 const HEADING: Record<SupportedLocale, string> = {
@@ -15,7 +15,7 @@ const HEADING: Record<SupportedLocale, string> = {
 const BODY: Record<SupportedLocale, string> = {
   fr: "Confirmez votre adresse e-mail pour finaliser votre inscription au club BARMAJATA.",
   en: "Confirm your email address to complete your BARMAJATA club subscription.",
-  ar: "أكّدوا عنوان بريدكم الإلكتروني لإتمام اشتراككم في نادي برما جاتا.",
+  ar: "أكّدوا عنوان بريدكم الإلكتروني لإتمام اشتراككم في نادي برماجاتا.",
 };
 
 const CTA: Record<SupportedLocale, string> = {

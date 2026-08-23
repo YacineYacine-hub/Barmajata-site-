@@ -822,6 +822,59 @@ de ces valeurs doit être remesurée : la réserve est mince.
   pour rester lisible, ce n'est pas une proposition de mise en forme.
 - Le lettrage BARMAJATA reste un `h1` en `text-enseigne`, jamais une image.
 
+## Lot H6 — le papier en net, et la marque corrigée
+
+### Le flou était le problème
+
+Le Lot H5 empilait des auréoles radiales. Sur une page haute, ça ne lit
+pas comme du papier, ça lit comme du flou. `.page-livre` est réécrit en
+**trois couches à arrêts durs**, aucune n'étant un dégradé mou :
+
+1. les lignes d'écriture (1px net, pas de fondu) ;
+2. deux marges verticales, une par page, comme une réglure de cahier ;
+3. **le bombé** : une lumière transversale, rehaut blanc sur la crête de
+   chaque page vers 30 % / 70 %, ombre qui plonge vers le pli à 49–51 %.
+   C'est cette couche, et elle seule, qui donne le relief.
+
+Les pourcentages de la couche 3 décrivent le profil d'un livre ouvert vu
+de face. **Ils se lisent comme une courbe, pas comme des valeurs
+indépendantes** — en modifier un isolément casse le relief.
+
+Le pli (`.page-livre-gouttiere`) est resserré (`clamp(22px, 3.2vw, 54px)`)
+et bordé de deux liserés clairs : c'est le liseré qui fait remonter la
+page, donc qui fait le bombé.
+
+### Marque : deux infractions corrigées
+
+- **Doublon dans le hero** : le surtitre disait « Maison d'édition
+  BARMAJATA » juste au-dessus d'un titre « BARMAJATA ». Le surtitre est
+  réduit à « Maison d'édition » dans les trois langues.
+- **L'arabe écrivait la marque en DEUX mots** (`برما جاتا`), contre la
+  règle « BARMAJATA en un seul mot » de la Phase 1. Six occurrences
+  corrigées en `برماجاتا`, dont `site.name` — donc le `<title>`, l'OG et
+  le JSON-LD.
+
+### Logo dans le hero
+
+`logo-mark.svg` (cercle, courbe de livre ouvert, point d'or) et **jamais
+le lockup** : le titre écrit déjà BARMAJATA juste en dessous, le lettrage
+ferait un troisième doublon. Décoratif, `alt=""` — la marque est dans le `h1`.
+
+### « Explorer » en rectangles
+
+Quatre rectangles posés sur les pages, comme des vignettes collées dans un
+cahier. Ils se détachent **par l'arête, pas par une ombre** : une ombre
+portée sur du papier plat trahirait le procédé.
+
+### Couvertures régénérées en haute définition
+
+Vectoriel, donc net à toute taille — la richesse vient des couches :
+fibre `feTurbulence` en multiply, lumière diagonale, titre **gaufré**
+(copie claire décalée d'1px sous l'encre), tranche à gauche avec liseré,
+marque de l'éditeur, vignettage. Le générateur est en scratchpad ; les
+palettes par slug sont dans le fichier, et il refuse de tourner si une
+couverture du disque lui est inconnue.
+
 ## Stack
 
 - Next.js 16 (App Router, Turbopack), TypeScript **5.9** (pas TS 7 natif :

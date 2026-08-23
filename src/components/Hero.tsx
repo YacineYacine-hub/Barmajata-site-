@@ -108,6 +108,21 @@ export function Hero({ slides }: HeroProps) {
 
             <div className="relative z-10 mx-auto flex h-full max-w-3xl flex-col items-start justify-center ps-6 pe-6 text-start">
               <Reveal>
+                {/* Le symbole seul (cercle, courbe de livre ouvert, point
+                    d'or), jamais le lettrage : le titre écrit déjà
+                    BARMAJATA juste en dessous, le lockup ferait doublon.
+                    Décoratif, d'où alt="" — la marque est déjà dans le h1. */}
+                {slideIndex === 0 && (
+                  <Image
+                    src="/brand/logo-mark.svg"
+                    alt=""
+                    aria-hidden="true"
+                    width={128}
+                    height={128}
+                    priority
+                    className="mb-6 h-12 w-12 sm:h-14 sm:w-14"
+                  />
+                )}
                 {/* roche-700 et non or-500 : sur papier clair l'or mesure
                     ~2,5:1, sous le seuil AA même en grand texte (règle du
                     Lot F). roche-700 tient 7,4:1 sur lin-50. */}

@@ -161,6 +161,16 @@ h3 {
 }
 
 /*
+ * Grain d'une GRANDE surface. `.grain-papier` (0,5) a été calibré sur le
+ * bandeau de titre, haut de quelques centaines de pixels. Étalée sur une
+ * page entière, cette valeur ne vieillit pas le papier : elle le salit,
+ * il vire au gris. Erreur commise au Lot H5 et corrigée ici.
+ */
+.grain-papier-large::after {
+  opacity: 0.14;
+}
+
+/*
  * Champ « Papier » (Lot H3) — le pendant clair du champ Encre, pour les
  * pages où l'on lit. Même construction, valeurs inversées : les lueurs
  * sont poussées à droite et en bas, de sorte que la colonne de texte
@@ -197,71 +207,85 @@ h3 {
  * serve sur fond clair comme sur fond sombre.
  */
 /*
- * Livre ouvert, pleine page (Lot H5) — le fond de l'accueil.
+ * Livre ouvert, pleine page (Lot H6) — le fond de l'accueil.
  *
- * Remplace la devanture sombre du Lot H2 ET le livre en perspective du
- * Lot H4 : la vue 3D à ras a été abandonnée au profit d'un livre vu de
- * face, dont les deux pages courent de la bande fine du bas à la bande
- * fine du haut. Le sombre ne subsiste que dans ces deux bandes.
+ * Réécrit en NET. La première version (Lot H5) empilait des auréoles
+ * radiales : sur une page haute, ça ne lit pas comme du papier, ça lit
+ * comme du flou. Une page de livre se reconnaît à des arêtes, pas à des
+ * dégradés — d'où trois couches franches, toutes en arrêts durs :
  *
- * Papier vieilli : quatre auréoles décentrées, d'intensités et de tailles
- * différentes, plutôt qu'un dégradé régulier — une page qui a vécu n'est
- * jamais salie uniformément. Le grain (`.grain-papier`) et la réglure se
- * posent par-dessus, comme partout ailleurs.
+ *   1. les lignes d'écriture (1px net, pas de fondu) ;
+ *   2. deux marges verticales, une par page, comme une réglure de cahier ;
+ *   3. le bombé : une lumière transversale avec rehaut sur la crête de
+ *      chaque page et ombre qui plonge vers la gouttière. C'est cette
+ *      couche, et elle seule, qui donne le relief.
+ *
+ * Les pourcentages de la couche 3 décrivent le profil d'un livre ouvert
+ * vu de face : bord extérieur qui retombe, crête vers le tiers, chute
+ * vers le pli central. Toute modification casse le relief — le profil se
+ * lit comme une courbe, pas comme des valeurs indépendantes.
  */
 .page-livre {
   position: relative;
+  --page-ligne: color-mix(in oklab, var(--color-nuit-900) 9%, transparent);
+  --page-marge: color-mix(in oklab, var(--color-or-500) 55%, transparent);
   background-color: var(--color-lin-50);
   background-image:
-    /* auréoles du temps */
-    radial-gradient(
-      38% 30% at 12% 8%,
-      color-mix(in oklab, var(--color-or-500) 14%, transparent),
-      transparent 70%
+    /* 1. lignes d'écriture */
+    repeating-linear-gradient(
+      to bottom,
+      var(--page-ligne) 0 1px,
+      transparent 1px 30px
     ),
-    radial-gradient(
-      30% 26% at 88% 22%,
-      color-mix(in oklab, var(--color-gres-600) 10%, transparent),
-      transparent 72%
+    /* 2. marges verticales, une par page */
+    linear-gradient(
+      to right,
+      transparent 0 13.4%,
+      var(--page-marge) 13.4% 13.55%,
+      transparent 13.55% 86.45%,
+      var(--page-marge) 86.45% 86.6%,
+      transparent 86.6% 100%
     ),
-    radial-gradient(
-      44% 24% at 78% 92%,
-      color-mix(in oklab, var(--color-or-500) 14%, transparent),
-      transparent 74%
-    ),
-    radial-gradient(
-      34% 22% at 22% 78%,
-      color-mix(in oklab, var(--color-sable-300) 18%, transparent),
-      transparent 70%
+    /* 3. bombé : rehaut sur la crête, ombre vers le pli */
+    linear-gradient(
+      to right,
+      color-mix(in oklab, var(--color-gres-600) 16%, transparent) 0%,
+      transparent 6%,
+      color-mix(in oklab, #fff 55%, transparent) 30%,
+      transparent 41%,
+      color-mix(in oklab, var(--color-gres-600) 22%, transparent) 49%,
+      color-mix(in oklab, var(--color-gres-600) 22%, transparent) 51%,
+      transparent 59%,
+      color-mix(in oklab, #fff 55%, transparent) 70%,
+      transparent 94%,
+      color-mix(in oklab, var(--color-gres-600) 16%, transparent) 100%
     );
 }
 
-
 /*
- * La marge centrale — la gouttière du livre ouvert. Bande verticale
- * continue, posée par-dessus le papier et sous le contenu.
+ * Le pli central. Net et étroit, pas une nappe floue : une ombre serrée
+ * au creux, bordée des deux côtés d'un liseré clair — c'est le liseré qui
+ * fait remonter la page, et donc qui fait le bombé.
  *
- * `pointer-events: none` est indispensable : elle couvre toute la hauteur
- * de la page, elle intercepterait sinon tous les clics de la colonne
- * centrale, y compris ceux de la bande de couvertures.
- *
- * L'ombre est portée des deux côtés depuis le pli, jamais un trait : une
- * arête nette dénoncerait le procédé.
+ * `pointer-events: none` est indispensable : la bande couvre toute la
+ * hauteur et intercepterait sinon tous les clics de la colonne centrale,
+ * bande de couvertures comprise.
  */
 .page-livre-gouttiere {
   position: absolute;
   inset-block: 0;
   left: 50%;
-  width: clamp(28px, 6vw, 96px);
+  width: clamp(22px, 3.2vw, 54px);
   transform: translateX(-50%);
   pointer-events: none;
   background-image: linear-gradient(
     to right,
     transparent 0%,
-    color-mix(in oklab, var(--color-nuit-900) 3%, transparent) 26%,
-    color-mix(in oklab, var(--color-nuit-900) 10%, transparent) 48%,
-    color-mix(in oklab, var(--color-nuit-900) 10%, transparent) 52%,
-    color-mix(in oklab, var(--color-nuit-900) 3%, transparent) 74%,
+    color-mix(in oklab, #fff 60%, transparent) 14%,
+    color-mix(in oklab, var(--color-roche-700) 34%, transparent) 44%,
+    color-mix(in oklab, var(--color-nuit-900) 44%, transparent) 50%,
+    color-mix(in oklab, var(--color-roche-700) 34%, transparent) 56%,
+    color-mix(in oklab, #fff 60%, transparent) 86%,
     transparent 100%
   );
 }

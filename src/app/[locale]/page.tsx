@@ -46,7 +46,7 @@ function HomeContent({ bandItems }: { bandItems: BandItem[] }) {
      * dans un bloc `relative z-10` : un élément positionné passe sinon
      * au-dessus du contenu en flux, et la marge masquerait le texte.
      */
-    <main className="page-livre grain-papier">
+    <main className="page-livre grain-papier grain-papier-large">
       <div aria-hidden="true" className="page-livre-gouttiere" />
 
       <div className="relative z-10">
@@ -65,21 +65,22 @@ function HomeContent({ bandItems }: { bandItems: BandItem[] }) {
         )}
 
         {/*
-         * PROVISOIRE — « Explorer » est explicitement reporté : il sera
-         * repris en écriture manuscrite sur la page une fois le livre
-         * abouti. Ce traitement n'est ici que pour rester lisible sur le
-         * papier ; ce n'est pas une proposition de mise en forme.
+         * « Explorer » : quatre rectangles posés sur les pages, comme des
+         * vignettes collées dans un cahier. Bord net et fond très
+         * légèrement plus clair que le papier — ils doivent se détacher
+         * par l'arête, pas par une ombre : une ombre portée sur du papier
+         * plat trahirait le procédé.
          */}
-        <section className="mx-auto max-w-5xl ps-6 pe-6 pt-24 pb-28">
+        <section className="mx-auto max-w-5xl ps-6 pe-6 pt-16 pb-24">
           <h2 className="font-serif text-sous-titre text-nuit-900 text-start">
             {t("pillarsTitle")}
           </h2>
-          <div className="mt-8 grid gap-5 sm:grid-cols-2">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {PILLARS.map((pillar, index) => (
               <Reveal key={pillar} index={index}>
                 <Link
                   href={`/${pillar}`}
-                  className="block h-full border-b border-gres-600 pb-4 text-start transition-colors hover:border-nuit-900"
+                  className="block h-full border border-roche-700/35 bg-lin-50/70 ps-5 pe-5 py-5 text-start transition-colors hover:border-nuit-900 hover:bg-lin-50"
                 >
                   <h3 className="font-serif text-xl text-nuit-900">
                     {t(`pillars.${pillar}.title`)}
