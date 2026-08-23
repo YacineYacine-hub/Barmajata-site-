@@ -31,8 +31,8 @@ export default async function HousePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <h1 className="font-serif text-4xl text-ink-900 text-start">{t("title")}</h1>
-      <p className="mt-6 text-ink-700 text-start">{t("body")}</p>
+      <h1 className="font-serif text-4xl text-nuit-900 text-start">{t("title")}</h1>
+      <p className="mt-6 text-roche-700 text-start">{t("body")}</p>
     </main>
   );
 }

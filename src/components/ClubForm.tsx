@@ -35,13 +35,13 @@ export function ClubForm({ books }: { books: BookEntry[] }) {
   }
 
   if (submitted) {
-    return <p className="mt-8 text-ink-700 text-start">{t("pending")}</p>;
+    return <p className="mt-8 text-roche-700 text-start">{t("pending")}</p>;
   }
 
   return (
     <form onSubmit={handleSubmit} className="mt-8 flex flex-col items-start gap-4">
       {matched && (
-        <p className="text-sm text-ink-700 text-start">
+        <p className="text-sm text-roche-700 text-start">
           {t("bookNotice", { title: matched.titre })}
         </p>
       )}
@@ -49,7 +49,7 @@ export function ClubForm({ books }: { books: BookEntry[] }) {
       {bookSlug && <input type="hidden" name="book" value={bookSlug} />}
 
       <div className="flex w-full flex-col gap-2">
-        <label htmlFor="club-email" className="text-sm text-ink-700 text-start">
+        <label htmlFor="club-email" className="text-sm text-roche-700 text-start">
           {t("emailLabel")}
         </label>
         <input
@@ -57,13 +57,13 @@ export function ClubForm({ books }: { books: BookEntry[] }) {
           name="email"
           type="email"
           required
-          className="w-full rounded-md border border-sand-200 bg-sand-50 px-4 py-2 text-sm text-ink-900"
+          className="w-full rounded-md border border-sable-300 bg-lin-50 px-4 py-2 text-sm text-nuit-900"
         />
       </div>
 
       <button
         type="submit"
-        className="rounded-md bg-gold-600 px-6 py-3 text-sm font-medium text-sand-50 hover:bg-gold-500"
+        className="rounded-md bg-nuit-900 px-6 py-3 text-sm font-medium text-lin-50 hover:bg-roche-700"
       >
         {t("submit")}
       </button>

@@ -13,7 +13,7 @@ export async function NotifyMe({ slug, langue }: { slug: string; langue: Content
   return (
     <Link
       href={{ pathname: "/club", query: { book: slug, langue } }}
-      className="inline-block rounded-md bg-gold-600 px-6 py-3 text-sm font-medium text-sand-50 hover:bg-gold-500"
+      className="inline-block rounded-md bg-nuit-900 px-6 py-3 text-sm font-medium text-lin-50 hover:bg-roche-700"
     >
       {t("cta.notifyMe")}
     </Link>

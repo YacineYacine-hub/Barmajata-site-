@@ -57,7 +57,7 @@ export function AmazonBuyButton({
         href={urlOverride}
         target="_blank"
         rel="nofollow sponsored noopener"
-        className="inline-block rounded-md bg-gold-600 px-6 py-3 text-sm font-medium text-sand-50 hover:bg-gold-500"
+        className="inline-block rounded-md bg-nuit-900 px-6 py-3 text-sm font-medium text-lin-50 hover:bg-roche-700"
       >
         {t("cta.buy")}
       </a>
@@ -79,7 +79,7 @@ export function AmazonBuyButton({
         href={buildAmazonUrl(asin, marketplace)}
         target="_blank"
         rel="nofollow sponsored noopener"
-        className="inline-block rounded-md bg-gold-600 px-6 py-3 text-sm font-medium text-sand-50 hover:bg-gold-500"
+        className="inline-block rounded-md bg-nuit-900 px-6 py-3 text-sm font-medium text-lin-50 hover:bg-roche-700"
       >
         {t("cta.buy")}
       </a>
@@ -89,7 +89,7 @@ export function AmazonBuyButton({
           value={marketplace}
           onChange={(event) => handleChange(event.target.value as MarketplaceCode)}
           aria-label={t("cta.marketplace")}
-          className="rounded-md border border-sand-200 bg-sand-50 px-3 py-2 text-sm text-ink-900"
+          className="rounded-md border border-sable-300 bg-lin-50 px-3 py-2 text-sm text-nuit-900"
         >
           {active.map((marketplaceConfig) => (
             <option key={marketplaceConfig.code} value={marketplaceConfig.code}>

@@ -10,6 +10,9 @@ const LOCALE_LABELS: Record<string, string> = {
   ar: "AR",
 };
 
+// Couleurs figées pour fond sombre : n'est utilisé que dans Header.tsx
+// (bg-nuit-900 depuis la refonte de palette). À revoir si jamais réutilisé
+// sur un fond clair ailleurs.
 export function LocaleSwitcher() {
   const pathname = usePathname();
   const params = useParams();
@@ -25,8 +28,8 @@ export function LocaleSwitcher() {
               locale={locale}
               className={
                 isActive
-                  ? "font-semibold text-ink-900"
-                  : "text-ink-500 hover:text-ink-900"
+                  ? "font-semibold text-lin-50"
+                  : "text-sable-300 hover:text-lin-50"
               }
               aria-current={isActive ? "true" : undefined}
             >

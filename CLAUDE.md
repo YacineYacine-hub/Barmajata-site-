@@ -37,11 +37,14 @@ déposée) — jamais "Barma Jata" en deux mots.
 
 ## Identité visuelle (Lot 3)
 
-- `public/brand/` : `logo-horizontal.svg` (header), `logo-lockup.svg` /
-  `logo-lockup-dark.svg` (footer, selon fond clair/sombre — seul le clair
-  est câblé, le footer étant toujours `bg-sand-50` aujourd'hui),
-  `favicon.svg`, `apple-touch-icon.png` (180×180), `og-image.png`
-  (1200×630), `logo-512.png` (512×512, JSON-LD Organization).
+- `public/brand/` : `logo-horizontal-light.svg` (header — fond
+  `bg-nuit-900` depuis la refonte de palette, voir plus bas ; version
+  claire dédiée, `logo-horizontal.svg` reste la version sombre pour un
+  usage futur sur fond clair), `logo-lockup.svg` / `logo-lockup-dark.svg`
+  (footer, selon fond clair/sombre — seul le clair est câblé, le footer
+  étant toujours `bg-lin-50` aujourd'hui), `favicon.svg`,
+  `apple-touch-icon.png` (180×180), `og-image.png` (1200×630),
+  `logo-512.png` (512×512, JSON-LD Organization).
   **Ce sont des placeholders générés par Claude** (lettrage "BARMA JATA" +
   monogramme "B", palette du site) — à remplacer par les fichiers
   définitifs du designer, mêmes noms de fichiers.
@@ -56,6 +59,30 @@ déposée) — jamais "Barma Jata" en deux mots.
 - `metadataBase` (vers `SITE_URL`) posé dans
   `src/app/[locale]/layout.tsx` pour que `openGraph.images` résolve en
   URL absolue (requis par le protocole Open Graph).
+
+## Header, Hero, animations
+
+- `Header.tsx` : bandeau plein `bg-nuit-900`, `sticky top-0`, toujours
+  visuellement séparé du Hero (jamais en overlay transparent dessus).
+  Au-delà de 80px de scroll (`SCROLL_SHRINK_THRESHOLD`), hauteur/logo
+  réduits, `transition-[...] duration-200`. `LocaleSwitcher.tsx` a des
+  couleurs figées pour fond sombre (couplé au Header — à revoir s'il est
+  réutilisé ailleurs).
+- `Hero.tsx` : composant réutilisable (`eyebrow?`, `title`, `subtitle?`,
+  `image?: { src, alt }`). Sans image : dégradé
+  `from-lin-100 via-sable-300 to-gres-600`. Avec image : `next/image`
+  `fill priority sizes="100vw"`. Ratio `aspect-[4/5]` mobile,
+  `sm:aspect-[16/9]` desktop. Titre toujours `text-nuit-900`, y compris
+  avec image (pas de scrim — à ajouter si une vraie photo pose un
+  problème de contraste). Utilisé sur `/` pour l'instant.
+- `Reveal.tsx` : fondu + `translate-y-3` (12px), `duration-[400ms]`,
+  jamais de rebond ni de rotation. `delayMs={index * 80}` pour la cascade
+  des grilles catalogue (`books/page.tsx`, `authors/page.tsx`) et de la
+  grille de piliers sur `/`. `prefers-reduced-motion` géré à deux
+  niveaux : `globals.css` coupe `transition-duration`/`animation-duration`
+  pour tout le monde, et `Reveal` évite en plus tout état masqué initial
+  pour ces utilisateurs (rendu visible dès le premier passage, pas de
+  flash) via `window.matchMedia`.
 
 ## Modèle de contenu — livres et auteurs
 
@@ -154,8 +181,12 @@ déposée) — jamais "Barma Jata" en deux mots.
 
 ## Palette (voir `src/app/globals.css`)
 
-Tons éditoriaux : `ink` (encre, texte), `sand` (fonds), `gold` (accent),
-`deep` (vert profond). Valeurs exactes dans le `@theme`.
+Tons éditoriaux : `lin` (fonds clairs), `sable`/`gres` (tons intermédiaires,
+`gres-600` jamais en corps de texte — contraste AA insuffisant), `or`
+(accent, jamais un bouton principal), `roche` (texte secondaire), `nuit`
+(texte principal / fond du header et des boutons principaux). Règles
+d'usage détaillées en commentaire dans le `@theme`. Valeurs exactes dans
+`src/app/globals.css`.
 
 ## Routes techniques hors préfixe locale
 

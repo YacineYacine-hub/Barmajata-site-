@@ -33,8 +33,8 @@ export default async function ClubPage({
 
   return (
     <main className="mx-auto max-w-xl ps-6 pe-6 py-16">
-      <h1 className="font-serif text-4xl text-ink-900 text-start">{t("title")}</h1>
-      <p className="mt-4 text-ink-700 text-start">{t("intro")}</p>
+      <h1 className="font-serif text-4xl text-nuit-900 text-start">{t("title")}</h1>
+      <p className="mt-4 text-roche-700 text-start">{t("intro")}</p>
 
       <Suspense fallback={null}>
         <ClubForm books={books} />

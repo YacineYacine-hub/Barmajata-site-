@@ -1,15 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ink-900: #14110f;
-  --color-ink-700: #34302c;
-  --color-ink-500: #6b625a;
-  --color-sand-50: #faf7f2;
-  --color-sand-100: #f2ece2;
-  --color-sand-200: #e5dbcb;
-  --color-gold-500: #b08d4f;
-  --color-gold-600: #96763d;
-  --color-deep-800: #1f3733;
+  /*
+   * Système de tokens — RÈGLES D'USAGE :
+   *
+   * - Corps de texte : nuit-900 sur lin-50, ou lin-50 sur nuit-900.
+   * - Texte secondaire : roche-700. Ne JAMAIS utiliser gres-600 en corps
+   *   de texte (contraste ~3,4:1 sur lin-50, insuffisant pour l'AA sur
+   *   texte normal — réservé aux éléments non textuels : dégradés,
+   *   bordures décoratives, grands aplats).
+   * - or-500 : accents, prix, filets/bordures d'emphase. Ne JAMAIS
+   *   l'utiliser en fond de bouton principal.
+   * - Bouton principal : fond nuit-900, texte lin-50 (jamais or-500).
+   */
+  --color-lin-50: #fbf8f2;
+  --color-lin-100: #f0e9dc;
+  --color-sable-300: #d9c7a8;
+  --color-or-500: #b99b72;
+  --color-gres-600: #8e7963;
+  --color-roche-700: #5a5048;
+  --color-nuit-900: #2a2521;
 
   --font-serif: var(--font-cormorant), ui-serif, serif;
   --font-sans: var(--font-inter), ui-sans-serif, sans-serif;
@@ -17,6 +27,20 @@
 }
 
 body {
-  background-color: var(--color-sand-50);
-  color: var(--color-ink-900);
+  background-color: var(--color-lin-50);
+  color: var(--color-nuit-900);
+}
+
+/* Animations sobres : fondu + translation, jamais de rebond ni de
+   rotation (voir src/components/Reveal.tsx). Coupées entièrement pour
+   les utilisateurs qui demandent moins de mouvement. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

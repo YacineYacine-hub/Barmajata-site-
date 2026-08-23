@@ -79,7 +79,7 @@ export default async function BookPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <Link href="/books" className="text-sm text-gold-600 hover:underline">
+      <Link href="/books" className="text-sm text-or-500 hover:underline">
         {t("cta.backToCatalogue")}
       </Link>
 
@@ -92,38 +92,38 @@ export default async function BookPage({
       )}
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
-        <span className="inline-block rounded-full bg-gold-500/10 px-3 py-1 text-xs font-medium text-gold-600">
+        <span className="inline-block rounded-full bg-or-500/10 px-3 py-1 text-xs font-medium text-or-500">
           {t(`status.${edition.statut}`)}
         </span>
         {isOtherLanguage && (
-          <span className="inline-block rounded-full bg-sand-200 px-3 py-1 text-xs font-medium text-ink-700">
+          <span className="inline-block rounded-full bg-sable-300 px-3 py-1 text-xs font-medium text-roche-700">
             {t(`languages.${edition.langue}`)}
           </span>
         )}
       </div>
 
-      <h1 className="mt-4 font-serif text-4xl text-ink-900 text-start">{edition.titre}</h1>
+      <h1 className="mt-4 font-serif text-4xl text-nuit-900 text-start">{edition.titre}</h1>
       {edition.sousTitre && (
-        <p className="mt-2 text-lg text-ink-500 text-start">{edition.sousTitre}</p>
+        <p className="mt-2 text-lg text-roche-700 text-start">{edition.sousTitre}</p>
       )}
 
       <Link
         href={{ pathname: "/authors/[slug]", params: { slug: author.slug } }}
-        className="mt-3 inline-block text-sm text-ink-700 hover:text-gold-600"
+        className="mt-3 inline-block text-sm text-roche-700 hover:text-or-500"
       >
         {t("fields.author")} : {author.nom}
       </Link>
 
-      <p className="mt-6 text-ink-700 text-start">{edition.resumeLong}</p>
+      <p className="mt-6 text-roche-700 text-start">{edition.resumeLong}</p>
 
       {edition.formats?.length ? (
         <ul className="mt-10 flex flex-wrap gap-3">
           {edition.formats.map((format, index) => (
             <li
               key={index}
-              className="rounded-md border border-sand-200 px-4 py-2 text-sm text-ink-700"
+              className="rounded-md border border-sable-300 px-4 py-2 text-sm text-roche-700"
             >
-              <span className="font-medium text-ink-900">{t(`formats.${format.type}`)}</span>
+              <span className="font-medium text-nuit-900">{t(`formats.${format.type}`)}</span>
               {format.pages ? ` · ${format.pages} ${t("fields.pages")}` : ""}
               {format.isbn ? ` · ${t("fields.isbn")} ${format.isbn}` : ""}
             </li>
@@ -132,7 +132,7 @@ export default async function BookPage({
       ) : null}
 
       {edition.dateParution && (
-        <p className="mt-6 text-sm text-ink-700 text-start">
+        <p className="mt-6 text-sm text-roche-700 text-start">
           {edition.statut === "publie" ? t("fields.publicationDate") : t("fields.announcedDate")}
           {" : "}
           {edition.dateParution}
@@ -140,7 +140,7 @@ export default async function BookPage({
       )}
 
       {edition.statut === "publie" && minPrice !== undefined && (
-        <p className="mt-6 text-lg font-medium text-ink-900 text-start">
+        <p className="mt-6 text-lg font-medium text-nuit-900 text-start">
           {t("priceFrom", {
             price: new Intl.NumberFormat(locale, {
               style: "currency",
@@ -154,7 +154,7 @@ export default async function BookPage({
         <div className="mt-6 flex flex-col gap-4">
           {sellableFormats.map((format, index) => (
             <div key={index} className="flex items-center gap-3">
-              <span className="text-sm font-medium text-ink-900">
+              <span className="text-sm font-medium text-nuit-900">
                 {t(`formats.${format.type}`)}
               </span>
               <AmazonBuyButton

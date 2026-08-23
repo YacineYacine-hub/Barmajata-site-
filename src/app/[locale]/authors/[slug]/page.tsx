@@ -55,13 +55,13 @@ export default async function AuthorPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <Link href="/authors" className="text-sm text-gold-600 hover:underline">
+      <Link href="/authors" className="text-sm text-or-500 hover:underline">
         {t("cta.backToCatalogue")}
       </Link>
 
-      <h1 className="mt-4 font-serif text-4xl text-ink-900 text-start">{author.nom}</h1>
+      <h1 className="mt-4 font-serif text-4xl text-nuit-900 text-start">{author.nom}</h1>
 
-      <p className="mt-6 text-ink-700 text-start">{author.bioLongue[contentLocale]}</p>
+      <p className="mt-6 text-roche-700 text-start">{author.bioLongue[contentLocale]}</p>
 
       {author.liens?.length ? (
         <ul className="mt-6 flex flex-wrap gap-4 text-sm">
@@ -71,7 +71,7 @@ export default async function AuthorPage({
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gold-600 hover:underline"
+                className="text-or-500 hover:underline"
               >
                 {link.label}
               </a>
@@ -82,16 +82,16 @@ export default async function AuthorPage({
 
       {entries.length > 0 && (
         <section className="mt-12">
-          <h2 className="font-serif text-2xl text-ink-900 text-start">{t("booksTitle")}</h2>
+          <h2 className="font-serif text-2xl text-nuit-900 text-start">{t("booksTitle")}</h2>
           <ul className="mt-6 grid gap-6 sm:grid-cols-2">
             {entries.map(({ book, edition }) => (
               <li
                 key={book.slug}
-                className="rounded-lg border border-sand-200 bg-sand-50 p-6"
+                className="rounded-lg border border-sable-300 bg-lin-50 p-6"
               >
                 <Link href={{ pathname: "/books/[slug]", params: { slug: book.slug } }}>
-                  <h3 className="font-serif text-lg text-ink-900 text-start">{edition.titre}</h3>
-                  <p className="mt-2 text-sm text-ink-700 text-start">{edition.resumeCourt}</p>
+                  <h3 className="font-serif text-lg text-nuit-900 text-start">{edition.titre}</h3>
+                  <p className="mt-2 text-sm text-roche-700 text-start">{edition.resumeCourt}</p>
                 </Link>
               </li>
             ))}
@@ -99,7 +99,7 @@ export default async function AuthorPage({
         </section>
       )}
       {entries.length === 0 && (
-        <p className="mt-12 text-sm text-ink-500 text-start">{tBooks("empty")}</p>
+        <p className="mt-12 text-sm text-roche-700 text-start">{tBooks("empty")}</p>
       )}
     </main>
   );
