@@ -1,0 +1,34 @@
+{
+  "slug": "demo-tout-ce-qui-pese",
+  "auteurSlug": "yasmine-ferrand",
+  "couverture": "/demo/covers/demo-tout-ce-qui-pese.svg",
+  "categories": [
+    "famille"
+  ],
+  "editions": [
+    {
+      "langue": "fr",
+      "statut": "publie",
+      "titre": "Tout ce qui pèse",
+      "resumeCourt": "Démonstration — Texte de démonstration, aucun contenu éditorial réel.",
+      "resumeLong": "Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "extrait": "Extrait de démonstration. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "dateParution": "2025-11-20",
+      "couvertureImage": "/demo/covers/demo-tout-ce-qui-pese.svg",
+      "formats": [
+        {
+          "type": "broche",
+          "isbn": "978-2-900009-09-4",
+          "asin": "B0DEMO0009",
+          "pages": 176,
+          "prixIndicatif": 26.0
+        },
+        {
+          "type": "epub",
+          "asin": "B0DEMOE009",
+          "prixIndicatif": 13.5
+        }
+      ]
+    }
+  ]
+}

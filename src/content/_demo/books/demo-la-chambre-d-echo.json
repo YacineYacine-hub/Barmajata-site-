@@ -1,0 +1,36 @@
+{
+  "slug": "demo-la-chambre-d-echo",
+  "auteurSlug": "remi-ansel",
+  "couverture": "/demo/covers/demo-la-chambre-d-echo.svg",
+  "categories": [
+    "thriller",
+    "psychologie"
+  ],
+  "editions": [
+    {
+      "langue": "fr",
+      "statut": "a_paraitre",
+      "titre": "La Chambre d'écho",
+      "resumeCourt": "Démonstration — Texte de démonstration, aucun contenu éditorial réel.",
+      "resumeLong": "Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "extrait": "Extrait de démonstration. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "dateParution": "2026-09-17",
+      "couvertureImage": "/demo/covers/demo-la-chambre-d-echo.svg",
+      "formats": [
+        {
+          "type": "broche",
+          "isbn": "978-2-900008-08-4",
+          "asin": "B0DEMO0008",
+          "pages": 304,
+          "prixIndicatif": 25.0
+        },
+        {
+          "type": "epub",
+          "asin": "B0DEMOE008",
+          "prixIndicatif": 13.0
+        }
+      ],
+      "sousTitre": "Roman"
+    }
+  ]
+}

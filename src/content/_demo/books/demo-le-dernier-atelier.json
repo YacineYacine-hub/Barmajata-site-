@@ -1,0 +1,35 @@
+{
+  "slug": "demo-le-dernier-atelier",
+  "auteurSlug": "samuel-vidal",
+  "couverture": "/demo/covers/demo-le-dernier-atelier.svg",
+  "categories": [
+    "histoire-vraie"
+  ],
+  "editions": [
+    {
+      "langue": "fr",
+      "statut": "publie",
+      "titre": "Le Dernier Atelier",
+      "resumeCourt": "Démonstration — Texte de démonstration, aucun contenu éditorial réel.",
+      "resumeLong": "Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "extrait": "Extrait de démonstration. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "dateParution": "2025-03-04",
+      "couvertureImage": "/demo/covers/demo-le-dernier-atelier.svg",
+      "formats": [
+        {
+          "type": "broche",
+          "isbn": "978-2-900002-02-4",
+          "asin": "B0DEMO0002",
+          "pages": 216,
+          "prixIndicatif": 19.0
+        },
+        {
+          "type": "epub",
+          "asin": "B0DEMOE002",
+          "prixIndicatif": 10.0
+        }
+      ],
+      "sousTitre": "Récit"
+    }
+  ]
+}

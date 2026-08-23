@@ -1,0 +1,52 @@
+{
+  "slug": "demo-nous-etions-des-feux",
+  "auteurSlug": "clara-oustric",
+  "couverture": "/demo/covers/demo-nous-etions-des-feux.svg",
+  "categories": [
+    "famille",
+    "thriller"
+  ],
+  "editions": [
+    {
+      "langue": "fr",
+      "statut": "publie",
+      "titre": "Nous étions des feux",
+      "resumeCourt": "Démonstration — Texte de démonstration, aucun contenu éditorial réel.",
+      "resumeLong": "Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "extrait": "Extrait de démonstration. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "dateParution": "2025-06-05",
+      "couvertureImage": "/demo/covers/demo-nous-etions-des-feux.svg",
+      "formats": [
+        {
+          "type": "broche",
+          "isbn": "978-2-900005-05-4",
+          "asin": "B0DEMO0005",
+          "pages": 352,
+          "prixIndicatif": 22.0
+        },
+        {
+          "type": "epub",
+          "asin": "B0DEMOE005",
+          "prixIndicatif": 11.5
+        }
+      ],
+      "sousTitre": "Roman"
+    },
+    {
+      "langue": "en",
+      "statut": "publie",
+      "titre": "Nous étions des feux",
+      "resumeCourt": "Demonstration — Demonstration text, no real editorial content.",
+      "resumeLong": "Demonstration text, no real editorial content. It exists only to judge layout, typography and templates.",
+      "dateParution": "2025-06-05",
+      "couvertureImage": "/demo/covers/demo-nous-etions-des-feux.svg",
+      "formats": [
+        {
+          "type": "epub",
+          "asin": "B0DEMOU005",
+          "prixIndicatif": 11.5
+        }
+      ]
+    }
+  ]
+}

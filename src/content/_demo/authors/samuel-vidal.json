@@ -1,0 +1,20 @@
+{
+  "slug": "samuel-vidal",
+  "nom": "Samuel Vidal",
+  "bioCourte": {
+    "fr": "Démonstration — Texte de démonstration, aucun contenu éditorial réel.",
+    "en": "Demonstration — Demonstration text, no real editorial content.",
+    "ar": "نص عرض توضيحي."
+  },
+  "bioLongue": {
+    "fr": "Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+    "en": "Demonstration text, no real editorial content. It exists only to judge layout, typography and templates. Demonstration text, no real editorial content. It exists only to judge layout, typography and templates.",
+    "ar": "نص عرض توضيحي، لا يمثل أي محتوى تحريري حقيقي. الغرض منه تقييم التنسيق والطباعة فقط. نص عرض توضيحي، لا يمثل أي محتوى تحريري حقيقي. الغرض منه تقييم التنسيق والطباعة فقط."
+  },
+  "liens": [
+    {
+      "label": "Site (démo)",
+      "url": "https://example.com/samuel-vidal"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "slug": "demo-vingt-trois-hivers",
+  "auteurSlug": "agnes-delcourt",
+  "couverture": "/demo/covers/demo-vingt-trois-hivers.svg",
+  "categories": [
+    "histoire-vraie"
+  ],
+  "editions": [
+    {
+      "langue": "fr",
+      "statut": "publie",
+      "titre": "Vingt-trois hivers",
+      "resumeCourt": "Démonstration — Texte de démonstration, aucun contenu éditorial réel.",
+      "resumeLong": "Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "extrait": "Extrait de démonstration. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "dateParution": "2024-02-14",
+      "couvertureImage": "/demo/covers/demo-vingt-trois-hivers.svg",
+      "formats": [
+        {
+          "type": "broche",
+          "isbn": "978-2-900007-07-4",
+          "asin": "B0DEMO0007",
+          "pages": 208,
+          "prixIndicatif": 24.0
+        },
+        {
+          "type": "epub",
+          "asin": "B0DEMOE007",
+          "prixIndicatif": 12.5
+        }
+      ],
+      "sousTitre": "Récit"
+    }
+  ]
+}

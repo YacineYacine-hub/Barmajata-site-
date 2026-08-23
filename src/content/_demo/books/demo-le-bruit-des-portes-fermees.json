@@ -1,0 +1,35 @@
+{
+  "slug": "demo-le-bruit-des-portes-fermees",
+  "auteurSlug": "malik-sorel",
+  "couverture": "/demo/covers/demo-le-bruit-des-portes-fermees.svg",
+  "categories": [
+    "psychologie"
+  ],
+  "editions": [
+    {
+      "langue": "fr",
+      "statut": "a_paraitre",
+      "titre": "Le Bruit des portes fermées",
+      "resumeCourt": "Démonstration — Texte de démonstration, aucun contenu éditorial réel.",
+      "resumeLong": "Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "extrait": "Extrait de démonstration. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "dateParution": "2026-11-03",
+      "couvertureImage": "/demo/covers/demo-le-bruit-des-portes-fermees.svg",
+      "formats": [
+        {
+          "type": "broche",
+          "isbn": "978-2-900006-06-4",
+          "asin": "B0DEMO0006",
+          "pages": 240,
+          "prixIndicatif": 23.0
+        },
+        {
+          "type": "epub",
+          "asin": "B0DEMOE006",
+          "prixIndicatif": 12.0
+        }
+      ],
+      "sousTitre": "Roman"
+    }
+  ]
+}

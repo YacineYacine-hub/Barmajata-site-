@@ -1,0 +1,34 @@
+{
+  "slug": "demo-ce-que-ma-mere-taisait",
+  "auteurSlug": "ines-fauvel",
+  "couverture": "/demo/covers/demo-ce-que-ma-mere-taisait.svg",
+  "categories": [
+    "famille"
+  ],
+  "editions": [
+    {
+      "langue": "fr",
+      "statut": "publie",
+      "titre": "Ce que ma mère taisait",
+      "resumeCourt": "Démonstration — Texte de démonstration, aucun contenu éditorial réel.",
+      "resumeLong": "Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "extrait": "Extrait de démonstration. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "dateParution": "2024-10-22",
+      "couvertureImage": "/demo/covers/demo-ce-que-ma-mere-taisait.svg",
+      "formats": [
+        {
+          "type": "broche",
+          "isbn": "978-2-900003-03-4",
+          "asin": "B0DEMO0003",
+          "pages": 192,
+          "prixIndicatif": 20.0
+        },
+        {
+          "type": "epub",
+          "asin": "B0DEMOE003",
+          "prixIndicatif": 10.5
+        }
+      ]
+    }
+  ]
+}

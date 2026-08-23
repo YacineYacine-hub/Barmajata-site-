@@ -1,0 +1,36 @@
+{
+  "slug": "demo-l-ordre-des-choses",
+  "auteurSlug": "bastien-kerouac",
+  "couverture": "/demo/covers/demo-l-ordre-des-choses.svg",
+  "categories": [
+    "histoire-vraie",
+    "psychologie"
+  ],
+  "editions": [
+    {
+      "langue": "fr",
+      "statut": "publie",
+      "titre": "L'Ordre des choses",
+      "resumeCourt": "Démonstration — Texte de démonstration, aucun contenu éditorial réel.",
+      "resumeLong": "Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "extrait": "Extrait de démonstration. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "dateParution": "2023-05-30",
+      "couvertureImage": "/demo/covers/demo-l-ordre-des-choses.svg",
+      "formats": [
+        {
+          "type": "broche",
+          "isbn": "978-2-900010-10-4",
+          "asin": "B0DEMO0010",
+          "pages": 264,
+          "prixIndicatif": 27.0
+        },
+        {
+          "type": "epub",
+          "asin": "B0DEMOE010",
+          "prixIndicatif": 14.0
+        }
+      ],
+      "sousTitre": "Essai"
+    }
+  ]
+}

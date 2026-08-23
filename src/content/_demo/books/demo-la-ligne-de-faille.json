@@ -1,0 +1,51 @@
+{
+  "slug": "demo-la-ligne-de-faille",
+  "auteurSlug": "nora-berkane",
+  "couverture": "/demo/covers/demo-la-ligne-de-faille.svg",
+  "categories": [
+    "thriller"
+  ],
+  "editions": [
+    {
+      "langue": "fr",
+      "statut": "publie",
+      "titre": "La Ligne de faille",
+      "resumeCourt": "Démonstration — Texte de démonstration, aucun contenu éditorial réel.",
+      "resumeLong": "Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "extrait": "Extrait de démonstration. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "dateParution": "2025-09-11",
+      "couvertureImage": "/demo/covers/demo-la-ligne-de-faille.svg",
+      "formats": [
+        {
+          "type": "broche",
+          "isbn": "978-2-900001-01-4",
+          "asin": "B0DEMO0001",
+          "pages": 288,
+          "prixIndicatif": 18.0
+        },
+        {
+          "type": "epub",
+          "asin": "B0DEMOE001",
+          "prixIndicatif": 9.5
+        }
+      ],
+      "sousTitre": "Roman"
+    },
+    {
+      "langue": "en",
+      "statut": "publie",
+      "titre": "La Ligne de faille",
+      "resumeCourt": "Demonstration — Demonstration text, no real editorial content.",
+      "resumeLong": "Demonstration text, no real editorial content. It exists only to judge layout, typography and templates.",
+      "dateParution": "2025-09-11",
+      "couvertureImage": "/demo/covers/demo-la-ligne-de-faille.svg",
+      "formats": [
+        {
+          "type": "epub",
+          "asin": "B0DEMOU001",
+          "prixIndicatif": 11.5
+        }
+      ]
+    }
+  ]
+}

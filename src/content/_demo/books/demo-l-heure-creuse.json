@@ -1,0 +1,35 @@
+{
+  "slug": "demo-l-heure-creuse",
+  "auteurSlug": "theo-marchand",
+  "couverture": "/demo/covers/demo-l-heure-creuse.svg",
+  "categories": [
+    "psychologie"
+  ],
+  "editions": [
+    {
+      "langue": "fr",
+      "statut": "publie",
+      "titre": "L'Heure creuse",
+      "resumeCourt": "Démonstration — Texte de démonstration, aucun contenu éditorial réel.",
+      "resumeLong": "Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "extrait": "Extrait de démonstration. Texte de démonstration, aucun contenu éditorial réel. Il sert uniquement à juger la mise en page, la typographie et les gabarits.",
+      "dateParution": "2026-01-15",
+      "couvertureImage": "/demo/covers/demo-l-heure-creuse.svg",
+      "formats": [
+        {
+          "type": "broche",
+          "isbn": "978-2-900004-04-4",
+          "asin": "B0DEMO0004",
+          "pages": 164,
+          "prixIndicatif": 21.0
+        },
+        {
+          "type": "epub",
+          "asin": "B0DEMOE004",
+          "prixIndicatif": 11.0
+        }
+      ],
+      "sousTitre": "Essai"
+    }
+  ]
+}
