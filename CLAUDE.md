@@ -866,7 +866,27 @@ Quatre rectangles posés sur les pages, comme des vignettes collées dans un
 cahier. Ils se détachent **par l'arête, pas par une ombre** : une ombre
 portée sur du papier plat trahirait le procédé.
 
-### Couvertures régénérées en haute définition
+### Le pli ne doit pas briller (correction post-capture)
+
+Première version : 22–54px de large, rehaut blanc à 60 %. À l'écran ça
+lisait comme **une tige chromée**, pas comme un pli de papier — trop
+étroit, trop spéculaire. Rehaut tombé à 22 %, largeur triplée
+(`clamp(40px, 6.5vw, 130px)`) : la page remonte au lieu de briller.
+
+### Couvertures : des fonds PROFONDS, jamais beiges
+
+Première version : fonds crème et beiges. Sur le papier clair de
+l'accueil, elles **disparaissaient** — c'était ça, le « pas réaliste ».
+Une couverture d'édition contraste avec son support.
+
+Dix fonds sombres et distincts (ardoise, oxblood, prune, olive, indigo,
+ocre…), dégradés en diagonale, texte crème `#f2ece0`, accent or
+`#e2cba6`. Mesuré : titre **6,2:1 au pire fond**, nom d'auteur **4,6:1**.
+
+L'or a dû être éclairci de `#c9ab7e` à `#e2cba6` : sur la couverture ocre,
+le premier tombait à 3,3:1 — de l'or sur de l'or.
+
+### Couvertures : la fabrication
 
 Vectoriel, donc net à toute taille — la richesse vient des couches :
 fibre `feTurbulence` en multiply, lumière diagonale, titre **gaufré**

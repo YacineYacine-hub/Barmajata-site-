@@ -1,62 +1,56 @@
 <!-- Couverture de démonstration — aucun contenu réel -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" role="img" aria-hidden="true">
   <defs>
+    <linearGradient id="fond" x1="0.1" y1="0" x2="0.9" y2="1">
+      <stop offset="0%" stop-color="#2c3b4d"/>
+      <stop offset="100%" stop-color="#18222e"/>
+    </linearGradient>
     <filter id="fibre" x="0" y="0" width="100%" height="100%">
-      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="5" stitchTiles="stitch"/>
+      <feTurbulence type="fractalNoise" baseFrequency="1.2" numOctaves="5" stitchTiles="stitch"/>
       <feColorMatrix type="saturate" values="0"/>
     </filter>
     <linearGradient id="tranche" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#000" stop-opacity="0.45"/>
-      <stop offset="42%" stop-color="#000" stop-opacity="0.16"/>
-      <stop offset="82%" stop-color="#fff" stop-opacity="0.10"/>
-      <stop offset="100%" stop-color="#000" stop-opacity="0.05"/>
+      <stop offset="0%" stop-color="#000" stop-opacity="0.55"/>
+      <stop offset="46%" stop-color="#000" stop-opacity="0.20"/>
+      <stop offset="86%" stop-color="#fff" stop-opacity="0.13"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.06"/>
     </linearGradient>
-    <radialGradient id="vignette" cx="50%" cy="42%" r="72%">
-      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#000" stop-opacity="0.26"/>
-    </radialGradient>
-    <linearGradient id="lumiere" x1="0" y1="0" x2="0.6" y2="1">
-      <stop offset="0%" stop-color="#fff" stop-opacity="0.16"/>
-      <stop offset="46%" stop-color="#fff" stop-opacity="0.03"/>
-      <stop offset="100%" stop-color="#000" stop-opacity="0.10"/>
+    <linearGradient id="lumiere" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.14"/>
+      <stop offset="48%" stop-color="#fff" stop-opacity="0.02"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.22"/>
     </linearGradient>
   </defs>
 
-  <rect width="400" height="600" fill="#e8dcc6"/>
+  <rect width="400" height="600" fill="url(#fond)"/>
   <rect width="400" height="600" fill="url(#lumiere)"/>
-  <rect width="400" height="600" filter="url(#fibre)" opacity="0.13" style="mix-blend-mode:multiply"/>
+  <rect width="400" height="600" filter="url(#fibre)" opacity="0.10" style="mix-blend-mode:overlay"/>
 
-  <!-- Double filet de cadre, net -->
-  <rect x="28" y="28" width="344" height="544" fill="none" stroke="#a8895c" stroke-width="1.2" opacity="0.9"/>
-  <rect x="34" y="34" width="332" height="532" fill="none" stroke="#a8895c" stroke-width="0.5" opacity="0.55"/>
+  <rect x="28" y="28" width="344" height="544" fill="none" stroke="#e2cba6" stroke-width="1.2" opacity="0.75"/>
+  <rect x="34" y="34" width="332" height="532" fill="none" stroke="#e2cba6" stroke-width="0.5" opacity="0.4"/>
 
-  <!-- Filet court au-dessus du titre -->
-  <line x1="168" y1="171" x2="232" y2="171" stroke="#a8895c" stroke-width="1.6"/>
+  <line x1="168" y1="169" x2="232" y2="169" stroke="#e2cba6" stroke-width="1.8"/>
 
-  <!-- Titre gaufré : copie claire décalée, puis l'encre -->
-  <text x="200" y="230" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="38" font-weight="500" fill="#ffffff" opacity="0.22">
+  <!-- Titre gaufré : copie sombre décalée sous le texte crème -->
+  <text x="200" y="229" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="38" font-weight="500" fill="#000000" opacity="0.38">
       <tspan x="201" dy="0">La Ligne de</tspan>
       <tspan x="201" dy="44">faille</tspan>
   </text>
-  <text x="200" y="229" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="38" font-weight="500" fill="#2f2a24">
+  <text x="200" y="227" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-size="38" font-weight="500" fill="#f2ece0">
       <tspan x="200" dy="0">La Ligne de</tspan>
       <tspan x="200" dy="44">faille</tspan>
   </text>
 
-  <text x="200" y="361" text-anchor="middle" font-family="'Inter', system-ui, sans-serif" font-size="14" letter-spacing="2.8" fill="#a8895c">NORA BERKANE</text>
+  <text x="200" y="359" text-anchor="middle" font-family="'Inter', system-ui, sans-serif" font-size="14" letter-spacing="2.8" fill="#e2cba6">NORA BERKANE</text>
 
-  <!-- Marque de l'éditeur : cercle, courbe de livre ouvert, point d'or -->
-  <g transform="translate(200 492) scale(0.30)" opacity="0.85">
-    <circle cx="0" cy="0" r="56.32" fill="none" stroke="#2f2a24" stroke-width="3.4"/>
-    <path d="M-15.94 -11.83 Q0 17.57 15.94 -11.83" fill="none" stroke="#2f2a24" stroke-width="2.8" stroke-linecap="round"/>
-    <circle cx="0" cy="7.77" r="4.6" fill="#a8895c"/>
+  <g transform="translate(200 492) scale(0.30)" opacity="0.9">
+    <circle cx="0" cy="0" r="56.32" fill="none" stroke="#f2ece0" stroke-width="3.4"/>
+    <path d="M-15.94 -11.83 Q0 17.57 15.94 -11.83" fill="none" stroke="#f2ece0" stroke-width="2.8" stroke-linecap="round"/>
+    <circle cx="0" cy="7.77" r="4.6" fill="#e2cba6"/>
   </g>
 
-  <text x="200" y="546" text-anchor="middle" font-family="'Inter', system-ui, sans-serif" font-size="8.5" letter-spacing="3.8" fill="#2f2a24" opacity="0.42">SPÉCIMEN</text>
+  <text x="200" y="546" text-anchor="middle" font-family="'Inter', system-ui, sans-serif" font-size="8.5" letter-spacing="3.8" fill="#f2ece0" opacity="0.5">SPÉCIMEN</text>
 
-  <!-- Tranche : le livre a une épaisseur -->
-  <rect x="0" y="0" width="17" height="600" fill="url(#tranche)"/>
-  <line x1="17.5" y1="0" x2="17.5" y2="600" stroke="#fff" stroke-opacity="0.13" stroke-width="1"/>
-
-  <rect width="400" height="600" fill="url(#vignette)"/>
+  <rect x="0" y="0" width="18" height="600" fill="url(#tranche)"/>
+  <line x1="18.5" y1="0" x2="18.5" y2="600" stroke="#fff" stroke-opacity="0.15" stroke-width="1"/>
 </svg>
