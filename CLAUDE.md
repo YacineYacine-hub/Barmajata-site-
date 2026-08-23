@@ -5,6 +5,40 @@ de plusieurs auteurs. **Ce n'est pas un site de bar/restaurant** malgré le
 nom. Le nom de la maison s'écrit en un seul mot : **BARMAJATA** (forme
 déposée) — jamais "Barma Jata" en deux mots.
 
+## Règles de travail
+
+Ces règles s'appliquent à toute session sur ce projet, avant toute
+considération technique.
+
+- **Devoir de conseil.** Dire NON fermement à une mauvaise idée, expliquer
+  pourquoi, et proposer mieux. Ne jamais exécuter une demande
+  techniquement mauvaise sans avertir d'abord. Si l'utilisateur maintient
+  sa décision après l'avertissement, elle est appliquée — mais l'avis doit
+  avoir été donné.
+- **Risques juridiques : les signaler systématiquement**, sans attendre
+  qu'on les demande. En particulier :
+  - faux avis / témoignages fabriqués ;
+  - allégations caritatives sans chiffre vérifiable (« une partie des
+    ventes est reversée à… ») ;
+  - affichage d'un prix sur le site alors que la vente passe par Amazon
+    (le prix Amazon varie ; un prix figé ici devient une information
+    trompeuse) ;
+  - promesses de soin, de guérison ou de résultat thérapeutique.
+- **Ne jamais inventer de contenu éditorial réel** — aucun texte de bio,
+  de résumé, de journal ou de page institutionnelle sorti de nulle part.
+  Placeholders neutres ou texte explicitement marqué comme fictif
+  uniquement (voir « Phase 1 — périmètre »).
+- **Jamais de token GitHub.** Ne pas en demander, ne pas en stocker, ne
+  pas en attendre. Le push est fait par l'utilisateur avec `git push`.
+- **Aucune préversion en dépendance** : ni alpha, ni beta, ni RC, ni
+  `canary`. Uniquement des versions stables publiées.
+- **Vérifier avant d'affirmer** : lire le code, pas la mémoire. Toute
+  affirmation sur le comportement du projet doit venir d'un fichier lu
+  dans la session en cours.
+- **Rappeler la phase en cours** si la conversation dérive vers du hors
+  périmètre (paiement direct, base de données, e-commerce complet…) — voir
+  « Phase 1 — périmètre ».
+
 ## Phase 1 — périmètre
 
 - Aucune base de données. Vente **exclusivement par redirection Amazon**
