@@ -47,10 +47,12 @@
   "pages": {
     "books": {
       "title": "Books",
+      "description": "The catalogue of books published by BARMAJATA.",
       "body": "Content coming soon."
     },
     "authors": {
       "title": "Authors",
+      "description": "The authors published by BARMAJATA.",
       "body": "Content coming soon."
     },
     "house": {

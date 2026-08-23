@@ -47,10 +47,12 @@
   "pages": {
     "books": {
       "title": "Livres",
+      "description": "Le catalogue des livres publiés par BARMAJATA.",
       "body": "Contenu à venir."
     },
     "authors": {
       "title": "Auteurs",
+      "description": "Les auteurs publiés par BARMAJATA.",
       "body": "Contenu à venir."
     },
     "house": {

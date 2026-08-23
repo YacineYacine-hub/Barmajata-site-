@@ -47,10 +47,12 @@
   "pages": {
     "books": {
       "title": "الكتب",
+      "description": "كتالوج الكتب الصادرة عن BARMAJATA.",
       "body": "المحتوى قادم قريبًا."
     },
     "authors": {
       "title": "المؤلفون",
+      "description": "المؤلفون الذين تنشر لهم BARMAJATA.",
       "body": "المحتوى قادم قريبًا."
     },
     "house": {
