@@ -105,6 +105,24 @@ body {
   color: var(--color-nuit-900);
 }
 
+/*
+ * Anneau de focus : visible au CLAVIER, invisible à la SOURIS (Lot H10).
+ *
+ * Les éléments qui portent `tabIndex={0}` pour être pilotables au clavier
+ * — carrousel du hero, bande de couvertures, livre en volume — affichaient
+ * un cadre au simple clic de souris. C'est inutile pour qui vient de
+ * cliquer : il sait déjà où il est.
+ *
+ * `:focus-visible` est exactement cette distinction. La règle du Lot F
+ * (« ne jamais supprimer l'anneau de focus ») reste donc respectée dans
+ * ce qui la motivait : un utilisateur au clavier voit toujours où il est.
+ * Ne JAMAIS remplacer ceci par un `outline: none` sur `:focus` seul, qui
+ * rendrait le site inutilisable sans souris.
+ */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
 /* Les titres ne doivent jamais laisser un mot orphelin sur la dernière
    ligne — d'autant plus visible aux tailles « enseigne »/« titre ». */
 h1,

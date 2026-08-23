@@ -21,7 +21,11 @@ const VIEWBOX_W = 460;
 const VIEWBOX_H = 560;
 const INITIAL_YAW = -24;
 const INITIAL_PITCH = 8;
-const PITCH_LIMIT = 60;
+// Rotation libre sur les deux axes (Lot H10) : le livre tournait
+// librement en lacet mais son tangage était bloqué à ±60°, il ne pouvait
+// donc jamais être vu de dessus ni de dessous. La projection et le tri
+// des faces gèrent déjà toutes les orientations — la borne était une
+// prudence, pas une nécessité.
 const DRAG_SENSITIVITY = 0.35; // degrés par pixel glissé
 const KEY_STEP_DEG = 6;
 const INERTIA_STOP_THRESHOLD = 0.01; // deg/frame en dessous duquel l'inertie s'arrête
@@ -172,7 +176,7 @@ export function BookSolid({
         return;
       }
       setYaw((prev) => prev + v.yaw);
-      setPitch((prev) => Math.max(-PITCH_LIMIT, Math.min(PITCH_LIMIT, prev + v.pitch)));
+      setPitch((prev) => prev + v.pitch);
       v.yaw *= INERTIA_DECAY;
       v.pitch *= INERTIA_DECAY;
       inertiaFrameRef.current = requestAnimationFrame(step);
@@ -200,7 +204,7 @@ export function BookSolid({
     const deltaYaw = dx * DRAG_SENSITIVITY;
     const deltaPitch = dy * DRAG_SENSITIVITY;
     setYaw((prev) => prev + deltaYaw);
-    setPitch((prev) => Math.max(-PITCH_LIMIT, Math.min(PITCH_LIMIT, prev + deltaPitch)));
+    setPitch((prev) => prev + deltaPitch);
     velocityRef.current = { yaw: deltaYaw, pitch: deltaPitch };
   }
 
@@ -228,10 +232,10 @@ export function BookSolid({
       setYaw((prev) => prev + KEY_STEP_DEG);
     } else if (event.key === "ArrowUp") {
       event.preventDefault();
-      setPitch((prev) => Math.max(-PITCH_LIMIT, prev - KEY_STEP_DEG));
+      setPitch((prev) => prev - KEY_STEP_DEG);
     } else if (event.key === "ArrowDown") {
       event.preventDefault();
-      setPitch((prev) => Math.min(PITCH_LIMIT, prev + KEY_STEP_DEG));
+      setPitch((prev) => prev + KEY_STEP_DEG);
     }
   }
 

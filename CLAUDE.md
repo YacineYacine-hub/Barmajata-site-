@@ -421,9 +421,14 @@ considération technique.
   transitoire n'est pas l'état évalué par un contrôle de contraste
   automatisé, et `or-500` reste pleinement conforme sur fond `nuit-900`
   (~5,8:1, déjà l'usage établi du Header/Footer/`SectionBanner`).
-- Focus visible : aucun `outline`/`focus:outline-none` nulle part dans le
-  projet — l'anneau de focus par défaut du navigateur n'est jamais
-  supprimé, vérifié par recherche exhaustive.
+- Focus visible : l'anneau de focus n'est jamais supprimé pour un
+  utilisateur au clavier. **Nuance introduite au Lot H10** : une seule
+  règle globale, `:focus:not(:focus-visible) { outline: none }`, masque
+  l'anneau au clic de souris — les éléments portant `tabIndex={0}` pour
+  être pilotables au clavier (carrousel, bande, livre en volume)
+  affichaient sinon un cadre à chaque clic. Ne JAMAIS élargir cela en
+  `outline: none` sur `:focus` seul : le site deviendrait inutilisable
+  sans souris.
 - **Vérifié par lecture du HTML statique/RSC via `curl` et calcul manuel
   des ratios de contraste (formule WCAG), pas par un outil axe ni un
   navigateur** (aucun outil de ce type disponible dans cette session) — à
