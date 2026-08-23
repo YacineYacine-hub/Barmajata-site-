@@ -32,9 +32,20 @@ export default async function BooksPage({
   const tBooks = await getTranslations("books");
   const contentLocale = locale as ContentLocale;
 
-  const entries = getVisibleBooks()
+  const visibleBooks = getVisibleBooks();
+  const entries = visibleBooks
     .map((book) => ({ book, edition: resolveEdition(book, contentLocale) }))
     .filter((entry): entry is { book: Book; edition: Edition } => entry.edition !== undefined);
+
+  // Garde-fou : getVisibleBooks() a déjà écarté les livres sans édition
+  // visible, donc resolveEdition() ne devrait jamais échouer ici. Si ça
+  // arrive quand même, le catalogue se viderait silencieusement — on
+  // préfère un avertissement bruyant au build à un panier vide muet.
+  if (visibleBooks.length > 0 && entries.length === 0) {
+    console.warn(
+      `[books/page.tsx] ${visibleBooks.length} livre(s) visible(s) pour "${contentLocale}" mais aucun n'a résolu d'édition — catalogue rendu vide alors qu'il ne devrait pas l'être.`,
+    );
+  }
 
   const bandEntries: BandEntry[] = entries.map(({ book, edition }) => ({
     slug: book.slug,
