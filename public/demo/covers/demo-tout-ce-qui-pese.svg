@@ -9,6 +9,12 @@
 
   <rect width="400" height="600" fill="url(#fond)"/>
 
+  <!-- Arête gauche : l'objet a une épaisseur. Deux valeurs seulement, pas
+       de tranche ornementée — un objet posé dans le vide a une arête, il
+       n'a pas de décor. -->
+  <rect x="0" y="0" width="11" height="600" fill="#000" opacity="0.30"/>
+  <rect x="11" y="0" width="1.5" height="600" fill="#fff" opacity="0.14"/>
+
   <!-- Titre au fer à gauche, généreux, sans ornement -->
   <text x="46" y="150" font-family="'Cormorant Garamond', Georgia, serif" font-size="40" font-weight="400" fill="#f5f1e9" letter-spacing="-0.4">
       <tspan x="46" dy="0">Tout ce qui</tspan>

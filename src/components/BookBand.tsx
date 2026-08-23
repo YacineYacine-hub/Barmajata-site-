@@ -22,6 +22,22 @@ const SETTLE_DURATION_MS = 420;
 const DRAG_CLICK_THRESHOLD_PX = 6; // au-delà, un pointerup n'est plus un clic
 const WHEEL_IDLE_MS = 120; // silence molette avant de caler
 
+/**
+ * Forme de la courbe d'extinction. OPACITY_CUTOFF_DISTANCE (3,7) vient de
+ * la spec et n'est PAS touchée : une couverture disparaît toujours à la
+ * même distance. Seule la courbe change, de linéaire à concave.
+ *
+ * Motif : en linéaire, la couverture voisine tombait à 0,73 d'opacité et
+ * la suivante à 0,46. Sur le fond sombre d'origine, ça lisait comme un
+ * éloignement ; sur le fond clair du registre moderne (Lot H8), ça lit
+ * comme une couleur morte — un rouge profond y vire au mauve pâle.
+ *
+ * Avec cet exposant, la voisine tient 0,94 et la suivante 0,74 : les
+ * couvertures gardent leur couleur, et c'est l'échelle, la rotation et le
+ * recul en Z qui portent la profondeur.
+ */
+const OPACITY_COURBE = 2.2;
+
 // Inertie au lâcher (« on pousse, ça continue »). Vitesses en unités de
 // position par milliseconde — 1 unité = une couverture.
 //
@@ -135,7 +151,7 @@ export function BookBand({
       const rotate = -Math.sign(delta) * ROTATE_MAX_DEG * t2;
       const z = -RECOIL_PX * t2;
       const isMuted = mutedSlugs?.has(items[i].slug) ?? false;
-      const opacity = isMuted ? 0 : Math.max(0, 1 - t2);
+      const opacity = isMuted ? 0 : Math.max(0, 1 - Math.pow(t2, OPACITY_COURBE));
       const x = delta * ITEM_SPACING_PX;
 
       el.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rotate}deg) scale(${scale})`;

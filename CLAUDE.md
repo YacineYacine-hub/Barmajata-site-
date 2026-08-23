@@ -941,6 +941,23 @@ grain et la réglure.
   n'apparaît qu'au survol — l'interface ne s'annonce pas avant qu'on la
   sollicite.
 
+### Le fondu d'opacité de la bande, corrigé par le fond clair
+
+`OPACITY_CUTOFF_DISTANCE` (3,7) vient de la spec et **n'a pas été
+touchée** : une couverture disparaît toujours à la même distance. C'est la
+*forme* de la courbe qui a changé, de linéaire à concave
+(`OPACITY_COURBE = 2.2`).
+
+Motif : en linéaire, la voisine tombait à 0,73 d'opacité et la suivante à
+0,46. Sur le fond sombre d'origine ça lisait comme un éloignement ; sur le
+fond clair du registre moderne, ça lit comme **une couleur morte** — un
+rouge profond y virait au mauve pâle. Avec l'exposant, la voisine tient
+0,94 et la suivante 0,74 : les couvertures gardent leur couleur, et ce
+sont l'échelle, la rotation et le recul en Z qui portent la profondeur.
+
+Leçon générale : **une constante de mouvement calibrée sur un fond sombre
+ne se transpose pas telle quelle sur un fond clair.**
+
 ### Couvertures
 
 Doubles filets, sceau de l'éditeur et gaufrage retirés : c'est cet
