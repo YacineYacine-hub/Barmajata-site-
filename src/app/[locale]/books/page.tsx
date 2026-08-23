@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link, getPathname } from "@/i18n/navigation";
 import { getVisibleBooks } from "@/lib/content";
@@ -16,8 +17,19 @@ import { buildAlternates } from "@/lib/seo";
 import { Reveal } from "@/components/Reveal";
 import { BookBandSection, type BandEntry } from "@/components/BookBandSection";
 
-export function generateMetadata(): Metadata {
-  return { alternates: buildAlternates("/books") };
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "pages.books" });
+
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: buildAlternates("/books"),
+  };
 }
 
 export default async function BooksPage({
@@ -98,15 +110,19 @@ export default async function BooksPage({
                     className="block"
                   >
                     {book.couverture && (
-                      <img
-                        src={book.couverture}
-                        alt=""
-                        className="aspect-[2/3] w-full object-cover"
-                      />
+                      <div className="relative aspect-[2/3] w-full">
+                        <Image
+                          src={book.couverture}
+                          alt=""
+                          fill
+                          sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                          className="object-cover"
+                        />
+                      </div>
                     )}
                     <div className="p-6">
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="inline-block rounded-full bg-or-500/10 px-3 py-1 text-xs font-medium text-or-500">
+                        <span className="inline-block rounded-full bg-or-500/10 px-3 py-1 text-xs font-medium text-roche-700">
                           {tBooks(`status.${edition.statut}`)}
                         </span>
                         {isOtherLanguage && (

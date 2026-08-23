@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LocaleSwitcher } from "./LocaleSwitcher";
@@ -97,11 +98,12 @@ export function Header() {
             volontairement en dur, identique dans toutes les langues —
             jamais dans les fichiers de traduction. */}
         <Link href="/" dir="ltr" className="inline-flex shrink-0" onClick={() => setIsOpen(false)}>
-          <img
+          <Image
             src="/brand/logo-horizontal-light.svg"
             alt="BARMAJATA Éditions"
             width={220}
             height={40}
+            priority
             className={`w-auto transition-[height] duration-200 ${isScrolled ? "h-6 md:h-8" : "h-8 md:h-10"}`}
           />
         </Link>

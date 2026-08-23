@@ -5,8 +5,19 @@ import { buildOrganizationJsonLd } from "@/lib/content/jsonld";
 import { SITE_URL } from "@/lib/site";
 import { buildAlternates } from "@/lib/seo";
 
-export function generateMetadata(): Metadata {
-  return { alternates: buildAlternates("/house") };
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "pages.house" });
+
+  return {
+    title: t("title"),
+    description: t("lede"),
+    alternates: buildAlternates("/house"),
+  };
 }
 
 export default async function HousePage({

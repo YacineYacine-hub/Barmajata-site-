@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { SOCIAL_LINKS } from "@/lib/social";
@@ -13,7 +14,7 @@ export function Footer() {
     <footer className="bg-nuit-900">
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-6 ps-6 pe-6 py-10 text-sm text-sable-300 sm:flex-row sm:justify-between">
         <div dir="ltr">
-          <img
+          <Image
             src="/brand/logo-lockup-dark.svg"
             alt=""
             aria-hidden="true"

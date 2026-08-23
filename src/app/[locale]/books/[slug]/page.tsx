@@ -20,10 +20,16 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  return { alternates: buildAlternates({ pathname: "/books/[slug]", params: { slug } }) };
+  const { locale, slug } = await params;
+  const alternates = buildAlternates({ pathname: "/books/[slug]", params: { slug } });
+
+  const book = getVisibleBookBySlug(slug);
+  const edition = book ? resolveEdition(book, locale as ContentLocale) : undefined;
+  if (!edition) return { alternates };
+
+  return { title: edition.titre, description: edition.resumeCourt, alternates };
 }
 
 export default async function BookPage({
@@ -108,7 +114,7 @@ export default async function BookPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
-      <nav aria-label={tNav("home")} className="text-sm text-roche-700">
+      <nav aria-label={tNav("breadcrumb")} className="text-sm text-roche-700">
         <ol className="flex flex-wrap items-center gap-2">
           <li>
             <Link href="/" className="hover:text-or-500">
@@ -139,7 +145,7 @@ export default async function BookPage({
       </div>
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
-        <span className="inline-block rounded-full bg-or-500/10 px-3 py-1 text-xs font-medium text-or-500">
+        <span className="inline-block rounded-full bg-or-500/10 px-3 py-1 text-xs font-medium text-roche-700">
           {t(`status.${edition.statut}`)}
         </span>
         {isOtherLanguage && (
@@ -235,7 +241,9 @@ export default async function BookPage({
           <span className="mt-1 block text-sm text-roche-700">
             {author.bioCourte[contentLocale]}
           </span>
-          <span className="mt-1 block text-sm text-or-500">{t("cta.viewAuthorProfile")}</span>
+          <span className="mt-1 block text-sm text-roche-700 underline">
+            {t("cta.viewAuthorProfile")}
+          </span>
         </span>
       </Link>
 

@@ -16,10 +16,19 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
-  return { alternates: buildAlternates({ pathname: "/authors/[slug]", params: { slug } }) };
+  const { locale, slug } = await params;
+  const alternates = buildAlternates({ pathname: "/authors/[slug]", params: { slug } });
+
+  const author = getAuthorBySlug(slug);
+  if (!author) return { alternates };
+
+  return {
+    title: author.nom,
+    description: author.bioCourte[locale as ContentLocale],
+    alternates,
+  };
 }
 
 export default async function AuthorPage({
@@ -56,53 +65,59 @@ export default async function AuthorPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <SectionBanner title={author.nom}>
-        <Link href="/authors" className="text-sm text-sable-300 hover:text-or-500">
-          {t("cta.backToCatalogue")}
-        </Link>
-      </SectionBanner>
+      <main>
+        <SectionBanner title={author.nom}>
+          <Link href="/authors" className="text-sm text-sable-300 hover:text-or-500">
+            {t("cta.backToCatalogue")}
+          </Link>
+        </SectionBanner>
 
-      <main className="mx-auto max-w-3xl ps-6 pe-6 py-16">
-        <p className="text-roche-700 text-start">{author.bioLongue[contentLocale]}</p>
+        <div className="mx-auto max-w-3xl ps-6 pe-6 py-16">
+          <p className="text-roche-700 text-start">{author.bioLongue[contentLocale]}</p>
 
-        {author.liens?.length ? (
-          <ul className="mt-6 flex flex-wrap gap-4 text-sm">
-            {author.liens.map((link) => (
-              <li key={link.url}>
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-or-500 hover:underline"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-
-        {entries.length > 0 && (
-          <section className="mt-12">
-            <h2 className="font-serif text-2xl text-nuit-900 text-start">{t("booksTitle")}</h2>
-            <ul className="mt-6 grid gap-6 sm:grid-cols-2">
-              {entries.map(({ book, edition }) => (
-                <li
-                  key={book.slug}
-                  className="rounded-lg border border-sable-300 bg-lin-50 p-6"
-                >
-                  <Link href={{ pathname: "/books/[slug]", params: { slug: book.slug } }}>
-                    <h3 className="font-serif text-lg text-nuit-900 text-start">{edition.titre}</h3>
-                    <p className="mt-2 text-sm text-roche-700 text-start">{edition.resumeCourt}</p>
-                  </Link>
+          {author.liens?.length ? (
+            <ul className="mt-6 flex flex-wrap gap-4 text-sm">
+              {author.liens.map((link) => (
+                <li key={link.url}>
+                  <a
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-roche-700 underline hover:text-nuit-900"
+                  >
+                    {link.label}
+                  </a>
                 </li>
               ))}
             </ul>
-          </section>
-        )}
-        {entries.length === 0 && (
-          <p className="mt-12 text-sm text-roche-700 text-start">{tBooks("empty")}</p>
-        )}
+          ) : null}
+
+          {entries.length > 0 && (
+            <section className="mt-12">
+              <h2 className="font-serif text-2xl text-nuit-900 text-start">{t("booksTitle")}</h2>
+              <ul className="mt-6 grid gap-6 sm:grid-cols-2">
+                {entries.map(({ book, edition }) => (
+                  <li
+                    key={book.slug}
+                    className="rounded-lg border border-sable-300 bg-lin-50 p-6"
+                  >
+                    <Link href={{ pathname: "/books/[slug]", params: { slug: book.slug } }}>
+                      <h3 className="font-serif text-lg text-nuit-900 text-start">
+                        {edition.titre}
+                      </h3>
+                      <p className="mt-2 text-sm text-roche-700 text-start">
+                        {edition.resumeCourt}
+                      </p>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+          {entries.length === 0 && (
+            <p className="mt-12 text-sm text-roche-700 text-start">{tBooks("empty")}</p>
+          )}
+        </div>
       </main>
     </>
   );

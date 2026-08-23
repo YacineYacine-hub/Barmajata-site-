@@ -11,7 +11,8 @@
     "journal": "Journal",
     "contact": "Contact",
     "menu": "Menu",
-    "closeMenu": "Close menu"
+    "closeMenu": "Close menu",
+    "breadcrumb": "Breadcrumb"
   },
   "home": {
     "heroEyebrow": "BARMAJATA Publishing House",
@@ -27,11 +28,11 @@
     "pillars": {
       "books": {
         "title": "Books",
-        "description": "Content coming soon."
+        "description": "The catalogue of books published by BARMAJATA."
       },
       "authors": {
         "title": "Authors",
-        "description": "Content coming soon."
+        "description": "The authors published by BARMAJATA."
       },
       "house": {
         "title": "The house",

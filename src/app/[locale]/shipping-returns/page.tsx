@@ -3,8 +3,15 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { SectionPage } from "@/components/SectionPage";
 import { buildAlternates } from "@/lib/seo";
 
-export function generateMetadata(): Metadata {
-  return { alternates: buildAlternates("/shipping-returns") };
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "legal.shippingReturns" });
+
+  return { title: t("title"), alternates: buildAlternates("/shipping-returns") };
 }
 
 export default async function ShippingReturnsPage({

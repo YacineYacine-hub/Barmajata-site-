@@ -7,8 +7,19 @@ import { buildAlternates } from "@/lib/seo";
 import { Reveal } from "@/components/Reveal";
 import { SectionBanner } from "@/components/SectionBanner";
 
-export function generateMetadata(): Metadata {
-  return { alternates: buildAlternates("/authors") };
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "pages.authors" });
+
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: buildAlternates("/authors"),
+  };
 }
 
 export default async function AuthorsPage({
@@ -26,9 +37,9 @@ export default async function AuthorsPage({
   const authors = getAllAuthors();
 
   return (
-    <>
+    <main>
       <SectionBanner title={t("title")} maxWidthClassName="max-w-5xl" />
-      <main className="mx-auto max-w-5xl ps-6 pe-6 py-16">
+      <div className="mx-auto max-w-5xl ps-6 pe-6 py-16">
         {authors.length === 0 ? (
           <p className="text-roche-700 text-start">{tAuthors("empty")}</p>
         ) : (
@@ -53,7 +64,7 @@ export default async function AuthorsPage({
             ))}
           </ul>
         )}
-      </main>
-    </>
+      </div>
+    </main>
   );
 }

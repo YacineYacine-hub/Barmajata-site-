@@ -7,8 +7,19 @@ import { ClubForm } from "@/components/ClubForm";
 import { getConfiguredProvider } from "@/lib/club/providers";
 import { buildAlternates } from "@/lib/seo";
 
-export function generateMetadata(): Metadata {
-  return { alternates: buildAlternates("/club") };
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "club" });
+
+  return {
+    title: t("title"),
+    description: t("intro"),
+    alternates: buildAlternates("/club"),
+  };
 }
 
 export default async function ClubPage({

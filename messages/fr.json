@@ -11,7 +11,8 @@
     "journal": "Journal",
     "contact": "Contact",
     "menu": "Menu",
-    "closeMenu": "Fermer le menu"
+    "closeMenu": "Fermer le menu",
+    "breadcrumb": "Fil d'Ariane"
   },
   "home": {
     "heroEyebrow": "Maison d'édition BARMAJATA",
@@ -27,11 +28,11 @@
     "pillars": {
       "books": {
         "title": "Livres",
-        "description": "Contenu à venir."
+        "description": "Le catalogue des livres publiés par BARMAJATA."
       },
       "authors": {
         "title": "Auteurs",
-        "description": "Contenu à venir."
+        "description": "Les auteurs et autrices publiés par BARMAJATA."
       },
       "house": {
         "title": "La maison",

@@ -39,7 +39,7 @@ export default async function BonusPage({
 
   return (
     <main className="mx-auto flex min-h-screen max-w-xl flex-col justify-center ps-6 pe-6 py-16 text-center">
-      <p className="text-sm font-medium uppercase tracking-wide text-or-500">Contenu débloqué</p>
+      <p className="text-sm font-medium uppercase tracking-wide text-roche-700">Contenu débloqué</p>
       <h1 className="mt-2 font-serif text-3xl text-nuit-900">{entry.libelle}</h1>
       <p className="mt-6 text-roche-700">
         Contenu à venir. Cette page sera complétée avec le contenu débloqué par ce code.

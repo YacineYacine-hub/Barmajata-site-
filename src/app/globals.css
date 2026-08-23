@@ -10,7 +10,13 @@
    *   texte normal — réservé aux éléments non textuels : dégradés,
    *   bordures décoratives, grands aplats).
    * - or-500 : accents, prix, filets/bordures d'emphase. Ne JAMAIS
-   *   l'utiliser en fond de bouton principal.
+   *   l'utiliser en fond de bouton principal, NI EN TEXTE sur lin-50/
+   *   lin-100 (contraste mesuré ~2,5:1, sous le seuil AA même pour du
+   *   grand texte — audit Lot F) : y utiliser roche-700 à la place
+   *   (7,4:1 sur lin-50). or-500 en texte reste correct sur nuit-900
+   *   (~5,8:1) — c'est déjà l'usage dans Header/Footer/SectionBanner —
+   *   et comme accent hover-only par-dessus roche-700/sable-300/lin-50
+   *   (état transitoire, pas l'état par défaut affiché).
    * - Bouton principal : fond nuit-900, texte lin-50 (jamais or-500).
    */
   --color-lin-50: #fbf8f2;

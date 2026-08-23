@@ -121,7 +121,7 @@ export function ClubForm({
           <span>
             {t.rich("consentLabel", {
               privacyLink: (chunks) => (
-                <Link href="/privacy-policy" className="text-or-500 hover:underline">
+                <Link href="/privacy-policy" className="text-roche-700 underline hover:text-nuit-900">
                   {chunks}
                 </Link>
               ),

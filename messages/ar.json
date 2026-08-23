@@ -11,7 +11,8 @@
     "journal": "المدونة",
     "contact": "اتصل",
     "menu": "القائمة",
-    "closeMenu": "إغلاق القائمة"
+    "closeMenu": "إغلاق القائمة",
+    "breadcrumb": "مسار التنقل"
   },
   "home": {
     "heroEyebrow": "دار نشر برما جاتا",
@@ -27,11 +28,11 @@
     "pillars": {
       "books": {
         "title": "الكتب",
-        "description": "المحتوى قادم قريبًا."
+        "description": "كتالوج الكتب التي تنشرها برما جاتا."
       },
       "authors": {
         "title": "المؤلفون",
-        "description": "المحتوى قادم قريبًا."
+        "description": "المؤلفون والمؤلفات الذين تنشر لهم برما جاتا."
       },
       "house": {
         "title": "الدار",

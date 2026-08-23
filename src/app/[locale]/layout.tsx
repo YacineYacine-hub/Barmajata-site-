@@ -13,16 +13,19 @@ import "../globals.css";
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  display: "swap",
   variable: "--font-cormorant",
 });
 
 const inter = Inter({
   subsets: ["latin"],
+  display: "swap",
   variable: "--font-inter",
 });
 
 const notoNaskhArabic = Noto_Naskh_Arabic({
   subsets: ["arabic"],
+  display: "swap",
   variable: "--font-noto-naskh",
 });
 
@@ -40,7 +43,11 @@ export async function generateMetadata({
 
   return {
     metadataBase: new URL(SITE_URL),
-    title: t("name"),
+    // `template` suffixe automatiquement le titre de chaque page avec le
+    // nom du site (Next.js le compose lui-même) — chaque page n'a donc
+    // qu'à fournir son propre titre court via generateMetadata(), jamais
+    // le nom du site en double.
+    title: { default: t("name"), template: `%s — ${t("name")}` },
     description: t("tagline"),
     icons: {
       icon: "/brand/favicon.svg",

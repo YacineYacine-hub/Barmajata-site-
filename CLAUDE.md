@@ -338,6 +338,59 @@ déposée) — jamais "Barma Jata" en deux mots.
   avec de fausses clés (échec attendu à l'appel réseau réel, capturé
   proprement).
 
+## Performance et accessibilité (Lot F)
+
+- Toutes les images passent par `next/image` (dernier `<img>` restant
+  converti : couvertures `books/page.tsx`/`BookBand.tsx` en `fill` +
+  `sizes`, logos `Header.tsx`/`Footer.tsx` en largeur/hauteur fixes).
+  **Les SVG locaux (`/brand/*.svg`, `/demo/covers/*.svg`) fonctionnent
+  avec `next/image` sans activer `images.dangerouslyAllowSVG`** : Next.js
+  les sert directement (pas de passage par `/_next/image`, pas de
+  génération de srcset raster) — vérifié par inspection du HTML rendu
+  (`src` pointe vers le fichier original, `data-nimg` présent). `priority`
+  sur le logo du header (visible immédiatement sur chaque page) et sur le
+  premier slide du `Hero` (déjà en place avant ce lot).
+- Polices (`next/font/google`, `[locale]/layout.tsx` et
+  `bonus/layout.tsx`) : `display: "swap"` sur les trois (Cormorant,
+  Inter, Noto Naskh Arabic), latin/arabic selon la police.
+- `title` : `[locale]/layout.tsx` définit un `template` (`"%s — " + nom
+  du site`) ; chaque page fournit désormais son propre titre court via
+  `generateMetadata()` (résolu dynamiquement pour les pages `[slug]` —
+  titre de l'édition/l'auteur — via une locale recherche de contenu
+  dédiée, pas de duplication avec le composant de page). `description`
+  ajoutée sur les pages qui n'en avaient pas (résumé/bio réels pour les
+  fiches livre/auteur, texte déjà existant réutilisé — `lede`/`intro` —
+  pour les pages éditoriales, rien d'inventé).
+- Repères (landmarks) : le titre (`<h1>`) de chaque page bandeau
+  (`SectionBanner`) est un enfant direct de `<main>`, jamais un frère —
+  un titre hors de tout repère est un défaut détecté par les contrôles
+  de type axe (corrigé sur `/la-maison`, `/journal`, `/contact`,
+  `/auteurs`, `/auteurs/[slug]` pendant ce lot). Un seul `<main>` par
+  page, vérifié sur l'ensemble du site.
+- `nav aria-label` : la fiche livre a désormais une clé dédiée
+  `nav.breadcrumb` ("Fil d'Ariane") au lieu de réutiliser par erreur
+  `nav.home` ("Accueil") — bug introduit puis corrigé pendant ce lot.
+- **Contraste** : `text-or-500` sur `lin-50`/`lin-100` mesure ~2,5:1 (sous
+  le seuil AA, y compris pour du grand texte) — voir la règle mise à jour
+  dans `globals.css`. Corrigé partout où c'était l'état par défaut affiché
+  (badges de statut, lien "Voir la fiche", liens externes auteur, lien
+  RGPD du club, libellé de `/bonus/[slug]`) en basculant vers
+  `roche-700` (7,4:1 sur `lin-50`), avec `underline` ajouté sur les liens
+  imbriqués dans du texte courant pour ne pas dépendre de la seule
+  couleur. Les usages `hover:text-or-500` sur un état par défaut déjà
+  conforme (roche-700, sable-300, lin-50) sont conservés : un survol
+  transitoire n'est pas l'état évalué par un contrôle de contraste
+  automatisé, et `or-500` reste pleinement conforme sur fond `nuit-900`
+  (~5,8:1, déjà l'usage établi du Header/Footer/`SectionBanner`).
+- Focus visible : aucun `outline`/`focus:outline-none` nulle part dans le
+  projet — l'anneau de focus par défaut du navigateur n'est jamais
+  supprimé, vérifié par recherche exhaustive.
+- **Vérifié par lecture du HTML statique/RSC via `curl` et calcul manuel
+  des ratios de contraste (formule WCAG), pas par un outil axe ni un
+  navigateur** (aucun outil de ce type disponible dans cette session) — à
+  confirmer avec un audit outillé (axe DevTools, Lighthouse) par un
+  humain.
+
 ## Stack
 
 - Next.js 16 (App Router, Turbopack), TypeScript **5.9** (pas TS 7 natif :

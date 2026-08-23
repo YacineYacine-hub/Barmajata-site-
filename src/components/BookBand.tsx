@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
@@ -319,11 +320,12 @@ export function BookBand({
 function BandCover({ item }: { item: BandItem }) {
   if (item.coverSrc) {
     return (
-      <img
-        src={item.coverSrc}
-        alt=""
-        className="aspect-[2/3] w-full rounded-md object-cover shadow-lg"
-      />
+      <div className="relative aspect-[2/3] w-full overflow-hidden rounded-md shadow-lg">
+        {/* Largeur logique max 160px (ITEM_WIDTH_PX) sur tous les
+            contextes d'usage (bande 3D et défilement natif <640px) —
+            sizes fixe en conséquence, pas de variation par breakpoint. */}
+        <Image src={item.coverSrc} alt="" fill sizes="160px" className="object-cover" />
+      </div>
     );
   }
   return (
