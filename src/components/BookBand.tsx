@@ -404,7 +404,7 @@ export function BookBand({
 function BandCover({ item }: { item: BandItem }) {
   if (item.coverSrc) {
     return (
-      <div className="relative aspect-[2/3] w-full overflow-hidden rounded-md shadow-lg">
+      <div className="relative aspect-[2/3] w-full overflow-hidden rounded-sm shadow-flottant">
         {/* Largeur logique max 160px (ITEM_WIDTH_PX) sur tous les
             contextes d'usage (bande 3D et défilement natif <640px) —
             sizes fixe en conséquence, pas de variation par breakpoint. */}
@@ -413,7 +413,7 @@ function BandCover({ item }: { item: BandItem }) {
     );
   }
   return (
-    <span className="flex aspect-[2/3] w-full items-center justify-center rounded-md bg-sable-300 p-3 text-center text-xs font-medium text-nuit-900 shadow-lg">
+    <span className="flex aspect-[2/3] w-full items-center justify-center rounded-sm bg-sable-300 p-3 text-center text-xs font-medium text-nuit-900 shadow-flottant">
       {item.title}
     </span>
   );

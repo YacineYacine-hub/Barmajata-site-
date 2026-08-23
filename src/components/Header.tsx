@@ -86,13 +86,12 @@ export function Header() {
     { href: "/contact", label: t("contact") },
   ];
 
-  // Frise supérieure (Lot H4) : la barre sombre porte la réglure
-  // d'imprimeur, comme les champs. C'est ce qui la fait lire comme un
-  // bandeau texturé plutôt qu'un aplat, et ce qui la relie au livre du
-  // pied de page. `text-lin-50` n'est pas décoratif : la réglure est bâtie
-  // sur currentColor, c'est donc lui qui la rend visible.
+  // Bande fine du haut. La réglure d'imprimeur qu'elle portait depuis le
+  // Lot H4 a été retirée au Lot H8 : une texture sur une barre
+  // d'interface est exactement ce qui datait l'ensemble. `text-lin-50`
+  // reste, il donne sa couleur au contenu de la bande.
   return (
-    <header className="reglure sticky top-0 z-50 bg-nuit-900 text-lin-50">
+    <header className="sticky top-0 z-50 bg-nuit-900 text-lin-50">
       <div
         className={`mx-auto flex max-w-5xl items-center justify-between gap-4 ps-6 pe-6 transition-[padding] duration-200 ${
           isScrolled ? "py-2" : "py-4"

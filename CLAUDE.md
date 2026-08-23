@@ -895,6 +895,60 @@ marque de l'éditeur, vignettage. Le générateur est en scratchpad ; les
 palettes par slug sont dans le fichier, et il refuse de tourner si une
 couverture du disque lui est inconnue.
 
+## Lot H8 — virage vers le moderne
+
+Retour de l'utilisateur après capture : « il y a un côté vieux, il manque
+de la modernité, au départ je voulais un côté Apple ».
+
+**Le diagnostic n'est pas un détail, c'est le concept.** Le papier vieilli,
+le grain, les lignes de cahier, les marges, l'or, les doubles filets, le
+gaufrage, le sceau de l'éditeur : chacun dit « ancien ». Empilés, ils ne
+pouvaient produire que de l'ancien. On ne peut pas tenir simultanément
+« papier vieilli avec des écritures » et « Apple ».
+
+**Réserve exprimée à l'utilisateur, qui a maintenu sa décision** : une
+maison d'édition qui ressemble à Apple risque de ressembler à une startup
+tech plutôt qu'à un éditeur.
+
+### Ce qui a été retiré (et non désactivé)
+
+`.page-livre`, `.page-livre-gouttiere`, `.grain-encre`, `.grain-papier`,
+`.grain-papier-large`, `.reglure`, `--reglure-couche`, `--texture-grain`,
+et la réglure du Header et du Footer. Environ 6 Ko de CSS. Vérifié absent
+de la feuille livrée.
+
+Le `.champ-papier` des pages intérieures est réduit à un dégradé quasi
+imperceptible : il décolle la tête de page du corps sans imiter de matière.
+
+### Ce qui remplace la texture
+
+**Rien — et c'est le point.** Le registre moderne tire sa profondeur de
+l'absence : fond quasi uni, beaucoup d'air, typographie nette, et les
+couvertures présentées comme des objets posés dans le vide.
+
+`--shadow-flottant` (Lot H8) : trois couches d'ombre de plus en plus
+larges et douces, comme un objet photographié sur fond blanc. C'est la
+seule profondeur du registre, et elle remplace à elle seule le papier, le
+grain et la réglure.
+
+### Accueil
+
+- `Hero` : proportion resserrée (`3/4` → `22/9` au-delà de 640px) — le
+  `16/9` laissait un demi-écran de vide sous le titre. Surtitre en `text-xs`
+  très espacé, logo réduit.
+- « Explorer » : les rectangles bordés du Lot H6 deviennent une **liste**
+  séparée de filets d'un pixel, où seul le mot compte. Le chevron
+  n'apparaît qu'au survol — l'interface ne s'annonce pas avant qu'on la
+  sollicite.
+
+### Couvertures
+
+Doubles filets, sceau de l'éditeur et gaufrage retirés : c'est cet
+appareil ornemental qui les datait. Il reste un aplat profond en dégradé,
+un titre généreux **aligné au fer à gauche** (et non centré, le centrage
+appartient au registre classique), un filet d'accent unique, le nom de
+l'auteur. Les dix fonds sombres du Lot H7 sont conservés.
+
 ## Stack
 
 - Next.js 16 (App Router, Turbopack), TypeScript **5.9** (pas TS 7 natif :

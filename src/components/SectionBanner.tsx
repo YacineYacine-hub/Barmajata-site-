@@ -1,7 +1,7 @@
 /**
- * Tête de page du registre « Papier » (Lot H3) : champ maillé clair, grain
- * de fibre et réglure d'imprimeur, le corps de la page restant sur `lin-50`
- * (fond par défaut). `children` sert de créneau pour un lien retour / fil
+ * Tête de page (Lot H3, allégée au Lot H8) : un dégradé quasi
+ * imperceptible, sans grain ni réglure — la texture faisait « ancien ».
+ * Le corps de la page reste sur `lin-50` (fond par défaut). `children` sert de créneau pour un lien retour / fil
  * d'Ariane affiché dans le bandeau lui-même.
  *
  * Avant H3 ce bandeau était un aplat `bg-nuit-900` à texte clair. Il est
@@ -31,7 +31,7 @@ export function SectionBanner({
   children?: React.ReactNode;
 }) {
   return (
-    <div className="champ-papier grain-papier border-b border-sable-300 text-nuit-900">
+    <div className="champ-papier border-b border-nuit-900/10 text-nuit-900">
       <div className={`mx-auto ${maxWidthClassName} ps-6 pe-6 py-20`}>
         {children}
         {eyebrow && (

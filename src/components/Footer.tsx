@@ -16,7 +16,7 @@ export function Footer() {
   const tSite = useTranslations("site");
 
   return (
-    <footer className="reglure bg-nuit-900 text-sable-300">
+    <footer className="bg-nuit-900 text-sable-300">
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 ps-6 pe-6 py-4 text-xs text-sable-300 sm:flex-row sm:justify-between sm:gap-6">
         <div dir="ltr">
           <Image

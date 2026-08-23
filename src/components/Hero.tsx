@@ -73,7 +73,7 @@ export function Hero({ slides }: HeroProps) {
       onKeyDown={handleKeyDown}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-[16/9]"
+      className="relative aspect-[3/4] w-full overflow-hidden sm:aspect-[22/9]"
     >
       <div
         className="flex h-full transition-transform duration-500 ease-out"
@@ -120,14 +120,14 @@ export function Hero({ slides }: HeroProps) {
                     width={128}
                     height={128}
                     priority
-                    className="mb-6 h-12 w-12 sm:h-14 sm:w-14"
+                    className="mb-8 h-10 w-10"
                   />
                 )}
                 {/* roche-700 et non or-500 : sur papier clair l'or mesure
                     ~2,5:1, sous le seuil AA même en grand texte (règle du
                     Lot F). roche-700 tient 7,4:1 sur lin-50. */}
                 {slide.eyebrow && (
-                  <p className="text-sm uppercase tracking-[0.18em] text-roche-700">
+                  <p className="text-xs font-medium uppercase tracking-[0.2em] text-roche-700">
                     {slide.eyebrow}
                   </p>
                 )}
@@ -144,7 +144,7 @@ export function Hero({ slides }: HeroProps) {
                   </p>
                 )}
                 {slide.subtitle && (
-                  <p className="mt-6 max-w-xl text-roche-700">{slide.subtitle}</p>
+                  <p className="mt-5 max-w-md text-base text-roche-700">{slide.subtitle}</p>
                 )}
               </Reveal>
             </div>
