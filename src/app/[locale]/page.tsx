@@ -36,7 +36,10 @@ function HomeContent({ bandItems }: { bandItems: BandItem[] }) {
   const t = useTranslations("home");
 
   return (
-    <main>
+    /* Devanture « Encre » (Lot H2) : l'accueil est la seule page au fond
+       sombre de bout en bout — Header et Footer l'étaient déjà. Les pages
+       de lecture restent claires (registre « Papier », Lot H3). */
+    <main className="bg-nuit-950">
       <Hero
         slides={[
           { eyebrow: t("heroEyebrow"), title: t("heroTitle"), subtitle: t("heroSubtitle") },
@@ -46,31 +49,35 @@ function HomeContent({ bandItems }: { bandItems: BandItem[] }) {
       {/* La bande est une vitrine (pas la boutique) : aucun filtre ici,
           voir BookBandSection sur /livres pour les puces de catégorie. */}
       {bandItems.length > 0 && (
-        <section className="py-16">
-          <BookBand items={bandItems} />
+        <section className="py-20">
+          <BookBand items={bandItems} registre="encre" />
         </section>
       )}
 
-      <section className="mx-auto max-w-5xl ps-6 pe-6 py-20">
-        <h2 className="font-serif text-2xl text-nuit-900 text-start">
-          {t("pillarsTitle")}
-        </h2>
-        <div className="mt-8 grid gap-6 sm:grid-cols-2">
-          {PILLARS.map((pillar, index) => (
-            <Reveal key={pillar} index={index}>
-              <Link
-                href={`/${pillar}`}
-                className="block rounded-lg border border-sable-300 bg-lin-100 ps-6 pe-6 py-6 text-start transition hover:border-or-500"
-              >
-                <h3 className="font-serif text-xl text-nuit-900">
-                  {t(`pillars.${pillar}.title`)}
-                </h3>
-                <p className="mt-2 text-sm text-roche-700">
-                  {t(`pillars.${pillar}.description`)}
-                </p>
-              </Link>
-            </Reveal>
-          ))}
+      {/* Réglure d'imprimeur : le liant entre les deux registres. En
+          currentColor, donc réglée ici par la couleur du texte du bloc. */}
+      <section className="reglure grain-encre border-t border-lin-50/10 text-lin-50">
+        <div className="mx-auto max-w-5xl ps-6 pe-6 py-24">
+          <h2 className="font-serif text-sous-titre text-lin-50 text-start">
+            {t("pillarsTitle")}
+          </h2>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2">
+            {PILLARS.map((pillar, index) => (
+              <Reveal key={pillar} index={index}>
+                <Link
+                  href={`/${pillar}`}
+                  className="block h-full rounded-lg border border-lin-50/12 bg-nuit-900/70 ps-6 pe-6 py-7 text-start shadow-nappe transition-colors hover:border-or-500 hover:bg-nuit-900"
+                >
+                  <h3 className="font-serif text-xl text-lin-50">
+                    {t(`pillars.${pillar}.title`)}
+                  </h3>
+                  <p className="mt-2 text-sm text-sable-300">
+                    {t(`pillars.${pillar}.description`)}
+                  </p>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
     </main>

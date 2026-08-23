@@ -86,8 +86,8 @@ considération technique.
   `bg-nuit-900` depuis la refonte de palette, voir plus bas ; version
   claire dédiée, `logo-horizontal.svg` reste la version sombre pour un
   usage futur sur fond clair), `logo-lockup.svg` / `logo-lockup-dark.svg`
-  (footer, selon fond clair/sombre — seul le clair est câblé, le footer
-  étant toujours `bg-lin-50` aujourd'hui), `favicon.svg`,
+  (footer, selon fond clair/sombre — le footer est en `bg-nuit-900`, donc
+  c'est `logo-lockup-dark.svg` qui est câblé ; vérifié dans `Footer.tsx`), `favicon.svg`,
   `apple-touch-icon.png` (180×180), `og-image.png` (1200×630),
   `logo-512.png` (512×512, JSON-LD Organization).
   **Ce sont des placeholders générés par Claude** (lettrage "BARMA JATA" +
@@ -560,13 +560,53 @@ n'existent pas dans la feuille produite. Ce n'est pas un bug. Ils ont été
 vérification dans le CSS produit, supprimé) — les 7 utilitaires sont
 générés correctement, interlignage et approche compris.
 
+### Ce que H2 a posé (devanture « Encre »)
+
+Header et Footer étaient **déjà** en `bg-nuit-900` — le diagnostic initial
+le supposait autrement pour le footer. H2 a donc porté sur le corps de
+l'accueil.
+
+- `.champ-encre` (`globals.css`) : trois lueurs radiales décentrées
+  mélangées `in oklab` par-dessus `nuit-900`. Remplace le
+  `bg-gradient-to-br from-lin-100 via-sable-300 to-gres-600` du `Hero`,
+  l'aplat beige qui était la première chose vue sur le site. C'est le seul
+  endroit où la palette OKLCH sert réellement : un mélange en sRGB
+  traverserait une zone grise entre l'or et le brun.
+- `[locale]/page.tsx` : `bg-nuit-950` de bout en bout, cartes de piliers en
+  `bg-nuit-900/70` + `shadow-nappe`, section en `.reglure` + `.grain-encre`.
+  L'accueil est la **seule** page au fond sombre intégral ; les pages de
+  lecture restent claires (H3).
+- `Hero` : titre en `text-enseigne` + `font-light` (un Cormorant en 400
+  devient lourd à cette taille), flèches et puces adaptées au fond sombre.
+  Une photo de slide reçoit désormais un **voile dégradé** `nuit-950/85 →
+  /20` : le texte de la devanture est clair, il ne peut pas dépendre de la
+  luminosité d'une image qu'on ne contrôle pas.
+- `BookBand` prend une prop `registre` (`"encre"` | `"papier"`, défaut
+  `"papier"`). Seule la devanture passe `"encre"` et obtient `shadow-tome` ;
+  `/livres` garde `shadow-lg`, `shadow-tome` y serait beaucoup trop lourde.
+  **Attention : `BandCover` est rendu à deux endroits** (bande 3D ≥640px et
+  repli à défilement natif <640px) — toute prop ajoutée doit l'être aux deux.
+
+#### Nouvelle règle de contraste : l'or ne survit pas au champ
+
+La règle du Lot F dit « `or-500` en texte est correct sur `nuit-900`
+(~5,8:1) ». **Elle ne se transmet pas au champ maillé.** Là où passe la
+lueur dorée, le fond monte jusqu'à ~`#584b3b`, et `or-500` y retombe à
+**3,2:1** — sous le seuil AA pour du texte normal. Mesuré pendant le lot,
+sur le surtitre du `Hero` qui est en `text-sm`.
+
+Sur `.champ-encre`, en texte : `sable-300` (5,1:1 au pire point, 9,2:1 sur
+aplat) ou `lin-100`/`lin-50`. `or-500` y reste admis pour du **non
+textuel** (les puces du carrousel : 3,2:1 dépasse le seuil de 3:1 des
+composants d'interface).
+
 ### Découpage restant
 
 | Lot | Contenu | État |
 |---|---|---|
 | H0 | 10 livres + 10 auteurs + 10 couvertures de démo | **fait** |
 | H1 | Fondations : échelle typo, tokens OKLCH, grain et réglure réutilisables, profondeur, bascule `Reveal` → scroll CSS | **fait** |
-| H2 | Devanture « Encre » : accueil, Header, Footer | à faire |
+| H2 | Devanture « Encre » : accueil, Header, Footer | **fait** |
 | H3 | Intérieur « Papier » : la maison, journal, fiches livre et auteur | à faire |
 
 ### Règle d'animation : vérifiée, aucun changement nécessaire

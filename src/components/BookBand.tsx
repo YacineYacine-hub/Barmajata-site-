@@ -70,9 +70,18 @@ function normalizeIndex(i: number, count: number): number {
 export function BookBand({
   items,
   mutedSlugs,
+  registre = "papier",
 }: {
   items: BandItem[];
   mutedSlugs?: ReadonlySet<string>;
+  /**
+   * Registre visuel du fond qui accueille la bande (Lot H2).
+   * "encre" (devanture, fond nuit-950) prend `shadow-tome` : ombre portée
+   * décalée + liseré interne clair qui détoure la tranche. "papier"
+   * (catalogue clair, défaut) garde l'ombre douce d'origine — `shadow-tome`
+   * y serait beaucoup trop lourde.
+   */
+  registre?: "encre" | "papier";
 }) {
   const t = useTranslations("band");
   const count = items.length;
@@ -263,7 +272,7 @@ export function BookBand({
         {items.map((item) => (
           <li key={item.slug} className="w-32 shrink-0 snap-center">
             <Link href={{ pathname: "/books/[slug]", params: { slug: item.slug } }} className="block">
-              <BandCover item={item} />
+              <BandCover item={item} registre={registre} />
             </Link>
           </li>
         ))}
@@ -308,7 +317,7 @@ export function BookBand({
               onClick={(event) => handleItemClick(event, index)}
               className="block"
             >
-              <BandCover item={item} />
+              <BandCover item={item} registre={registre} />
             </Link>
           </li>
         ))}
@@ -317,10 +326,18 @@ export function BookBand({
   );
 }
 
-function BandCover({ item }: { item: BandItem }) {
+function BandCover({
+  item,
+  registre,
+}: {
+  item: BandItem;
+  registre: "encre" | "papier";
+}) {
+  const ombre = registre === "encre" ? "shadow-tome" : "shadow-lg";
+
   if (item.coverSrc) {
     return (
-      <div className="relative aspect-[2/3] w-full overflow-hidden rounded-md shadow-lg">
+      <div className={`relative aspect-[2/3] w-full overflow-hidden rounded-md ${ombre}`}>
         {/* Largeur logique max 160px (ITEM_WIDTH_PX) sur tous les
             contextes d'usage (bande 3D et défilement natif <640px) —
             sizes fixe en conséquence, pas de variation par breakpoint. */}
@@ -329,7 +346,7 @@ function BandCover({ item }: { item: BandItem }) {
     );
   }
   return (
-    <span className="flex aspect-[2/3] w-full items-center justify-center rounded-md bg-sable-300 p-3 text-center text-xs font-medium text-nuit-900 shadow-lg">
+    <span className={`flex aspect-[2/3] w-full items-center justify-center rounded-md bg-sable-300 p-3 text-center text-xs font-medium text-nuit-900 ${ombre}`}>
       {item.title}
     </span>
   );
