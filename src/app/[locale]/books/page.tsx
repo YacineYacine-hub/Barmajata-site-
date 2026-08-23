@@ -2,11 +2,19 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link, getPathname } from "@/i18n/navigation";
 import { getVisibleBooks } from "@/lib/content";
-import { getMinPrice, resolveEdition, type Book, type ContentLocale, type Edition } from "@/lib/content/schema";
+import {
+  getMinPrice,
+  isNewRelease,
+  resolveEdition,
+  type Book,
+  type ContentLocale,
+  type Edition,
+} from "@/lib/content/schema";
 import { buildBookListJsonLd } from "@/lib/content/jsonld";
 import { SITE_URL } from "@/lib/site";
 import { buildAlternates } from "@/lib/seo";
 import { Reveal } from "@/components/Reveal";
+import { BookBandSection, type BandEntry } from "@/components/BookBandSection";
 
 export function generateMetadata(): Metadata {
   return { alternates: buildAlternates("/books") };
@@ -28,6 +36,14 @@ export default async function BooksPage({
     .map((book) => ({ book, edition: resolveEdition(book, contentLocale) }))
     .filter((entry): entry is { book: Book; edition: Edition } => entry.edition !== undefined);
 
+  const bandEntries: BandEntry[] = entries.map(({ book, edition }) => ({
+    slug: book.slug,
+    title: edition.titre,
+    coverSrc: book.couverture,
+    categories: book.categories ?? [],
+    isNew: isNewRelease(edition),
+  }));
+
   const jsonLd = buildBookListJsonLd(
     entries.map(({ book, edition }) => ({
       url: `${SITE_URL}${getPathname({ locale, href: { pathname: "/books/[slug]", params: { slug: book.slug } } })}`,
@@ -45,6 +61,12 @@ export default async function BooksPage({
       )}
 
       <h1 className="font-serif text-4xl text-nuit-900 text-start">{t("title")}</h1>
+
+      {bandEntries.length > 0 && (
+        <div className="mt-10 -mx-6">
+          <BookBandSection entries={bandEntries} locale={contentLocale} />
+        </div>
+      )}
 
       {entries.length === 0 ? (
         <p className="mt-6 text-roche-700 text-start">{tBooks("empty")}</p>

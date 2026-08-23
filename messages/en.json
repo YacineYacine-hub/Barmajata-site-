@@ -69,6 +69,22 @@
       "body": "Content coming soon."
     }
   },
+  "categories": {
+    "all": "All",
+    "new": "New releases",
+    "famille": "Family",
+    "psychologie": "Psychology",
+    "thriller": "Thriller",
+    "histoire-vraie": "True story"
+  },
+  "band": {
+    "label": "Books showcase",
+    "empty": "No books to showcase yet."
+  },
+  "solid": {
+    "label": "3D book — drag to rotate",
+    "straighten": "Straighten"
+  },
   "books": {
     "empty": "No books available yet.",
     "priceFrom": "From {price}",

@@ -69,6 +69,22 @@
       "body": "Contenu à venir."
     }
   },
+  "categories": {
+    "all": "Tout",
+    "new": "Nouveautés",
+    "famille": "Famille",
+    "psychologie": "Psychologie",
+    "thriller": "Thriller",
+    "histoire-vraie": "Histoire vraie"
+  },
+  "band": {
+    "label": "Vitrine des livres",
+    "empty": "Aucun livre à présenter pour le moment."
+  },
+  "solid": {
+    "label": "Livre en volume — faites glisser pour tourner",
+    "straighten": "Redresser"
+  },
   "books": {
     "empty": "Aucun livre disponible pour le moment.",
     "priceFrom": "À partir de {price}",

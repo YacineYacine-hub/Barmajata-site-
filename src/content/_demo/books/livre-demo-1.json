@@ -2,6 +2,7 @@
   "slug": "livre-demo-1",
   "auteurSlug": "auteur-demo-1",
   "couverture": "/demo/covers/livre-demo-1.svg",
+  "categories": ["famille", "histoire-vraie"],
   "editions": [
     {
       "langue": "fr",
@@ -11,6 +12,7 @@
       "resumeCourt": "Résumé court factice. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "resumeLong": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Contenu entièrement factice, à usage de démonstration uniquement — aucun texte éditorial réel.",
       "dateParution": "2026-06-15",
+      "couvertureImage": "/demo/covers/livre-demo-1.svg",
       "formats": [
         { "type": "broche", "isbn": "978-2-00-000001-0", "asin": "B0DEMO0001", "pages": 240, "prixIndicatif": 19.9 },
         { "type": "epub", "asin": "B0DEMO0002", "prixIndicatif": 9.9 },

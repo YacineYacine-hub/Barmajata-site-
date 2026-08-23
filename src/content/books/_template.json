@@ -29,7 +29,12 @@
   // Slug de la fiche auteur (src/content/authors/<auteurSlug>.json).
   "auteurSlug": "",
 
-  "couverture": "",   // chemin ou URL de la couverture — optionnel, niveau livre.
+  "couverture": "",   // chemin ou URL de la couverture 2D plate (catalogue/fiche) — optionnel, niveau livre.
+
+  // Genres — quatre valeurs figées : "famille" | "psychologie" | "thriller"
+  // | "histoire-vraie". Un livre peut en porter plusieurs. Optionnel :
+  // sans catégorie, le livre n'apparaît dans aucun filtre par genre.
+  "categories": [],
 
   // Surcharges SEO optionnelles (title/description de la fiche), une
   // entrée par langue présente dans `editions`. À défaut, la page retombe
@@ -74,7 +79,16 @@
       // est dynamique et hors de notre contrôle.
       "formats": [
         // { "type": "broche", "isbn": "", "asin": "", "pages": 0, "prixIndicatif": 0, "urlOverride": "" }
-      ]
+      ],
+
+      // Textures du livre en volume (BookSolid, fiche livre) — distinctes
+      // de `couverture` ci-dessus (vignette 2D plate). Toutes optionnelles :
+      // sans elles, aplats colorés. `epaisseurMm` optionnelle aussi : si
+      // absente, dérivée du format broché (pages × 0.07).
+      "couvertureImage": "",
+      "quatriemeImage": "",
+      "dosImage": "",
+      "epaisseurMm": 0
     }
   ]
 }

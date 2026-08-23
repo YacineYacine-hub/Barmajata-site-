@@ -5,6 +5,9 @@ import { Link } from "@/i18n/navigation";
 import { buildAlternates } from "@/lib/seo";
 import { Hero } from "@/components/Hero";
 import { Reveal } from "@/components/Reveal";
+import { BookBand, type BandItem } from "@/components/BookBand";
+import { getVisibleBooks } from "@/lib/content";
+import { resolveEdition, type Book, type ContentLocale, type Edition } from "@/lib/content/schema";
 
 const PILLARS = ["books", "authors", "house", "journal"] as const;
 
@@ -20,10 +23,16 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <HomeContent />;
+  const contentLocale = locale as ContentLocale;
+  const bandItems: BandItem[] = getVisibleBooks()
+    .map((book) => ({ book, edition: resolveEdition(book, contentLocale) }))
+    .filter((entry): entry is { book: Book; edition: Edition } => entry.edition !== undefined)
+    .map(({ book, edition }) => ({ slug: book.slug, title: edition.titre, coverSrc: book.couverture }));
+
+  return <HomeContent bandItems={bandItems} />;
 }
 
-function HomeContent() {
+function HomeContent({ bandItems }: { bandItems: BandItem[] }) {
   const t = useTranslations("home");
 
   return (
@@ -33,6 +42,14 @@ function HomeContent() {
           { eyebrow: t("heroEyebrow"), title: t("heroTitle"), subtitle: t("heroSubtitle") },
         ]}
       />
+
+      {/* La bande est une vitrine (pas la boutique) : aucun filtre ici,
+          voir BookBandSection sur /livres pour les puces de catégorie. */}
+      {bandItems.length > 0 && (
+        <section className="py-16">
+          <BookBand items={bandItems} />
+        </section>
+      )}
 
       <section className="mx-auto max-w-5xl ps-6 pe-6 py-20">
         <h2 className="font-serif text-2xl text-nuit-900 text-start">

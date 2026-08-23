@@ -69,6 +69,22 @@
       "body": "المحتوى قادم قريبًا."
     }
   },
+  "categories": {
+    "all": "الكل",
+    "new": "الجديد",
+    "famille": "Family",
+    "psychologie": "Psychology",
+    "thriller": "Thriller",
+    "histoire-vraie": "True story"
+  },
+  "band": {
+    "label": "واجهة عرض الكتب",
+    "empty": "لا توجد كتب لعرضها حاليًا."
+  },
+  "solid": {
+    "label": "كتاب ثلاثي الأبعاد — اسحب للتدوير",
+    "straighten": "تصحيح الوضعية"
+  },
   "books": {
     "empty": "لا توجد كتب متاحة حاليًا.",
     "priceFrom": "ابتداءً من {price}",

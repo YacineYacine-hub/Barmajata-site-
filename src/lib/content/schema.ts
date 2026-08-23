@@ -22,6 +22,16 @@ export type ContentLocale = (typeof CONTENT_LOCALES)[number];
 export const BOOK_FORMAT_TYPES = ["broche", "epub", "pdf"] as const;
 export type BookFormatType = (typeof BOOK_FORMAT_TYPES)[number];
 
+/**
+ * Quatre genres figés. Distinct du champ `formats[].type` (broché/epub/
+ * pdf, le format physique/numérique) : la catégorie ne touche jamais à
+ * ce champ. Slugs canoniques utilisés dans les fichiers de contenu — la
+ * traduction par locale (URL du filtre `?categorie=`) vit dans
+ * `src/lib/content/categories.ts`.
+ */
+export const BOOK_CATEGORIES = ["famille", "psychologie", "thriller", "histoire-vraie"] as const;
+export type BookCategory = (typeof BOOK_CATEGORIES)[number];
+
 const slugSchema = z
   .string()
   .min(1)
@@ -76,6 +86,15 @@ const editionSchema = z
     statut: z.enum(CONTENT_STATUSES),
     dateParution: isoDateSchema.optional(),
     formats: z.array(formatSchema).optional(),
+    // Textures du livre en volume (BookSolid, fiche livre) — distinctes de
+    // `couverture` (niveau livre, vignette 2D plate du catalogue/de la
+    // fiche). Optionnelles : sans elles, aplats colorés (voir BookSolid.tsx).
+    couvertureImage: z.string().min(1).optional(),
+    quatriemeImage: z.string().min(1).optional(),
+    dosImage: z.string().min(1).optional(),
+    // Épaisseur en mm. Si absente, dérivée du format broché :
+    // pages × 0.07 (voir getEpaisseurMm()).
+    epaisseurMm: z.number().positive().optional(),
   })
   .superRefine((edition, ctx) => {
     if (edition.statut === "publie") {
@@ -113,6 +132,9 @@ export const bookSchema = z
     slug: slugSchema,
     auteurSlug: slugSchema,
     couverture: z.string().min(1).optional(),
+    // Un livre peut porter plusieurs genres. Optionnel : un livre sans
+    // catégorie n'apparaît simplement dans aucun filtre par genre.
+    categories: z.array(z.enum(BOOK_CATEGORIES)).min(1).optional(),
     // Surcharges SEO optionnelles, une entrée par langue présente dans
     // `editions` (pas forcément les 3 locales du site).
     seo: z.record(z.enum(CONTENT_LOCALES), seoOverrideSchema).optional(),
@@ -158,6 +180,30 @@ export function resolveEdition(book: Book, locale: ContentLocale): Edition | und
 export function getMinPrice(edition: Edition): number | undefined {
   if (!edition.formats?.length) return undefined;
   return Math.min(...edition.formats.map((format) => format.prixIndicatif));
+}
+
+const MM_PER_PAGE = 0.07;
+
+/** Épaisseur en mm : explicite si fournie, sinon dérivée des pages du
+ * format broché (pages × 0.07). undefined si aucune des deux n'existe —
+ * BookSolid retombe alors sur une épaisseur par défaut. */
+export function getEpaisseurMm(edition: Edition): number | undefined {
+  if (edition.epaisseurMm) return edition.epaisseurMm;
+  const pages = edition.formats?.find((format) => format.type === "broche")?.pages;
+  return pages ? pages * MM_PER_PAGE : undefined;
+}
+
+const NEW_RELEASE_MONTHS = 12;
+
+/** "Nouveautés" est un filtre calculé, jamais stocké : publié et paru
+ * dans les NEW_RELEASE_MONTHS derniers mois (jamais dans le futur). */
+export function isNewRelease(edition: Edition, referenceDate: Date = new Date()): boolean {
+  if (edition.statut !== "publie" || !edition.dateParution) return false;
+  const parution = new Date(edition.dateParution);
+  if (Number.isNaN(parution.getTime()) || parution > referenceDate) return false;
+  const cutoff = new Date(referenceDate);
+  cutoff.setMonth(cutoff.getMonth() - NEW_RELEASE_MONTHS);
+  return parution >= cutoff;
 }
 
 const authorLinkSchema = z.object({

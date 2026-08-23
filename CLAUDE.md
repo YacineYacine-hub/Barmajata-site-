@@ -148,14 +148,85 @@ déposée) — jamais "Barma Jata" en deux mots.
 - JSON-LD schema.org : `Book` sur la fiche livre, `Person` sur la fiche
   auteur, `Organization` sur `/la-maison`, `ItemList` sur le catalogue
   livres — générés dans `src/lib/content/jsonld.ts`.
-- Couvertures (`book.couverture`) affichées sur la carte catalogue et la
-  fiche livre via `<img>` — champ optionnel, pas de rendu si absent.
+- Couvertures 2D (`book.couverture`) affichées sur la carte catalogue via
+  `<img>` — champ optionnel, pas de rendu si absent. La fiche livre, elle,
+  affiche `BookSolid` (voir plus bas) à la place.
+- Genres (`book.categories`, quatre valeurs figées : `famille` |
+  `psychologie` | `thriller` | `histoire-vraie`) : un livre peut en porter
+  plusieurs, champ optionnel. Distinct de `formats[].type` (broché/epub/
+  pdf) — jamais confondu. Slugs de filtre traduits par locale dans
+  `src/lib/content/categories.ts` (`CATEGORY_SLUGS`) ; arabe non fourni,
+  anglais utilisé en attendant (TODO traduction humaine, voir aussi
+  `messages/ar.json` → `categories.famille/psychologie/thriller/
+  histoire-vraie`, volontairement en anglais alors que `categories.all`/
+  `categories.new` sont bien traduits).
+- "Nouveautés" est un **filtre calculé**, jamais stocké : `isNewRelease()`
+  dans `schema.ts` (édition `publie`, parution dans les 12 derniers mois,
+  jamais dans le futur).
+- Textures du livre en volume (`couvertureImage`, `quatriemeImage`,
+  `dosImage`, toutes par édition) et `epaisseurMm` (dérivée des pages du
+  format broché × 0,07 via `getEpaisseurMm()` si absente) — distinctes de
+  `book.couverture`, consommées par `BookSolid` (voir plus bas).
+
+## BookBand et BookSolid
+
+- `BookBand.tsx` : bande continue et bouclée de couvertures (`/`, sans
+  filtre — "une vitrine, pas la boutique" — et `/livres`, avec filtre).
+  Position continue (`positionRef`, pas un index entier), distance au
+  centre calculée modulo (`wrappedDelta()`) pour boucler sans à-coup.
+  ≥640px : échelle 1,34→0,84, rotation Y max ±38°, recul Z, opacité nulle
+  au-delà d'une distance de 3,7 (`OPACITY_CUTOFF_DISTANCE`) — constantes
+  données par la spec ; espacement/recul en px sont des choix
+  d'implémentation documentés en commentaire dans le fichier. <640px :
+  défilement horizontal natif, aucune transform. Glissement pointeur,
+  molette **horizontale uniquement** (`deltaX` vs `deltaY`, jamais de
+  `preventDefault` si la verticale domine — ne bloque jamais le scroll de
+  la page), flèches clavier (sens inversé en RTL), calage amorti en fin de
+  geste (`settleTo`, coupé net par `prefers-reduced-motion`).
+  `role="listbox"` / `role="option"` / `aria-selected`. **Rend toujours la
+  totalité des éléments reçus, liens réels vers `/books/[slug]` inclus,
+  sans dépendre de `useSearchParams`** — un filtre externe ne doit
+  masquer visuellement des éléments (`mutedSlugs`, opacité 0 +
+  `pointer-events: none` + `aria-hidden`) qu'*après* ce rendu de base,
+  jamais en le conditionnant, sous peine de sortir la bande du HTML
+  statique (piège rencontré et corrigé pendant le développement — voir
+  `BookBandSection.tsx` : seule la lecture de `?categorie=` vit dans une
+  feuille `Suspense` séparée, isolée du rendu de la bande elle-même).
+- `BookBandSection.tsx` (`/livres` uniquement) : puces Tout / Nouveautés
+  (`NEW_RELEASES_PARAM = "nouveautes"`, réservé, non traduit par locale) /
+  quatre genres, mettent à jour `?categorie=` (slug traduit via
+  `categoryToSlug()`). Le catalogue en grille classique sous la bande
+  reste, lui, complet et non filtré.
+- `BookSolid.tsx` : livre en volume par **projection SVG**, pas de CSS 3D.
+  8 sommets (`localVertices`), rotation Y puis X (`rotateYX`), projection
+  perspective focale 780 (`FOCAL`, `CAMERA_DISTANCE` = choix
+  d'implémentation). 6 faces (`FACES`), élimination arrière sur la normale
+  rotatée (`nz <= 0` culled, gardé si `nz > 0`), tri peintre par
+  profondeur moyenne avant tracé. Éclairage lambertien fixe par rapport à
+  la caméra (`LIGHT_DIR`, pas tourné avec l'objet) : ambiant 0,62 + diffus
+  0,38. Chaque polygone a `fill` **et** `stroke` de la même couleur
+  (`STROKE_WIDTH = 1.1`) pour supprimer les interstices d'anticrénelage
+  entre faces adjacentes. Les 3 faces texturables (couverture, quatrième,
+  dos) placent leur `<image>` via une **matrice affine dérivée de 3 des 4
+  coins projetés** (approximation affine assumée par la spec, pas une
+  correction perspective par pixel) ; sans image, aplat coloré teinté par
+  l'éclairage. Rotation libre 2 axes à la souris/au toucher, inertie
+  (décroissance 0,93/frame, coupée par `prefers-reduced-motion` — ajout
+  défensif au-delà de la spec, cohérent avec le reste du site), flèches
+  clavier, bouton "Redresser" (retour à `yaw=0, pitch=0`).
+- Aucune vérification visuelle possible côté agent (pas d'outil
+  navigateur dans cette session) : la géométrie/physique a été vérifiée
+  par relecture et par inspection du HTML/SVG généré (coordonnées,
+  couleurs éclairées, matrices affines), pas par capture d'écran. À
+  confirmer visuellement par un humain.
 
 ## Contenu de démonstration (`NEXT_PUBLIC_DEMO_CONTENT`)
 
 - `src/content/_demo/books/*.json` et `src/content/_demo/authors/*.json` :
-  3 livres factices (`publie` à 3 formats, `a_paraitre`, `brouillon`) + 2
-  auteurs factices, textes explicitement lorem ipsum, ASIN/ISBN fictifs
+  4 livres factices (`publie` à 3 formats avec `categories`+
+  `couvertureImage`, `a_paraitre`, `brouillon`, `publie` 1 format non
+  récent — pour tester `isNewRelease()` en négatif) + 2 auteurs factices,
+  textes explicitement lorem ipsum, ASIN/ISBN fictifs
   mais au bon format. Couvertures SVG générées dans
   `public/demo/covers/` (aplat sable, titre en `font-family:
   'Cormorant Garamond'` — sans import de police externe, donc dépendant

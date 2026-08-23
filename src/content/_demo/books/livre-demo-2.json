@@ -2,6 +2,7 @@
   "slug": "livre-demo-2",
   "auteurSlug": "auteur-demo-2",
   "couverture": "/demo/covers/livre-demo-2.svg",
+  "categories": ["thriller"],
   "editions": [
     {
       "langue": "fr",

@@ -3,11 +3,12 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link, getPathname } from "@/i18n/navigation";
 import { getAuthorBySlug, getVisibleBookBySlug, getVisibleBooks } from "@/lib/content";
-import { getMinPrice, resolveEdition, type ContentLocale } from "@/lib/content/schema";
+import { getEpaisseurMm, getMinPrice, resolveEdition, type ContentLocale } from "@/lib/content/schema";
 import { buildBookJsonLd } from "@/lib/content/jsonld";
 import { AmazonBuyButton } from "@/components/AmazonBuyButton";
 import { StickyBuyBar } from "@/components/StickyBuyBar";
 import { NotifyMe } from "@/components/NotifyMe";
+import { BookSolid } from "@/components/BookSolid";
 import { SITE_URL } from "@/lib/site";
 import { buildAlternates } from "@/lib/seo";
 
@@ -93,13 +94,15 @@ export default async function BookPage({
         {t("cta.backToCatalogue")}
       </Link>
 
-      {book.couverture && (
-        <img
-          src={book.couverture}
-          alt=""
-          className="mt-6 aspect-[2/3] w-48 rounded-md object-cover shadow-sm sm:w-56"
+      <div className="mt-6 max-w-xs">
+        <BookSolid
+          title={edition.titre}
+          couvertureImage={edition.couvertureImage}
+          quatriemeImage={edition.quatriemeImage}
+          dosImage={edition.dosImage}
+          epaisseurMm={getEpaisseurMm(edition)}
         />
-      )}
+      </div>
 
       <div className="mt-6 flex flex-wrap items-center gap-3">
         <span className="inline-block rounded-full bg-or-500/10 px-3 py-1 text-xs font-medium text-or-500">
