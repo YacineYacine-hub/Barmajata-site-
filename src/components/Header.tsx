@@ -31,7 +31,7 @@ export function Header() {
         <Link href="/" dir="ltr" className="inline-flex shrink-0" onClick={() => setIsOpen(false)}>
           <img
             src="/brand/logo-horizontal.svg"
-            alt="Barmajata Éditions"
+            alt="BARMAJATA Éditions"
             width={220}
             height={40}
             className="h-8 w-auto md:h-10"

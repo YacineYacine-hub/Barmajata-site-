@@ -46,6 +46,7 @@ export async function generateMetadata({
       apple: "/brand/apple-touch-icon.png",
     },
     openGraph: {
+      siteName: t("name"),
       images: [{ url: "/brand/og-image.png", width: 1200, height: 630 }],
     },
     twitter: {

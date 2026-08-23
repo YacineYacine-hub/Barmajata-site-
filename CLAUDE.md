@@ -1,8 +1,9 @@
-# Barma Jata
+# BARMAJATA
 
-Site vitrine de Barma Jata, maison d'édition qui publiera plusieurs livres
+Site vitrine de BARMAJATA, maison d'édition qui publiera plusieurs livres
 de plusieurs auteurs. **Ce n'est pas un site de bar/restaurant** malgré le
-nom.
+nom. Le nom de la maison s'écrit en un seul mot : **BARMAJATA** (forme
+déposée) — jamais "Barma Jata" en deux mots.
 
 ## Phase 1 — périmètre
 
