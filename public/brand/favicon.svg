@@ -1,5 +1,1 @@
-<!-- PLACEHOLDER — à remplacer par le favicon définitif du designer -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#b08d4f"/>
-  <text x="32" y="44" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-weight="600" fill="#14110f">B</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Barmajata"><circle cx="64.00" cy="64.00" r="56.32" fill="none" stroke="#2A2521" stroke-width="3.17"/><path d="M44.08 52.17 Q64.00 88.92 83.92 52.17" fill="none" stroke="#2A2521" stroke-width="2.60" stroke-linecap="round"/><circle cx="64.00" cy="76.67" r="4.98" fill="#B99B72"/></svg>
