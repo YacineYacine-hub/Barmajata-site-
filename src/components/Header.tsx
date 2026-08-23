@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 
 type NavHref = "/authors" | "/house" | "/journal" | "/contact";
+type ProHref = "/submissions" | "/press" | "/rights" | "/booksellers";
 
 const SCROLL_SHRINK_THRESHOLD = 80;
 const FOCUSABLE_SELECTOR =
@@ -86,6 +87,18 @@ export function Header() {
     { href: "/contact", label: t("contact") },
   ];
 
+  // Pages professionnelles (Lot H12) : rangées dans le panneau et non
+  // dans le bandeau, qui doit rester une bande fine, ni dans le pied de
+  // page pour la même raison. Elles s'adressent aux auteurs, à la presse,
+  // aux libraires et aux acheteurs de droits — pas au lecteur qui vient
+  // acheter un livre, dont le parcours reste le bandeau.
+  const proLinks: Array<{ href: ProHref; label: string }> = [
+    { href: "/submissions", label: t("submissions") },
+    { href: "/press", label: t("press") },
+    { href: "/rights", label: t("rights") },
+    { href: "/booksellers", label: t("booksellers") },
+  ];
+
   // Bande fine du haut. La réglure d'imprimeur qu'elle portait depuis le
   // Lot H4 a été retirée au Lot H8 : une texture sur une barre
   // d'interface est exactement ce qui datait l'ensemble. `text-lin-50`
@@ -158,7 +171,7 @@ export function Header() {
             </button>
           </div>
 
-          <nav aria-label={t("menu")} className="mt-16 flex-1">
+          <nav aria-label={t("menu")} className="mt-16 flex-1 overflow-y-auto">
             <ul className="flex flex-col gap-6">
               {panelLinks.map((link) => (
                 <li key={link.href}>
@@ -166,6 +179,23 @@ export function Header() {
                     href={link.href}
                     onClick={() => setIsOpen(false)}
                     className="font-serif text-3xl text-lin-50 hover:text-or-500"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <p className="mt-12 text-xs font-medium uppercase tracking-[0.2em] text-sable-300">
+              {t("pro")}
+            </p>
+            <ul className="mt-5 flex flex-col gap-4">
+              {proLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className="text-lg text-sable-300 hover:text-lin-50"
                   >
                     {link.label}
                   </Link>

@@ -14,6 +14,13 @@ const CANONICAL_PATHS = [
   "/club",
   "/journal",
   "/contact",
+  // Pages professionnelles (Lot H12). Cette liste est écrite à la main :
+  // une route ajoutée à `routing.pathnames` n'y entre PAS toute seule et
+  // resterait absente du sitemap sans que rien ne le signale.
+  "/submissions",
+  "/press",
+  "/rights",
+  "/booksellers",
   "/legal-notice",
   "/terms-of-sale",
   "/privacy-policy",

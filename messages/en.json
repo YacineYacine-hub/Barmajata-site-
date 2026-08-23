@@ -12,7 +12,12 @@
     "contact": "Contact",
     "menu": "Menu",
     "closeMenu": "Close menu",
-    "breadcrumb": "Breadcrumb"
+    "breadcrumb": "Breadcrumb",
+    "pro": "Trade",
+    "submissions": "Manuscripts",
+    "press": "Press",
+    "rights": "Rights",
+    "booksellers": "Booksellers"
   },
   "home": {
     "heroEyebrow": "Publishing house",
@@ -105,6 +110,82 @@
         {
           "heading": "Details",
           "body": "Content coming soon."
+        }
+      ]
+    },
+    "submissions": {
+      "eyebrow": "Manuscripts",
+      "title": "Submit a manuscript",
+      "lede": "We read the manuscripts sent to us. Submission terms are set out below.",
+      "sections": [
+        {
+          "heading": "What we read",
+          "body": "Content coming soon."
+        },
+        {
+          "heading": "How to send it",
+          "body": "Content coming soon."
+        },
+        {
+          "heading": "Response time",
+          "body": "Content coming soon."
+        }
+      ]
+    },
+    "press": {
+      "eyebrow": "Press",
+      "title": "Press room",
+      "lede": "Journalists, booksellers, reviewers: interview requests, review copies and cover images.",
+      "sections": [
+        {
+          "heading": "Press contact",
+          "body": "Write to us through the contact page; your request will be passed on."
+        },
+        {
+          "heading": "Images and covers",
+          "body": "Content coming soon."
+        },
+        {
+          "heading": "Review copies",
+          "body": "Content coming soon."
+        }
+      ]
+    },
+    "rights": {
+      "eyebrow": "Rights",
+      "title": "Rights and licensing",
+      "lede": "Foreign, audio, digital and adaptation rights for titles in the catalogue.",
+      "sections": [
+        {
+          "heading": "Foreign rights",
+          "body": "Content coming soon."
+        },
+        {
+          "heading": "Audio, digital and adaptation",
+          "body": "Content coming soon."
+        },
+        {
+          "heading": "Get in touch",
+          "body": "Licensing enquiries go through the contact page."
+        }
+      ]
+    },
+    "booksellers": {
+      "eyebrow": "Trade",
+      "title": "Booksellers and retailers",
+      "lede": "Distribution terms and ordering for book trade professionals.",
+      "sections": [
+        {
+          "heading": "Distribution",
+          "body": "Content coming soon."
+        },
+        {
+          "heading": "Ordering",
+          "body": "Content coming soon."
+        },
+        {
+          "heading": "Retail sales",
+          "body": "Sales to readers are handled by redirection to Amazon: no order is processed on this site."
         }
       ]
     }

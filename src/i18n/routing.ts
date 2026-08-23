@@ -53,6 +53,30 @@ export const routing = defineRouting({
       en: "/contact",
       ar: "/اتصل",
     },
+    // Pages professionnelles (Lot H12). Un éditeur sans page manuscrits
+    // reçoit les manuscrits n'importe où ; sans page droits, il ne reçoit
+    // pas d'offres de cession. Elles ne sont pas dans le bandeau : elles
+    // vivent dans le panneau du menu, sous « Professionnels ».
+    "/submissions": {
+      fr: "/manuscrits",
+      en: "/submissions",
+      ar: "/المخطوطات",
+    },
+    "/press": {
+      fr: "/presse",
+      en: "/press",
+      ar: "/الصحافة",
+    },
+    "/rights": {
+      fr: "/droits",
+      en: "/rights",
+      ar: "/الحقوق",
+    },
+    "/booksellers": {
+      fr: "/libraires",
+      en: "/booksellers",
+      ar: "/الموزعون",
+    },
     "/legal-notice": "/mentions-legales",
     "/terms-of-sale": "/cgv",
     "/privacy-policy": "/confidentialite",

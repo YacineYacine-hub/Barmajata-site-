@@ -1026,6 +1026,52 @@ Côté légal, les quatre pages existent mais sont vides : il manque aussi
 les mentions d'éditeur (SIRET, directeur de publication, hébergeur) et une
 politique cookies.
 
+## Lot H12 — les quatre pages professionnelles
+
+Créées d'après ce que fait tout éditeur : `/manuscrits`, `/presse`,
+`/droits`, `/libraires` (routes traduites dans les trois langues).
+
+**Ce qui a été livré, c'est la STRUCTURE, pas le contenu.** Les délais de
+réponse aux manuscrits, les droits effectivement cédés, les conditions
+faites aux libraires sont de la **politique d'entreprise** : les inventer
+aurait été pire que de laisser vide. Les corps de section portent donc le
+« Contenu à venir. » du projet, sauf là où un énoncé est factuellement
+vérifiable (la vente au public passe par Amazon, les demandes passent par
+la page contact).
+
+### Ce que l'utilisateur doit décider, page par page
+
+| Page | Décisions à prendre |
+|---|---|
+| Manuscrits | Genres acceptés ; format et canal d'envoi (courriel ? postal ?) ; délai de réponse annoncé ; ce qui est refusé d'office |
+| Presse | Adresse de contact presse dédiée ou non ; où sont les visuels HD ; conditions d'obtention d'un service de presse |
+| Droits | Territoires et langues déjà cédés ou libres ; qui traite les demandes ; existence d'un agent |
+| Libraires | Diffuseur et distributeur ; remise consentie ; canal de commande |
+
+### Emplacement dans la navigation
+
+Dans le **panneau du menu**, sous un intertitre « Professionnels » — ni
+dans le bandeau ni dans le pied de page, tous deux devant rester des
+bandes fines depuis le Lot H5. Ces pages s'adressent aux auteurs, à la
+presse, aux libraires et aux acheteurs de droits ; le lecteur qui vient
+acheter un livre garde son parcours dans le bandeau.
+
+### Piège : le sitemap n'est pas automatique
+
+`CANONICAL_PATHS` (`src/app/sitemap.ts`) est une liste **écrite à la
+main**. Une route ajoutée à `routing.pathnames` n'y entre pas toute seule
+et resterait absente du sitemap sans que rien ne le signale — même classe
+de défaut silencieux que les clés de traduction manquantes du Lot F.
+Vérifié : les quatre nouvelles routes y sont.
+
+### Restent à faire
+
+Citations de presse sur la fiche livre, catalogue PDF téléchargeable. Et
+surtout : les quatre pages légales existent mais sont **vides**, et il
+manque les mentions d'éditeur (SIRET, directeur de la publication,
+hébergeur) ainsi qu'une politique cookies — toutes choses qui exigent des
+informations d'entreprise réelles.
+
 ## Stack
 
 - Next.js 16 (App Router, Turbopack), TypeScript **5.9** (pas TS 7 natif :

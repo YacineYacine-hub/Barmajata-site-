@@ -12,7 +12,12 @@
     "contact": "Contact",
     "menu": "Menu",
     "closeMenu": "Fermer le menu",
-    "breadcrumb": "Fil d'Ariane"
+    "breadcrumb": "Fil d'Ariane",
+    "pro": "Professionnels",
+    "submissions": "Manuscrits",
+    "press": "Presse",
+    "rights": "Droits",
+    "booksellers": "Libraires"
   },
   "home": {
     "heroEyebrow": "Maison d'édition",
@@ -105,6 +110,82 @@
         {
           "heading": "Coordonnées",
           "body": "Contenu à venir."
+        }
+      ]
+    },
+    "submissions": {
+      "eyebrow": "Manuscrits",
+      "title": "Envoyer un manuscrit",
+      "lede": "Nous lisons les manuscrits qui nous sont adressés. Les conditions de dépôt sont précisées ci-dessous.",
+      "sections": [
+        {
+          "heading": "Ce que nous lisons",
+          "body": "Contenu à venir."
+        },
+        {
+          "heading": "Comment nous l'adresser",
+          "body": "Contenu à venir."
+        },
+        {
+          "heading": "Délai de réponse",
+          "body": "Contenu à venir."
+        }
+      ]
+    },
+    "press": {
+      "eyebrow": "Presse",
+      "title": "Espace presse",
+      "lede": "Journalistes, libraires, blogueurs : demandes d'interview, de service de presse et de visuels.",
+      "sections": [
+        {
+          "heading": "Contact presse",
+          "body": "Écrivez-nous par la page contact ; votre demande sera transmise à la personne concernée."
+        },
+        {
+          "heading": "Visuels et couvertures",
+          "body": "Contenu à venir."
+        },
+        {
+          "heading": "Services de presse",
+          "body": "Contenu à venir."
+        }
+      ]
+    },
+    "rights": {
+      "eyebrow": "Droits",
+      "title": "Droits et cessions",
+      "lede": "Droits étrangers, audio, numériques et d'adaptation des ouvrages du catalogue.",
+      "sections": [
+        {
+          "heading": "Droits étrangers",
+          "body": "Contenu à venir."
+        },
+        {
+          "heading": "Audio, numérique et adaptation",
+          "body": "Contenu à venir."
+        },
+        {
+          "heading": "Nous contacter",
+          "body": "Les demandes de cession passent par la page contact."
+        }
+      ]
+    },
+    "booksellers": {
+      "eyebrow": "Professionnels",
+      "title": "Libraires et revendeurs",
+      "lede": "Conditions de diffusion et modalités de commande pour les professionnels du livre.",
+      "sections": [
+        {
+          "heading": "Diffusion et distribution",
+          "body": "Contenu à venir."
+        },
+        {
+          "heading": "Commander",
+          "body": "Contenu à venir."
+        },
+        {
+          "heading": "Vente au public",
+          "body": "La vente aux particuliers se fait par redirection vers Amazon : aucune commande n'est traitée sur ce site."
         }
       ]
     }
