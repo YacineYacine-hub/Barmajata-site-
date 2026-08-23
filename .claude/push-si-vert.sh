@@ -42,11 +42,30 @@ fi
 
 A_POUSSER="$(git log --oneline '@{u}..HEAD' | wc -l | tr -d ' ')"
 
+# ATTENTION — le code de sortie ne suffit pas.
+#
+# `next build` imprime certaines erreurs et sort quand même en 0. Mesuré
+# sur ce projet : retirer `pages.books.description` de messages/fr.json
+# fait imprimer « Error: MISSING_MESSAGE » pendant la génération statique,
+# et le build sort en 0. C'est exactement la panne du Lot F, celle qui a
+# motivé ce script : s'y fier seule le rendrait inutile.
+#
+# On inspecte donc aussi la sortie. Motifs retenus : les erreurs de clé de
+# traduction manquante, et toute ligne `Error:` en début de ligne.
+MOTIFS_ECHEC='MISSING_MESSAGE|^Error:|^\s*⨯'
+
+echouer() {
+  rendre_compte "$(printf 'Push auto ANNULÉ — %s\n\n%s\n\nRien n'"'"'a été publié : %s commit(s) restent en local.' \
+    "$1" "$(tail -n 15 "$JOURNAL")" "$A_POUSSER")"
+  exit 0
+}
+
 for controle in "npx tsc --noEmit" "npm run lint" "npm run build"; do
   if ! eval "$controle" >"$JOURNAL" 2>&1; then
-    rendre_compte "$(printf 'Push auto ANNULÉ — « %s » a échoué.\n\n%s\n\nRien n'"'"'a été publié : %s commit(s) restent en local.' \
-      "$controle" "$(tail -n 15 "$JOURNAL")" "$A_POUSSER")"
-    exit 0
+    echouer "« $controle » a échoué."
+  fi
+  if grep -qE "$MOTIFS_ECHEC" "$JOURNAL"; then
+    echouer "« $controle » est sorti en 0 mais a signalé des erreurs dans sa sortie."
   fi
 done
 
