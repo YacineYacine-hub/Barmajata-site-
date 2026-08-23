@@ -239,6 +239,18 @@ export function BookBand({
     }
   }
 
+  // Clic sur la couverture centrale : navigation normale (comportement
+  // par défaut du <Link>). Clic sur une couverture latérale : la
+  // recentre sans naviguer — plus court chemin bouclé via wrappedDelta().
+  function handleItemClick(event: React.MouseEvent<HTMLAnchorElement>, index: number) {
+    if (event.defaultPrevented) return;
+    if (index === centerIndex) return;
+    event.preventDefault();
+    const target = positionRef.current + wrappedDelta(index, positionRef.current, count);
+    settleTo(target, false);
+    focusItem(index);
+  }
+
   if (count === 0) return null;
 
   if (isNarrow) {
@@ -292,6 +304,7 @@ export function BookBand({
             <Link
               href={{ pathname: "/books/[slug]", params: { slug: item.slug } }}
               tabIndex={index === centerIndex ? 0 : -1}
+              onClick={(event) => handleItemClick(event, index)}
               className="block"
             >
               <BandCover item={item} />

@@ -98,6 +98,12 @@ déposée) — jamais "Barma Jata" en deux mots.
   `logo-lockup-dark.svg`, copyright, liens sociaux (`src/lib/social.ts`,
   `SOCIAL_LINKS` vide par conception — section masquée tant qu'aucun lien
   réel n'est fourni), sélecteur de langue.
+- `PageTransition.tsx` : fondu de 250ms au changement de page
+  (`@keyframes page-fade` dans `globals.css`), posé dans
+  `[locale]/layout.tsx` entre `Header` et `Footer`. `key={pathname}`
+  force le remontage à chaque navigation pour rejouer l'animation ;
+  coupée pour `prefers-reduced-motion` par la règle globale existante
+  (aucune logique dédiée à ce composant).
 - `Reveal.tsx` : fondu + `translate-y-3` (12px), `duration-[400ms]`,
   jamais de rebond ni de rotation. `delayMs={index * 80}` pour la cascade
   des grilles catalogue (`books/page.tsx`, `authors/page.tsx`) et de la
@@ -199,7 +205,11 @@ déposée) — jamais "Barma Jata" en deux mots.
   `preventDefault` si la verticale domine — ne bloque jamais le scroll de
   la page), flèches clavier (sens inversé en RTL), calage amorti en fin de
   geste (`settleTo`, coupé net par `prefers-reduced-motion`).
-  `role="listbox"` / `role="option"` / `aria-selected`. **Rend toujours la
+  `role="listbox"` / `role="option"` / `aria-selected`. Clic sur la
+  couverture centrale : navigation normale (comportement par défaut du
+  `<Link>`). Clic sur une couverture latérale : `event.preventDefault()`
+  + recentrage vers cette couverture (`settleTo`, plus court chemin
+  bouclé via `wrappedDelta()`), aucune navigation. **Rend toujours la
   totalité des éléments reçus, liens réels vers `/books/[slug]` inclus,
   sans dépendre de `useSearchParams`** — un filtre externe ne doit
   masquer visuellement des éléments (`mutedSlugs`, opacité 0 +
@@ -211,8 +221,10 @@ déposée) — jamais "Barma Jata" en deux mots.
 - `BookBandSection.tsx` (`/livres` uniquement) : puces Tout / Nouveautés
   (`NEW_RELEASES_PARAM = "nouveautes"`, réservé, non traduit par locale) /
   quatre genres, mettent à jour `?categorie=` (slug traduit via
-  `categoryToSlug()`). Le catalogue en grille classique sous la bande
-  reste, lui, complet et non filtré.
+  `categoryToSlug()`) — ce sont de vrais `<Link>` vers
+  `/livres?categorie=slug` (indexables, fonctionnels sans JS). Le
+  catalogue en grille classique sous la bande reste, lui, complet et non
+  filtré.
 - `BookSolid.tsx` : livre en volume par **projection SVG**, pas de CSS 3D.
   8 sommets (`localVertices`), rotation Y puis X (`rotateYX`), projection
   perspective focale 780 (`FOCAL`, `CAMERA_DISTANCE` = choix

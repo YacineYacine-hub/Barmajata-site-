@@ -31,6 +31,18 @@ body {
   color: var(--color-nuit-900);
 }
 
+/* Fondu de transition entre pages (src/components/PageTransition.tsx),
+   250ms, coupé comme toute animation par la règle prefers-reduced-motion
+   ci-dessous. */
+@keyframes page-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Animations sobres : fondu + translation, jamais de rebond ni de
    rotation (voir src/components/Reveal.tsx). Coupées entièrement pour
    les utilisateurs qui demandent moins de mouvement. */

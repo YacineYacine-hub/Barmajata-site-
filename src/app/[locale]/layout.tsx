@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { PageTransition } from "@/components/PageTransition";
 import { SITE_URL } from "@/lib/site";
 import "../globals.css";
 
@@ -87,7 +88,7 @@ export default async function LocaleLayout({
       >
         <NextIntlClientProvider>
           <Header />
-          {children}
+          <PageTransition>{children}</PageTransition>
           <Footer />
         </NextIntlClientProvider>
       </body>
