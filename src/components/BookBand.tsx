@@ -228,6 +228,22 @@ export function BookBand({
 
       el.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rotate}deg) scale(${scale})`;
       el.style.opacity = String(opacity);
+
+      /*
+       * Ordre d'empilement EXPLICITE, et non laissé au recul en Z.
+       *
+       * Les éléments sont bien reculés (translateZ), mais chacun porte une
+       * opacité < 1, ce qui l'aplatit en un plan : le tri en profondeur du
+       * conteneur `preserve-3d` ne s'y applique plus de façon fiable, et le
+       * navigateur retombe sur l'ordre du DOM. Résultat observé : à droite
+       * du centre, un élément plus lointain passait DEVANT un plus proche —
+       * l'inverse de ce que la perspective raconte.
+       *
+       * Un z-index décroissant avec la distance rétablit la règle des deux
+       * côtés à la fois : le centre au-dessus de tous, puis chaque voisin
+       * au-dessus de celui qui le suit vers l'extérieur.
+       */
+      el.style.zIndex = String(Math.round(1000 - absDelta * 100));
       const visible = !isMuted && absDelta < OPACITY_CUTOFF_DISTANCE;
       el.style.pointerEvents = visible ? "auto" : "none";
       el.setAttribute("aria-hidden", isMuted ? "true" : "false");
