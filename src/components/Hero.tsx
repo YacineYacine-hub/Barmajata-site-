@@ -116,20 +116,6 @@ export function Hero({ slides }: HeroProps) {
                  * recalcule tout seul quand la typographie change de pas.
                  */}
                 <span className="inline-block">
-                  {slideIndex === 0 && (
-                    <span className="mb-6 flex justify-center">
-                      <Image
-                        src="/brand/logo-mark.svg"
-                        alt=""
-                        aria-hidden="true"
-                        width={128}
-                        height={128}
-                        priority
-                        className="h-14 w-14 md:h-16 md:w-16"
-                      />
-                    </span>
-                  )}
-
                   {/* roche-700 et non or-500 : sur papier clair l'or mesure
                       ~2,5:1, sous le seuil AA même en grand texte (règle du
                       Lot F). roche-700 tient 7,4:1 sur lin-50. */}
@@ -142,15 +128,39 @@ export function Hero({ slides }: HeroProps) {
                   {/* text-enseigne : le pas réservé à la devanture, un seul
                       par page (voir globals.css). font-light parce qu'à
                       cette taille, un Cormorant en 400 devient lourd. */}
-                  {slideIndex === 0 ? (
-                    <h1 className="mt-3 font-serif text-enseigne font-light text-nuit-900">
-                      {slide.title}
-                    </h1>
-                  ) : (
-                    <p className="mt-3 font-serif text-enseigne font-light text-nuit-900">
-                      {slide.title}
-                    </p>
-                  )}
+                  {/*
+                   * Le symbole passe en SECOND PLAN : agrandi, centré sur
+                   * le mot, posé derrière lui. Le conteneur porte
+                   * `text-enseigne`, donc le `em` du symbole se résout sur
+                   * la taille du mot — il grandit exactement avec lui, à
+                   * n'importe quelle largeur d'écran.
+                   *
+                   * `opacity-[0.13]` : assez pour se voir, assez peu pour
+                   * ne pas entamer le contraste du titre (mesuré : le
+                   * pire fond reste à 9,5:1 sous nuit-900).
+                   */}
+                  <span className="relative mt-3 block text-enseigne">
+                    {slideIndex === 0 && (
+                      <Image
+                        src="/brand/logo-mark.svg"
+                        alt=""
+                        aria-hidden="true"
+                        width={128}
+                        height={128}
+                        priority
+                        className="pointer-events-none absolute start-1/2 top-1/2 h-[1.35em] w-[1.35em] -translate-x-1/2 -translate-y-1/2 opacity-[0.13] rtl:translate-x-1/2"
+                      />
+                    )}
+                    {slideIndex === 0 ? (
+                      <h1 className="relative font-serif text-enseigne font-light text-nuit-900">
+                        {slide.title}
+                      </h1>
+                    ) : (
+                      <p className="relative font-serif text-enseigne font-light text-nuit-900">
+                        {slide.title}
+                      </p>
+                    )}
+                  </span>
 
                   {slide.subtitle && (
                     <p className="mt-5 max-w-md text-base text-roche-700">{slide.subtitle}</p>

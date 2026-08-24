@@ -149,7 +149,7 @@ export function Header() {
        * Sur l'accueil, elle se retrouve en face du grand logo du hero.
        */}
       <div className="mx-auto flex max-w-5xl items-center justify-end gap-5 ps-6 pe-6 pt-9">
-        <Link href="/books" className="text-sm text-roche-700 hover:text-nuit-900">
+        <Link href="/books" className="text-sm font-medium text-roche-700 hover:text-nuit-900">
           {t("books")}
         </Link>
 
@@ -160,7 +160,7 @@ export function Header() {
           aria-label={t("menu")}
           aria-expanded={isOpen}
           aria-controls="nav-panel"
-          className="flex h-9 w-9 items-center justify-center rounded-md border border-nuit-900/25 text-nuit-900 hover:border-nuit-900"
+          className="flex h-9 w-9 items-center justify-center rounded-md bg-roche-700 text-lin-50 transition-colors hover:bg-nuit-900"
         >
           <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />
