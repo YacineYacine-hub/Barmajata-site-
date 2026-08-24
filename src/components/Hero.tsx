@@ -129,39 +129,39 @@ export function Hero({ slides }: HeroProps) {
                       par page (voir globals.css). font-light parce qu'à
                       cette taille, un Cormorant en 400 devient lourd. */}
                   {/*
-                   * Le symbole passe en SECOND PLAN : agrandi, centré sur
-                   * le mot, posé derrière lui. Le conteneur porte
-                   * `text-enseigne`, donc le `em` du symbole se résout sur
-                   * la taille du mot — il grandit exactement avec lui, à
-                   * n'importe quelle largeur d'écran.
+                   * Le symbole passe en SECOND PLAN, et son point doré est
+                   * ancré EXACTEMENT sur la jointure M|A du mot.
                    *
-                   * Il est ancré par SON POINT, pas par son centre : le
-                   * point doré est à 56 % de la hauteur du symbole
-                   * (cy=71.77 sur 128 dans logo-mark.svg), d'où le
-                   * `-translate-y-[56%]` qui amène ce point exactement sur
-                   * l'ancre verticale.
+                   * Le mot est coupé en deux fragments avec, entre eux, une
+                   * ancre de largeur nulle. C'est donc le navigateur qui
+                   * place la jointure, avec les vraies chasses de la police
+                   * — la version précédente reposait sur des chasses
+                   * estimées à la main (48,5 %), forcément approximatives.
                    *
-                   * Horizontalement, l'ancre vaut 48,5 % de la largeur du
-                   * mot : c'est là que tombe la jointure M|A dans
-                   * « BARMAJATA », chasses d'un serif additionnées
-                   * (B .62 + A .68 + R .63 + M .93 sur 5,90 em au total).
-                   * Le pourcentage se résout sur la largeur du mot, le
-                   * conteneur `inline-block` s'y ajustant — l'ancre suit
-                   * donc le mot si la typographie change de pas.
+                   * Géométrie de l'ancrage, à ne pas modifier au hasard :
+                   * - le point est à 56 % de la hauteur du symbole
+                   *   (cy=71.77 sur 128 dans logo-mark.svg) ;
+                   * - `bottom-0` pose le symbole sur la ligne de base, ce
+                   *   qui met son point à 0,44 × H au-dessus d'elle ;
+                   * - `translate-y-[24%]` le redescend pour amener le point
+                   *   vers le haut des capitales (~0,45em au-dessus de la
+                   *   ligne de base, la hauteur de capitale valant ~0,66em).
                    *
-                   * TAILLE PLAFONNÉE À 2,4em, et c'est une contrainte
-                   * géométrique, pas un goût : au-delà, le symbole dépasse
-                   * la hauteur du hero et son cercle est rogné. Le rapport
-                   * hauteur du hero / taille du mot vaut 2,71 à 1440px,
-                   * 2,47 à 1024px et 2,46 à 768px — 2,4 tient partout.
-                   * Remonter cette valeur oblige à allonger le hero.
+                   * TAILLE PLAFONNÉE : au-delà de ~2,4em le symbole dépasse
+                   * la hauteur du hero et son cercle est rogné (rapport
+                   * hero/mot mesuré : 2,71 à 1440px, 2,47 à 1024px, 2,46 à
+                   * 768px). 2,2em laisse de la marge.
                    *
-                   * `opacity-[0.13]` : assez pour se voir, assez peu pour
-                   * ne pas entamer le contraste du titre (mesuré : le
-                   * pire fond reste à 11,2:1 sous nuit-900).
+                   * L'arabe ne contient pas la séquence « MA » : `indexOf`
+                   * y renvoie -1 et le symbole retombe centré sur le mot,
+                   * sans jamais couper une écriture cursive en deux
+                   * fragments — ce qui briserait ses liaisons.
                    */}
-                  <span className="relative mt-3 block text-enseigne">
-                    {slideIndex === 0 && (
+                  {(() => {
+                    const coupure = slide.title.indexOf("MA");
+                    const ancrable = slideIndex === 0 && coupure !== -1;
+
+                    const symbole = (
                       <Image
                         src="/brand/logo-mark.svg"
                         alt=""
@@ -169,19 +169,36 @@ export function Hero({ slides }: HeroProps) {
                         width={128}
                         height={128}
                         priority
-                        className="pointer-events-none absolute start-[48.5%] top-[34%] h-[2.4em] w-[2.4em] -translate-x-1/2 -translate-y-[56%] opacity-[0.13] rtl:translate-x-1/2"
+                        className={
+                          ancrable
+                            ? "pointer-events-none absolute bottom-0 left-0 h-[2.2em] w-[2.2em] -translate-x-1/2 translate-y-[24%] opacity-[0.13]"
+                            : "pointer-events-none absolute start-1/2 top-1/2 h-[2.2em] w-[2.2em] -translate-x-1/2 -translate-y-1/2 opacity-[0.13] rtl:translate-x-1/2"
+                        }
                       />
-                    )}
-                    {slideIndex === 0 ? (
-                      <h1 className="relative font-serif text-enseigne font-light text-nuit-900">
-                        {slide.title}
+                    );
+
+                    const contenu = ancrable ? (
+                      <>
+                        {slide.title.slice(0, coupure + 1)}
+                        <span className="relative inline-block w-0 align-baseline">{symbole}</span>
+                        {slide.title.slice(coupure + 1)}
+                      </>
+                    ) : (
+                      slide.title
+                    );
+
+                    const classe =
+                      "relative mt-3 block font-serif text-enseigne font-light text-nuit-900";
+
+                    return slideIndex === 0 ? (
+                      <h1 className={classe}>
+                        {!ancrable && symbole}
+                        {contenu}
                       </h1>
                     ) : (
-                      <p className="relative font-serif text-enseigne font-light text-nuit-900">
-                        {slide.title}
-                      </p>
-                    )}
-                  </span>
+                      <p className={classe}>{slide.title}</p>
+                    );
+                  })()}
 
                   {slide.subtitle && (
                     <p className="mt-5 max-w-md text-base text-roche-700">{slide.subtitle}</p>
