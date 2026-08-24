@@ -106,7 +106,8 @@
  *
  * Négatif = le mot va vers la GAUCHE. Sert à faire tomber la jointure M|A
  * sur le point doré du symbole, qui est lui posé au centre exact du mot et
- * de la page. Se règle à l'œil, avec le filet rouge d'AxeDeReglage.
+ * de la page. Réglé à l'œil : un filet rouge temporaire avait été posé sur
+ * l'axe de la fenêtre le temps du calage, puis retiré.
  */
 :root {
   --decalage-mot: -0.03em;
