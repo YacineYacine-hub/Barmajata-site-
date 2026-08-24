@@ -159,10 +159,22 @@ export function Hero({ slides }: HeroProps) {
                    *
                    * Géométrie verticale (logo-mark.svg, viewBox 128) : le
                    * point est à 56,1 % de la hauteur du symbole, le haut de
-                   * la courbe à 40,8 %. Symbole de 2em rabaissé de 10 % :
-                   * le point tombe à ~0,55em au-dessus de la ligne de base,
-                   * la courbe culmine à ~0,85em, au-dessus des capitales
-                   * (~0,66em). Les deux valeurs sont solidaires.
+                   * la courbe à 40,8 %. Symbole de 2,4em rabaissé de 16 % :
+                   * le point tombe à ~0,54em au-dessus de la ligne de base,
+                   * la courbe culmine à ~0,91em, au-dessus des capitales
+                   * (~0,66em).
+                   *
+                   * LES DEUX VALEURS SONT SOLIDAIRES. Agrandir sans
+                   * rabaisser davantage fait remonter le point AU-DESSUS
+                   * des lettres au lieu de le laisser entre elles : à 2,4em
+                   * rabaissé de seulement 10 %, il monte à 0,68em, soit
+                   * au-dessus des capitales. C'est pourquoi le passage de
+                   * 2em à 2,4em s'accompagne d'un rabaissement de 10 à 16 %.
+                   *
+                   * 2,4em est aussi le PLAFOND : au-delà, le symbole dépasse
+                   * la hauteur du hero et son cercle est rogné (mesuré :
+                   * 442px de symbole pour 498px de hero à 1440px de large,
+                   * 344 pour 354 à 1024px, 258 pour 266 à 768px).
                    */}
                   <span className="mt-9 block text-enseigne">
                     {(() => {
@@ -182,7 +194,7 @@ export function Hero({ slides }: HeroProps) {
                             width={128}
                             height={128}
                             priority
-                            className="pointer-events-none absolute bottom-0 left-1/2 h-[2em] w-[2em] -translate-x-1/2 translate-y-[10%] opacity-30"
+                            className="pointer-events-none absolute bottom-0 left-1/2 h-[2.4em] w-[2.4em] -translate-x-1/2 translate-y-[16%] opacity-30"
                           />
                           <span className="relative block translate-x-[var(--decalage-mot)]">
                             {slide.title}
