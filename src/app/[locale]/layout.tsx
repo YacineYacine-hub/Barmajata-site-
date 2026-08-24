@@ -7,6 +7,7 @@ import { routing } from "@/i18n/routing";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { BlocAbonnement } from "@/components/BlocAbonnement";
+import { AxeDeReglage } from "@/components/AxeDeReglage";
 import { PageTransition } from "@/components/PageTransition";
 import { SITE_URL } from "@/lib/site";
 import "../globals.css";
@@ -95,6 +96,8 @@ export default async function LocaleLayout({
         }
       >
         <NextIntlClientProvider>
+          {/* OUTIL DE RÉGLAGE TEMPORAIRE — à retirer une fois le calage validé. */}
+          <AxeDeReglage />
           <Header />
           <PageTransition>{children}</PageTransition>
           <BlocAbonnement />
