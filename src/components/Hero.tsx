@@ -146,7 +146,7 @@ export function Hero({ slides }: HeroProps) {
                       ~2,5:1, sous le seuil AA même en grand texte (règle du
                       Lot F). roche-700 tient 7,4:1 sur lin-50. */}
                   {slide.eyebrow && (
-                    <p className="text-[clamp(0.7rem,0.075em,1.05rem)] font-medium uppercase tracking-[0.2em] text-roche-700">
+                    <p className="text-[clamp(0.78rem,0.09em,1.25rem)] font-medium uppercase tracking-[0.2em] text-roche-700">
                       {slide.eyebrow}
                     </p>
                   )}
@@ -227,7 +227,7 @@ export function Hero({ slides }: HeroProps) {
                    * 442px de symbole pour 498px de hero à 1440px de large,
                    * 344 pour 354 à 1024px, 258 pour 266 à 768px).
                    */}
-                  <span className="mt-[0.2em] block text-enseigne">
+                  <span className="mt-[0.32em] block text-enseigne">
                     {(() => {
                       const classe =
                         "relative mx-auto w-fit font-serif text-enseigne font-light text-nuit-900";
