@@ -129,60 +129,74 @@ export function Hero({ slides }: HeroProps) {
                       par page (voir globals.css). font-light parce qu'à
                       cette taille, un Cormorant en 400 devient lourd. */}
                   {/*
-                   * On ne vise plus la jointure M|A : on l'AMÈNE au centre.
+                   * Le point doré est ancré SUR la jointure M|A, et la
+                   * jointure est amenée au centre du mot. Deux mécanismes
+                   * distincts, chacun exact :
                    *
-                   * Le mot est réparti en deux `span` **inline** — jamais
-                   * `inline-block`, qui créerait un point de coupure et
-                   * césurerait le mot (défaut du Lot H24). Une approche
-                   * (`letter-spacing`) est appliquée au premier fragment
-                   * pour égaliser les deux moitiés : `letter-spacing`
-                   * ajoute une avance après CHAQUE caractère, dernier
-                   * compris, donc 4 caractères × 0,045em ≈ 0,18em, soit
-                   * exactement l'écart entre « BARM » (2,86em) et
-                   * « AJATA » (3,04em).
+                   * 1. ANCRAGE — un `span` `position:relative` **inline**
+                   *    est inséré entre les deux fragments du mot, et le
+                   *    symbole s'y positionne en absolu. Le bord de ce span
+                   *    EST la jointure, telle que le navigateur la calcule
+                   *    avec les vraies chasses. Aucune estimation, et aucune
+                   *    dépendance à la largeur du conteneur — c'était le
+                   *    défaut du positionnement en pourcentage.
                    *
-                   * La jointure tombe alors au milieu du mot, le bloc est
-                   * centré sur la page, et le symbole peut être posé à 50 %
-                   * — plus aucune estimation de position.
+                   *    `inline` et jamais `inline-block` : un inline-block
+                   *    est un inline atomique, il crée un point de coupure
+                   *    de ligne et césurait le mot (défaut du Lot H24). Un
+                   *    span inline n'en crée aucun.
                    *
-                   * L'approche 0,045em vient de chasses estimées : c'est le
-                   * seul nombre à ajuster si le calage n'est pas parfait.
+                   * 2. ÉQUILIBRAGE — une approche sur le premier fragment
+                   *    égalise les deux moitiés, donc amène la jointure au
+                   *    milieu du mot, donc au centre de la page puisque le
+                   *    bloc y est centré. `letter-spacing` ajoute une avance
+                   *    après CHAQUE caractère, dernier compris : 4 × 0,045em
+                   *    ≈ 0,18em, l'écart entre « BARM » (2,86em) et
+                   *    « AJATA » (3,04em). Seul nombre estimé qui subsiste,
+                   *    et il n'agit que sur l'équilibre du mot.
                    *
                    * Géométrie verticale (logo-mark.svg, viewBox 128) : le
                    * point est à 56,1 % de la hauteur du symbole, le haut de
-                   * la courbe à 40,8 %. `bottom-0` s'appuie sur le bas de
-                   * la ligne, ~0,13em sous la ligne de base : le point
-                   * tombe vers 0,57em au-dessus d'elle, la courbe culmine
-                   * vers 0,85em, au-dessus des capitales (~0,66em).
+                   * la courbe à 40,8 %. Symbole de 2em rabaissé de 10 % :
+                   * le point tombe à ~0,55em au-dessus de la ligne de base,
+                   * la courbe culmine à ~0,85em, au-dessus des capitales
+                   * (~0,66em). Les deux valeurs sont solidaires — agrandir
+                   * sans rabaisser fait monter le point, rabaisser sans
+                   * agrandir fait passer la courbe sous les lettres.
                    *
-                   * Le symbole mesure 2em et est RABAISSÉ de 10 % de sa
-                   * hauteur. Attention : agrandir sans rabaisser fait
-                   * monter le point, rabaisser sans agrandir fait passer la
-                   * courbe SOUS les capitales — à 1,6em, un rabaissement de
-                   * 10 % la ramène pile à 0,66em, donc au ras des lettres.
-                   * Les deux valeurs bougent ensemble.
+                   * L'arabe n'a pas de séquence « MA » : ni découpe ni
+                   * approche, ce qui briserait les liaisons d'une écriture
+                   * cursive. Le symbole y est alors centré sur le mot.
                    */}
                   <span className="relative mt-9 block text-enseigne">
-                    {slideIndex === 0 && (
-                      <Image
-                        src="/brand/logo-mark.svg"
-                        alt=""
-                        aria-hidden="true"
-                        width={128}
-                        height={128}
-                        priority
-                        className="pointer-events-none absolute bottom-0 left-1/2 h-[2em] w-[2em] -translate-x-1/2 translate-y-[10%] opacity-30"
-                      />
-                    )}
                     {(() => {
                       const coupure = slide.title.indexOf("MA");
-                      const equilibrable = slideIndex === 0 && coupure !== -1;
+                      const ancrable = slideIndex === 0 && coupure !== -1;
                       const classe =
                         "relative font-serif text-enseigne font-light text-nuit-900";
 
-                      if (!equilibrable) {
+                      const symbole = (
+                        <Image
+                          src="/brand/logo-mark.svg"
+                          alt=""
+                          aria-hidden="true"
+                          width={128}
+                          height={128}
+                          priority
+                          className={
+                            ancrable
+                              ? "pointer-events-none absolute bottom-0 left-0 h-[2em] w-[2em] -translate-x-1/2 translate-y-[10%] opacity-30"
+                              : "pointer-events-none absolute bottom-0 left-1/2 h-[2em] w-[2em] -translate-x-1/2 translate-y-[10%] opacity-30"
+                          }
+                        />
+                      );
+
+                      if (!ancrable) {
                         return slideIndex === 0 ? (
-                          <h1 className={classe}>{slide.title}</h1>
+                          <h1 className={classe}>
+                            {symbole}
+                            {slide.title}
+                          </h1>
                         ) : (
                           <p className={classe}>{slide.title}</p>
                         );
@@ -193,6 +207,7 @@ export function Hero({ slides }: HeroProps) {
                           <span className="tracking-[0.045em]">
                             {slide.title.slice(0, coupure + 1)}
                           </span>
+                          <span className="relative">{symbole}</span>
                           {slide.title.slice(coupure + 1)}
                         </h1>
                       );
