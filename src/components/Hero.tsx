@@ -73,7 +73,14 @@ export function Hero({ slides }: HeroProps) {
       onKeyDown={handleKeyDown}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="relative aspect-[4/5] w-full overflow-hidden sm:aspect-[26/9]"
+      className={`relative aspect-[4/5] w-full sm:aspect-[26/9] ${
+        // Le recadrage ne sert qu'à masquer les diapositives voisines
+        // pendant le glissement. Avec une seule diapositive il ne masque
+        // rien, et il empêche en revanche le symbole du titre de déborder
+        // vers le haut, par-dessus la ligne « Livres » et le menu. On ne
+        // l'applique donc que s'il y a réellement de quoi masquer.
+        hasMultiple ? "overflow-hidden" : ""
+      }`}
     >
       <div
         className="flex h-full transition-transform duration-500 ease-out"
@@ -194,7 +201,7 @@ export function Hero({ slides }: HeroProps) {
                             width={128}
                             height={128}
                             priority
-                            className="pointer-events-none absolute bottom-0 left-1/2 h-[2.4em] w-[2.4em] -translate-x-1/2 translate-y-[16%] opacity-30"
+                            className="pointer-events-none absolute bottom-0 left-1/2 z-20 h-[2.4em] w-[2.4em] -translate-x-1/2 translate-y-[16%] opacity-30"
                           />
                           <span className="relative block translate-x-[var(--decalage-mot)]">
                             {slide.title}
