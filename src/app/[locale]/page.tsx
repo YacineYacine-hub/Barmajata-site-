@@ -55,8 +55,12 @@ function HomeContent({ bandItems }: { bandItems: BandItem[] }) {
 
       {/* La bande est une vitrine (pas la boutique) : aucun filtre ici,
           voir BookBandSection sur /livres pour les puces de catégorie. */}
+      {/* Remontée négative : le hero réserve une hauteur fixe et son texte
+          est centré dedans, ce qui laissait un large vide sous « Contenu à
+          venir. ». On récupère cette réserve plutôt que d'écraser la marge
+          de la bande. */}
       {bandItems.length > 0 && (
-        <section className="pb-28">
+        <section className="-mt-6 pb-28 sm:-mt-14">
           <BookBand items={bandItems} />
         </section>
       )}

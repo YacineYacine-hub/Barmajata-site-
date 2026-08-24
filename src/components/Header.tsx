@@ -105,52 +105,67 @@ export function Header() {
   // d'interface est exactement ce qui datait l'ensemble. `text-lin-50`
   // reste, il donne sa couleur au contenu de la bande.
   return (
-    <header className="sticky top-0 z-50 bg-nuit-900 text-lin-50">
-      <div
-        className={`mx-auto flex max-w-5xl items-center justify-between gap-4 ps-6 pe-6 transition-[padding] duration-200 ${
-          isScrolled ? "py-2" : "py-4"
-        }`}
-      >
-        {/* dir="ltr" fixe : le logo (sceau + nom) ne doit jamais se
-            miroiter ni se réordonner en RTL (voir CLAUDE.md, Lot 3). alt
-            volontairement en dur, identique dans toutes les langues —
-            jamais dans les fichiers de traduction. */}
-        <Link href="/" dir="ltr" className="inline-flex shrink-0" onClick={() => setIsOpen(false)}>
-          <Image
-            src="/brand/logo-horizontal-light.svg"
-            alt="BARMAJATA Éditions"
-            width={220}
-            height={40}
-            priority
-            className={`w-auto transition-[height] duration-200 ${isScrolled ? "h-6 md:h-8" : "h-8 md:h-10"}`}
-          />
-        </Link>
-
-        <div className="flex items-center gap-5">
-          {/* Masqué tant que SOCIAL_LINKS est vide — voir src/lib/social.ts.
-              Caché sous 640px : la bande doit rester une bande fine. */}
-          <SocialLinks className="hidden text-sable-300 sm:flex" />
-
-          <LocaleSwitcher />
-
-          <Link href="/books" className="text-sm text-sable-300 hover:text-lin-50">
-            {t("books")}
+    <>
+      {/*
+       * Bande fine du haut : le logo, puis les réseaux et les langues à
+       * droite. « Livres » et le menu n'y sont plus (Lot H16) — ils
+       * vivent sur la ligne transparente juste en dessous.
+       */}
+      <header className="sticky top-0 z-50 bg-nuit-900 text-lin-50">
+        <div
+          className={`mx-auto flex max-w-5xl items-center justify-between gap-4 ps-6 pe-6 transition-[padding] duration-200 ${
+            isScrolled ? "py-2" : "py-3"
+          }`}
+        >
+          {/* dir="ltr" fixe : le logo (sceau + nom) ne doit jamais se
+              miroiter ni se réordonner en RTL (voir CLAUDE.md, Lot 3). alt
+              volontairement en dur, identique dans toutes les langues —
+              jamais dans les fichiers de traduction. */}
+          <Link href="/" dir="ltr" className="inline-flex shrink-0" onClick={() => setIsOpen(false)}>
+            <Image
+              src="/brand/logo-horizontal-light.svg"
+              alt="BARMAJATA Éditions"
+              width={220}
+              height={40}
+              priority
+              className={`w-auto transition-[height] duration-200 ${isScrolled ? "h-7 md:h-9" : "h-9 md:h-11"}`}
+            />
           </Link>
 
-          <button
-            ref={triggerRef}
-            type="button"
-            onClick={() => setIsOpen(true)}
-            aria-label={t("menu")}
-            aria-expanded={isOpen}
-            aria-controls="nav-panel"
-            className="flex h-9 w-9 items-center justify-center rounded-md border border-sable-300 text-lin-50"
-          >
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />
-            </svg>
-          </button>
+          <div className="flex items-center gap-5">
+            {/* Coquilles tant que SOCIAL_LINKS est vide — voir lib/social.ts. */}
+            <SocialLinks className="hidden text-sable-300 sm:flex" />
+            <LocaleSwitcher />
+          </div>
         </div>
+      </header>
+
+      {/*
+       * Ligne de navigation, transparente et alignée à droite. Elle est
+       * rendue sur TOUTES les pages, pas seulement l'accueil : sans elle,
+       * le catalogue, la FAQ et les pages professionnelles n'auraient plus
+       * aucun accès au menu.
+       *
+       * Sur l'accueil, elle se retrouve en face du grand logo du hero.
+       */}
+      <div className="mx-auto flex max-w-5xl items-center justify-end gap-5 ps-6 pe-6 pt-5">
+        <Link href="/books" className="text-sm text-roche-700 hover:text-nuit-900">
+          {t("books")}
+        </Link>
+
+        <button
+          ref={triggerRef}
+          type="button"
+          onClick={() => setIsOpen(true)}
+          aria-label={t("menu")}
+          aria-expanded={isOpen}
+          aria-controls="nav-panel"
+          className="flex h-9 w-9 items-center justify-center rounded-md border border-nuit-900/25 text-nuit-900 hover:border-nuit-900"
+        >
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
       </div>
 
       {isOpen && (
@@ -210,6 +225,6 @@ export function Header() {
           </nav>
         </div>
       )}
-    </header>
+    </>
   );
 }

@@ -58,7 +58,7 @@
    * pour tout le reste — ces pas ne la remplacent pas, ils la prolongent
    * vers le haut.
    */
-  --text-enseigne: clamp(3.4rem, 13vw, 10rem);
+  --text-enseigne: clamp(3.6rem, 14vw, 11.5rem);
   --text-enseigne--line-height: 0.86;
   --text-enseigne--letter-spacing: -0.02em;
 
