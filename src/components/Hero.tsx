@@ -106,46 +106,56 @@ export function Hero({ slides }: HeroProps) {
               </>
             ) : null}
 
-            <div className="relative z-10 mx-auto flex h-full max-w-3xl flex-col items-start justify-center ps-6 pe-6 text-start">
+            <div className="relative z-10 mx-auto flex h-full max-w-5xl flex-col items-start justify-center ps-6 pe-6 text-start">
               <Reveal>
-                {/* Le symbole seul (cercle, courbe de livre ouvert, point
-                    d'or), jamais le lettrage : le titre écrit déjà
-                    BARMAJATA juste en dessous, le lockup ferait doublon.
-                    Décoratif, d'où alt="" — la marque est déjà dans le h1. */}
-                {slideIndex === 0 && (
-                  <Image
-                    src="/brand/logo-mark.svg"
-                    alt=""
-                    aria-hidden="true"
-                    width={128}
-                    height={128}
-                    priority
-                    className="mb-8 h-10 w-10"
-                  />
-                )}
-                {/* roche-700 et non or-500 : sur papier clair l'or mesure
-                    ~2,5:1, sous le seuil AA même en grand texte (règle du
-                    Lot F). roche-700 tient 7,4:1 sur lin-50. */}
-                {slide.eyebrow && (
-                  <p className="text-xs font-medium uppercase tracking-[0.2em] text-roche-700">
-                    {slide.eyebrow}
-                  </p>
-                )}
-                {/* text-enseigne : le pas réservé à la devanture, un seul
-                    par page (voir globals.css). font-light parce qu'à
-                    cette taille, un Cormorant en 400 devient lourd. */}
-                {slideIndex === 0 ? (
-                  <h1 className="mt-4 font-serif text-enseigne font-light text-nuit-900">
-                    {slide.title}
-                  </h1>
-                ) : (
-                  <p className="mt-4 font-serif text-enseigne font-light text-nuit-900">
-                    {slide.title}
-                  </p>
-                )}
-                {slide.subtitle && (
-                  <p className="mt-5 max-w-md text-base text-roche-700">{slide.subtitle}</p>
-                )}
+                {/*
+                 * Bloc de signature. `inline-block` : sa largeur est celle
+                 * de son plus large enfant, c'est-à-dire le mot BARMAJATA.
+                 * Le symbole peut donc être centré DANS L'AXE du mot, tout
+                 * en laissant le surtitre aligné au fer, et l'axe se
+                 * recalcule tout seul quand la typographie change de pas.
+                 */}
+                <span className="inline-block">
+                  {slideIndex === 0 && (
+                    <span className="mb-6 flex justify-center">
+                      <Image
+                        src="/brand/logo-mark.svg"
+                        alt=""
+                        aria-hidden="true"
+                        width={128}
+                        height={128}
+                        priority
+                        className="h-14 w-14 md:h-16 md:w-16"
+                      />
+                    </span>
+                  )}
+
+                  {/* roche-700 et non or-500 : sur papier clair l'or mesure
+                      ~2,5:1, sous le seuil AA même en grand texte (règle du
+                      Lot F). roche-700 tient 7,4:1 sur lin-50. */}
+                  {slide.eyebrow && (
+                    <p className="text-xs font-medium uppercase tracking-[0.2em] text-roche-700">
+                      {slide.eyebrow}
+                    </p>
+                  )}
+
+                  {/* text-enseigne : le pas réservé à la devanture, un seul
+                      par page (voir globals.css). font-light parce qu'à
+                      cette taille, un Cormorant en 400 devient lourd. */}
+                  {slideIndex === 0 ? (
+                    <h1 className="mt-3 font-serif text-enseigne font-light text-nuit-900">
+                      {slide.title}
+                    </h1>
+                  ) : (
+                    <p className="mt-3 font-serif text-enseigne font-light text-nuit-900">
+                      {slide.title}
+                    </p>
+                  )}
+
+                  {slide.subtitle && (
+                    <p className="mt-5 max-w-md text-base text-roche-700">{slide.subtitle}</p>
+                  )}
+                </span>
               </Reveal>
             </div>
           </div>
