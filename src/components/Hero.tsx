@@ -146,7 +146,7 @@ export function Hero({ slides }: HeroProps) {
                       ~2,5:1, sous le seuil AA même en grand texte (règle du
                       Lot F). roche-700 tient 7,4:1 sur lin-50. */}
                   {slide.eyebrow && (
-                    <p className="text-xs font-medium uppercase tracking-[0.2em] text-roche-700">
+                    <p className="text-[clamp(0.7rem,0.075em,1.05rem)] font-medium uppercase tracking-[0.2em] text-roche-700">
                       {slide.eyebrow}
                     </p>
                   )}
@@ -154,6 +154,18 @@ export function Hero({ slides }: HeroProps) {
                   {/* text-enseigne : le pas réservé à la devanture, un seul
                       par page (voir globals.css). font-light parce qu'à
                       cette taille, un Cormorant en 400 devient lourd. */}
+                  {/*
+                   * Toutes les tailles du bloc sont exprimées en `em`, donc
+                   * relatives au mot. Le surtitre était en `text-xs` fixe :
+                   * rapporté au mot il valait 0,208em à 390px de large et
+                   * 0,065em à 1440 — un rapport de 1 à 3,2, d'où l'impression
+                   * qu'il changeait selon le format.
+                   *
+                   * Le `clamp` conserve un PLANCHER en rem : sous ~1400px,
+                   * une taille purement proportionnelle tomberait à 4px,
+                   * illisible. La proportion cède alors à la lisibilité —
+                   * c'est une contrainte, pas un oubli.
+                   */}
                   {/*
                    * Note de calage vertical : le bloc est centré dans le
                    * hero, et c'est le `pb-8` du conteneur qui le fait
@@ -215,7 +227,7 @@ export function Hero({ slides }: HeroProps) {
                    * 442px de symbole pour 498px de hero à 1440px de large,
                    * 344 pour 354 à 1024px, 258 pour 266 à 768px).
                    */}
-                  <span className="mt-9 block text-enseigne">
+                  <span className="mt-[0.2em] block text-enseigne">
                     {(() => {
                       const classe =
                         "relative mx-auto w-fit font-serif text-enseigne font-light text-nuit-900";
@@ -244,7 +256,9 @@ export function Hero({ slides }: HeroProps) {
                   </span>
 
                   {slide.subtitle && (
-                    <p className="mt-5 max-w-md text-base text-roche-700">{slide.subtitle}</p>
+                    <p className="mt-[0.14em] max-w-md text-[clamp(0.95rem,0.1em,1.35rem)] text-roche-700">
+                      {slide.subtitle}
+                    </p>
                   )}
                 </span>
               </Reveal>
