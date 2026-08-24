@@ -113,7 +113,9 @@ export function Hero({ slides }: HeroProps) {
               </>
             ) : null}
 
-            <div className="relative z-10 mx-auto flex h-full max-w-5xl flex-col items-center justify-center ps-6 pe-6 text-center">
+            <div
+              className="relative z-10 mx-auto flex h-full max-w-5xl flex-col items-center justify-center ps-6 pe-6 pb-8 text-center"
+            >
               <Reveal>
                 {/*
                  * Bloc de signature. `inline-block` : sa largeur est celle
@@ -135,6 +137,19 @@ export function Hero({ slides }: HeroProps) {
                   {/* text-enseigne : le pas réservé à la devanture, un seul
                       par page (voir globals.css). font-light parce qu'à
                       cette taille, un Cormorant en 400 devient lourd. */}
+                  {/*
+                   * Note de calage vertical : le bloc est centré dans le
+                   * hero, et c'est le `pb-8` du conteneur qui le fait
+                   * REMONTER — un padding bas réduit la zone de centrage,
+                   * donc décale le contenu vers le haut de la moitié de sa
+                   * valeur. 32px de padding remontent le bloc de 16px.
+                   *
+                   * Réglé pour laisser ~16px entre le haut du cercle et le
+                   * bas du bandeau sombre, à 1440px de large. Mesure : le
+                   * cercle dépasse de 40px au-dessus du hero, le bandeau de
+                   * navigation en occupe 72 au-dessus — d'où 32px d'écart
+                   * avant le padding, 16 après.
+                   */}
                   {/*
                    * Calage du symbole sur la jointure M|A.
                    *
