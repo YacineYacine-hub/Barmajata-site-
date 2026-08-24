@@ -106,8 +106,8 @@ export function Hero({ slides }: HeroProps) {
               </>
             ) : null}
 
-            <div className="relative z-10 mx-auto flex h-full max-w-5xl items-center gap-8 ps-6 pe-6 text-start sm:gap-14">
-              <Reveal className="flex items-center gap-8 sm:gap-14">
+            <div className="relative z-10 mx-auto flex h-full max-w-3xl flex-col items-start justify-center ps-6 pe-6 text-start">
+              <Reveal>
                 {/* Le symbole seul (cercle, courbe de livre ouvert, point
                     d'or), jamais le lettrage : le titre écrit déjà
                     BARMAJATA juste en dessous, le lockup ferait doublon.
@@ -120,10 +120,9 @@ export function Hero({ slides }: HeroProps) {
                     width={128}
                     height={128}
                     priority
-                    className="hidden h-24 w-24 shrink-0 sm:block md:h-32 md:w-32"
+                    className="mb-8 h-10 w-10"
                   />
                 )}
-                <div>
                 {/* roche-700 et non or-500 : sur papier clair l'or mesure
                     ~2,5:1, sous le seuil AA même en grand texte (règle du
                     Lot F). roche-700 tient 7,4:1 sur lin-50. */}
@@ -147,7 +146,6 @@ export function Hero({ slides }: HeroProps) {
                 {slide.subtitle && (
                   <p className="mt-5 max-w-md text-base text-roche-700">{slide.subtitle}</p>
                 )}
-                </div>
               </Reveal>
             </div>
           </div>

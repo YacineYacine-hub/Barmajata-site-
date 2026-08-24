@@ -148,7 +148,7 @@ export function Header() {
        *
        * Sur l'accueil, elle se retrouve en face du grand logo du hero.
        */}
-      <div className="mx-auto flex max-w-5xl items-center justify-end gap-5 ps-6 pe-6 pt-5">
+      <div className="mx-auto flex max-w-5xl items-center justify-end gap-5 ps-6 pe-6 pt-9">
         <Link href="/books" className="text-sm text-roche-700 hover:text-nuit-900">
           {t("books")}
         </Link>
