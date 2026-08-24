@@ -40,7 +40,24 @@ const OPACITY_CUTOFF_DISTANCE = 3.7;
 // laissés magiques dans le code.
 const RECOIL_PX = 220; // recul en Z au bord de la plage de visibilité
 const ITEM_WIDTH_PX = 160; // largeur d'une couverture au repos (scale 1)
-const ITEM_SPACING_PX = 190; // distance entre centres de deux couvertures
+/*
+ * Distance entre les centres de deux éléments.
+ *
+ * Elle valait 190px et l'élément CENTRAL était chevauché de 12px par
+ * chacun de ses voisins : agrandi à SCALE_CENTER (1,34), il occupe 107px
+ * de demi-largeur, tandis que son voisin immédiat en occupe encore 95
+ * après réduction d'échelle et rotation — soit 202px à loger dans 190.
+ *
+ * Seule cette première paire posait problème : au-delà, la réduction
+ * d'échelle creuse l'écart toute seule (175px requis entre le 1er et le
+ * 2e, 144 entre le 2e et le 3e).
+ *
+ * 224px laisse 22px de jeu autour de l'élément central. Valeur
+ * d'implémentation, pas de spec — contrairement à SCALE_CENTER,
+ * SCALE_EDGE, ROTATE_MAX_DEG et OPACITY_CUTOFF_DISTANCE, qui eux sont
+ * donnés et ne se touchent pas.
+ */
+const ITEM_SPACING_PX = 224;
 const SETTLE_DURATION_MS = 420;
 const DRAG_CLICK_THRESHOLD_PX = 6; // au-delà, un pointerup n'est plus un clic
 const WHEEL_IDLE_MS = 120; // silence molette avant de caler
