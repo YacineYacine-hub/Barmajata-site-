@@ -149,6 +149,13 @@ export function Hero({ slides }: HeroProps) {
                    * conteneur `inline-block` s'y ajustant — l'ancre suit
                    * donc le mot si la typographie change de pas.
                    *
+                   * TAILLE PLAFONNÉE À 2,4em, et c'est une contrainte
+                   * géométrique, pas un goût : au-delà, le symbole dépasse
+                   * la hauteur du hero et son cercle est rogné. Le rapport
+                   * hauteur du hero / taille du mot vaut 2,71 à 1440px,
+                   * 2,47 à 1024px et 2,46 à 768px — 2,4 tient partout.
+                   * Remonter cette valeur oblige à allonger le hero.
+                   *
                    * `opacity-[0.13]` : assez pour se voir, assez peu pour
                    * ne pas entamer le contraste du titre (mesuré : le
                    * pire fond reste à 11,2:1 sous nuit-900).
@@ -162,7 +169,7 @@ export function Hero({ slides }: HeroProps) {
                         width={128}
                         height={128}
                         priority
-                        className="pointer-events-none absolute start-[48.5%] top-[34%] h-[4em] w-[4em] -translate-x-1/2 -translate-y-[56%] opacity-[0.13] rtl:translate-x-1/2"
+                        className="pointer-events-none absolute start-[48.5%] top-[34%] h-[2.4em] w-[2.4em] -translate-x-1/2 -translate-y-[56%] opacity-[0.13] rtl:translate-x-1/2"
                       />
                     )}
                     {slideIndex === 0 ? (
