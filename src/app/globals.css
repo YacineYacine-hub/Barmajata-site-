@@ -109,7 +109,7 @@
  * de la page. Se règle à l'œil, avec le filet rouge d'AxeDeReglage.
  */
 :root {
-  --decalage-mot: -0.08em;
+  --decalage-mot: -0.03em;
 }
 
 body {
