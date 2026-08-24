@@ -25,7 +25,7 @@
   "home": {
     "heroEyebrow": "Maison d'édition",
     "heroTitle": "BARMAJATA",
-    "heroSubtitle": "Contenu à venir.",
+    "heroSubtitle": "L'esprit du livre",
     "carousel": {
       "region": "Présentation",
       "previous": "Diapositive précédente",
@@ -225,7 +225,8 @@
     "histoire-vraie": "Histoire vraie",
     "enfance": "Enfance",
     "developpement-personnel": "Développement personnel",
-    "poesie-pensees": "Poésie et pensées"
+    "poesie-pensees": "Poésie et pensées",
+    "consult": "Consulter"
   },
   "band": {
     "label": "Vitrine des livres",

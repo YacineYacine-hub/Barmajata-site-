@@ -25,7 +25,7 @@
   "home": {
     "heroEyebrow": "Publishing house",
     "heroTitle": "BARMAJATA",
-    "heroSubtitle": "Content coming soon.",
+    "heroSubtitle": "The spirit of the book",
     "carousel": {
       "region": "Highlights",
       "previous": "Previous slide",
@@ -225,7 +225,8 @@
     "histoire-vraie": "True story",
     "enfance": "Childhood",
     "developpement-personnel": "Personal growth",
-    "poesie-pensees": "Poetry and thoughts"
+    "poesie-pensees": "Poetry and thoughts",
+    "consult": "Browse"
   },
   "band": {
     "label": "Books showcase",

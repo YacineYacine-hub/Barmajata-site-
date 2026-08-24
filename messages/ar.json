@@ -25,7 +25,7 @@
   "home": {
     "heroEyebrow": "دار نشر",
     "heroTitle": "برماجاتا",
-    "heroSubtitle": "المحتوى قادم قريبًا.",
+    "heroSubtitle": "روح الكتاب",
     "carousel": {
       "region": "أبرز المحتوى",
       "previous": "الشريحة السابقة",
@@ -225,7 +225,8 @@
     "histoire-vraie": "True story",
     "enfance": "الطفولة",
     "developpement-personnel": "التنمية الشخصية",
-    "poesie-pensees": "شعر وخواطر"
+    "poesie-pensees": "شعر وخواطر",
+    "consult": "تصفّح"
   },
   "band": {
     "label": "واجهة عرض الكتب",

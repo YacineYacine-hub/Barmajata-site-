@@ -176,6 +176,8 @@ export function BookBand({
   mutedSlugs?: ReadonlySet<string>;
 }) {
   const t = useTranslations("band");
+  const tCategories = useTranslations("categories");
+  const consulterLabel = tCategories("consult");
   const count = items.length;
 
   const prefersReducedMotion = useSyncExternalStore(
@@ -451,7 +453,7 @@ export function BookBand({
         {items.map((item) => (
           <li key={item.slug} className="w-32 shrink-0 snap-center">
             <Link href={lienDe(item)} className="block">
-              <BandCover item={item} />
+              <BandCover item={item} consulterLabel={consulterLabel} />
             </Link>
           </li>
         ))}
@@ -496,7 +498,7 @@ export function BookBand({
               onClick={(event) => handleItemClick(event, index)}
               className="block"
             >
-              <BandCover item={item} />
+              <BandCover item={item} consulterLabel={consulterLabel} />
             </Link>
           </li>
         ))}
@@ -505,7 +507,7 @@ export function BookBand({
   );
 }
 
-function BandCover({ item }: { item: BandItem }) {
+function BandCover({ item, consulterLabel }: { item: BandItem; consulterLabel: string }) {
   // Le titre est TOUJOURS rendu, au moins pour les lecteurs d'écran : le
   // visuel porte `alt=""`, donc sans ce texte le lien n'aurait aucun nom
   // accessible — défaut préexistant, corrigé ici.
@@ -519,9 +521,24 @@ function BandCover({ item }: { item: BandItem }) {
     return (
       <div className="relative aspect-[2/3] w-full overflow-hidden rounded-sm shadow-flottant">
         {estCategorie ? (
-          <span className="absolute inset-0 z-10 flex items-start p-4 font-serif text-lg leading-tight text-lin-50">
-            {item.title}
-          </span>
+          <>
+            {/*
+             * Composée comme une couverture : le libellé en gros au centre,
+             * là où un livre porte son titre, et « Consulter » en bas, là où
+             * il porte son auteur. Le symbole vit dans le fond SVG, entre
+             * les deux — c'est du dessin, il n'a pas à être traduit.
+             *
+             * Tailles en `em` : la bande réduit les éléments latéraux par
+             * `scale`, mais le texte doit rester proportionné à la carte
+             * quelle que soit la largeur d'écran.
+             */}
+            <span className="absolute inset-x-0 top-[16%] z-10 px-4 text-center font-serif text-[1.35rem] leading-tight text-lin-50">
+              {item.title}
+            </span>
+            <span className="absolute inset-x-0 bottom-[7%] z-10 text-center text-[0.62rem] font-medium uppercase tracking-[0.22em] text-or-500">
+              {consulterLabel}
+            </span>
+          </>
         ) : (
           <span className="sr-only">{item.title}</span>
         )}
