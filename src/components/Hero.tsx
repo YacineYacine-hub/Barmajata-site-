@@ -255,8 +255,13 @@ export function Hero({ slides }: HeroProps) {
                     })()}
                   </span>
 
+                  {/* Aligné au DÉBUT de ligne, sous le B du mot. Propriétés
+                      logiques (text-start) et non text-left : en arabe le
+                      texte doit se caler à droite tout seul. Le bloc parent
+                      est un inline-block dont la largeur est celle du mot,
+                      donc « début de ligne » y désigne bien le B. */}
                   {slide.subtitle && (
-                    <p className="mt-[0.14em] max-w-md text-[clamp(0.95rem,0.1em,1.35rem)] text-roche-700">
+                    <p className="mt-[0.14em] max-w-md text-start text-[clamp(0.95rem,0.1em,1.35rem)] text-roche-700">
                       {slide.subtitle}
                     </p>
                   )}
