@@ -133,30 +133,28 @@ export function Hero({ slides }: HeroProps) {
                    * le haut des lettres, son POINT doré descend dans
                    * l'espace qui les sépare.
                    *
-                   * L'ancrage horizontal n'est pas estimé. Le mot est coupé
-                   * en deux fragments — « BARM » et « AJATA » — séparés par
-                   * une ancre de largeur nulle : c'est le navigateur qui
-                   * place la jointure, avec les vraies chasses de la police.
+                   * PAS de découpe du mot : une ancre `inline-block`
+                   * insérée entre deux fragments crée un point de coupure
+                   * de ligne, et le mot se césurait à cet endroit. Le mot
+                   * reste donc entier et le symbole est positionné en
+                   * pourcentage de sa largeur.
                    *
                    * Géométrie verticale, lue dans logo-mark.svg (viewBox
-                   * 128) : haut de la courbe à 40,8 % de la hauteur du
-                   * symbole, bas de la courbe à 52,3 %, point à 56,1 %.
-                   * Avec `bottom-0` le point tombe à 0,44 × H au-dessus de
-                   * la ligne de base ; `translate-y-[10%]` le redescend à
-                   * 0,55em. À 1,6em de haut, la courbe culmine alors à
-                   * 0,79em — au-dessus des capitales, qui montent à ~0,66em.
-                   * Changer l'un de ces trois nombres défait l'assemblage.
+                   * 128) : le point est à 56,1 % de la hauteur du symbole,
+                   * le haut de la courbe à 40,8 %. Le `bottom-0` s'appuie
+                   * sur le bas de la ligne, situé ~0,13em sous la ligne de
+                   * base (interligne 0,86em, ascendante ~0,9em) : le point
+                   * tombe ainsi à ~0,57em au-dessus de la ligne de base, et
+                   * la courbe culmine vers 0,81em — au-dessus des
+                   * capitales, qui montent à ~0,66em.
                    *
-                   * L'arabe ne contient pas la séquence « MA » : `indexOf`
-                   * y renvoie -1 et le symbole retombe centré sur le mot.
-                   * Couper une écriture cursive en deux fragments briserait
-                   * ses liaisons.
+                   * `start-[48.5%]` : jointure M|A estimée par les chasses
+                   * (B .62 + A .68 + R .63 + M .93 sur 5,90 em). Valeur à
+                   * ajuster à l'œil — c'est le seul nombre approximatif de
+                   * l'assemblage.
                    */}
-                  {(() => {
-                    const coupure = slide.title.indexOf("MA");
-                    const ancrable = slideIndex === 0 && coupure !== -1;
-
-                    const symbole = (
+                  <span className="relative mt-3 block text-enseigne">
+                    {slideIndex === 0 && (
                       <Image
                         src="/brand/logo-mark.svg"
                         alt=""
@@ -164,36 +162,19 @@ export function Hero({ slides }: HeroProps) {
                         width={128}
                         height={128}
                         priority
-                        className={
-                          ancrable
-                            ? "pointer-events-none absolute bottom-0 left-0 h-[1.6em] w-[1.6em] -translate-x-1/2 translate-y-[10%] opacity-30"
-                            : "pointer-events-none absolute start-1/2 top-1/2 h-[1.6em] w-[1.6em] -translate-x-1/2 -translate-y-1/2 opacity-30 rtl:translate-x-1/2"
-                        }
+                        className="pointer-events-none absolute bottom-0 start-[48.5%] h-[1.6em] w-[1.6em] -translate-x-1/2 opacity-30 rtl:translate-x-1/2"
                       />
-                    );
-
-                    const contenu = ancrable ? (
-                      <>
-                        {slide.title.slice(0, coupure + 1)}
-                        <span className="relative inline-block w-0 align-baseline">{symbole}</span>
-                        {slide.title.slice(coupure + 1)}
-                      </>
-                    ) : (
-                      slide.title
-                    );
-
-                    const classe =
-                      "relative mt-3 block font-serif text-enseigne font-light text-nuit-900";
-
-                    return slideIndex === 0 ? (
-                      <h1 className={classe}>
-                        {!ancrable && symbole}
-                        {contenu}
+                    )}
+                    {slideIndex === 0 ? (
+                      <h1 className="relative font-serif text-enseigne font-light text-nuit-900">
+                        {slide.title}
                       </h1>
                     ) : (
-                      <p className={classe}>{slide.title}</p>
-                    );
-                  })()}
+                      <p className="relative font-serif text-enseigne font-light text-nuit-900">
+                        {slide.title}
+                      </p>
+                    )}
+                  </span>
 
                   {slide.subtitle && (
                     <p className="mt-5 max-w-md text-base text-roche-700">{slide.subtitle}</p>
