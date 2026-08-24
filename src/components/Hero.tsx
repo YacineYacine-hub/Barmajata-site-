@@ -106,7 +106,7 @@ export function Hero({ slides }: HeroProps) {
               </>
             ) : null}
 
-            <div className="relative z-10 mx-auto flex h-full max-w-5xl flex-col items-start justify-center ps-6 pe-6 text-start">
+            <div className="relative z-10 mx-auto flex h-full max-w-5xl flex-col items-center justify-center ps-6 pe-6 text-center">
               <Reveal>
                 {/*
                  * Bloc de signature. `inline-block` : sa largeur est celle
@@ -129,29 +129,31 @@ export function Hero({ slides }: HeroProps) {
                       par page (voir globals.css). font-light parce qu'à
                       cette taille, un Cormorant en 400 devient lourd. */}
                   {/*
-                   * Le symbole coiffe la jointure M|A : sa COURBE enjambe
-                   * le haut des lettres, son POINT doré descend dans
-                   * l'espace qui les sépare.
+                   * On ne vise plus la jointure M|A : on l'AMÈNE au centre.
                    *
-                   * PAS de découpe du mot : une ancre `inline-block`
-                   * insérée entre deux fragments crée un point de coupure
-                   * de ligne, et le mot se césurait à cet endroit. Le mot
-                   * reste donc entier et le symbole est positionné en
-                   * pourcentage de sa largeur.
+                   * Le mot est réparti en deux `span` **inline** — jamais
+                   * `inline-block`, qui créerait un point de coupure et
+                   * césurerait le mot (défaut du Lot H24). Une approche
+                   * (`letter-spacing`) est appliquée au premier fragment
+                   * pour égaliser les deux moitiés : `letter-spacing`
+                   * ajoute une avance après CHAQUE caractère, dernier
+                   * compris, donc 4 caractères × 0,045em ≈ 0,18em, soit
+                   * exactement l'écart entre « BARM » (2,86em) et
+                   * « AJATA » (3,04em).
                    *
-                   * Géométrie verticale, lue dans logo-mark.svg (viewBox
-                   * 128) : le point est à 56,1 % de la hauteur du symbole,
-                   * le haut de la courbe à 40,8 %. Le `bottom-0` s'appuie
-                   * sur le bas de la ligne, situé ~0,13em sous la ligne de
-                   * base (interligne 0,86em, ascendante ~0,9em) : le point
-                   * tombe ainsi à ~0,57em au-dessus de la ligne de base, et
-                   * la courbe culmine vers 0,81em — au-dessus des
-                   * capitales, qui montent à ~0,66em.
+                   * La jointure tombe alors au milieu du mot, le bloc est
+                   * centré sur la page, et le symbole peut être posé à 50 %
+                   * — plus aucune estimation de position.
                    *
-                   * `start-[48.5%]` : jointure M|A estimée par les chasses
-                   * (B .62 + A .68 + R .63 + M .93 sur 5,90 em). Valeur à
-                   * ajuster à l'œil — c'est le seul nombre approximatif de
-                   * l'assemblage.
+                   * L'approche 0,045em vient de chasses estimées : c'est le
+                   * seul nombre à ajuster si le calage n'est pas parfait.
+                   *
+                   * Géométrie verticale (logo-mark.svg, viewBox 128) : le
+                   * point est à 56,1 % de la hauteur du symbole, le haut de
+                   * la courbe à 40,8 %. `bottom-0` s'appuie sur le bas de
+                   * la ligne, ~0,13em sous la ligne de base : le point
+                   * tombe vers 0,57em au-dessus d'elle, la courbe culmine
+                   * vers 0,81em, au-dessus des capitales (~0,66em).
                    */}
                   <span className="relative mt-3 block text-enseigne">
                     {slideIndex === 0 && (
@@ -162,18 +164,32 @@ export function Hero({ slides }: HeroProps) {
                         width={128}
                         height={128}
                         priority
-                        className="pointer-events-none absolute bottom-0 start-[48.5%] h-[1.6em] w-[1.6em] -translate-x-1/2 opacity-30 rtl:translate-x-1/2"
+                        className="pointer-events-none absolute bottom-0 left-1/2 h-[1.6em] w-[1.6em] -translate-x-1/2 opacity-30"
                       />
                     )}
-                    {slideIndex === 0 ? (
-                      <h1 className="relative font-serif text-enseigne font-light text-nuit-900">
-                        {slide.title}
-                      </h1>
-                    ) : (
-                      <p className="relative font-serif text-enseigne font-light text-nuit-900">
-                        {slide.title}
-                      </p>
-                    )}
+                    {(() => {
+                      const coupure = slide.title.indexOf("MA");
+                      const equilibrable = slideIndex === 0 && coupure !== -1;
+                      const classe =
+                        "relative font-serif text-enseigne font-light text-nuit-900";
+
+                      if (!equilibrable) {
+                        return slideIndex === 0 ? (
+                          <h1 className={classe}>{slide.title}</h1>
+                        ) : (
+                          <p className={classe}>{slide.title}</p>
+                        );
+                      }
+
+                      return (
+                        <h1 className={classe}>
+                          <span className="tracking-[0.045em]">
+                            {slide.title.slice(0, coupure + 1)}
+                          </span>
+                          {slide.title.slice(coupure + 1)}
+                        </h1>
+                      );
+                    })()}
                   </span>
 
                   {slide.subtitle && (
