@@ -135,9 +135,23 @@ export function Hero({ slides }: HeroProps) {
                    * la taille du mot — il grandit exactement avec lui, à
                    * n'importe quelle largeur d'écran.
                    *
+                   * Il est ancré par SON POINT, pas par son centre : le
+                   * point doré est à 56 % de la hauteur du symbole
+                   * (cy=71.77 sur 128 dans logo-mark.svg), d'où le
+                   * `-translate-y-[56%]` qui amène ce point exactement sur
+                   * l'ancre verticale.
+                   *
+                   * Horizontalement, l'ancre vaut 48,5 % de la largeur du
+                   * mot : c'est là que tombe la jointure M|A dans
+                   * « BARMAJATA », chasses d'un serif additionnées
+                   * (B .62 + A .68 + R .63 + M .93 sur 5,90 em au total).
+                   * Le pourcentage se résout sur la largeur du mot, le
+                   * conteneur `inline-block` s'y ajustant — l'ancre suit
+                   * donc le mot si la typographie change de pas.
+                   *
                    * `opacity-[0.13]` : assez pour se voir, assez peu pour
                    * ne pas entamer le contraste du titre (mesuré : le
-                   * pire fond reste à 9,5:1 sous nuit-900).
+                   * pire fond reste à 11,2:1 sous nuit-900).
                    */}
                   <span className="relative mt-3 block text-enseigne">
                     {slideIndex === 0 && (
@@ -148,7 +162,7 @@ export function Hero({ slides }: HeroProps) {
                         width={128}
                         height={128}
                         priority
-                        className="pointer-events-none absolute start-1/2 top-1/2 h-[1.35em] w-[1.35em] -translate-x-1/2 -translate-y-1/2 opacity-[0.13] rtl:translate-x-1/2"
+                        className="pointer-events-none absolute start-[48.5%] top-[34%] h-[4em] w-[4em] -translate-x-1/2 -translate-y-[56%] opacity-[0.13] rtl:translate-x-1/2"
                       />
                     )}
                     {slideIndex === 0 ? (
