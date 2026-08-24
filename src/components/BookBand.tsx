@@ -64,6 +64,32 @@ const ITEM_WIDTH_PX = 160; // largeur d'une couverture au repos (scale 1)
  * donnés et ne se touchent pas.
  */
 const ITEM_SPACING_PX = 206;
+
+/**
+ * Compression de l'écartement à mesure qu'on s'éloigne du centre.
+ *
+ * Avec un espacement uniforme, une seule valeur commande à la fois le
+ * dégagement du centre et le resserrement des côtés : impossible d'avoir
+ * l'un sans l'autre. La position devient donc
+ * `ITEM_SPACING_PX × |delta|^exposant`.
+ *
+ * À 0,85 : le PREMIER écart reste 206px, donc le centre garde ses 4px de
+ * dégagement, et les suivants tombent à 165, 153, 145px — les côtés se
+ * chevauchent de nouveau légèrement, ce qui est l'effet recherché.
+ *
+ * Un exposant plus bas resserre davantage (0,8 → 153/137/128px) mais
+ * empile trop : les couvertures cessent d'être distinguables.
+ *
+ * Effet de bord accepté : le glissement au pointeur reste linéaire (voir
+ * handlePointerMove), donc légèrement moins « collé » au doigt loin du
+ * centre. Le centre est là où l'œil se pose, la linéarité y est exacte.
+ */
+const ESPACEMENT_COMPRESSION = 0.85;
+
+/** Position horizontale d'un élément, en px, pour une distance au centre. */
+function positionX(delta: number): number {
+  return Math.sign(delta) * ITEM_SPACING_PX * Math.abs(delta) ** ESPACEMENT_COMPRESSION;
+}
 const SETTLE_DURATION_MS = 420;
 const DRAG_CLICK_THRESHOLD_PX = 6; // au-delà, un pointerup n'est plus un clic
 const WHEEL_IDLE_MS = 120; // silence molette avant de caler
@@ -198,7 +224,7 @@ export function BookBand({
       const z = -RECOIL_PX * t2;
       const isMuted = mutedSlugs?.has(items[i].slug) ?? false;
       const opacity = isMuted ? 0 : Math.max(0, 1 - Math.pow(t2, OPACITY_COURBE));
-      const x = delta * ITEM_SPACING_PX;
+      const x = positionX(delta);
 
       el.style.transform = `translateX(${x}px) translateZ(${z}px) rotateY(${rotate}deg) scale(${scale})`;
       el.style.opacity = String(opacity);
