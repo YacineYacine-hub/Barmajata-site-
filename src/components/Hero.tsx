@@ -153,9 +153,16 @@ export function Hero({ slides }: HeroProps) {
                    * la courbe à 40,8 %. `bottom-0` s'appuie sur le bas de
                    * la ligne, ~0,13em sous la ligne de base : le point
                    * tombe vers 0,57em au-dessus d'elle, la courbe culmine
-                   * vers 0,81em, au-dessus des capitales (~0,66em).
+                   * vers 0,85em, au-dessus des capitales (~0,66em).
+                   *
+                   * Le symbole mesure 2em et est RABAISSÉ de 10 % de sa
+                   * hauteur. Attention : agrandir sans rabaisser fait
+                   * monter le point, rabaisser sans agrandir fait passer la
+                   * courbe SOUS les capitales — à 1,6em, un rabaissement de
+                   * 10 % la ramène pile à 0,66em, donc au ras des lettres.
+                   * Les deux valeurs bougent ensemble.
                    */}
-                  <span className="relative mt-3 block text-enseigne">
+                  <span className="relative mt-9 block text-enseigne">
                     {slideIndex === 0 && (
                       <Image
                         src="/brand/logo-mark.svg"
@@ -164,7 +171,7 @@ export function Hero({ slides }: HeroProps) {
                         width={128}
                         height={128}
                         priority
-                        className="pointer-events-none absolute bottom-0 left-1/2 h-[1.6em] w-[1.6em] -translate-x-1/2 opacity-30"
+                        className="pointer-events-none absolute bottom-0 left-1/2 h-[2em] w-[2em] -translate-x-1/2 translate-y-[10%] opacity-30"
                       />
                     )}
                     {(() => {
