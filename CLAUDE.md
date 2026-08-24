@@ -1072,6 +1072,28 @@ manque les mentions d'éditeur (SIRET, directeur de la publication,
 hébergeur) ainsi qu'une politique cookies — toutes choses qui exigent des
 informations d'entreprise réelles.
 
+## Piège : le garde-fou de push écrase le build de démonstration
+
+`.claude/push-si-vert.sh` lance `npm run build` **de production** — c'est
+sa raison d'être, il vérifie ce que vérifie la CI. Effet de bord : il
+écrase `.next`, qui redevient un build **sans contenu de démonstration**.
+
+Symptôme observé : après un commit, le catalogue affiche « Aucun livre »
+alors que les pages auteur, déjà générées, listent encore leurs titres —
+un `.next` incohérent, mi-démo mi-production.
+
+**Pour reprendre la consultation locale après un commit**, toujours :
+
+```bash
+rm -rf .next
+NEXT_PUBLIC_DEMO_CONTENT=true npm run build
+NEXT_PUBLIC_DEMO_CONTENT=true PORT=3000 npm run start
+```
+
+Le `rm -rf .next` n'est pas superflu : sans lui, la génération
+incrémentale conserve des pages du build précédent et le mélange persiste.
+Et le drapeau est nécessaire **au build ET au démarrage**.
+
 ## Stack
 
 - Next.js 16 (App Router, Turbopack), TypeScript **5.9** (pas TS 7 natif :
