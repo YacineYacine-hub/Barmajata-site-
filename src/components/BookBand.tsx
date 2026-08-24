@@ -73,10 +73,9 @@ const ITEM_SPACING_PX = 206;
  * l'un sans l'autre. La position devient donc
  * `ITEM_SPACING_PX × |delta|^exposant`.
  *
- * À 0,87 : le PREMIER écart reste 206px, donc le centre garde ses 4px de
- * dégagement, et les suivants tombent à 170, 159px. Le chevauchement des
- * côtés passe de 10px (à 0,85) à 4px — réduit, pas supprimé : à 0,9 il
- * disparaissait entièrement, ce qui n'était pas l'effet voulu.
+ * À 0,85 : le PREMIER écart reste 206px, donc le centre garde ses 4px de
+ * dégagement, et les suivants tombent à 165, 153, 145px — les côtés se
+ * chevauchent de nouveau légèrement, ce qui est l'effet recherché.
  *
  * Un exposant plus bas resserre davantage (0,8 → 153/137/128px) mais
  * empile trop : les couvertures cessent d'être distinguables.
@@ -85,7 +84,7 @@ const ITEM_SPACING_PX = 206;
  * handlePointerMove), donc légèrement moins « collé » au doigt loin du
  * centre. Le centre est là où l'œil se pose, la linéarité y est exacte.
  */
-const ESPACEMENT_COMPRESSION = 0.87;
+const ESPACEMENT_COMPRESSION = 0.85;
 
 /** Position horizontale d'un élément, en px, pour une distance au centre. */
 function positionX(delta: number): number {
@@ -105,14 +104,11 @@ const WHEEL_IDLE_MS = 120; // silence molette avant de caler
  * éloignement ; sur le fond clair du registre moderne (Lot H8), ça lit
  * comme une couleur morte — un rouge profond y vire au mauve pâle.
  *
- * Porté à 4 (Lot H41) pour une seconde raison, plus dirimante que la
- * couleur : une couverture à 0,94 laisse voir 6 % de celle qui passe
- * DERRIÈRE elle, et le chevauchement devenait donc visible par
- * transparence. À 4, la voisine tient 0,99 et la suivante 0,91 : elles
- * sont opaques là où elles se recouvrent, et l'extinction se concentre
- * sur les rangs lointains, où plus rien ne les chevauche.
+ * Avec cet exposant, la voisine tient 0,94 et la suivante 0,74 : les
+ * couvertures gardent leur couleur, et c'est l'échelle, la rotation et le
+ * recul en Z qui portent la profondeur.
  */
-const OPACITY_COURBE = 4;
+const OPACITY_COURBE = 2.2;
 
 // Inertie au lâcher (« on pousse, ça continue »). Vitesses en unités de
 // position par milliseconde — 1 unité = une couverture.
