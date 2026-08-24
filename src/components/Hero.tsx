@@ -129,62 +129,45 @@ export function Hero({ slides }: HeroProps) {
                       par page (voir globals.css). font-light parce qu'à
                       cette taille, un Cormorant en 400 devient lourd. */}
                   {/*
-                   * Le point doré tombe au centre du mot, qui est aussi le
-                   * centre de la page. Deux conditions, chacune explicite :
+                   * Calage du symbole sur la jointure M|A.
                    *
-                   * 1. CONTENEUR — le `h1` porte `w-fit mx-auto` : sa
-                   *    largeur est donc EXACTEMENT celle du mot, et il est
-                   *    centré. `left-1/2` y désigne le centre du mot, qui
-                   *    coïncide avec le centre de la page.
+                   * Le symbole est posé au centre du `h1`, lequel porte
+                   * `w-fit mx-auto` : sa largeur est exactement celle du
+                   * mot et il est centré, donc `left-1/2` y désigne à la
+                   * fois le centre du mot et celui de la page.
                    *
-                   *    Un bloc, et surtout pas un `span` inline : un inline
-                   *    vide ne forme pas de bloc conteneur fiable pour un
-                   *    élément en position absolue — le symbole était
-                   *    rattaché à un ancêtre plus large, sortait du cadre,
-                   *    et le `overflow-hidden` du hero l'escamotait (défaut
-                   *    du Lot H28). Et surtout pas un `inline-block` non
-                   *    plus, qui crée un point de coupure et césure le mot
-                   *    (défaut du Lot H24).
+                   * Le mot, lui, est décalé par UN SEUL réglage,
+                   * `DECALAGE_MOT`. Les versions précédentes tentaient de
+                   * calculer la position de la jointure à partir des
+                   * chasses de la police — estimations qui se sont révélées
+                   * fausses à l'écran, et qui déformaient en plus le
+                   * lettrage par une approche compensatoire. Un décalage
+                   * unique, réglé à l'œil, est à la fois plus honnête et
+                   * plus simple à corriger.
                    *
-                   * 2. ÉQUILIBRAGE — une approche sur le premier fragment
-                   *    égalise les deux moitiés du mot, ce qui amène la
-                   *    jointure M|A sur ce même centre. `letter-spacing`
-                   *    ajoute une avance après CHAQUE caractère, dernier
-                   *    compris : 4 × 0,045em ≈ 0,18em, soit l'écart entre
-                   *    « BARM » (2,86em) et « AJATA » (3,04em). C'est le
-                   *    seul nombre estimé de l'assemblage — l'ajuster
-                   *    déplace la jointure sous le point.
+                   * Négatif = le mot va vers la GAUCHE, donc la jointure
+                   * aussi. Le symbole ne bouge pas : le décalage porte sur
+                   * le texte seul, la boîte du `h1` restant en place.
+                   *
+                   * Choix du conteneur, trois écueils qui s'excluent :
+                   * - `span` inline vide : ne forme pas de bloc conteneur,
+                   *   le symbole s'échappe du cadre (défaut du Lot H28) ;
+                   * - `inline-block` : crée un point de coupure de ligne et
+                   *   césure le mot (défaut du Lot H24) ;
+                   * - conteneur plus large que le mot : le centre visé
+                   *   n'est pas celui du mot (défaut du Lot H27).
                    *
                    * Géométrie verticale (logo-mark.svg, viewBox 128) : le
                    * point est à 56,1 % de la hauteur du symbole, le haut de
                    * la courbe à 40,8 %. Symbole de 2em rabaissé de 10 % :
                    * le point tombe à ~0,55em au-dessus de la ligne de base,
                    * la courbe culmine à ~0,85em, au-dessus des capitales
-                   * (~0,66em). Les deux valeurs sont solidaires — agrandir
-                   * sans rabaisser fait monter le point, rabaisser sans
-                   * agrandir fait passer la courbe sous les lettres.
-                   *
-                   * L'arabe n'a pas de séquence « MA » : pas d'approche,
-                   * ce qui briserait les liaisons d'une écriture cursive.
+                   * (~0,66em). Les deux valeurs sont solidaires.
                    */}
                   <span className="mt-9 block text-enseigne">
                     {(() => {
-                      const coupure = slide.title.indexOf("MA");
-                      const equilibrable = slideIndex === 0 && coupure !== -1;
                       const classe =
                         "relative mx-auto w-fit font-serif text-enseigne font-light text-nuit-900";
-
-                      const symbole = slideIndex === 0 && (
-                        <Image
-                          src="/brand/logo-mark.svg"
-                          alt=""
-                          aria-hidden="true"
-                          width={128}
-                          height={128}
-                          priority
-                          className="pointer-events-none absolute bottom-0 left-1/2 h-[2em] w-[2em] -translate-x-1/2 translate-y-[10%] opacity-30"
-                        />
-                      );
 
                       if (slideIndex !== 0) {
                         return <p className={classe}>{slide.title}</p>;
@@ -192,17 +175,18 @@ export function Hero({ slides }: HeroProps) {
 
                       return (
                         <h1 className={classe}>
-                          {symbole}
-                          {equilibrable ? (
-                            <>
-                              <span className="tracking-[0.045em]">
-                                {slide.title.slice(0, coupure + 1)}
-                              </span>
-                              {slide.title.slice(coupure + 1)}
-                            </>
-                          ) : (
-                            slide.title
-                          )}
+                          <Image
+                            src="/brand/logo-mark.svg"
+                            alt=""
+                            aria-hidden="true"
+                            width={128}
+                            height={128}
+                            priority
+                            className="pointer-events-none absolute bottom-0 left-1/2 h-[2em] w-[2em] -translate-x-1/2 translate-y-[10%] opacity-30"
+                          />
+                          <span className="relative block translate-x-[var(--decalage-mot)]">
+                            {slide.title}
+                          </span>
                         </h1>
                       );
                     })()}

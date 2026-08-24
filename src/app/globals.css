@@ -100,6 +100,18 @@
 
 }
 
+/*
+ * RÉGLAGE — décalage horizontal du mot BARMAJATA par rapport au symbole
+ * du hero, en em (donc proportionnel à la taille du titre).
+ *
+ * Négatif = le mot va vers la GAUCHE. Sert à faire tomber la jointure M|A
+ * sur le point doré du symbole, qui est lui posé au centre exact du mot et
+ * de la page. Se règle à l'œil, avec le filet rouge d'AxeDeReglage.
+ */
+:root {
+  --decalage-mot: -0.08em;
+}
+
 body {
   background-color: var(--color-lin-50);
   color: var(--color-nuit-900);
