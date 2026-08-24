@@ -73,7 +73,7 @@ export function Hero({ slides }: HeroProps) {
       onKeyDown={handleKeyDown}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className={`relative aspect-[4/5] w-full sm:aspect-[26/9] ${
+      className={`relative aspect-[4/5] w-full sm:aspect-[30/9] ${
         // Le recadrage ne sert qu'à masquer les diapositives voisines
         // pendant le glissement. Avec une seule diapositive il ne masque
         // rien, et il empêche en revanche le symbole du titre de déborder
@@ -113,7 +113,7 @@ export function Hero({ slides }: HeroProps) {
               </>
             ) : null}
 
-            <div className="relative z-10 mx-auto flex h-full max-w-5xl flex-col items-center justify-center ps-6 pe-6 text-center">
+            <div className="relative z-10 mx-auto flex h-full max-w-5xl flex-col items-center justify-start ps-6 pe-6 pt-10 text-center sm:pt-14">
               <Reveal>
                 {/*
                  * Bloc de signature. `inline-block` : sa largeur est celle
