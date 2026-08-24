@@ -73,7 +73,7 @@ export function Hero({ slides }: HeroProps) {
       onKeyDown={handleKeyDown}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className={`relative aspect-[4/5] w-full sm:aspect-[26/9] ${
+      className={`relative w-full text-enseigne ${
         // Le recadrage ne sert qu'à masquer les diapositives voisines
         // pendant le glissement. Avec une seule diapositive il ne masque
         // rien, et il empêche en revanche le symbole du titre de déborder
@@ -81,6 +81,23 @@ export function Hero({ slides }: HeroProps) {
         // l'applique donc que s'il y a réellement de quoi masquer.
         hasMultiple ? "overflow-hidden" : ""
       }`}
+      /*
+       * Hauteur exprimée EN FONCTION DU MOT, jamais de la fenêtre.
+       *
+       * Elle valait `aspect-[26/9]`, donc une fraction de la largeur de la
+       * fenêtre. Or le mot suit `clamp(3,6rem, 14vw, 11,5rem)` : il se fige
+       * au-delà de ~1314px et en deçà de ~411px, tandis que la hauteur,
+       * elle, continuait de suivre la fenêtre. Les deux ne grandissaient
+       * donc pas ensemble, et la composition se déformait — mesuré : l'écart
+       * entre le cercle et le bandeau valait 212px à 390px de large, 9px à
+       * 1024px, MOINS 3px à 1280px (ils se touchaient) et 100px à 1920px.
+       *
+       * En posant `text-enseigne` sur la section, le `em` s'y résout sur la
+       * taille du mot : la hauteur, le symbole et le bloc grandissent
+       * désormais du même pas, et le rapport cercle/hero reste constant à
+       * 0,89 de 390 à 1920px.
+       */
+      style={{ minHeight: "2.7em" }}
     >
       <div
         className="flex h-full transition-transform duration-500 ease-out"
@@ -114,7 +131,7 @@ export function Hero({ slides }: HeroProps) {
             ) : null}
 
             <div
-              className="relative z-10 mx-auto flex h-full max-w-5xl flex-col items-center justify-center ps-6 pe-6 pb-8 text-center"
+              className="relative z-10 mx-auto flex h-full min-h-[2.7em] max-w-5xl flex-col items-center justify-center ps-6 pe-6 pb-[0.17em] text-center"
             >
               <Reveal>
                 {/*
