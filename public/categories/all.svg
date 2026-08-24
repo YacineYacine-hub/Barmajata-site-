@@ -1,0 +1,14 @@
+<!-- Fond de catégorie — décoratif, sans texte : le libellé est rendu en
+     HTML pour rester traduit. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="f" x1="0" y1="0" x2="0.45" y2="1">
+      <stop offset="0%" stop-color="#3a3630"/>
+      <stop offset="100%" stop-color="#1e1c18"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="600" fill="url(#f)"/>
+  <rect x="0" y="0" width="11" height="600" fill="#000" opacity="0.30"/>
+  <rect x="11" y="0" width="1.5" height="600" fill="#fff" opacity="0.14"/>
+  <line x1="46" y1="520" x2="86" y2="520" stroke="#e2cba6" stroke-width="2"/>
+</svg>

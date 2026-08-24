@@ -222,7 +222,10 @@
     "famille": "Family",
     "psychologie": "Psychology",
     "thriller": "Thriller",
-    "histoire-vraie": "True story"
+    "histoire-vraie": "True story",
+    "enfance": "الطفولة",
+    "developpement-personnel": "التنمية الشخصية",
+    "poesie-pensees": "شعر وخواطر"
   },
   "band": {
     "label": "واجهة عرض الكتب",

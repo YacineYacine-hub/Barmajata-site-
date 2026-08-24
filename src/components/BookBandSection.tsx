@@ -6,13 +6,13 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { BookBand, type BandItem } from "./BookBand";
 import { BOOK_CATEGORIES, type BookCategory, type ContentLocale } from "@/lib/content/schema";
-import { categoryToSlug, slugToCategory } from "@/lib/content/categories";
+import { categoryToSlug, slugToCategory, NEW_RELEASES_PARAM } from "@/lib/content/categories";
 
 export type BandEntry = BandItem & { categories: BookCategory[]; isNew: boolean };
 
 // Valeur réservée pour le filtre calculé "Nouveautés" — distinct des slugs
 // de genre (jamais stocké, voir isNewRelease() dans schema.ts).
-const NEW_RELEASES_PARAM = "nouveautes";
+
 
 /**
  * Lit ?categorie= et remonte sa valeur au parent. Isolé dans son propre

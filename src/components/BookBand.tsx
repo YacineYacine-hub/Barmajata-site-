@@ -5,7 +5,30 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
-export type BandItem = { slug: string; title: string; coverSrc?: string };
+export type BandItem = {
+  slug: string;
+  title: string;
+  coverSrc?: string;
+  /**
+   * Quand il est présent, l'élément ne mène pas à une fiche livre mais au
+   * catalogue filtré sur cette catégorie. C'est ce qui permet à la même
+   * bande de servir de présentoir sur `/livres` et de MENU DE CATÉGORIES
+   * sur l'accueil, sans dupliquer sa mécanique de défilement.
+   *
+   * Chaîne vide = « toutes catégories », donc le catalogue sans filtre.
+   */
+  categorieSlug?: string;
+};
+
+/** Cible du lien d'un élément : une fiche, ou le catalogue filtré. */
+function lienDe(item: BandItem) {
+  return item.categorieSlug === undefined
+    ? ({ pathname: "/books/[slug]", params: { slug: item.slug } } as const)
+    : ({
+        pathname: "/books",
+        query: item.categorieSlug ? { categorie: item.categorieSlug } : {},
+      } as const);
+}
 
 // Constantes explicitement données par la spec.
 const SCALE_CENTER = 1.34;
@@ -362,7 +385,7 @@ export function BookBand({
       >
         {items.map((item) => (
           <li key={item.slug} className="w-32 shrink-0 snap-center">
-            <Link href={{ pathname: "/books/[slug]", params: { slug: item.slug } }} className="block">
+            <Link href={lienDe(item)} className="block">
               <BandCover item={item} />
             </Link>
           </li>
@@ -403,7 +426,7 @@ export function BookBand({
             }}
           >
             <Link
-              href={{ pathname: "/books/[slug]", params: { slug: item.slug } }}
+              href={lienDe(item)}
               tabIndex={index === centerIndex ? 0 : -1}
               onClick={(event) => handleItemClick(event, index)}
               className="block"
@@ -418,9 +441,25 @@ export function BookBand({
 }
 
 function BandCover({ item }: { item: BandItem }) {
+  // Le titre est TOUJOURS rendu, au moins pour les lecteurs d'écran : le
+  // visuel porte `alt=""`, donc sans ce texte le lien n'aurait aucun nom
+  // accessible — défaut préexistant, corrigé ici.
+  //
+  // Pour une catégorie il est en plus rendu VISIBLE par-dessus le fond :
+  // les visuels de catégorie ne contiennent volontairement pas de texte,
+  // sans quoi le libellé serait figé en français dans le fichier SVG.
+  const estCategorie = item.categorieSlug !== undefined;
+
   if (item.coverSrc) {
     return (
       <div className="relative aspect-[2/3] w-full overflow-hidden rounded-sm shadow-flottant">
+        {estCategorie ? (
+          <span className="absolute inset-0 z-10 flex items-start p-4 font-serif text-lg leading-tight text-lin-50">
+            {item.title}
+          </span>
+        ) : (
+          <span className="sr-only">{item.title}</span>
+        )}
         {/* Largeur logique max 160px (ITEM_WIDTH_PX) sur tous les
             contextes d'usage (bande 3D et défilement natif <640px) —
             sizes fixe en conséquence, pas de variation par breakpoint. */}

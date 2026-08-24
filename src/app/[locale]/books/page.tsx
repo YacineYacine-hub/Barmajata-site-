@@ -12,6 +12,7 @@ import {
   type Edition,
 } from "@/lib/content/schema";
 import { buildBookListJsonLd } from "@/lib/content/jsonld";
+import { slugToCategory, NEW_RELEASES_PARAM } from "@/lib/content/categories";
 import { SITE_URL } from "@/lib/site";
 import { buildAlternates } from "@/lib/seo";
 import { Reveal } from "@/components/Reveal";
@@ -38,10 +39,10 @@ export default async function BooksPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; categorie?: string }>;
 }) {
   const { locale } = await params;
-  const { q } = await searchParams;
+  const { q, categorie } = await searchParams;
   setRequestLocale(locale);
 
   const t = await getTranslations("pages.books");
@@ -70,14 +71,35 @@ export default async function BooksPage({
 
   const recherche = q?.trim() ? aplatir(q.trim()) : undefined;
 
+  /*
+   * Filtre par catégorie. Il n'agissait jusqu'ici que sur la bande, côté
+   * navigateur : la grille en dessous restait complète, ce qui n'était pas
+   * tenable une fois les catégories devenues la navigation principale de
+   * l'accueil.
+   *
+   * `nouveautes` n'est pas une catégorie stockée mais un filtre calculé
+   * (voir isNewRelease dans le schéma), d'où le traitement séparé.
+   */
+  const categorieActive =
+    categorie && categorie !== NEW_RELEASES_PARAM
+      ? slugToCategory(categorie, contentLocale)
+      : undefined;
+  const filtreNouveautes = categorie === NEW_RELEASES_PARAM;
+
+  const parCategorie = toutesLesEntrees.filter(({ book, edition }) => {
+    if (filtreNouveautes) return isNewRelease(edition);
+    if (categorieActive) return book.categories?.includes(categorieActive) ?? false;
+    return true;
+  });
+
   const entries = recherche
-    ? toutesLesEntrees.filter(({ book, edition }) => {
+    ? parCategorie.filter(({ book, edition }) => {
         const auteur = getAuthorBySlug(book.auteurSlug);
         return [edition.titre, edition.sousTitre, auteur?.nom]
           .filter((champ): champ is string => Boolean(champ))
           .some((champ) => aplatir(champ).includes(recherche));
       })
-    : toutesLesEntrees;
+    : parCategorie;
 
   // Garde-fou : getVisibleBooks() a déjà écarté les livres sans édition
   // visible, donc resolveEdition() ne devrait jamais échouer ici. Si ça

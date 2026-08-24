@@ -23,13 +23,21 @@ export const BOOK_FORMAT_TYPES = ["broche", "epub", "pdf"] as const;
 export type BookFormatType = (typeof BOOK_FORMAT_TYPES)[number];
 
 /**
- * Quatre genres figés. Distinct du champ `formats[].type` (broché/epub/
+ * Genres figés. Distinct du champ `formats[].type` (broché/epub/
  * pdf, le format physique/numérique) : la catégorie ne touche jamais à
  * ce champ. Slugs canoniques utilisés dans les fichiers de contenu — la
  * traduction par locale (URL du filtre `?categorie=`) vit dans
  * `src/lib/content/categories.ts`.
  */
-export const BOOK_CATEGORIES = ["famille", "psychologie", "thriller", "histoire-vraie"] as const;
+export const BOOK_CATEGORIES = [
+  "famille",
+  "psychologie",
+  "thriller",
+  "histoire-vraie",
+  "enfance",
+  "developpement-personnel",
+  "poesie-pensees",
+] as const;
 export type BookCategory = (typeof BOOK_CATEGORIES)[number];
 
 const slugSchema = z

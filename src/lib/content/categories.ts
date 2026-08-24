@@ -15,20 +15,42 @@ export const CATEGORY_SLUGS: Record<ContentLocale, Record<BookCategory, string>>
     psychologie: "psychologie",
     thriller: "thriller",
     "histoire-vraie": "histoire-vraie",
+    "enfance": "enfance",
+    "developpement-personnel": "developpement-personnel",
+    "poesie-pensees": "poesie-pensees",
   },
   en: {
     famille: "family",
     psychologie: "psychology",
     thriller: "thriller",
     "histoire-vraie": "true-story",
+    "enfance": "childhood",
+    "developpement-personnel": "personal-growth",
+    "poesie-pensees": "poetry-thoughts",
   },
   ar: {
     famille: "family",
     psychologie: "psychology",
     thriller: "thriller",
     "histoire-vraie": "true-story",
+    "enfance": "childhood",
+    "developpement-personnel": "personal-growth",
+    "poesie-pensees": "poetry-thoughts",
   },
 };
+
+/**
+ * Valeur de `?categorie=` pour le filtre « Nouveautés ».
+ *
+ * Elle vit ICI et non dans BookBandSection, qui est un module `"use
+ * client"` : Next.js y substitue une référence client, et une constante
+ * qu'on en importe depuis un composant serveur ne vaut pas ce qu'on croit.
+ * Symptôme observé : le filtre passait sans rien filtrer.
+ *
+ * « Nouveautés » n'est pas une catégorie stockée mais un filtre calculé
+ * (voir isNewRelease dans le schéma), d'où une constante à part.
+ */
+export const NEW_RELEASES_PARAM = "nouveautes";
 
 export function categoryToSlug(category: BookCategory, locale: ContentLocale): string {
   return CATEGORY_SLUGS[locale][category];

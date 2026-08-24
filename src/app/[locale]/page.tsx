@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { useTranslations } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { buildAlternates } from "@/lib/seo";
 import { Hero } from "@/components/Hero";
 import { Reveal } from "@/components/Reveal";
 import { BookBand, type BandItem } from "@/components/BookBand";
-import { getVisibleBooks } from "@/lib/content";
-import { resolveEdition, type Book, type ContentLocale, type Edition } from "@/lib/content/schema";
+import { BOOK_CATEGORIES, type ContentLocale } from "@/lib/content/schema";
+import { categoryToSlug, NEW_RELEASES_PARAM } from "@/lib/content/categories";
 
 // « Livres » n'y figure pas : le lien vit déjà dans la ligne de navigation,
 // juste au-dessus. Le répéter ici n'ajoutait rien.
@@ -26,10 +26,31 @@ export default async function HomePage({
   setRequestLocale(locale);
 
   const contentLocale = locale as ContentLocale;
-  const bandItems: BandItem[] = getVisibleBooks()
-    .map((book) => ({ book, edition: resolveEdition(book, contentLocale) }))
-    .filter((entry): entry is { book: Book; edition: Edition } => entry.edition !== undefined)
-    .map(({ book, edition }) => ({ slug: book.slug, title: edition.titre, coverSrc: book.couverture }));
+  const t = await getTranslations("categories");
+
+  /*
+   * La bande de l'accueil n'est PAS un présentoir de livres : c'est un
+   * menu de catégories. Chaque élément mène au catalogue filtré, et
+   * « Tout » y mène sans filtre (d'où la chaîne vide).
+   *
+   * Le libellé vient des traductions et le visuel ne contient aucun texte :
+   * un libellé gravé dans le SVG serait figé en français.
+   */
+  const bandItems: BandItem[] = [
+    { cle: "all" as const, categorieSlug: "" },
+    // « Nouveautés » n'est pas une catégorie stockée mais un filtre calculé
+    // (isNewRelease). Elle a néanmoins sa place dans le menu.
+    { cle: "new" as const, categorieSlug: NEW_RELEASES_PARAM },
+    ...BOOK_CATEGORIES.map((categorie) => ({
+      cle: categorie,
+      categorieSlug: categoryToSlug(categorie, contentLocale),
+    })),
+  ].map(({ cle, categorieSlug }) => ({
+    slug: cle,
+    title: t(cle),
+    coverSrc: `/categories/${cle}.svg`,
+    categorieSlug,
+  }));
 
   return <HomeContent bandItems={bandItems} />;
 }
