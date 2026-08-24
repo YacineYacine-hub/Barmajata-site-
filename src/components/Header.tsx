@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LocaleSwitcher } from "./LocaleSwitcher";
+import { SocialLinks } from "./SocialLinks";
 
 type NavHref = "/authors" | "/house" | "/journal" | "/contact";
 type ProHref = "/submissions" | "/press" | "/rights" | "/booksellers";
@@ -126,6 +127,10 @@ export function Header() {
         </Link>
 
         <div className="flex items-center gap-5">
+          {/* Masqué tant que SOCIAL_LINKS est vide — voir src/lib/social.ts.
+              Caché sous 640px : la bande doit rester une bande fine. */}
+          <SocialLinks className="hidden text-sable-300 sm:flex" />
+
           <LocaleSwitcher />
 
           <Link href="/books" className="text-sm text-sable-300 hover:text-lin-50">

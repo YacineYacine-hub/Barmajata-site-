@@ -17,7 +17,8 @@
     "submissions": "Manuscrits",
     "press": "Presse",
     "rights": "Droits",
-    "booksellers": "Libraires"
+    "booksellers": "Libraires",
+    "faq": "FAQ"
   },
   "home": {
     "heroEyebrow": "Maison d'édition",
@@ -188,6 +189,29 @@
           "body": "La vente aux particuliers se fait par redirection vers Amazon : aucune commande n'est traitée sur ce site."
         }
       ]
+    },
+    "faq": {
+      "eyebrow": "Aide",
+      "title": "Questions fréquentes",
+      "lede": "Achat, livraison, manuscrits : les réponses aux questions qui reviennent.",
+      "sections": [
+        {
+          "heading": "Où sont vendus vos livres ?",
+          "body": "La vente se fait par redirection vers Amazon : vous quittez ce site pour finaliser votre commande. BARMAJATA n'intervient ni dans le paiement, ni dans la livraison, ni dans le service après-vente."
+        },
+        {
+          "heading": "Pourquoi le prix affiché ici et celui d'Amazon peuvent-ils différer ?",
+          "body": "Le prix indiqué sur ce site est le prix public fixé par l'éditeur. En France, la loi sur le prix unique du livre autorise les détaillants à accorder au maximum 5 % de rabais : l'écart ne peut donc pas dépasser cette limite."
+        },
+        {
+          "heading": "Livraison et retours",
+          "body": "Contenu à venir."
+        },
+        {
+          "heading": "J'ai écrit un manuscrit",
+          "body": "Contenu à venir."
+        }
+      ]
     }
   },
   "categories": {
@@ -278,7 +302,12 @@
     "errorGeneric": "Une erreur est survenue, réessayez plus tard.",
     "confirmSuccess": "Votre inscription est confirmée. Bienvenue dans le club !",
     "confirmInvalid": "Ce lien de confirmation n'est plus valide (expiré ou déjà utilisé).",
-    "confirmError": "Une erreur est survenue lors de la confirmation. Réessayez ou contactez-nous."
+    "confirmError": "Une erreur est survenue lors de la confirmation. Réessayez ou contactez-nous.",
+    "bloc": {
+      "title": "Abonnez-vous",
+      "lede": "Recevez les prochaines parutions, sans rien d'autre.",
+      "cta": "S'inscrire"
+    }
   },
   "legal": {
     "legalNotice": {

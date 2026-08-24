@@ -17,7 +17,8 @@
     "submissions": "Manuscripts",
     "press": "Press",
     "rights": "Rights",
-    "booksellers": "Booksellers"
+    "booksellers": "Booksellers",
+    "faq": "FAQ"
   },
   "home": {
     "heroEyebrow": "Publishing house",
@@ -188,6 +189,29 @@
           "body": "Sales to readers are handled by redirection to Amazon: no order is processed on this site."
         }
       ]
+    },
+    "faq": {
+      "eyebrow": "Help",
+      "title": "Frequently asked questions",
+      "lede": "Buying, delivery, manuscripts: answers to the questions we get most.",
+      "sections": [
+        {
+          "heading": "Where are your books sold?",
+          "body": "Sales are handled by redirection to Amazon: you leave this site to complete your order. BARMAJATA is not involved in payment, delivery or after-sales service."
+        },
+        {
+          "heading": "Why might the price here differ from Amazon's?",
+          "body": "The price shown on this site is the public price set by the publisher. In France, the fixed book price law allows retailers a discount of at most 5%, so the gap cannot exceed that."
+        },
+        {
+          "heading": "Delivery and returns",
+          "body": "Content coming soon."
+        },
+        {
+          "heading": "I have written a manuscript",
+          "body": "Content coming soon."
+        }
+      ]
     }
   },
   "categories": {
@@ -278,7 +302,12 @@
     "errorGeneric": "Something went wrong, please try again later.",
     "confirmSuccess": "Your subscription is confirmed. Welcome to the club!",
     "confirmInvalid": "This confirmation link is no longer valid (expired or already used).",
-    "confirmError": "Something went wrong during confirmation. Please try again or contact us."
+    "confirmError": "Something went wrong during confirmation. Please try again or contact us.",
+    "bloc": {
+      "title": "Subscribe",
+      "lede": "Get our forthcoming titles, and nothing else.",
+      "cta": "Sign up"
+    }
   },
   "legal": {
     "legalNotice": {

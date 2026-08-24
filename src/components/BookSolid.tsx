@@ -17,7 +17,26 @@ const BOOK_HEIGHT_MM = 210; // hauteur physique supposée, pour convertir epaiss
 const UNITS_PER_MM = (HALF_H * 2) / BOOK_HEIGHT_MM;
 const DEFAULT_EPAISSEUR_MM = 20;
 const CAMERA_DISTANCE = 900; // doit rester très supérieur à la profondeur du livre
-const VIEWBOX_W = 460;
+/*
+ * Cadre CARRÉ, et dimensionné pour n'importe quelle orientation.
+ *
+ * Il valait 460×560, taillé pour le livre debout. Depuis que la rotation
+ * a été libérée sur les deux axes (Lot H10), le livre peut basculer dans
+ * des positions où sa projection déborde en largeur : il était coupé.
+ *
+ * Une rotation conserve la distance au centre, donc le sommet le plus
+ * éloigné reste à la demi-diagonale du pavé, quelle que soit l'orientation.
+ * Au pire, ce sommet est aussi le plus proche de la caméra :
+ *
+ *   r        = √(HALF_W² + HALF_H² + halfDepth²)   ≈ 233 au plus épais
+ *   étendue  = r × FOCAL / (CAMERA_DISTANCE − r)   ≈ 273
+ *   côté     = 2 × étendue                          ≈ 545
+ *
+ * D'où 560, avec une marge. Le cadre doit rester CARRÉ : une rotation ne
+ * privilégie aucun axe. Le conteneur a été élargi en conséquence pour que
+ * le livre ne rapetisse pas à l'écran.
+ */
+const VIEWBOX_W = 560;
 const VIEWBOX_H = 560;
 const INITIAL_YAW = -24;
 const INITIAL_PITCH = 8;
@@ -273,7 +292,7 @@ export function BookSolid({
         aria-label={t("label")}
         tabIndex={0}
         viewBox={`${-VIEWBOX_W / 2} ${-VIEWBOX_H / 2} ${VIEWBOX_W} ${VIEWBOX_H}`}
-        className="w-full max-w-sm touch-none select-none"
+        className="w-full max-w-md touch-none select-none"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}

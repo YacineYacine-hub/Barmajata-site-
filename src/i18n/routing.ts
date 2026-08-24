@@ -77,6 +77,11 @@ export const routing = defineRouting({
       en: "/booksellers",
       ar: "/الموزعون",
     },
+    "/faq": {
+      fr: "/faq",
+      en: "/faq",
+      ar: "/الأسئلة-الشائعة",
+    },
     "/legal-notice": "/mentions-legales",
     "/terms-of-sale": "/cgv",
     "/privacy-policy": "/confidentialite",

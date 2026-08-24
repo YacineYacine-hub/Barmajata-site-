@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { LocaleSwitcher } from "./LocaleSwitcher";
-import { SOCIAL_LINKS } from "@/lib/social";
+import { SocialLinks } from "./SocialLinks";
 
 // Bande fine du bas (Lot H5) : avec l'accueil devenu un livre ouvert, le
 // sombre ne subsiste que dans deux bandes — celle-ci et l'en-tête. Elle a
@@ -33,22 +33,7 @@ export function Footer() {
           {tSite("name")} — {t("rights")}
         </p>
 
-        {SOCIAL_LINKS.length > 0 && (
-          <ul className="flex items-center gap-4">
-            {SOCIAL_LINKS.map((link) => (
-              <li key={link.url}>
-                <a
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-lin-50"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
+        <SocialLinks />
 
         <LocaleSwitcher />
       </div>

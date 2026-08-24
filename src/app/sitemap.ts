@@ -21,6 +21,7 @@ const CANONICAL_PATHS = [
   "/press",
   "/rights",
   "/booksellers",
+  "/faq",
   "/legal-notice",
   "/terms-of-sale",
   "/privacy-policy",
