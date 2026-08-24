@@ -52,12 +52,18 @@ const ITEM_WIDTH_PX = 160; // largeur d'une couverture au repos (scale 1)
  * d'échelle creuse l'écart toute seule (175px requis entre le 1er et le
  * 2e, 144 entre le 2e et le 3e).
  *
- * 224px laisse 22px de jeu autour de l'élément central. Valeur
- * d'implémentation, pas de spec — contrairement à SCALE_CENTER,
+ * 224px dégageait le centre de 22px, mais écartait trop toute la bande :
+ * le resserrement des côtés faisait justement partie de l'effet voulu.
+ *
+ * 206px est le compromis retenu : le centre est dégagé de 4px — assez pour
+ * qu'aucun voisin ne mange dessus — et les rangs suivants restent serrés
+ * (+31, +62, +89px de jeu, contre +49, +80, +107 à 224px).
+ *
+ * Valeur d'implémentation, pas de spec — contrairement à SCALE_CENTER,
  * SCALE_EDGE, ROTATE_MAX_DEG et OPACITY_CUTOFF_DISTANCE, qui eux sont
  * donnés et ne se touchent pas.
  */
-const ITEM_SPACING_PX = 224;
+const ITEM_SPACING_PX = 206;
 const SETTLE_DURATION_MS = 420;
 const DRAG_CLICK_THRESHOLD_PX = 6; // au-delà, un pointerup n'est plus un clic
 const WHEEL_IDLE_MS = 120; // silence molette avant de caler
