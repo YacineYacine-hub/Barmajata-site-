@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { SocialLinks } from "./SocialLinks";
 
@@ -16,6 +16,11 @@ const FOCUSABLE_SELECTOR =
 
 export function Header() {
   const t = useTranslations("nav");
+  // La barre de recherche n'apparaît que sur le catalogue — ailleurs elle
+  // n'aurait rien à chercher. `usePathname` de next-intl renvoie le chemin
+  // interne ("/books"), jamais sa traduction, donc la comparaison tient
+  // dans les trois langues.
+  const surLeCatalogue = usePathname() === "/books";
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -152,6 +157,27 @@ export function Header() {
         <Link href="/books" className="text-sm font-medium text-roche-700 hover:text-nuit-900">
           {t("books")}
         </Link>
+
+        {/*
+         * Formulaire SANS `action` : il se soumet à l'URL courante, donc au
+         * catalogue dans sa langue, sans avoir à reconstruire un chemin
+         * traduit. Méthode GET : la recherche vit dans l'URL, elle est donc
+         * partageable, et le formulaire fonctionne même sans JavaScript.
+         */}
+        {surLeCatalogue && (
+          <form method="get" className="flex items-center">
+            <label htmlFor="recherche" className="sr-only">
+              {t("search")}
+            </label>
+            <input
+              id="recherche"
+              type="search"
+              name="q"
+              placeholder={t("searchPlaceholder")}
+              className="w-36 border-b border-nuit-900/25 bg-transparent pb-1 text-sm text-nuit-900 placeholder:text-roche-700/60 focus:border-nuit-900 sm:w-52"
+            />
+          </form>
+        )}
 
         <button
           ref={triggerRef}

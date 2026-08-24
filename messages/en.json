@@ -18,7 +18,9 @@
     "press": "Press",
     "rights": "Rights",
     "booksellers": "Booksellers",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "search": "Search",
+    "searchPlaceholder": "Title or author"
   },
   "home": {
     "heroEyebrow": "Publishing house",
@@ -284,7 +286,8 @@
       "title": "Have you read this book?",
       "lede": "Your review helps other readers find it. Reviews are left on Amazon, where your purchase is verified.",
       "cta": "Write a review on Amazon"
-    }
+    },
+    "searchEmpty": "No book matches “{q}”."
   },
   "authors": {
     "empty": "No authors available yet.",

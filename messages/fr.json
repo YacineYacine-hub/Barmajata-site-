@@ -18,7 +18,9 @@
     "press": "Presse",
     "rights": "Droits",
     "booksellers": "Libraires",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "search": "Rechercher",
+    "searchPlaceholder": "Titre ou auteur"
   },
   "home": {
     "heroEyebrow": "Maison d'édition",
@@ -284,7 +286,8 @@
       "title": "Vous avez lu ce livre ?",
       "lede": "Votre avis aide d'autres lecteurs à le découvrir. Il se dépose sur Amazon, où votre achat est vérifié.",
       "cta": "Donner mon avis sur Amazon"
-    }
+    },
+    "searchEmpty": "Aucun livre ne correspond à « {q} »."
   },
   "authors": {
     "empty": "Aucun auteur disponible pour le moment.",

@@ -9,7 +9,9 @@ import { BookBand, type BandItem } from "@/components/BookBand";
 import { getVisibleBooks } from "@/lib/content";
 import { resolveEdition, type Book, type ContentLocale, type Edition } from "@/lib/content/schema";
 
-const PILLARS = ["books", "authors", "house", "journal"] as const;
+// « Livres » n'y figure pas : le lien vit déjà dans la ligne de navigation,
+// juste au-dessus. Le répéter ici n'ajoutait rien.
+const PILLARS = ["authors", "house", "journal"] as const;
 
 export function generateMetadata(): Metadata {
   return { alternates: buildAlternates("/") };

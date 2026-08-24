@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link, getPathname } from "@/i18n/navigation";
-import { getVisibleBooks } from "@/lib/content";
+import { getAuthorBySlug, getVisibleBooks } from "@/lib/content";
 import {
   getMinPrice,
   isNewRelease,
@@ -35,10 +35,13 @@ export async function generateMetadata({
 
 export default async function BooksPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ q?: string }>;
 }) {
   const { locale } = await params;
+  const { q } = await searchParams;
   setRequestLocale(locale);
 
   const t = await getTranslations("pages.books");
@@ -46,9 +49,35 @@ export default async function BooksPage({
   const contentLocale = locale as ContentLocale;
 
   const visibleBooks = getVisibleBooks();
-  const entries = visibleBooks
+  const toutesLesEntrees = visibleBooks
     .map((book) => ({ book, edition: resolveEdition(book, contentLocale) }))
     .filter((entry): entry is { book: Book; edition: Edition } => entry.edition !== undefined);
+
+  /*
+   * Recherche par titre, sous-titre ou nom d'auteur. La comparaison passe
+   * par `normalize("NFD")` puis retire les diacritiques : sans cela,
+   * « evenement » ne trouverait pas « Événement », et « mere » raterait
+   * « mère » — inacceptable sur un catalogue francophone.
+   *
+   * `toLocaleLowerCase()` et non `toLowerCase()` : le repli du turc, où le
+   * I majuscule ne s'abaisse pas en i.
+   */
+  const aplatir = (texte: string) =>
+    texte
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLocaleLowerCase(locale);
+
+  const recherche = q?.trim() ? aplatir(q.trim()) : undefined;
+
+  const entries = recherche
+    ? toutesLesEntrees.filter(({ book, edition }) => {
+        const auteur = getAuthorBySlug(book.auteurSlug);
+        return [edition.titre, edition.sousTitre, auteur?.nom]
+          .filter((champ): champ is string => Boolean(champ))
+          .some((champ) => aplatir(champ).includes(recherche));
+      })
+    : toutesLesEntrees;
 
   // Garde-fou : getVisibleBooks() a déjà écarté les livres sans édition
   // visible, donc resolveEdition() ne devrait jamais échouer ici. Si ça
@@ -98,7 +127,9 @@ export default async function BooksPage({
         )}
 
         {entries.length === 0 ? (
-          <p className="mt-6 text-roche-700 text-start">{tBooks("empty")}</p>
+          <p className="mt-6 text-roche-700 text-start">
+            {recherche ? tBooks("searchEmpty", { q: q!.trim() }) : tBooks("empty")}
+          </p>
         ) : (
           <ul className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {entries.map(({ book, edition }, index) => {
