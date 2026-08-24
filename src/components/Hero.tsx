@@ -129,31 +129,31 @@ export function Hero({ slides }: HeroProps) {
                       par page (voir globals.css). font-light parce qu'à
                       cette taille, un Cormorant en 400 devient lourd. */}
                   {/*
-                   * Le point doré est ancré SUR la jointure M|A, et la
-                   * jointure est amenée au centre du mot. Deux mécanismes
-                   * distincts, chacun exact :
+                   * Le point doré tombe au centre du mot, qui est aussi le
+                   * centre de la page. Deux conditions, chacune explicite :
                    *
-                   * 1. ANCRAGE — un `span` `position:relative` **inline**
-                   *    est inséré entre les deux fragments du mot, et le
-                   *    symbole s'y positionne en absolu. Le bord de ce span
-                   *    EST la jointure, telle que le navigateur la calcule
-                   *    avec les vraies chasses. Aucune estimation, et aucune
-                   *    dépendance à la largeur du conteneur — c'était le
-                   *    défaut du positionnement en pourcentage.
+                   * 1. CONTENEUR — le `h1` porte `w-fit mx-auto` : sa
+                   *    largeur est donc EXACTEMENT celle du mot, et il est
+                   *    centré. `left-1/2` y désigne le centre du mot, qui
+                   *    coïncide avec le centre de la page.
                    *
-                   *    `inline` et jamais `inline-block` : un inline-block
-                   *    est un inline atomique, il crée un point de coupure
-                   *    de ligne et césurait le mot (défaut du Lot H24). Un
-                   *    span inline n'en crée aucun.
+                   *    Un bloc, et surtout pas un `span` inline : un inline
+                   *    vide ne forme pas de bloc conteneur fiable pour un
+                   *    élément en position absolue — le symbole était
+                   *    rattaché à un ancêtre plus large, sortait du cadre,
+                   *    et le `overflow-hidden` du hero l'escamotait (défaut
+                   *    du Lot H28). Et surtout pas un `inline-block` non
+                   *    plus, qui crée un point de coupure et césure le mot
+                   *    (défaut du Lot H24).
                    *
                    * 2. ÉQUILIBRAGE — une approche sur le premier fragment
-                   *    égalise les deux moitiés, donc amène la jointure au
-                   *    milieu du mot, donc au centre de la page puisque le
-                   *    bloc y est centré. `letter-spacing` ajoute une avance
-                   *    après CHAQUE caractère, dernier compris : 4 × 0,045em
-                   *    ≈ 0,18em, l'écart entre « BARM » (2,86em) et
-                   *    « AJATA » (3,04em). Seul nombre estimé qui subsiste,
-                   *    et il n'agit que sur l'équilibre du mot.
+                   *    égalise les deux moitiés du mot, ce qui amène la
+                   *    jointure M|A sur ce même centre. `letter-spacing`
+                   *    ajoute une avance après CHAQUE caractère, dernier
+                   *    compris : 4 × 0,045em ≈ 0,18em, soit l'écart entre
+                   *    « BARM » (2,86em) et « AJATA » (3,04em). C'est le
+                   *    seul nombre estimé de l'assemblage — l'ajuster
+                   *    déplace la jointure sous le point.
                    *
                    * Géométrie verticale (logo-mark.svg, viewBox 128) : le
                    * point est à 56,1 % de la hauteur du symbole, le haut de
@@ -164,18 +164,17 @@ export function Hero({ slides }: HeroProps) {
                    * sans rabaisser fait monter le point, rabaisser sans
                    * agrandir fait passer la courbe sous les lettres.
                    *
-                   * L'arabe n'a pas de séquence « MA » : ni découpe ni
-                   * approche, ce qui briserait les liaisons d'une écriture
-                   * cursive. Le symbole y est alors centré sur le mot.
+                   * L'arabe n'a pas de séquence « MA » : pas d'approche,
+                   * ce qui briserait les liaisons d'une écriture cursive.
                    */}
-                  <span className="relative mt-9 block text-enseigne">
+                  <span className="mt-9 block text-enseigne">
                     {(() => {
                       const coupure = slide.title.indexOf("MA");
-                      const ancrable = slideIndex === 0 && coupure !== -1;
+                      const equilibrable = slideIndex === 0 && coupure !== -1;
                       const classe =
-                        "relative font-serif text-enseigne font-light text-nuit-900";
+                        "relative mx-auto w-fit font-serif text-enseigne font-light text-nuit-900";
 
-                      const symbole = (
+                      const symbole = slideIndex === 0 && (
                         <Image
                           src="/brand/logo-mark.svg"
                           alt=""
@@ -183,32 +182,27 @@ export function Hero({ slides }: HeroProps) {
                           width={128}
                           height={128}
                           priority
-                          className={
-                            ancrable
-                              ? "pointer-events-none absolute bottom-0 left-0 h-[2em] w-[2em] -translate-x-1/2 translate-y-[10%] opacity-30"
-                              : "pointer-events-none absolute bottom-0 left-1/2 h-[2em] w-[2em] -translate-x-1/2 translate-y-[10%] opacity-30"
-                          }
+                          className="pointer-events-none absolute bottom-0 left-1/2 h-[2em] w-[2em] -translate-x-1/2 translate-y-[10%] opacity-30"
                         />
                       );
 
-                      if (!ancrable) {
-                        return slideIndex === 0 ? (
-                          <h1 className={classe}>
-                            {symbole}
-                            {slide.title}
-                          </h1>
-                        ) : (
-                          <p className={classe}>{slide.title}</p>
-                        );
+                      if (slideIndex !== 0) {
+                        return <p className={classe}>{slide.title}</p>;
                       }
 
                       return (
                         <h1 className={classe}>
-                          <span className="tracking-[0.045em]">
-                            {slide.title.slice(0, coupure + 1)}
-                          </span>
-                          <span className="relative">{symbole}</span>
-                          {slide.title.slice(coupure + 1)}
+                          {symbole}
+                          {equilibrable ? (
+                            <>
+                              <span className="tracking-[0.045em]">
+                                {slide.title.slice(0, coupure + 1)}
+                              </span>
+                              {slide.title.slice(coupure + 1)}
+                            </>
+                          ) : (
+                            slide.title
+                          )}
                         </h1>
                       );
                     })()}
