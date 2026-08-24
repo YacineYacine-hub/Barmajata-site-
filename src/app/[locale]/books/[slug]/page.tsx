@@ -12,6 +12,7 @@ import { NotifyMe } from "@/components/NotifyMe";
 import { BookSolid } from "@/components/BookSolid";
 import { SITE_URL } from "@/lib/site";
 import { buildAlternates } from "@/lib/seo";
+import { buildAmazonReviewUrl, DEFAULT_MARKETPLACE_BY_LOCALE } from "@/lib/amazon/marketplaces";
 
 export function generateStaticParams() {
   return getVisibleBooks().map((book) => ({ slug: book.slug }));
@@ -280,6 +281,34 @@ export default async function BookPage({
                   </div>
                 )}
               </dl>
+            </section>
+          )}
+
+          {/*
+            * Avis de lecteurs : recueillis chez Amazon, jamais ici. Le
+            * lecteur y a acheté le livre, Amazon vérifie donc l'achat et
+            * porte les obligations de l'article L111-7-2 du Code de la
+            * consommation. Voir CLAUDE.md, « Avis de lecteurs ».
+            */}
+          {edition.statut === "publie" && primarySellableFormat?.asin && (
+            <section className="mt-12 border border-nuit-900/15 p-6">
+              <h2 className="font-serif text-xl text-nuit-900 text-start">
+                {t("review.title")}
+              </h2>
+              <p className="mt-2 text-sm leading-relaxed text-roche-700 text-start">
+                {t("review.lede")}
+              </p>
+              <a
+                href={buildAmazonReviewUrl(
+                  primarySellableFormat.asin,
+                  DEFAULT_MARKETPLACE_BY_LOCALE[contentLocale],
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-block text-sm font-medium text-nuit-900 underline underline-offset-4 hover:opacity-70"
+              >
+                {t("review.cta")}
+              </a>
             </section>
           )}
 

@@ -1094,6 +1094,64 @@ Le `rm -rf .next` n'est pas superflu : sans lui, la génération
 incrémentale conserve des pages du build précédent et le mélange persiste.
 Et le drapeau est nécessaire **au build ET au démarrage**.
 
+## Avis de lecteurs — recueillis chez Amazon, jamais ici
+
+Demande : « créer une ligne pour que les clients recommandent le livre,
+un QR code qui redirige au site, une base avec les avis ».
+
+**Le risque juridique a fait écarter la base d'avis maison.** L'article
+L111-7-2 du Code de la consommation s'applique à *toute* personne dont
+l'activité consiste, même à titre accessoire, à **collecter, modérer ou
+diffuser** des avis en ligne de consommateurs. Il impose :
+
+- une information loyale et transparente sur les modalités de publication
+  et de traitement des avis ;
+- de préciser si les avis font l'objet d'un contrôle, et lequel ;
+- d'afficher **la date** de chaque avis et de ses mises à jour ;
+- d'indiquer à l'auteur d'un avis rejeté **le motif du rejet**.
+
+Sanction : amende administrative jusqu'à **75 000 € pour une personne
+physique et 375 000 € pour une personne morale**. La DGCCRF contrôle
+activement le secteur (outil « Polygraphe », 55 % de sites non conformes
+relevés).
+
+S'y ajoutent le RGPD (un avis est une donnée personnelle), la modération
+anti-spam, et l'interdiction de supprimer sélectivement les avis négatifs
+— qui relève de la pratique commerciale trompeuse.
+
+**Solution retenue : le lecteur dépose son avis sur Amazon.** C'est là
+qu'il a acheté, Amazon vérifie donc l'achat et porte toutes ces
+obligations. `buildAmazonReviewUrl()` construit
+`https://www.amazon.{domaine}/review/create-review?asin={asin}` et la
+fiche livre affiche un bloc « Vous avez lu ce livre ? ». Zéro base, zéro
+exposition, et les avis atterrissent là où ils font vendre.
+
+### Le QR code existait déjà
+
+`/b/<code>` → table `src/content/qr/codes.json`, avec repli sur l'accueil
+si le code est inconnu ou désactivé (**jamais une 404** : le support
+physique survit à la désactivation).
+
+Étendu au Lot H14 d'un champ `type` :
+- `"bonus"` (défaut, rétrocompatible) → `/bonus/<destination>` ;
+- `"livre"` → la fiche du livre, donc son bloc d'avis. C'est le cas du QR
+  imprimé dans l'ouvrage.
+
+La fiche vit sous le préfixe de locale, contrairement à `/bonus` qui en
+est exempté — d'où le `getPathname()` dans la route.
+
+**L'URL à encoder dans le QR imprimé** est `https://www.barmajata.com/b/<code>`,
+jamais l'adresse finale : elle reste ainsi redirigeable après impression.
+Aucun générateur d'image QR n'est installé sur la machine et aucune
+dépendance n'a été ajoutée pour cela.
+
+### Si une base d'avis maison devient nécessaire
+
+Ce serait une **Phase 2** : base de données, interface de modération, page
+d'information L111-7-2, traitement RGPD (accès, rectification,
+effacement), anti-spam, et une politique écrite de rejet. Rien de tout
+cela n'existe.
+
 ## Stack
 
 - Next.js 16 (App Router, Turbopack), TypeScript **5.9** (pas TS 7 natif :

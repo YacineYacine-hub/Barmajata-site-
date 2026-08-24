@@ -51,6 +51,24 @@ export function getActiveMarketplaces(): MarketplaceConfig[] {
   );
 }
 
+/**
+ * Page de rédaction d'avis Amazon pour un ouvrage.
+ *
+ * Choix délibéré (Lot H14) : les avis de lecteurs sont recueillis **chez
+ * Amazon**, pas sur ce site. L'achat s'y conclut, Amazon vérifie donc que
+ * l'auteur de l'avis a réellement acheté le livre, et porte les
+ * obligations de l'article L111-7-2 du Code de la consommation
+ * (information sur le contrôle des avis, date, motif de rejet).
+ *
+ * Recueillir et publier des avis ici ferait basculer ces obligations sur
+ * BARMAJATA, avec une amende administrative pouvant atteindre 375 000 €
+ * pour une personne morale. Voir CLAUDE.md, « Avis de lecteurs ».
+ */
+export function buildAmazonReviewUrl(asin: string, marketplace: MarketplaceCode): string {
+  const config = AMAZON_MARKETPLACES[marketplace];
+  return `https://www.amazon.${config.domaine}/review/create-review?asin=${asin}`;
+}
+
 /** https://www.amazon.{domaine}/dp/{asin}[?tag=...] */
 export function buildAmazonUrl(asin: string, marketplace: MarketplaceCode, tag?: string): string {
   const config = AMAZON_MARKETPLACES[marketplace];

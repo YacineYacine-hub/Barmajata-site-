@@ -279,7 +279,12 @@
     "amazonNotice": "The sale is completed by Amazon, on its own site and under its own terms. BARMAJATA is not involved in payment, delivery or after-sales service.",
     "aboutTitle": "About this book",
     "detailsTitle": "Details",
-    "extractTitle": "Extract"
+    "extractTitle": "Extract",
+    "review": {
+      "title": "Have you read this book?",
+      "lede": "Your review helps other readers find it. Reviews are left on Amazon, where your purchase is verified.",
+      "cta": "Write a review on Amazon"
+    }
   },
   "authors": {
     "empty": "No authors available yet.",

@@ -225,10 +225,18 @@ export type Author = z.infer<typeof authorSchema>;
 
 /** Entrée de src/content/qr/codes.json — un QR code physique (livre, carte,
  * etc.) redirigeant /b/[code] vers /bonus/[destination]. */
+/** Où mène un QR code physique. "bonus" (défaut) ouvre la page de contenu
+ *  déverrouillé ; "livre" mène à la fiche du livre, donc à son bloc d'avis
+ *  — c'est le cas d'usage « QR imprimé dans l'ouvrage ». */
+export const QR_DESTINATION_TYPES = ["bonus", "livre"] as const;
+export type QrDestinationType = (typeof QR_DESTINATION_TYPES)[number];
+
 export const qrCodeSchema = z.object({
   code: z.string().min(1),
   destination: z.string().min(1),
   libelle: z.string().min(1),
   actif: z.boolean(),
+  // Absent = "bonus", pour que les entrées existantes restent valides.
+  type: z.enum(QR_DESTINATION_TYPES).optional(),
 });
 export type QrCode = z.infer<typeof qrCodeSchema>;
