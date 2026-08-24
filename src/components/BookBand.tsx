@@ -523,16 +523,17 @@ function BandCover({ item, consulterLabel }: { item: BandItem; consulterLabel: s
         {estCategorie ? (
           <>
             {/*
-             * Composée comme une couverture : le libellé en gros au centre,
-             * là où un livre porte son titre, et « Consulter » en bas, là où
-             * il porte son auteur. Le symbole vit dans le fond SVG, entre
-             * les deux — c'est du dessin, il n'a pas à être traduit.
+             * Composée comme une couverture : le symbole EN HAUT (il vit
+             * dans le fond SVG — c'est du dessin, il n'a pas à être
+             * traduit), le libellé CENTRÉ dans la carte, là où un livre
+             * porte son titre, et « Consulter » en bas, là où il porte son
+             * auteur.
              *
              * Tailles en `em` : la bande réduit les éléments latéraux par
              * `scale`, mais le texte doit rester proportionné à la carte
              * quelle que soit la largeur d'écran.
              */}
-            <span className="absolute inset-x-0 top-[16%] z-10 px-4 text-center font-serif text-[1.35rem] leading-tight text-lin-50">
+            <span className="absolute inset-0 z-10 flex items-center justify-center px-4 text-center font-serif text-[1.35rem] leading-tight text-lin-50">
               {item.title}
             </span>
             <span className="absolute inset-x-0 bottom-[7%] z-10 text-center text-[0.62rem] font-medium uppercase tracking-[0.22em] text-or-500">

@@ -1,6 +1,7 @@
 <!-- Fond de catégorie — décoratif. Aucun texte : le libellé et le mot
      « Consulter » sont rendus en HTML pour rester traduits. Le symbole,
-     lui, est du dessin, il peut donc vivre ici. -->
+     lui, est du dessin, il peut donc vivre ici : il est placé EN HAUT, le
+     libellé venant se centrer sous lui. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" role="img" aria-hidden="true">
   <defs>
     <linearGradient id="f" x1="0" y1="0" x2="0.45" y2="1">
@@ -14,8 +15,8 @@
   <rect x="0" y="0" width="11" height="600" fill="#000" opacity="0.30"/>
   <rect x="11" y="0" width="1.5" height="600" fill="#fff" opacity="0.14"/>
 
-  <!-- Symbole, dans l'axe -->
-  <g transform="translate(200 462) scale(0.42)" opacity="0.9">
+  <!-- Symbole, en haut et dans l'axe -->
+  <g transform="translate(200 108) scale(0.42)" opacity="0.9">
     <circle cx="0" cy="0" r="56.32" fill="none" stroke="#f5f1e9" stroke-width="3"/>
     <path d="M-15.94 -11.83 Q0 17.57 15.94 -11.83" fill="none" stroke="#f5f1e9" stroke-width="2.6" stroke-linecap="round"/>
     <circle cx="0" cy="7.77" r="4.6" fill="#e2cba6"/>
