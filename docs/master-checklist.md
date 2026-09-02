@@ -35,7 +35,7 @@ tranchées, avancer c'est deviner.
 
 | # | Décision | Ce qu'elle commande |
 |---|---|---|
-| D1 | **Carnet ou livre ?** | Loi Lang (plafond de 5 % sur les remises), frais de port, ISBN, TVA, dépôt légal. Cinq risques changent de réponse. |
+| ~~D1~~ | **Carnet ou livre ? → C'EST UN LIVRE** *(tranché le 2026-09-02)* | Ouvrage hybride, mais le contenu justifie le livre. **Loi Lang applicable** : 5 % de remise maximum, frais de port jamais offerts. ISBN, dépôt légal et TVA du livre s'appliquent. Voir « Ce que D1 ferme et ouvre » ci-dessous. |
 | D2 | **Catalogue en base, ou en fichiers ?** | Le back-office, le rendu statique ou dynamique, la vitesse, l'hébergement. Premier arbitrage technique. |
 | D3 | **Vente directe : oui, et à partir de quand ?** | Stripe, CGV opposables, rétractation, médiateur, SAV, tests, environnement de recette. Le plus gros bloc du programme. |
 | D4 | **Où atterrit l'exploitation BARMAJATA ?** | Bot Telegram, PDF, Lulu, logs. Trois dossiers annoncés, quatre besoins. |
@@ -43,6 +43,28 @@ tranchées, avancer c'est deviner.
 | D6 | **Quelles langues ?** | Le site parle fr/en/ar. Les ISBN prévoient FR/EN/DE/ES/AR. Deux langues n'existent nulle part. |
 | D7 | **Un bot, ou trois ?** | Telegram, ManyChat, assistant du site. Trois systèmes, trois tons, trois endroits où une réponse fausse peut sortir. |
 | D8 | **Le domaine définitif est-il arrêté ?** | Il part à l'encre dans chaque exemplaire. Après la première impression, il n'est plus changeable. |
+
+### Ce que D1 ferme, et ce qu'elle ouvre
+
+**Fermé, définitivement.** Le levier prix n'existe quasiment plus :
+
+- Aucun code promo au-delà de **5 %**. Le « OFFRE10 » de la Phase 3 est
+  mort, ainsi que tout code de relance de panier au-delà du plafond.
+- **Frais de port jamais offerts** sur un livre neuf.
+- Le bot d'accueil et ManyChat ne peuvent proposer aucune remise
+  supérieure à 5 %.
+
+**Ouvert, et c'est la bonne nouvelle.** Puisque le prix ne peut plus être
+l'argument, l'avantage doit être **non tarifaire** — et le programme le
+contient déjà, sans l'avoir vu comme tel : le **bonus PDF déverrouillé par
+le QR**, l'accès au bot, la dédicace, le contenu réservé. C'est là que la
+séduction doit se jouer. Réorienter les relances des phases 6 et 7 vers le
+contenu offert plutôt que vers la réduction, et le plafond cesse d'être une
+contrainte pour devenir une direction.
+
+**Activé aussi** : ISBN par langue et par reliure, dépôt légal éditeur et
+imprimeur, TVA au taux réduit du livre — à confirmer par le comptable vu
+la structure hors Union européenne.
 
 ---
 
@@ -61,11 +83,31 @@ tranchées, avancer c'est deviner.
       Telegram, fournisseur d'e-mail, réseaux sociaux.
 - [ ] Codes de secours récupérés et stockés **hors du téléphone et hors du
       VPS**.
-- [ ] Domaine : propriété confirmée, verrouillage registrar, renouvellement
-      long, surveillance d'expiration. *(Prérequis absolu du bloc QR.)*
-- [ ] **SPF, DKIM, DMARC** sur le domaine, et boîtes professionnelles
-      (contact, presse, droits, manuscrits). Sans cela, le double opt-in
-      échoue en silence.
+- [x] Domaine : **vérifié le 2026-09-02.** `barmajata.com`, registrar
+      Hostinger, enregistré le 21 août 2026, **expire le 21 août 2027**,
+      verrou de transfert actif (`client transfer prohibited`).
+- [ ] ⚠ **Étendre l'enregistrement à plusieurs années et activer le
+      renouvellement automatique, AVANT toute impression.** Une seule année
+      de réservation face à un QR imprimé à l'encre : si le domaine tombe en
+      août 2027, tous les exemplaires en circulation meurent avec lui.
+- [ ] Le domaine sert aujourd'hui la **page par défaut de Hostinger**
+      (« Vous êtes prêt à partir ! ») sur l'apex et sur `www`. À remplacer
+      par le site au bloc 2.
+- [x] **SPF, DKIM : présents et corrects pour la messagerie Hostinger**
+      (vérifié le 2026-09-02). SPF `include:_spf.mail.hostinger.com ~all`,
+      DKIM délégué sur trois sélecteurs `hostingermail-a/b/c`.
+- [ ] ⚠ **Le fournisseur d'envoi du club n'est couvert par rien.** SPF
+      n'autorise que Hostinger : dès que Brevo ou Resend enverra, il sera un
+      expéditeur non autorisé et non signé. Ajouter son `include:` SPF et
+      ses enregistrements DKIM **le jour où le fournisseur est choisi** —
+      c'est là que se joue le risque du double opt-in muet, pas dans
+      l'absence de SPF.
+- [ ] ⚠ **DMARC existe mais ne fait rien** : `v=DMARC1; p=none`, sans
+      `rua`. Ni protection, ni rapports — donc aucune visibilité sur ce qui
+      part au nom du domaine. Ajouter une adresse de rapport d'abord, puis
+      durcir vers `quarantine` une fois les expéditeurs légitimes alignés.
+- [ ] Boîtes professionnelles (contact, presse, droits, manuscrits). La
+      messagerie Hostinger est déjà en place (MX `mx1`/`mx2.hostinger.com`).
 - [ ] Surveillance de disponibilité **externe** — une alerte de panne ne
       peut pas partir du serveur en panne.
 - [ ] 👤 Rédiger les **mentions légales** et la **politique de
