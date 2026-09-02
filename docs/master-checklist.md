@@ -150,8 +150,11 @@ Le site n'existe aujourd'hui **qu'en local**. C'est la première marche.
       pour les remontées clients. Définir les niveaux de gravité.
 - [ ] Audit d'accessibilité outillé — le niveau actuel n'a été vérifié
       qu'à la main.
-- [ ] Remettre à jour `CLAUDE.md`, `.env.example` et le journal des lots,
-      qui ont décroché du code.
+- [x] **`CLAUDE.md`, `.env.example` et le journal des lots remis à jour**
+      (2026-09-02). Huit décrochages corrigés dans la référence ; le
+      journal, arrêté au lot H12 alors que le code était au H43, a été
+      rattrapé à partir des messages de commit — donc de ce qui avait été
+      consigné sur le moment, non reconstitué après coup.
 
 ### Bloc 3 — Le club réellement fonctionnel
 
