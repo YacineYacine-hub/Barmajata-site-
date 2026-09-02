@@ -29,7 +29,22 @@ considération technique.
   Placeholders neutres ou texte explicitement marqué comme fictif
   uniquement (voir « Phase 1 — périmètre »).
 - **Jamais de token GitHub.** Ne pas en demander, ne pas en stocker, ne
-  pas en attendre. Le push est fait par l'utilisateur avec `git push`.
+  pas en attendre, ne jamais en faire coller un dans la conversation.
+  Cette règle est intacte : le push fonctionne **sans qu'aucun secret ne
+  passe par l'agent**. Le dépôt est en HTTPS et Git lit l'identifiant dans
+  le trousseau macOS (`credential.helper = osxkeychain`) — la même
+  mécanique que lorsque l'utilisateur pousse à la main.
+- **Le push est automatique et conditionnel** (mis en place le
+  2026-09-02, à sa demande : « de manière durable »). Après chaque appel
+  Bash, le hook `PostToolUse` déclaré dans `.claude/settings.local.json`
+  (personnel, non versionné) lance `.claude/push-si-vert.sh`, qui :
+  sort immédiatement s'il n'y a rien à publier, sinon enchaîne
+  `tsc --noEmit`, `eslint` et `npm run build` — **en inspectant leur
+  sortie et pas seulement leur code de retour** (voir « Piège : `next
+  build` sort en 0 malgré des erreurs ») — et ne pousse que si les trois
+  sont verts. Il ne bloque jamais la session : il sort toujours en 0 et
+  rend compte par `systemMessage`. Un commit rouge reste donc en local,
+  et le dit.
 - **Aucune préversion en dépendance** : ni alpha, ni beta, ni RC, ni
   `canary`. Uniquement des versions stables publiées.
 - **Vérifier avant d'affirmer** : lire le code, pas la mémoire. Toute
