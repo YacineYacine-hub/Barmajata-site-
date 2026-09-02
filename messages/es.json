@@ -1,0 +1,362 @@
+{
+  "site": {
+    "name": "BARMAJATA",
+    "tagline": "Editorial"
+  },
+  "nav": {
+    "home": "Inicio",
+    "books": "Libros",
+    "authors": "Autores",
+    "house": "La editorial",
+    "journal": "Diario",
+    "contact": "Contacto",
+    "menu": "Menú",
+    "primary": "Navegación principal",
+    "closeMenu": "Cerrar el menú",
+    "breadcrumb": "Ruta de navegación",
+    "pro": "Profesionales",
+    "submissions": "Manuscritos",
+    "press": "Prensa",
+    "rights": "Derechos",
+    "booksellers": "Libreros",
+    "faq": "Preguntas frecuentes",
+    "search": "Buscar",
+    "searchPlaceholder": "Título o autor"
+  },
+  "home": {
+    "heroEyebrow": "Editorial",
+    "heroTitle": "BARMAJATA",
+    "heroSubtitle": "El espíritu del libro",
+    "carousel": {
+      "region": "Presentación",
+      "previous": "Diapositiva anterior",
+      "next": "Diapositiva siguiente",
+      "goTo": "Ir a la diapositiva {n}"
+    },
+    "pillarsTitle": "Explorar",
+    "pillars": {
+      "books": {
+        "title": "Libros",
+        "description": "El catálogo de los libros publicados por BARMAJATA."
+      },
+      "authors": {
+        "title": "Autores",
+        "description": "Los autores y autoras publicados por BARMAJATA."
+      },
+      "house": {
+        "title": "La editorial",
+        "description": "Contenido próximamente."
+      },
+      "journal": {
+        "title": "Diario",
+        "description": "Contenido próximamente."
+      }
+    }
+  },
+  "pages": {
+    "books": {
+      "title": "Libros",
+      "description": "El catálogo de los libros publicados por BARMAJATA.",
+      "body": "Contenido próximamente."
+    },
+    "authors": {
+      "title": "Autores",
+      "description": "Los autores publicados por BARMAJATA.",
+      "body": "Contenido próximamente."
+    },
+    "house": {
+      "eyebrow": "Editorial",
+      "title": "La editorial",
+      "lede": "Tres exigencias guían nuestro trabajo editorial: la sinceridad, el rigor, la transmisión. Texto de demostración, contenido real próximamente.",
+      "sections": [
+        {
+          "heading": "Nuestra historia",
+          "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Texto de demostración, ningún contenido editorial real."
+        },
+        {
+          "heading": "Nuestro catálogo",
+          "body": "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Texto de demostración, ningún contenido editorial real."
+        },
+        {
+          "heading": "Nuestro compromiso",
+          "body": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Texto de demostración, ningún contenido editorial real."
+        }
+      ]
+    },
+    "commitment": {
+      "title": "Compromiso",
+      "body": "Contenido próximamente."
+    },
+    "journal": {
+      "eyebrow": "Diario",
+      "title": "Diario",
+      "lede": "Cuadernos, entresijos y actualidad de la editorial. Texto de demostración, contenido real próximamente.",
+      "sections": [
+        {
+          "heading": "Sobre este diario",
+          "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Texto de demostración, ningún contenido editorial real."
+        },
+        {
+          "heading": "Primeras entradas",
+          "body": "Todavía no hay ningún artículo publicado. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Texto de demostración, ningún contenido editorial real."
+        }
+      ]
+    },
+    "contact": {
+      "eyebrow": "Contacto",
+      "title": "Contacto",
+      "lede": "Respondemos con gusto a sus preguntas. Texto de demostración, contenido real próximamente.",
+      "sections": [
+        {
+          "heading": "Escríbanos",
+          "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Texto de demostración, ningún contenido editorial real."
+        },
+        {
+          "heading": "Datos de contacto",
+          "body": "Contenido próximamente."
+        }
+      ]
+    },
+    "submissions": {
+      "eyebrow": "Manuscritos",
+      "title": "Enviar un manuscrito",
+      "lede": "Leemos los manuscritos que se nos envían. Las condiciones de envío se detallan a continuación.",
+      "sections": [
+        {
+          "heading": "Lo que leemos",
+          "body": "Contenido próximamente."
+        },
+        {
+          "heading": "Cómo hacérnoslo llegar",
+          "body": "Contenido próximamente."
+        },
+        {
+          "heading": "Plazo de respuesta",
+          "body": "Contenido próximamente."
+        }
+      ]
+    },
+    "press": {
+      "eyebrow": "Prensa",
+      "title": "Área de prensa",
+      "lede": "Periodistas, libreros, blogueros: solicitudes de entrevista, de ejemplares de prensa y de material gráfico.",
+      "sections": [
+        {
+          "heading": "Contacto de prensa",
+          "body": "Escríbanos desde la página de contacto; su solicitud se transmitirá a la persona correspondiente."
+        },
+        {
+          "heading": "Imágenes y cubiertas",
+          "body": "Contenido próximamente."
+        },
+        {
+          "heading": "Ejemplares de prensa",
+          "body": "Contenido próximamente."
+        }
+      ]
+    },
+    "rights": {
+      "eyebrow": "Derechos",
+      "title": "Derechos y cesiones",
+      "lede": "Derechos extranjeros, de audio, digitales y de adaptación de las obras del catálogo.",
+      "sections": [
+        {
+          "heading": "Derechos extranjeros",
+          "body": "Contenido próximamente."
+        },
+        {
+          "heading": "Audio, digital y adaptación",
+          "body": "Contenido próximamente."
+        },
+        {
+          "heading": "Contactar con nosotros",
+          "body": "Las solicitudes de cesión se tramitan desde la página de contacto."
+        }
+      ]
+    },
+    "booksellers": {
+      "eyebrow": "Profesionales",
+      "title": "Libreros y distribuidores",
+      "lede": "Condiciones de difusión y modalidades de pedido para los profesionales del libro.",
+      "sections": [
+        {
+          "heading": "Difusión y distribución",
+          "body": "Contenido próximamente."
+        },
+        {
+          "heading": "Hacer un pedido",
+          "body": "Contenido próximamente."
+        },
+        {
+          "heading": "Venta al público",
+          "body": "La venta a particulares se realiza mediante redirección a Amazon: en este sitio no se tramita ningún pedido."
+        }
+      ]
+    },
+    "faq": {
+      "eyebrow": "Ayuda",
+      "title": "Preguntas frecuentes",
+      "lede": "Compra, entrega, manuscritos: las respuestas a las preguntas que más se repiten.",
+      "sections": [
+        {
+          "heading": "¿Dónde se venden sus libros?",
+          "body": "La venta se realiza mediante redirección a Amazon: usted sale de este sitio para completar su pedido. BARMAJATA no interviene ni en el pago, ni en la entrega, ni en el servicio posventa."
+        },
+        {
+          "heading": "¿Por qué el precio indicado aquí y el de Amazon pueden diferir?",
+          "body": "El precio indicado en este sitio es el precio público fijado por la editorial. En Francia, la ley del precio único del libro permite a los minoristas conceder como máximo un 5 % de descuento: la diferencia no puede por tanto superar ese límite."
+        },
+        {
+          "heading": "Entrega y devoluciones",
+          "body": "Contenido próximamente."
+        },
+        {
+          "heading": "He escrito un manuscrito",
+          "body": "Contenido próximamente."
+        }
+      ]
+    }
+  },
+  "categories": {
+    "all": "Todo",
+    "new": "Novedades",
+    "famille": "Familia",
+    "psychologie": "Psicología",
+    "thriller": "Thriller",
+    "histoire-vraie": "Historia real",
+    "enfance": "Infancia",
+    "developpement-personnel": "Desarrollo personal",
+    "poesie-pensees": "Poesía y pensamientos",
+    "consult": "Ver"
+  },
+  "band": {
+    "label": "Escaparate de libros",
+    "empty": "No hay ningún libro que presentar por el momento."
+  },
+  "solid": {
+    "label": "Libro en volumen — arrastre para girarlo",
+    "straighten": "Enderezar"
+  },
+  "books": {
+    "empty": "No hay ningún libro disponible por el momento.",
+    "priceFrom": "Desde {price}",
+    "status": {
+      "a_paraitre": "Próxima aparición",
+      "publie": "Publicado"
+    },
+    "cta": {
+      "buy": "Comprar en Amazon",
+      "backToCatalogue": "Volver al catálogo",
+      "marketplace": "Elegir la tienda de Amazon",
+      "notifyMe": "Avisarme de la salida",
+      "viewAuthorProfile": "Ver la ficha"
+    },
+    "fields": {
+      "author": "Autor",
+      "format": "Formato",
+      "pages": "páginas",
+      "isbn": "ISBN",
+      "publicationDate": "Fecha de publicación",
+      "announcedDate": "Fecha anunciada"
+    },
+    "nav": {
+      "previousBook": "Libro anterior",
+      "nextBook": "Libro siguiente"
+    },
+    "formats": {
+      "broche": "Rústica",
+      "epub": "ePub",
+      "pdf": "PDF"
+    },
+    "languages": {
+      "fr": "Francés",
+      "en": "Inglés",
+      "es": "Español"
+    },
+    "marketplaces": {
+      "fr": "Amazon.fr",
+      "ca": "Amazon.ca",
+      "be": "Amazon.com.be",
+      "com": "Amazon.com",
+      "co_uk": "Amazon.co.uk",
+      "com_au": "Amazon.com.au",
+      "es": "Amazon.es",
+      "com_mx": "Amazon.com.mx"
+    },
+    "amazonNotice": "La venta la concluye Amazon, en su sitio y según sus condiciones. BARMAJATA no interviene ni en el pago, ni en la entrega, ni en el servicio posventa.",
+    "aboutTitle": "Sobre este libro",
+    "detailsTitle": "Características",
+    "extractTitle": "Fragmento",
+    "review": {
+      "title": "¿Ha leído este libro?",
+      "lede": "Su opinión ayuda a otros lectores a descubrirlo. Se publica en Amazon, donde su compra queda verificada.",
+      "cta": "Dejar mi opinión en Amazon"
+    },
+    "searchEmpty": "Ningún libro corresponde a «{q}»."
+  },
+  "authors": {
+    "empty": "No hay ningún autor disponible por el momento.",
+    "booksTitle": "Libros de este autor",
+    "cta": {
+      "backToCatalogue": "Volver a los autores"
+    }
+  },
+  "club": {
+    "title": "El club",
+    "intro": "Déjenos su correo electrónico para estar al tanto de las próximas publicaciones.",
+    "bookNotice": "Le avisaremos cuando salga: {title}",
+    "emailLabel": "Dirección de correo electrónico",
+    "submit": "Suscribirse",
+    "pending": "¡Gracias! La suscripción se activará próximamente: esta funcionalidad está en preparación.",
+    "consentLabel": "Acepto recibir correos de BARMAJATA y he leído la <privacyLink>política de privacidad</privacyLink>.",
+    "gdprNote": "Sus datos solo se utilizan para esta suscripción y nunca se comparten con terceros. Conforme al RGPD, dispone de un derecho de acceso, rectificación y supresión, y puede darse de baja en cualquier momento mediante el enlace incluido en cada correo.",
+    "confirmPending": "¡Gracias! Acabamos de enviarle un correo de confirmación: haga clic en el enlace que contiene para validar su suscripción (doble consentimiento).",
+    "serviceUnavailable": "La suscripción todavía no está disponible: el servicio de envío de correos no está configurado.",
+    "errorGeneric": "Se ha producido un error, inténtelo de nuevo más tarde.",
+    "confirmSuccess": "Su suscripción está confirmada. ¡Bienvenido al club!",
+    "confirmInvalid": "Este enlace de confirmación ya no es válido (caducado o ya utilizado).",
+    "confirmError": "Se ha producido un error durante la confirmación. Inténtelo de nuevo o escríbanos.",
+    "bloc": {
+      "title": "Suscríbase",
+      "lede": "Reciba las próximas publicaciones, y nada más.",
+      "cta": "Suscribirse"
+    }
+  },
+  "legal": {
+    "legalNotice": {
+      "title": "Aviso legal",
+      "body": "Contenido próximamente."
+    },
+    "termsOfSale": {
+      "title": "Condiciones generales de venta",
+      "body": "Contenido próximamente."
+    },
+    "privacyPolicy": {
+      "title": "Privacidad",
+      "body": "Contenido próximamente."
+    },
+    "shippingReturns": {
+      "title": "Entrega y devoluciones",
+      "body": "Contenido próximamente."
+    }
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados."
+  },
+  "errors": {
+    "notFound": {
+      "code": "Error 404",
+      "title": "Página no encontrada",
+      "lede": "Esta dirección no corresponde a ninguna página del sitio. Puede que el enlace sea antiguo, o que la dirección se haya copiado mal.",
+      "backHome": "Volver al inicio",
+      "browseBooks": "Ver los libros"
+    },
+    "serverError": {
+      "code": "Error 500",
+      "title": "Se ha producido un error",
+      "lede": "No se ha podido mostrar la página. Puede volver a intentarlo o regresar al inicio.",
+      "retry": "Reintentar",
+      "backHome": "Volver al inicio"
+    }
+  }
+}

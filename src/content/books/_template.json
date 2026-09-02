@@ -49,7 +49,7 @@
   // ("édition d'origine"), avec mention de sa langue.
   "editions": [
     {
-      // "fr" | "en" | "ar"
+      // "fr" | "en" | "es"
       "langue": "fr",
 
       // "brouillon"    → invisible partout (catalogue, fiche, sitemap), même par URL directe.

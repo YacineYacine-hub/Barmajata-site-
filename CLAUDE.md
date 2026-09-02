@@ -87,14 +87,19 @@ considération technique.
 - Anciennes routes (ex-site mono-autrice), gérées dans `src/proxy.ts`
   (avant next-intl, car `nextUrl.pathname` n'est jamais décodé — les
   segments non-ASCII y restent en `%XX`) :
-  - `/autrice`, `/author`, `/الكاتبة` → 301 vers l'équivalent `/auteurs`
-    dans la même locale (contenu déplacé).
+  - `/autrice`, `/author` → 301 vers l'équivalent `/auteurs` dans la même
+    locale (contenu déplacé). L'entrée arabe a été retirée avec la locale
+    au Lot H46 : `/ar/...` n'est plus un préfixe valide et tombe sur la
+    404 de dernier recours, ce qui est la réponse juste — un 410 dirait
+    « cette page a été retirée du site », alors que c'est le site arabe
+    entier qui n'existe plus.
   - `/methode`, `/spiritualite` et leurs traductions → 410 Gone (contenu
     retiré définitivement, absorbé par la fiche livre concernée).
-- SEO : `src/lib/seo.ts` définit `PUBLIC_LOCALES` (`fr`, `en` — `ar` reste
-  pleinement accessible sur le site mais volontairement absent des
-  `hreflang`/`alternates.languages` tant qu'il n'est pas jugé prêt pour
-  l'indexation) et `buildAlternates(href)`, utilisé dans le
+- SEO : `src/lib/seo.ts` définit `PUBLIC_LOCALES` (**`fr`, `en`, `es`** —
+  les trois locales y figurent depuis le Lot H46 ; l'arabe en était exclu
+  faute d'être jugé prêt, l'espagnol est un marché visé et n'aurait aucun
+  intérêt hors de l'index, **sa traduction restant à faire relire par un
+  humain**) et `buildAlternates(href)`, utilisé dans le
   `generateMetadata` de **chaque page** (y compris `/engagement`, malgré
   son noindex, et les pages dynamiques `[slug]`).
 
@@ -229,7 +234,7 @@ considération technique.
   en échappatoire). `src/lib/amazon/marketplaces.ts` définit la table des
   marketplaces (dont `ae`/`sa` désactivées, `actif: false`) et
   `buildAmazonUrl(asin, marketplace, tag?)`. Marketplace par défaut selon
-  la locale du site (`fr`→`fr`, `en`/`ar`→`com`) ; le choix de l'utilisateur
+  la locale du site (`fr`→`fr`, `en`→`com`, `es`→`es`) ; le choix de l'utilisateur
   est mémorisé en cookie côté client uniquement (`AmazonBuyButton.tsx`) —
   jamais de géo-IP, jamais de lecture de cookie côté serveur (la page
   resterait sinon dynamique au lieu de statique).
@@ -247,13 +252,10 @@ considération technique.
   son menu — ajouter un genre y ajoute une carte, et exige un visuel
   `public/categories/<clé>.svg` et une clé de traduction. Distinct de `formats[].type` (broché/epub/
   pdf) — jamais confondu. Slugs de filtre traduits par locale dans
-  `src/lib/content/categories.ts` (`CATEGORY_SLUGS`) ; slugs arabes non
-  fournis, anglais utilisé en attendant. **La traduction arabe est
-  aujourd'hui partielle** : `enfance`, `developpement-personnel` et
-  `poesie-pensees` sont bien traduits dans `messages/ar.json`, mais les
-  quatre genres d'origine (`famille`, `psychologie`, `thriller`,
-  `histoire-vraie`) y sont encore en anglais — TODO traduction humaine,
-  alors que `categories.all`/`categories.new`/`categories.consult` le sont.
+  `src/lib/content/categories.ts` (`CATEGORY_SLUGS`) ; **les trois locales
+  ont désormais leurs propres slugs**, l'espagnol ayant remplacé l'arabe
+  au Lot H46. Comme le reste de la traduction espagnole, ils restent à
+  faire relire par un humain.
 - "Nouveautés" est un **filtre calculé**, jamais stocké : `isNewRelease()`
   dans `schema.ts` (édition `publie`, parution dans les 12 derniers mois,
   jamais dans le futur).
@@ -412,7 +414,7 @@ considération technique.
 - Flux : `POST /api/club/subscribe` (email + `consent: true` obligatoire
   + locale, Zod) → si aucun fournisseur configuré, 503 immédiat ; sinon
   crée le jeton et envoie l'e-mail de confirmation
-  (`src/lib/club/email.ts`, gabarit HTML par locale, RTL pour l'arabe).
+  (`src/lib/club/email.ts`, gabarit HTML par locale ; le sens RTL y a été retiré avec l'arabe, Lot H46).
   `GET /api/club/confirm?token=&locale=` (lien cliqué dans l'e-mail) →
   vérifie le jeton, appelle `addConfirmedContact()`, puis redirige vers
   `/club?confirm=success|invalid|error`.
@@ -451,7 +453,7 @@ considération technique.
   premier slide du `Hero` (déjà en place avant ce lot).
 - Polices (`next/font/google`, `[locale]/layout.tsx` et
   `bonus/layout.tsx`) : `display: "swap"` sur les trois (Cormorant,
-  Inter, Noto Naskh Arabic), latin/arabic selon la police.
+  Inter), sous-ensemble latin. Noto Naskh Arabic a été retirée au Lot H46.
 - `title` : `[locale]/layout.tsx` définit un `template` (`"%s — " + nom
   du site`) ; chaque page fournit désormais son propre titre court via
   `generateMetadata()` (résolu dynamiquement pour les pages `[slug]` —
@@ -792,18 +794,37 @@ courant.
 - Rendu **statique** partout sauf `/b/[code]` : chaque page appelle
   `setRequestLocale(locale)` en première ligne de son composant.
 
-## i18n / RTL
+## i18n
 
-- Locales : `fr` (défaut), `en`, `ar`.
+- Locales : **`fr` (défaut), `en`, `es`**. L'arabe a été retiré au Lot H46
+  et remplacé par l'espagnol, sur décision de l'utilisateur (« pour les
+  langues on fait fr es en, pas arabe »).
 - Slugs traduits par locale (voir `src/i18n/routing.ts`), ex.
-  `/auteurs` (fr) / `/authors` (en) / `/المؤلفون` (ar).
-- `ar` est RTL (`dir="rtl"` posé dans `src/app/[locale]/layout.tsx`).
-  Contrainte stricte : n'utiliser que des classes Tailwind logiques
-  (`ms-*`, `me-*`, `ps-*`, `pe-*`, `text-start`, `text-end`) — jamais
-  `ml-*`, `mr-*`, `pl-*`, `pr-*`, `text-left`, `text-right`.
-- Polices : Cormorant Garamond (`--font-serif`, titres), Inter
-  (`--font-sans`, texte latin), Noto Naskh Arabic (`--font-arabic`, texte
-  arabe) — chargées via `next/font/google` dans le layout locale.
+  `/auteurs` (fr) / `/authors` (en) / `/autores` (es).
+- Polices : Cormorant Garamond (`--font-serif`, titres) et Inter
+  (`--font-sans`, texte) — chargées via `next/font/google` dans le layout
+  locale. Noto Naskh Arabic a été retirée avec l'arabe.
+- **Les classes logiques restent la règle** — `ms-*`, `me-*`, `ps-*`,
+  `pe-*`, `text-start`, `text-end` ; jamais `ml-*`, `mr-*`, `pl-*`,
+  `pr-*`, `text-left`, `text-right`. Le site n'a plus de locale de droite
+  à gauche, mais ces classes ne coûtent rien, valent exactement les
+  autres, et sont ce qui rendrait le retour d'une telle langue possible
+  sans tout réécrire. La lecture du sens (`document.documentElement.dir`)
+  dans le carrousel et la bande est conservée pour la même raison : elle
+  est inerte tant qu'aucune locale n'est RTL.
+
+### Ce que le changement de locales a appris
+
+Le sélecteur de langue n'affichait plus que FR et EN après la bascule,
+sans qu'aucun contrôle ne s'en aperçoive. Sa table de libellés était typée
+`Record<string, string>` : un tel type **accepte n'importe quelle clé et
+n'en exige aucune**, donc `ar` y restait sans erreur et `es` y manquait
+sans erreur. Défaut trouvé au navigateur, jamais par `tsc`.
+
+Elle est désormais typée sur `routing.locales` : ajouter une locale sans
+son libellé ne compile plus. **À vérifier partout où une table est indexée
+par locale** — c'est la classe de défaut qui traverse ce genre de
+migration.
 
 ## Palette (voir `src/app/globals.css`)
 

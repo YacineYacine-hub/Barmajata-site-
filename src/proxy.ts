@@ -7,13 +7,16 @@ const intlMiddleware = createMiddleware(routing);
 // Anciennes routes retirées définitivement (contenu absorbé par la fiche
 // livre concernée, voir CLAUDE.md) : 410 Gone plutôt qu'un 404, pour
 // signaler explicitement qu'il ne s'agit pas d'une simple page manquante.
+// Les équivalents arabes ont été retirés d'ici au Lot H46, en même temps
+// que la locale : un 410 dit « cette page a été retirée du site », ce qui
+// n'a plus de sens quand c'est le site arabe entier qui n'existe plus.
+// `/ar/...` tombe désormais sur la 404 de dernier recours, qui est la
+// réponse juste — le préfixe lui-même n'est plus une locale.
 const GONE_PATHS = new Set([
   "/fr/methode",
   "/en/method",
-  "/ar/المنهج",
   "/fr/spiritualite",
   "/en/spirituality",
-  "/ar/الروحانية",
 ]);
 
 // Ancienne fiche autrice unique → catalogue auteurs, même locale. 301
@@ -21,7 +24,6 @@ const GONE_PATHS = new Set([
 const RENAMED_PATHS: Record<string, string> = {
   "/fr/autrice": "/fr/auteurs",
   "/en/author": "/en/authors",
-  "/ar/الكاتبة": "/ar/المؤلفون",
 };
 
 // Corps de la réponse 410. Le middleware ne peut pas rendre un composant
@@ -48,20 +50,20 @@ const GONE_TEXT = {
     lede: "This page has been permanently removed. Its content now lives on the relevant book page.",
     home: "Back to the home page",
   },
-  ar: {
-    lang: "ar",
-    dir: "rtl",
-    code: "\u062e\u0637\u0623 410",
-    title: "\u0635\u0641\u062d\u0629 \u0645\u062d\u0630\u0648\u0641\u0629",
-    lede: "\u0623\u064f\u0632\u064a\u0644\u062a \u0647\u0630\u0647 \u0627\u0644\u0635\u0641\u062d\u0629 \u0646\u0647\u0627\u0626\u064a\u064b\u0627. \u0627\u0646\u062a\u0642\u0644 \u0645\u062d\u062a\u0648\u0627\u0647\u0627 \u0625\u0644\u0649 \u0635\u0641\u062d\u0629 \u0627\u0644\u0643\u062a\u0627\u0628 \u0627\u0644\u0645\u0639\u0646\u064a.",
-    home: "\u0627\u0644\u0639\u0648\u062f\u0629 \u0625\u0644\u0649 \u0627\u0644\u0635\u0641\u062d\u0629 \u0627\u0644\u0631\u0626\u064a\u0633\u064a\u0629",
+  es: {
+    lang: "es",
+    dir: "ltr",
+    code: "Error 410",
+    title: "Página eliminada",
+    lede: "Esta página se ha eliminado definitivamente. Su contenido se encuentra ahora en la ficha del libro correspondiente.",
+    home: "Volver al inicio",
   },
 } as const;
 
 function goneResponse(pathname: string) {
   const prefix = pathname.split("/")[1];
   const t =
-    prefix === "en" || prefix === "ar" ? GONE_TEXT[prefix] : GONE_TEXT.fr;
+    prefix === "en" || prefix === "es" ? GONE_TEXT[prefix] : GONE_TEXT.fr;
 
   const body = `<!doctype html>
 <html lang="${t.lang}" dir="${t.dir}">

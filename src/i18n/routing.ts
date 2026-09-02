@@ -1,7 +1,7 @@
 import { defineRouting } from "next-intl/routing";
 
 export const routing = defineRouting({
-  locales: ["fr", "en", "ar"],
+  locales: ["fr", "en", "es"],
   defaultLocale: "fr",
   localePrefix: "always",
   pathnames: {
@@ -9,49 +9,49 @@ export const routing = defineRouting({
     "/authors": {
       fr: "/auteurs",
       en: "/authors",
-      ar: "/المؤلفون",
+      es: "/autores",
     },
     "/authors/[slug]": {
       fr: "/auteurs/[slug]",
       en: "/authors/[slug]",
-      ar: "/المؤلفون/[slug]",
+      es: "/autores/[slug]",
     },
     "/books": {
       fr: "/livres",
       en: "/books",
-      ar: "/الكتب",
+      es: "/libros",
     },
     "/books/[slug]": {
       fr: "/livres/[slug]",
       en: "/books/[slug]",
-      ar: "/الكتب/[slug]",
+      es: "/libros/[slug]",
     },
     "/house": {
       fr: "/la-maison",
       en: "/about",
-      ar: "/من-نحن",
+      es: "/la-editorial",
     },
     "/club": {
       fr: "/club",
       en: "/club",
-      ar: "/النادي",
+      es: "/club",
     },
     // Page construite mais hors menu et en noindex — voir le commentaire
     // dans src/app/[locale]/commitment/page.tsx.
     "/commitment": {
       fr: "/engagement",
       en: "/commitment",
-      ar: "/الالتزام",
+      es: "/compromiso",
     },
     "/journal": {
       fr: "/journal",
       en: "/journal",
-      ar: "/المدونة",
+      es: "/diario",
     },
     "/contact": {
       fr: "/contact",
       en: "/contact",
-      ar: "/اتصل",
+      es: "/contacto",
     },
     // Pages professionnelles (Lot H12). Un éditeur sans page manuscrits
     // reçoit les manuscrits n'importe où ; sans page droits, il ne reçoit
@@ -60,27 +60,27 @@ export const routing = defineRouting({
     "/submissions": {
       fr: "/manuscrits",
       en: "/submissions",
-      ar: "/المخطوطات",
+      es: "/manuscritos",
     },
     "/press": {
       fr: "/presse",
       en: "/press",
-      ar: "/الصحافة",
+      es: "/prensa",
     },
     "/rights": {
       fr: "/droits",
       en: "/rights",
-      ar: "/الحقوق",
+      es: "/derechos",
     },
     "/booksellers": {
       fr: "/libraires",
       en: "/booksellers",
-      ar: "/الموزعون",
+      es: "/libreros",
     },
     "/faq": {
       fr: "/faq",
       en: "/faq",
-      ar: "/الأسئلة-الشائعة",
+      es: "/preguntas-frecuentes",
     },
     "/legal-notice": "/mentions-legales",
     "/terms-of-sale": "/cgv",

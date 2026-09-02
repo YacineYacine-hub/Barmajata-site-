@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter, Noto_Naskh_Arabic } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -22,12 +22,6 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
-});
-
-const notoNaskhArabic = Noto_Naskh_Arabic({
-  subsets: ["arabic"],
-  display: "swap",
-  variable: "--font-noto-naskh",
 });
 
 export function generateStaticParams() {
@@ -79,21 +73,14 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
 
-  const dir = locale === "ar" ? "rtl" : "ltr";
 
   return (
     <html
       lang={locale}
-      dir={dir}
-      className={`${cormorant.variable} ${inter.variable} ${notoNaskhArabic.variable}`}
+      dir="ltr"
+      className={`${cormorant.variable} ${inter.variable}`}
     >
-      <body
-        className={
-          locale === "ar"
-            ? "font-arabic antialiased"
-            : "font-sans antialiased"
-        }
-      >
+      <body className="font-sans antialiased">
         <NextIntlClientProvider>
           <Header />
           <PageTransition>{children}</PageTransition>

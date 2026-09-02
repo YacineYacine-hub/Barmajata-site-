@@ -6,8 +6,9 @@ import { BOOK_CATEGORIES, type BookCategory, type ContentLocale } from "./schema
  * qu'à un segment d'URL. Les clés des fichiers de contenu (BOOK_CATEGORIES)
  * restent en français quelle que soit la locale.
  *
- * TODO(traduction humaine) : slugs arabes non fournis — l'anglais est
- * utilisé en attendant (voir aussi messages/ar.json, namespace "categories").
+ * Les trois locales ont désormais leurs propres slugs. L'espagnol a
+ * remplacé l'arabe au Lot H46 ; ses slugs, comme le reste de sa
+ * traduction, restent à faire relire par un humain.
  */
 export const CATEGORY_SLUGS: Record<ContentLocale, Record<BookCategory, string>> = {
   fr: {
@@ -28,14 +29,14 @@ export const CATEGORY_SLUGS: Record<ContentLocale, Record<BookCategory, string>>
     "developpement-personnel": "personal-growth",
     "poesie-pensees": "poetry-thoughts",
   },
-  ar: {
-    famille: "family",
-    psychologie: "psychology",
+  es: {
+    famille: "familia",
+    psychologie: "psicologia",
     thriller: "thriller",
-    "histoire-vraie": "true-story",
-    "enfance": "childhood",
-    "developpement-personnel": "personal-growth",
-    "poesie-pensees": "poetry-thoughts",
+    "histoire-vraie": "historia-real",
+    "enfance": "infancia",
+    "developpement-personnel": "desarrollo-personal",
+    "poesie-pensees": "poesia-pensamientos",
   },
 };
 

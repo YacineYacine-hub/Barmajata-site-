@@ -16,7 +16,7 @@ export type VisibleStatus = (typeof VISIBLE_STATUSES)[number];
 
 /** Langues du site, dupliqué volontairement pour ne pas coupler ce module
  * de contenu à `src/i18n/routing.ts` (mêmes valeurs que `routing.locales`). */
-export const CONTENT_LOCALES = ["fr", "en", "ar"] as const;
+export const CONTENT_LOCALES = ["fr", "en", "es"] as const;
 export type ContentLocale = (typeof CONTENT_LOCALES)[number];
 
 export const BOOK_FORMAT_TYPES = ["broche", "epub", "pdf"] as const;
@@ -224,8 +224,11 @@ export type AuthorLink = z.infer<typeof authorLinkSchema>;
 export const authorSchema = z.object({
   slug: slugSchema,
   nom: z.string().min(1),
-  bioCourte: z.object({ fr: z.string(), en: z.string(), ar: z.string() }),
-  bioLongue: z.object({ fr: z.string(), en: z.string(), ar: z.string() }),
+  // Dérivées de CONTENT_LOCALES plutôt qu'énumérées à la main : au Lot
+  // H46, la liste écrite en dur ici était le seul endroit du schéma
+  // resté sur l'arabe après le changement de locales.
+  bioCourte: z.object(Object.fromEntries(CONTENT_LOCALES.map((l) => [l, z.string()])) as Record<ContentLocale, z.ZodString>),
+  bioLongue: z.object(Object.fromEntries(CONTENT_LOCALES.map((l) => [l, z.string()])) as Record<ContentLocale, z.ZodString>),
   portrait: z.string().min(1).optional(),
   liens: z.array(authorLinkSchema).optional(),
 });

@@ -82,7 +82,7 @@ type AuthorJsonLdOptions = {
 /** Représentation schema.org/Person d'une fiche auteur, pour une locale donnée. */
 export function buildAuthorJsonLd(
   author: Author,
-  locale: "fr" | "en" | "ar",
+  locale: "fr" | "en" | "es",
   { siteUrl, pathname }: AuthorJsonLdOptions,
 ) {
   const url = `${siteUrl}${pathname}`;

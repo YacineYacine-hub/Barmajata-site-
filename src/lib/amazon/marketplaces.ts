@@ -42,7 +42,7 @@ export const AMAZON_MARKETPLACES: Record<MarketplaceCode, MarketplaceConfig> = {
 export const DEFAULT_MARKETPLACE_BY_LOCALE: Record<ContentLocale, MarketplaceCode> = {
   fr: "fr",
   en: "com",
-  ar: "com",
+  es: "es",
 };
 
 export function getActiveMarketplaces(): MarketplaceConfig[] {

@@ -22,8 +22,8 @@
 
   // Champs traduits : une valeur par locale du site (fr/en/ar). Ne jamais
   // inventer de contenu biographique réel tant qu'il n'a pas été fourni.
-  "bioCourte": { "fr": "", "en": "", "ar": "" },   // courte, utilisée sur la carte du catalogue auteurs.
-  "bioLongue": { "fr": "", "en": "", "ar": "" },    // longue, utilisée sur la fiche auteur.
+  "bioCourte": { "fr": "", "en": "", "es": "" },   // courte, utilisée sur la carte du catalogue auteurs.
+  "bioLongue": { "fr": "", "en": "", "es": "" },    // longue, utilisée sur la fiche auteur.
 
   "portrait": "",   // chemin ou URL du portrait — optionnel.
 

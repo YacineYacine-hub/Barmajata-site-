@@ -4,10 +4,21 @@ import { useParams } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { Link, usePathname } from "@/i18n/navigation";
 
-const LOCALE_LABELS: Record<string, string> = {
+/*
+ * Typé sur les locales du routage, et NON en `Record<string, string>`.
+ *
+ * C'est ce qui manquait : au changement de locales du Lot H46, la table
+ * était restée sur `ar` et le sélecteur n'affichait plus que FR et EN.
+ * TypeScript n'avait rien signalé, puisqu'un `Record<string, string>`
+ * accepte n'importe quelle clé et n'en exige aucune. Défaut silencieux,
+ * trouvé au navigateur.
+ *
+ * Avec ce typage, ajouter une locale sans son libellé ne compile plus.
+ */
+const LOCALE_LABELS: Record<(typeof routing.locales)[number], string> = {
   fr: "FR",
   en: "EN",
-  ar: "AR",
+  es: "ES",
 };
 
 // Couleurs figées pour fond sombre : utilisé dans Header.tsx et

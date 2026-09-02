@@ -1,33 +1,33 @@
-type SupportedLocale = "fr" | "en" | "ar";
+type SupportedLocale = "fr" | "en" | "es";
 
 const SUBJECT: Record<SupportedLocale, string> = {
   fr: "Confirmez votre inscription au club BARMAJATA",
   en: "Confirm your BARMAJATA club subscription",
-  ar: "أكّدوا اشتراككم في نادي برماجاتا",
+  es: "Confirme su suscripción al club BARMAJATA",
 };
 
 const HEADING: Record<SupportedLocale, string> = {
   fr: "Plus qu'une étape",
   en: "One more step",
-  ar: "خطوة أخيرة",
+  es: "Un último paso",
 };
 
 const BODY: Record<SupportedLocale, string> = {
   fr: "Confirmez votre adresse e-mail pour finaliser votre inscription au club BARMAJATA.",
   en: "Confirm your email address to complete your BARMAJATA club subscription.",
-  ar: "أكّدوا عنوان بريدكم الإلكتروني لإتمام اشتراككم في نادي برماجاتا.",
+  es: "Confirme su dirección de correo electrónico para completar su suscripción al club BARMAJATA.",
 };
 
 const CTA: Record<SupportedLocale, string> = {
   fr: "Confirmer mon inscription",
   en: "Confirm my subscription",
-  ar: "تأكيد الاشتراك",
+  es: "Confirmar la suscripción",
 };
 
 const FOOTER: Record<SupportedLocale, string> = {
   fr: "Vous recevez cet e-mail car cette adresse a été utilisée pour s'inscrire sur barmajata.com. Si vous n'êtes pas à l'origine de cette demande, ignorez ce message : aucune inscription ne sera activée sans confirmation.",
   en: "You are receiving this email because this address was used to sign up on barmajata.com. If you did not request this, simply ignore this message: no subscription is activated without confirmation.",
-  ar: "تصلكم هذه الرسالة لأن هذا العنوان استُخدم للتسجيل على barmajata.com. إذا لم تكونوا من طلب ذلك، يمكنكم تجاهل هذه الرسالة: لن يُفعَّل أي اشتراك دون تأكيد.",
+  es: "Recibe este correo porque esta dirección se ha utilizado para suscribirse en barmajata.com. Si no ha sido usted, puede ignorar este mensaje: ninguna suscripción se activa sin confirmación.",
 };
 
 export function buildConfirmationSubject(locale: SupportedLocale): string {
@@ -35,14 +35,13 @@ export function buildConfirmationSubject(locale: SupportedLocale): string {
 }
 
 export function buildConfirmationHtml(confirmUrl: string, locale: SupportedLocale): string {
-  const dir = locale === "ar" ? "rtl" : "ltr";
   const heading = HEADING[locale] ?? HEADING.fr;
   const body = BODY[locale] ?? BODY.fr;
   const cta = CTA[locale] ?? CTA.fr;
   const footer = FOOTER[locale] ?? FOOTER.fr;
 
   return `<!doctype html>
-<html lang="${locale}" dir="${dir}">
+<html lang="${locale}" dir="ltr">
   <body style="margin:0;padding:32px 16px;background-color:#fbf8f2;font-family:sans-serif;color:#2a2521;">
     <table role="presentation" width="100%" style="max-width:480px;margin:0 auto;">
       <tr>
