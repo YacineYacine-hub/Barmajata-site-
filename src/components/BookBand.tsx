@@ -201,6 +201,20 @@ export function BookBand({
   } | null>(null);
   const clickSuppressRef = useRef(false);
   const settleAnimRef = useRef<number | null>(null);
+  /*
+   * Cible d'un calage EN COURS, ou `null` si la bande est au repos.
+   *
+   * Sans elle, deux flèches enchaînées rapidement ne faisaient avancer que
+   * d'un cran : la seconde calculait sa cible à partir de la position
+   * ANIMÉE, encore proche du point de départ, et redemandait donc le même
+   * palier. Bug mesuré au navigateur le 2026-09-02 — visible dès qu'on
+   * maintient la touche enfoncée.
+   *
+   * Toute intervention qui reprend la main sur le mouvement (glissement,
+   * molette, inertie) la remet à `null` : la prochaine flèche repart alors
+   * de la position réelle, et non d'une cible devenue caduque.
+   */
+  const cibleRef = useRef<number | null>(null);
   const wheelIdleTimerRef = useRef<number | null>(null);
 
   const applyTransforms = useCallback(() => {
@@ -269,10 +283,12 @@ export function BookBand({
         settleAnimRef.current = null;
       }
       if (immediate || prefersReducedMotion) {
+        cibleRef.current = null;
         positionRef.current = target;
         applyTransforms();
         return;
       }
+      cibleRef.current = target;
       const start = positionRef.current;
       const diff = target - start;
       const startTime = performance.now();
@@ -287,6 +303,7 @@ export function BookBand({
           settleAnimRef.current = requestAnimationFrame(step);
         } else {
           settleAnimRef.current = null;
+          cibleRef.current = null;
         }
       }
       settleAnimRef.current = requestAnimationFrame(step);
@@ -300,6 +317,7 @@ export function BookBand({
   // qu'aucun d'eux n'ait à être modifié.
   const lancerInertie = useCallback(
     (vitesseInitiale: number) => {
+      cibleRef.current = null;
       let vitesse = Math.max(
         -INERTIE_VITESSE_MAX,
         Math.min(INERTIE_VITESSE_MAX, vitesseInitiale),
@@ -329,7 +347,20 @@ export function BookBand({
 
   function focusItem(index: number) {
     const el = itemRefs.current[normalizeIndex(index, count)];
-    el?.querySelector("a")?.focus();
+    /*
+     * `preventScroll` n'est pas une précaution : sans lui, la bande sort
+     * de son axe.
+     *
+     * Le conteneur est en `overflow: hidden`, ce qui n'empêche pas le
+     * navigateur de le faire défiler pour « amener à l'écran » l'élément
+     * qui reçoit le focus. Or la bande vient précisément de le centrer
+     * elle-même, par transform. Le navigateur ajoutait donc un défilement
+     * par-dessus le centrage : `scrollLeft` mesuré à 308px après quelques
+     * flèches, toutes les couvertures poussées hors de leur axe alors que
+     * la position interne, elle, restait juste. Mesuré au navigateur le
+     * 2026-09-02.
+     */
+    el?.querySelector("a")?.focus({ preventScroll: true });
   }
 
   function handlePointerDown(event: React.PointerEvent<HTMLDivElement>) {
@@ -339,6 +370,7 @@ export function BookBand({
       cancelAnimationFrame(settleAnimRef.current);
       settleAnimRef.current = null;
     }
+    cibleRef.current = null;
     clickSuppressRef.current = false;
     dragRef.current = {
       startX: event.clientX,
@@ -401,6 +433,7 @@ export function BookBand({
       cancelAnimationFrame(settleAnimRef.current);
       settleAnimRef.current = null;
     }
+    cibleRef.current = null;
     positionRef.current += event.deltaX / ITEM_SPACING_PX;
     applyTransforms();
 
@@ -417,7 +450,11 @@ export function BookBand({
     if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
       event.preventDefault();
       const forward = event.key === "ArrowRight" ? !rtl : rtl;
-      const target = Math.round(positionRef.current) + (forward ? 1 : -1);
+      // Depuis la cible en attente s'il y en a une, sinon depuis la
+      // position réelle — c'est ce qui fait que deux flèches rapides
+      // avancent bien de deux crans.
+      const depart = cibleRef.current ?? positionRef.current;
+      const target = Math.round(depart) + (forward ? 1 : -1);
       settleTo(target, false);
       focusItem(target);
     }
@@ -437,7 +474,8 @@ export function BookBand({
     if (event.defaultPrevented) return;
     if (index === centerIndex) return;
     event.preventDefault();
-    const target = positionRef.current + wrappedDelta(index, positionRef.current, count);
+    const depart = cibleRef.current ?? positionRef.current;
+    const target = depart + wrappedDelta(index, depart, count);
     settleTo(target, false);
     focusItem(index);
   }

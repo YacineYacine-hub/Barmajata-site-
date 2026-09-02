@@ -300,10 +300,20 @@ considération technique.
   critiques — voir le commentaire de `BookBand.tsx` : un listbox est un
   widget de sélection, la bande est une liste de liens, et l'ARIA interdit
   tout élément interactif dans une option. Ne pas rétablir ces rôles.
-  **Défaut connu, non corrigé** : au clavier, le focus avance à chaque
-  flèche mais la position de la bande ne suit pas toujours — les deux
-  divergent d'un cran. Antérieur au retrait des rôles (la logique de
-  position n'a pas été touchée), à traiter à part. Clic sur la
+  **Deux défauts clavier corrigés le 2026-09-02**, tous deux invisibles à
+  la lecture du code et trouvés au navigateur :
+  1. *Les flèches rapides s'annulaient.* La cible était calculée depuis la
+     position ANIMÉE, encore proche du départ : deux flèches enchaînées
+     redemandaient le même palier, et n'avançaient que d'un cran.
+     `cibleRef` mémorise la cible d'un calage en cours, et toute reprise en
+     main (glissement, molette, inertie) la remet à `null`.
+  2. *La bande sortait de son axe.* `focus()` sur une couverture éloignée
+     faisait défiler le conteneur pour « l'amener à l'écran », alors que la
+     bande venait de la centrer par transform — `scrollLeft` mesuré à
+     308px, toutes les couvertures poussées hors de leur axe pendant que la
+     position interne restait juste. D'où `focus({ preventScroll: true })`,
+     qui n'est pas une précaution mais la condition du centrage.
+  Clic sur la
   couverture centrale : navigation normale (comportement par défaut du
   `<Link>`). Clic sur une couverture latérale : `event.preventDefault()`
   + recentrage vers cette couverture (`settleTo`, plus court chemin
