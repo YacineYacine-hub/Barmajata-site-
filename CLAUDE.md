@@ -65,8 +65,11 @@ considération technique.
   biographique ou éditorial sur un auteur ou un livre. Les catalogues
   livres/auteurs (`src/content/`) sont vides par conception — voir
   "Modèle de contenu" ci-dessous.
-- Pages : Livres (`/livres`), Auteurs (`/auteurs`), La maison
-  (`/la-maison`), Journal, Contact, légales. `/engagement` existe mais est
+- Pages publiques : Livres (`/livres`), Auteurs (`/auteurs`), La maison
+  (`/la-maison`), Journal, Contact, FAQ (`/faq`), légales. S'y ajoutent
+  quatre **pages professionnelles** (Lot H12), absentes du bandeau et
+  regroupées sous « Professionnels » dans le panneau de menu :
+  `/manuscrits`, `/presse`, `/droits`, `/libraires`. `/engagement` existe mais est
   volontairement **hors menu et en noindex** tant que le partenariat
   associé n'est pas fixé — voir le commentaire dans
   `src/app/[locale]/commitment/page.tsx`.
@@ -122,18 +125,32 @@ considération technique.
 
 ## Header, Hero/carrousel, footer, animations
 
-- `Header.tsx` : bandeau plein `bg-nuit-900`, `sticky top-0`, toujours
-  visuellement séparé du Hero (jamais en overlay transparent dessus).
-  Au-delà de 80px de scroll (`SCROLL_SHRINK_THRESHOLD`), hauteur/logo
-  réduits, `transition-[...] duration-200`. Disposition : sceau+nom
-  (`logo-horizontal-light.svg`) à gauche ; sélecteur de langue, lien
-  "Livres" en clair puis bouton menu (3 traits) à droite — identique à
-  toutes les tailles d'écran, plus de nav desktop séparée. Le bouton ouvre
-  un panneau plein écran (`role="dialog" aria-modal`, `Auteurs`/`La
-  maison`/`Journal`/`Contact` — pas "Livres", déjà direct dans le
-  bandeau) : Échap ferme, Tab/Shift+Tab piégés dedans (`FOCUSABLE_SELECTOR`),
-  focus posé sur le bouton de fermeture à l'ouverture puis restitué au
-  déclencheur à la fermeture, scroll de la page bloqué pendant.
+- `Header.tsx` : **deux lignes depuis le Lot H16**, pas une.
+  1. Une bande fine `bg-nuit-900`, `sticky top-0`, toujours visuellement
+     séparée du Hero (jamais en overlay transparent dessus) : sceau+nom
+     (`logo-horizontal-light.svg`) à gauche ; réseaux sociaux (coquilles
+     tant que `SOCIAL_LINKS` est vide) et sélecteur de langue à droite.
+     Au-delà de 80px de scroll (`SCROLL_SHRINK_THRESHOLD`), hauteur/logo
+     réduits, `transition-[...] duration-200`.
+  2. Sous elle, une ligne **transparente** alignée à droite, rendue sur
+     **toutes** les pages et non seulement l'accueil (sans elle, le
+     catalogue et les pages professionnelles perdraient tout accès au
+     menu) : lien "Livres", puis — **uniquement sur le catalogue** — un
+     champ de recherche, puis le bouton menu (3 traits).
+  Le champ de recherche est un `<form method="get">` **sans `action`** :
+  il se soumet à l'URL courante, donc au catalogue dans sa langue, sans
+  reconstruire de chemin traduit ; la recherche vit dans `?q=`, elle est
+  donc partageable et fonctionne sans JavaScript. Sa présence est décidée
+  par `usePathname() === "/books"` — le chemin **interne** de next-intl,
+  jamais sa traduction, ce qui fait tenir la comparaison dans les trois
+  langues.
+  Le bouton ouvre un panneau plein écran (`role="dialog" aria-modal`) :
+  `Auteurs`/`La maison`/`Journal`/`Contact` en grand — pas "Livres", déjà
+  direct dans la ligne — puis, sous un intertitre « Professionnels »,
+  `Manuscrits`/`Presse`/`Droits`/`Libraires`. Échap ferme, Tab/Shift+Tab
+  piégés dedans (`FOCUSABLE_SELECTOR`), focus posé sur le bouton de
+  fermeture à l'ouverture puis restitué au déclencheur à la fermeture,
+  scroll de la page bloqué pendant.
   `LocaleSwitcher.tsx` a des couleurs figées pour fond sombre (utilisé
   dans Header **et** Footer, tous deux `bg-nuit-900`).
 - `Hero.tsx` : carrousel manuel uniquement — **jamais** de défilement
@@ -222,15 +239,21 @@ considération technique.
 - Couvertures 2D (`book.couverture`) affichées sur la carte catalogue via
   `<img>` — champ optionnel, pas de rendu si absent. La fiche livre, elle,
   affiche `BookSolid` (voir plus bas) à la place.
-- Genres (`book.categories`, quatre valeurs figées : `famille` |
-  `psychologie` | `thriller` | `histoire-vraie`) : un livre peut en porter
-  plusieurs, champ optionnel. Distinct de `formats[].type` (broché/epub/
+- Genres (`book.categories`, **sept** valeurs figées, dans cet ordre :
+  `famille` | `psychologie` | `thriller` | `histoire-vraie` | `enfance` |
+  `developpement-personnel` | `poesie-pensees`) : un livre peut en porter
+  plusieurs, champ optionnel. La liste fait autorité dans
+  `BOOK_CATEGORIES` (`schema.ts`) et l'accueil la parcourt pour composer
+  son menu — ajouter un genre y ajoute une carte, et exige un visuel
+  `public/categories/<clé>.svg` et une clé de traduction. Distinct de `formats[].type` (broché/epub/
   pdf) — jamais confondu. Slugs de filtre traduits par locale dans
-  `src/lib/content/categories.ts` (`CATEGORY_SLUGS`) ; arabe non fourni,
-  anglais utilisé en attendant (TODO traduction humaine, voir aussi
-  `messages/ar.json` → `categories.famille/psychologie/thriller/
-  histoire-vraie`, volontairement en anglais alors que `categories.all`/
-  `categories.new` sont bien traduits).
+  `src/lib/content/categories.ts` (`CATEGORY_SLUGS`) ; slugs arabes non
+  fournis, anglais utilisé en attendant. **La traduction arabe est
+  aujourd'hui partielle** : `enfance`, `developpement-personnel` et
+  `poesie-pensees` sont bien traduits dans `messages/ar.json`, mais les
+  quatre genres d'origine (`famille`, `psychologie`, `thriller`,
+  `histoire-vraie`) y sont encore en anglais — TODO traduction humaine,
+  alors que `categories.all`/`categories.new`/`categories.consult` le sont.
 - "Nouveautés" est un **filtre calculé**, jamais stocké : `isNewRelease()`
   dans `schema.ts` (édition `publie`, parution dans les 12 derniers mois,
   jamais dans le futur).
@@ -307,18 +330,20 @@ considération technique.
   (décroissance 0,93/frame, coupée par `prefers-reduced-motion` — ajout
   défensif au-delà de la spec, cohérent avec le reste du site), flèches
   clavier, bouton "Redresser" (retour à `yaw=0, pitch=0`).
-- Aucune vérification visuelle possible côté agent (pas d'outil
-  navigateur dans cette session) : la géométrie/physique a été vérifiée
-  par relecture et par inspection du HTML/SVG généré (coordonnées,
-  couleurs éclairées, matrices affines), pas par capture d'écran. À
-  confirmer visuellement par un humain.
+- La géométrie/physique de `BookSolid` a été vérifiée par relecture et par
+  inspection du HTML/SVG généré (coordonnées, couleurs éclairées, matrices
+  affines), **jamais par capture d'écran** : les séances d'alors n'avaient
+  pas d'outil navigateur. **Ce n'est plus le cas** — un navigateur est
+  disponible depuis le 2026-09-02, et cette vérification visuelle reste à
+  faire. Vaut aussi pour l'audit d'accessibilité outillé, annoncé plus bas
+  comme impossible pour la même raison.
 
 ## Contenu de démonstration (`NEXT_PUBLIC_DEMO_CONTENT`)
 
 - `src/content/_demo/books/*.json` et `src/content/_demo/authors/*.json` :
-  4 livres factices (`publie` à 3 formats avec `categories`+
+  10 livres factices et 10 auteurs factices (dont `publie` à 3 formats avec `categories`+
   `couvertureImage`, `a_paraitre`, `brouillon`, `publie` 1 format non
-  récent — pour tester `isNewRelease()` en négatif) + 2 auteurs factices,
+  récent — pour tester `isNewRelease()` en négatif),
   textes explicitement lorem ipsum, ASIN/ISBN fictifs
   mais au bon format. Couvertures SVG générées dans
   `public/demo/covers/` (aplat sable, titre en `font-family:
@@ -446,9 +471,11 @@ considération technique.
   sans souris.
 - **Vérifié par lecture du HTML statique/RSC via `curl` et calcul manuel
   des ratios de contraste (formule WCAG), pas par un outil axe ni un
-  navigateur** (aucun outil de ce type disponible dans cette session) — à
-  confirmer avec un audit outillé (axe DevTools, Lighthouse) par un
-  humain.
+  navigateur** — aucun outil de ce type n'était disponible dans les
+  séances concernées. **Un navigateur l'est depuis le 2026-09-02** :
+  l'audit outillé (axe, Lighthouse) devient faisable et reste à faire. Il
+  cesse donc d'être « à confirmer par un humain » pour devenir une tâche
+  du projet.
 
 ## Pages d'erreur (Lot G)
 
