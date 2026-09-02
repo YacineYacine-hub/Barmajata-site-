@@ -13,3 +13,7 @@ next-env.d.ts
 # ignore les reglages Claude Code personnels
 .claude/settings.local.json
 build.log
+
+# Notes contenant des jetons — ne doit jamais partir dans un commit
+DOSSIER ENV./
+*.notepad

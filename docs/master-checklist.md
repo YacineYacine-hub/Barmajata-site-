@@ -1,0 +1,315 @@
+# BARMAJATA — Master checklist
+
+Issue de la réunion du 2026-09-02. Le dépouillement brut, avec le détail
+des risques, reste dans `docs/reunion-2026-09-02.md` — ce document-ci est
+la version ordonnée, celle qu'on déroule.
+
+---
+
+## Règle de séparation
+
+**Trois chantiers distincts, qui ne se mélangent pas.** Ils partagent une
+machine et une marque, rien d'autre. Confondre leurs tâches, c'est se
+retrouver à traiter du dépôt légal en plein travail de code, et à croire
+le site en retard alors qu'il attend un contrat.
+
+| Rail | Ce que c'est | Où ça vit |
+|---|---|---|
+| **A — LE SITE** | Ce qu'on fait ici : pages, back-office, paiement, redirecteur, club, bots, alertes | `~/barmajata` |
+| **B — L'USINE** | L'outillage de production éditoriale et la conception du livre | `~/usine-editoriale` (mémoire séparée depuis le 2026-09-02) |
+| **C — LA MAISON** | Ce qui n'est pas du logiciel : structure, contrats, ISBN, dépôt légal, prix, fiscalité, comptes | Hors dépôt |
+| **D — LE SOCLE** | Le VPS Hostinger, qui héberge A, B et le bot de trading | Transversal |
+
+*Hypothèse retenue : « l'usine » et « la conception du livre » forment un
+seul rail (B), l'outil et son usage. À corriger si tu les veux séparés.*
+
+**Ce document détaille le rail A.** Les rails B, C et D y figurent pour ce
+qui bloque le site — et seulement pour cela.
+
+---
+
+## Bloc 0 — Huit décisions à rendre avant de coder
+
+Chacune commande des dizaines de tâches. Tant qu'elles ne sont pas
+tranchées, avancer c'est deviner.
+
+| # | Décision | Ce qu'elle commande |
+|---|---|---|
+| D1 | **Carnet ou livre ?** | Loi Lang (plafond de 5 % sur les remises), frais de port, ISBN, TVA, dépôt légal. Cinq risques changent de réponse. |
+| D2 | **Catalogue en base, ou en fichiers ?** | Le back-office, le rendu statique ou dynamique, la vitesse, l'hébergement. Premier arbitrage technique. |
+| D3 | **Vente directe : oui, et à partir de quand ?** | Stripe, CGV opposables, rétractation, médiateur, SAV, tests, environnement de recette. Le plus gros bloc du programme. |
+| D4 | **Où atterrit l'exploitation BARMAJATA ?** | Bot Telegram, PDF, Lulu, logs. Trois dossiers annoncés, quatre besoins. |
+| D5 | **Mesure d'audience : avec ou sans traceurs ?** | Sans cookie, pas de bandeau. Avec les pixels Meta/TikTok, bandeau obligatoire et conforme. |
+| D6 | **Quelles langues ?** | Le site parle fr/en/ar. Les ISBN prévoient FR/EN/DE/ES/AR. Deux langues n'existent nulle part. |
+| D7 | **Un bot, ou trois ?** | Telegram, ManyChat, assistant du site. Trois systèmes, trois tons, trois endroits où une réponse fausse peut sortir. |
+| D8 | **Le domaine définitif est-il arrêté ?** | Il part à l'encre dans chaque exemplaire. Après la première impression, il n'est plus changeable. |
+
+---
+
+## Rail A — LE SITE
+
+### Bloc 1 — Ce qui ne dépend de rien, et débloque tout
+
+À faire en premier : aucune de ces lignes n'attend une décision.
+
+- [ ] Committer le `.gitignore` qui protège `DOSSIER ENV./` et `*.notepad`.
+      La protection n'existe aujourd'hui que sur une machine.
+- [ ] Double authentification sur le **compte Hostinger** d'abord — il
+      permet de réinitialiser root, d'ouvrir une console et de changer les
+      DNS. Qui tient le compte tient le serveur, quel que soit SSH.
+- [ ] Double authentification sur registrar, GitHub, Stripe, KDP, Lulu,
+      Telegram, fournisseur d'e-mail, réseaux sociaux.
+- [ ] Codes de secours récupérés et stockés **hors du téléphone et hors du
+      VPS**.
+- [ ] Domaine : propriété confirmée, verrouillage registrar, renouvellement
+      long, surveillance d'expiration. *(Prérequis absolu du bloc QR.)*
+- [ ] **SPF, DKIM, DMARC** sur le domaine, et boîtes professionnelles
+      (contact, presse, droits, manuscrits). Sans cela, le double opt-in
+      échoue en silence.
+- [ ] Surveillance de disponibilité **externe** — une alerte de panne ne
+      peut pas partir du serveur en panne.
+- [ ] 👤 Rédiger les **mentions légales** et la **politique de
+      confidentialité**. Il me faut : raison sociale, forme, adresse,
+      identifiants d'entreprise, directeur de publication, hébergeur.
+
+### Bloc 2 — Mettre en ligne le site tel qu'il est
+
+Le site n'existe aujourd'hui **qu'en local**. C'est la première marche.
+
+- [ ] Déployer sur le VPS (voir rail D pour le durcissement).
+- [ ] Certificat SSL, redirection HTTPS, en-têtes de sécurité.
+- [ ] Sauvegardes automatiques hors du VPS, **et une restauration de test
+      réellement effectuée**.
+- [ ] Déploiement reproductible et retour arrière en une commande. La CI ne
+      fait aujourd'hui que construire.
+- [ ] 👤 Contenu réel minimal : au moins un auteur et un livre. Le
+      catalogue est vide, tout ce qu'on voit en local est factice.
+- [ ] 👤 Les quatre URL de réseaux sociaux, ou le maintien de la rangée
+      masquée.
+- [ ] Canaux d'alerte : e-mail prioritaire, WhatsApp, et un canal **séparé**
+      pour les remontées clients. Définir les niveaux de gravité.
+- [ ] Audit d'accessibilité outillé — le niveau actuel n'a été vérifié
+      qu'à la main.
+- [ ] Remettre à jour `CLAUDE.md`, `.env.example` et le journal des lots,
+      qui ont décroché du code.
+
+### Bloc 3 — Le club réellement fonctionnel
+
+Tout est écrit et **rien n'a jamais tourné avec de vraies clés**.
+
+- [ ] 👤 Choisir le fournisseur d'e-mail, poser les clés.
+- [ ] Test de bout en bout : inscription, e-mail reçu, lien cliqué, contact
+      ajouté à la liste.
+- [ ] Vérifier l'acheminement réel vers les principaux fournisseurs de
+      messagerie *(dépend du bloc 1)*.
+- [ ] Enregistrer la **preuve du consentement** : date, texte affiché,
+      horodatage. Rien n'est stocké aujourd'hui.
+- [ ] Page newsletter : ce qu'on envoie, à quelle fréquence, archive
+      publique des numéros, désinscription accessible.
+- [ ] Ne pas mélanger liste transactionnelle et liste de prospection.
+
+### Bloc 4 — QR codes
+
+Le redirecteur `/b/<code>` **existe déjà** et répond au besoin : code figé,
+destination modifiable, jamais de 404. *(Bloqué par D8 et le domaine.)*
+
+- [ ] Attribuer le code **dès la création de la fiche**, en brouillon.
+- [ ] Plusieurs codes par ouvrage, par usage — étendre le champ `type`.
+- [ ] Codes opaques, non séquentiels, jamais réutilisés.
+- [ ] Générer le visuel **en vectoriel** pour l'imprimeur ; aucune
+      dépendance n'est installée pour cela aujourd'hui.
+- [ ] Registre : quel ouvrage, quel usage, quel tirage, quelle date.
+- [ ] **Scan réel sur l'épreuve imprimée**, jamais seulement à l'écran.
+- [ ] Décider ce que fait le redirecteur quand la fiche n'est pas encore
+      publiée — l'inscription au club serait le plus utile.
+
+### Bloc 5 — Base de données et back-office *(bloqué par D2)*
+
+- [ ] Base sur le VPS, jamais exposée sur l'internet, utilisateur à
+      privilèges limités.
+- [ ] Migration des fichiers JSON vers la base : script réversible et
+      rejouable.
+- [ ] Back-office : authentification forte — **clé d'accès plutôt qu'OTP,
+      seule à résister à l'hameçonnage**.
+- [ ] Création et modification des livres, auteurs, éditions par langue,
+      formats, prix, ISBN.
+- [ ] Téléversement des visuels et versionnage des PDF d'impression.
+- [ ] Prévisualisation avant publication, dans les trois langues.
+- [ ] Les contrôles de cohérence deviennent des messages lisibles, au lieu
+      de faire échouer le build.
+- [ ] Journal des modifications, retour arrière.
+- [ ] **Retrait d'un ouvrage** : distinguer dépublier / retirer / supprimer.
+      Jamais de 404. Ne jamais emporter les commandes ni les factures.
+
+### Bloc 6 — Vente directe *(bloqué par D1 et D3)*
+
+Le plus lourd, et celui qui change la nature juridique du site : avec
+Stripe, **c'est nous le vendeur**, plus Amazon.
+
+- [ ] 👤 CGV opposables, droit de rétractation de 14 jours, information
+      précontractuelle, délai de livraison annoncé.
+- [ ] 👤 Adhésion à un médiateur de la consommation, mentionnée sur le site.
+- [ ] 👤 Calculer le prix public **avant** de le déclarer : commission
+      Stripe, coût d'impression, port, retours qui ne se remettent pas en
+      stock, abonnements mensuels. La loi Lang interdit tout rattrapage
+      ultérieur par des remises.
+- [ ] Stripe Checkout hébergé — aucune donnée de carte sur notre serveur.
+      Préserver ce choix.
+- [ ] Le montant est recalculé côté serveur, jamais reçu du navigateur.
+- [ ] Lulu : commande déclenchée par le paiement, **file d'attente avec
+      réessais** et état de commande persistant. Un échec après
+      encaissement laisse un client qui a payé sans rien recevoir.
+- [ ] Webhooks Stripe et Lulu : signature vérifiée, traitement idempotent.
+- [ ] Second canal Amazon, avec redirection contournable par le visiteur.
+- [ ] Tests automatisés sur le prix, le paiement et la commande
+      d'impression. Le projet n'en a **aucun** aujourd'hui.
+- [ ] Environnement de recette : Stripe en mode test, Lulu en bac à sable.
+- [ ] Facturation : mentions obligatoires, numérotation sans trou,
+      conservation dix ans.
+- [ ] SAV : colis perdu ou abîmé, qui réimprime et qui paie.
+
+### Bloc 7 — Croissance *(en dernier, et seulement là)*
+
+Rien ici n'a de sens tant qu'il n'y a pas de livre à vendre.
+
+- [ ] Bot Telegram : accueil au scan, bonus PDF, recommande.
+- [ ] Assistant conversationnel sur l'accueil — **tenu au catalogue, sans
+      liberté d'invention**, avec mention explicite qu'on parle à une
+      machine.
+- [ ] ManyChat sur les réseaux, messages privés automatiques.
+- [ ] Page de liens maison plutôt qu'un service tiers ; liens courts
+      redirigeables, un par réseau et par campagne.
+- [ ] Pixels Meta et TikTok — **et donc un bandeau de consentement
+      conforme**, qui n'existe pas aujourd'hui *(voir D5)*.
+- [ ] Relances de panier abandonné et séquence d'accueil, dans le respect
+      des règles de prospection.
+- [ ] Test à blanc du parcours complet, exemplaire de test commandé.
+
+---
+
+## Rail B — L'USINE *(l'espace d'une autre session)*
+
+**L'usine n'est pas un sous-dossier du site : c'est le territoire de sa
+propre session Claude.** Listé ici pour mémoire, jamais traité ici.
+
+- Conception et fabrication du livre, gabarits, mise en page.
+- PDF intérieurs et couvertures avec tranche, validés pour l'impression.
+- Ce que le site attend d'elle : les PDF prêts, la couverture de catalogue,
+  les trois textures du livre en volume, l'épaisseur.
+
+### Transmission
+
+Fil unique : **`~/usine-editoriale/docs/notes-du-site.md`** — une entrée par
+transmission, la plus récente en haut, écrite par la session site et lue par
+la session usine.
+
+- [ ] Y écrire à chaque décision qui touche la fabrication, l'infrastructure
+      partagée, ou les données attendues de l'usine.
+- [ ] Prévenir la session vivante quand il y en a une.
+- [ ] Ne jamais modifier son `CLAUDE.md` ni sa mémoire : c'est à elle de
+      décider si elle référence la note.
+- [x] Première note déposée et transmise le 2026-09-02 — séparation des
+      rails, QR imprimé, mentions obligatoires, ce que le site consomme,
+      infrastructure, et les trois décisions qui bloquent un gabarit.
+
+---
+
+## Rail C — LA MAISON *(hors logiciel)*
+
+Ce qui bloque le site figure ici ; le reste appartient à la maison.
+
+- [ ] 👤 Structure juridique, et **fiscalité à faire valider par un
+      comptable** : structure hors UE, clients européens, impression
+      possiblement en UE.
+- [ ] 👤 **Contrat d'édition écrit pour chaque ouvrage.** Sans écrit, la
+      cession de droits n'est pas valablement constituée.
+- [ ] 👤 Reddition de comptes annuelle aux auteurs — suppose de compter les
+      ventes par canal et par format. *Le site doit fournir ces chiffres.*
+- [ ] 👤 Traçabilité des manuscrits reçus et des refus.
+- [ ] 👤 ISBN AFNIL : un par langue **et par reliure**. Le prix y figure —
+      donc après le calcul de coûts.
+- [ ] 👤 Dépôt légal BnF, éditeur **et** imprimeur — question à poser
+      explicitement avec une impression à la demande étrangère.
+- [ ] 👤 Mentions obligatoires dans l'ouvrage : achevé d'imprimer, nom et
+      adresse de l'imprimeur, dépôt légal, ISBN, prix.
+- [ ] 👤 Vérifier que **BARMAJATA est réellement déposé**, dans quelles
+      classes et sur quels territoires.
+- [ ] 👤 Comptes marchands : Stripe, et KDP **en version non exclusive** —
+      KDP Select interdirait la vente directe.
+- [ ] 👤 Licences des polices et droits sur les visuels : écran et
+      impression ne se licencient pas pareil.
+
+---
+
+## Rail D — LE SOCLE *(le VPS partagé)*
+
+- [ ] Migrer site, usine et bot de trading sur le VPS, dans des dossiers
+      séparés *(voir D4 pour l'exploitation)*.
+- [ ] **Isolation réelle entre les trois locataires** : un dossier n'est
+      pas une frontière. Un serveur qui encaisse et détient une base
+      clients ne devrait pas partager sa surface d'attaque avec des bots
+      porteurs de clés d'API d'échange. Conteneurs, utilisateurs séparés,
+      ou seconde machine.
+- [ ] Pare-feu : tout fermé sauf SSH, 80, 443.
+- [ ] SSH par clé seule, root interdit, port déplacé, `fail2ban`.
+- [ ] Mises à jour de sécurité automatiques.
+- [ ] Aucun service ne tourne en root.
+- [ ] Inventaire des secrets et politique de rotation.
+- [ ] Journalisation centralisée, alerte à chaque connexion réussie.
+- [ ] Plan d'incident écrit : quoi faire, dans quel ordre, avec quels accès
+      de secours, si le serveur est compromis un dimanche.
+- [ ] Plan de notification de violation — 72 heures pour prévenir la CNIL,
+      cela ne s'improvise pas le jour venu.
+
+---
+
+## Les risques, triés
+
+### Bloquants — rien ne s'ouvre au public avant
+
+| Risque | Rail |
+|---|---|
+| Pages légales vides alors que le club recueille des e-mails | A |
+| Remise supérieure à 5 % sur un livre (loi Lang) | A + C |
+| Frais de port offerts sur un livre neuf | A + C |
+| Pixels publicitaires sans bandeau de consentement | A |
+| Vente directe sans CGV, rétractation ni médiateur | A + C |
+| Publier sans contrat d'édition écrit | C |
+| SPF/DKIM/DMARC absents : double opt-in en échec silencieux | A |
+| Preuve du consentement non conservée | A |
+| Prix fixé avant le calcul des coûts | C |
+| Panneau d'hébergement non protégé | D |
+| Alerte de panne émise par le serveur en panne | D |
+
+### À cadrer avant d'y toucher
+
+Fiscalité transfrontalière · KDP Select contre vente directe · RGPD du bot
+Telegram · sous-traitance Lulu et adresse postale · dépôt légal de
+l'imprimeur étranger · assistant qui invente un prix ou une date ·
+transparence « vous parlez à une machine » · accessibilité devenue
+obligation · rétractation qui coûte le tirage · réclamations transitant
+par Meta.
+
+### À surveiller
+
+Cohabitation trading / encaissement · webhooks non signés · échec Lulu
+après encaissement · domaine imprimé à l'encre · lien en bio non
+redirigeable · raccourcisseurs tiers · ISBN recyclé · sauvegarde jamais
+restaurée · OTP sans plafond de tentatives · coût de l'assistant · écart
+entre langues du site et ISBN · sept phases menées de front.
+
+---
+
+## Ta part — ce qui n'avance pas sans toi
+
+1. Les huit décisions du bloc 0, à commencer par **carnet ou livre**.
+2. Les informations d'entreprise, pour les mentions légales.
+3. Le contenu réel : au moins un auteur, un livre.
+4. Les comptes et les clés : hébergeur, e-mail, Stripe, Lulu, KDP.
+5. Le calcul des coûts, avant tout prix et tout ISBN.
+6. Les contrats d'auteur.
+
+## Ma part — ce qui n'attend rien
+
+Blocs 1 et 2 pour la partie technique, remise à jour de la documentation,
+durcissement du socle, et le déploiement dès que le VPS est accessible.
