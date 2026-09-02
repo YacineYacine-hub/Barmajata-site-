@@ -102,10 +102,19 @@ la structure hors Union européenne.
       ses enregistrements DKIM **le jour où le fournisseur est choisi** —
       c'est là que se joue le risque du double opt-in muet, pas dans
       l'absence de SPF.
-- [ ] ⚠ **DMARC existe mais ne fait rien** : `v=DMARC1; p=none`, sans
-      `rua`. Ni protection, ni rapports — donc aucune visibilité sur ce qui
-      part au nom du domaine. Ajouter une adresse de rapport d'abord, puis
-      durcir vers `quarantine` une fois les expéditeurs légitimes alignés.
+- [x] **DMARC rendu utile — fait le 2026-09-02.** Il valait
+      `v=DMARC1; p=none` sans adresse de rapport : ni protection, ni
+      visibilité. Il vaut désormais
+      `v=DMARC1; p=none; rua=mailto:dmarc@barmajata.com; fo=1`, vérifié sur
+      les deux serveurs autoritaires et trois résolveurs publics, un seul
+      enregistrement, SPF et DKIM intacts. La propagation côté Hostinger a
+      pris près d'une heure, avec une phase où les serveurs autoritaires se
+      contredisaient — c'est normal, pas une erreur de saisie.
+- [ ] Ranger les rapports quotidiens (XML, un par fournisseur) dans un
+      dossier dédié — sinon ils encombrent et finissent supprimés.
+- [ ] Durcir vers `p=quarantine` **seulement** quand les rapports montreront
+      que tous les expéditeurs légitimes passent. Durcir à l'aveugle
+      enverrait nos propres e-mails à la corbeille.
 - [ ] Boîtes professionnelles (contact, presse, droits, manuscrits). La
       messagerie Hostinger est déjà en place (MX `mx1`/`mx2.hostinger.com`).
 - [ ] Surveillance de disponibilité **externe** — une alerte de panne ne
