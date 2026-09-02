@@ -128,7 +128,16 @@ la structure hors Union européenne.
 Le site n'existe aujourd'hui **qu'en local**. C'est la première marche.
 
 - [ ] Déployer sur le VPS (voir rail D pour le durcissement).
-- [ ] Certificat SSL, redirection HTTPS, en-têtes de sécurité.
+- [x] **En-têtes de sécurité — faits le 2026-09-02.** HSTS (sans
+      `preload`, volontairement), `nosniff`, `Referrer-Policy`,
+      `Permissions-Policy`, `X-Frame-Options`, suppression de
+      `X-Powered-By`, et une **CSP en mode bloquant** vérifiée au
+      navigateur sur huit types de pages dans les trois langues. Sans
+      nonce, par contrainte d'architecture : une CSP à nonce rendrait tout
+      le site dynamique.
+- [ ] Certificat SSL et redirection HTTPS (au déploiement).
+- [ ] ⚠ Vérifier que le reverse proxy ou le CDN **relaie** ces en-têtes —
+      posés côté Next, ils se perdent si un intermédiaire les remplace.
 - [ ] Sauvegardes automatiques hors du VPS, **et une restauration de test
       réellement effectuée**.
 - [ ] Déploiement reproductible et retour arrière en une commande. La CI ne

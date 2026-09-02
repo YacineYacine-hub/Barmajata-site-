@@ -506,6 +506,47 @@ considération technique.
   cesse donc d'être « à confirmer par un humain » pour devenir une tâche
   du projet.
 
+## En-têtes de sécurité (Lot H45)
+
+Posés dans `next.config.ts` (`headers()`), donc appliqués par le serveur de
+`next start` à **toutes** les réponses, pages statiques comprises. **Si un
+reverse proxy ou un CDN se place devant, vérifier qu'il les relaie** —
+c'est l'erreur classique.
+
+- `Strict-Transport-Security` deux ans, sous-domaines compris,
+  **volontairement sans `preload`** : l'inscription sur la liste des
+  navigateurs est longue à défaire.
+- `X-Content-Type-Options: nosniff`, `Referrer-Policy:
+  strict-origin-when-cross-origin`, `Permissions-Policy` refusant caméra,
+  micro, géolocalisation, paiement et USB, `X-Frame-Options: DENY`
+  (doublon assumé de `frame-ancestors`, pour les navigateurs anciens).
+- `poweredByHeader: false` — plus de `X-Powered-By: Next.js`.
+
+### CSP : pourquoi elle n'a pas de nonce
+
+**À lire avant d'en ajouter un.** La documentation de Next est explicite :
+une CSP à nonce impose un rendu **dynamique**, le nonce devant être unique
+à chaque requête. Or ce projet est statique partout sauf `/b/[code]`.
+Poser une CSP à nonce rendrait donc tout le site dynamique — un changement
+d'architecture déguisé en réglage de sécurité.
+
+La CSP posée est donc **sans nonce**, avec `'unsafe-inline'` sur les
+scripts (Next injecte son amorce RSC en ligne). Elle est par construction
+inopérante contre une injection de script inline : **son intérêt est
+d'interdire toute origine externe**, donc l'exfiltration vers un tiers.
+
+Vérifiée au navigateur le 2026-09-02 : posée d'abord en `Report-Only`,
+aucune violation sur huit types de pages dans les trois langues, deux
+violations volontaires (script et image externes) confirmant qu'elle était
+bien appliquée — puis passée en mode bloquant.
+
+**Conséquence** : tout script, image, police ou appel réseau vers un
+domaine tiers est désormais bloqué. C'est voulu. Les pixels publicitaires
+et widgets de discussion envisagés plus tard ne fonctionneront pas sans
+ajouter explicitement leur origine — et il est sain qu'une telle décision
+passe par une modification consciente du fichier. En cas de doute au
+déploiement, repasser la clé en `Content-Security-Policy-Report-Only`.
+
 ## Pages d'erreur (Lot G)
 
 Avant ce lot, `notFound()` était appelé à cinq endroits sans qu'aucun
