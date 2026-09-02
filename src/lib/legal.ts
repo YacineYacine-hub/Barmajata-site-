@@ -12,9 +12,11 @@
  * où ce fichier est rempli, les quatre pages s'écrivent d'elles-mêmes.
  *
  * Les champs d'immatriculation sont **optionnels et volontairement
- * neutres** : selon que la structure est française ou étrangère, on y met
- * un SIREN/RCS ou un numéro de licence commerciale. Ce qui compte est que
- * le lecteur puisse identifier et joindre l'éditeur.
+ * neutres**, parce que la structure retenue n'est pas française : c'est
+ * une **LLC américaine, non encore créée** au 2026-09-02. On y mettra donc
+ * l'État de constitution et le numéro de dossier, là où une société
+ * française porterait un SIREN. Ce qui compte n'est pas la forme du
+ * numéro, c'est que le lecteur puisse identifier et joindre l'éditeur.
  */
 export type IdentiteLegale = {
   /** Dénomination sociale complète, telle qu'immatriculée. */
@@ -25,7 +27,9 @@ export type IdentiteLegale = {
   capital?: string;
   /** Adresse postale complète du siège. */
   adresse: string;
-  /** Immatriculation : SIREN/RCS, licence commerciale… Libellé compris. */
+  /** Juridiction de constitution — pour une LLC, l'État (« Delaware », « Wyoming »…). */
+  juridiction?: string;
+  /** Immatriculation : numéro de dossier de l'État, SIREN… Libellé compris. */
   immatriculation?: string;
   /** Numéro de TVA, si la structure en a un. */
   tva?: string;
@@ -57,6 +61,7 @@ export const IDENTITE: IdentiteLegale = {
   formeJuridique: "",
   capital: "",
   adresse: "",
+  juridiction: "",
   immatriculation: "",
   tva: "",
   directeurPublication: "",
@@ -87,15 +92,26 @@ export function hebergeurComplet(): boolean {
   return Boolean(HEBERGEUR.nom && HEBERGEUR.adresse);
 }
 
-/** Bloc d'identification, mis en forme sur une ligne par information. */
-export function lignesIdentite(): string[] {
+/**
+ * Bloc d'identification, une ligne par information.
+ *
+ * Les libellés sont **passés en paramètre** et non écrits ici : ils
+ * s'affichent sur les trois locales, et une mention légale à moitié en
+ * français sur la version espagnole ferait mauvais effet.
+ */
+export function lignesIdentite(labels: {
+  directeur: string;
+  capital: string;
+  tva: string;
+}): string[] {
   const lignes = [
     [IDENTITE.raisonSociale, IDENTITE.formeJuridique].filter(Boolean).join(" — "),
-    IDENTITE.capital ? `Capital social : ${IDENTITE.capital}` : "",
+    IDENTITE.capital ? `${labels.capital} : ${IDENTITE.capital}` : "",
     IDENTITE.adresse,
+    IDENTITE.juridiction,
     IDENTITE.immatriculation,
-    IDENTITE.tva ? `TVA : ${IDENTITE.tva}` : "",
-    `Directeur de la publication : ${IDENTITE.directeurPublication}`,
+    IDENTITE.tva ? `${labels.tva} : ${IDENTITE.tva}` : "",
+    `${labels.directeur} : ${IDENTITE.directeurPublication}`,
     IDENTITE.email,
     IDENTITE.telephone,
   ];

@@ -281,6 +281,7 @@
       "co_uk": "Amazon.co.uk",
       "com_au": "Amazon.com.au",
       "es": "Amazon.es",
+      "de": "Amazon.de",
       "com_mx": "Amazon.com.mx"
     },
     "amazonNotice": "La venta la concluye Amazon, en su sitio y según sus condiciones. BARMAJATA no interviene ni en el pago, ni en la entrega, ni en el servicio posventa.",
@@ -325,19 +326,126 @@
   "legal": {
     "legalNotice": {
       "title": "Aviso legal",
-      "body": "Contenido próximamente."
+      "body": "Contenido próximamente.",
+      "eyebrow": "Información legal",
+      "lede": "Quién publica este sitio, quién dirige su publicación y dónde está alojado.",
+      "editeur": "Editor del sitio",
+      "hebergement": "Alojamiento",
+      "sections": [
+        {
+          "heading": "Objeto del sitio",
+          "body": "Este sitio presenta el catálogo de la editorial y sus novedades. No vende nada directamente: cada obra se ofrece a la venta en Amazon, donde el pedido, el pago, la entrega y el servicio posventa dependen de Amazon y de sus propias condiciones."
+        },
+        {
+          "heading": "Propiedad intelectual",
+          "body": "Los textos, imágenes, cubiertas y elementos gráficos presentados en este sitio están protegidos. Las obras publicadas siguen siendo propiedad de sus autores, dentro de los límites de los derechos cedidos a la editorial. Queda prohibida toda reproducción o representación, total o parcial, sin autorización escrita previa."
+        },
+        {
+          "heading": "Enlaces a sitios de terceros",
+          "body": "Este sitio remite a páginas de Amazon. Dichas páginas no son publicadas por la editorial, que no ejerce control alguno sobre su contenido ni sobre las condiciones que en ellas se aplican."
+        },
+        {
+          "heading": "Notificar un contenido",
+          "body": "Cualquier solicitud relativa a un contenido publicado en este sitio puede dirigirse a la dirección de contacto indicada más arriba. Será atendida a la mayor brevedad."
+        }
+      ],
+      "labelDirecteur": "Director de la publicación",
+      "labelCapital": "Capital social",
+      "labelTva": "IVA"
     },
     "termsOfSale": {
       "title": "Condiciones generales de venta",
-      "body": "Contenido próximamente."
+      "body": "Contenido próximamente.",
+      "eyebrow": "Condiciones",
+      "lede": "Este sitio no vende directamente. Esto es lo que ello implica para usted.",
+      "sections": [
+        {
+          "heading": "En este sitio no se cierra ninguna venta",
+          "body": "Este sitio es un escaparate. No ofrece cesta, ni pago, ni cuenta de cliente. Su visita no crea por tanto ningún contrato de venta entre usted y la editorial."
+        },
+        {
+          "heading": "La venta la cierra Amazon",
+          "body": "Cada botón de compra le lleva a Amazon. Allí, el pedido, el pago, la facturación, la entrega, el derecho de desistimiento y el servicio posventa se rigen por las condiciones de Amazon, que es su vendedor. La editorial no interviene en ninguna de esas etapas."
+        },
+        {
+          "heading": "El precio indicado",
+          "body": "El precio indicado en este sitio es el precio público fijado por la editorial. En Francia, la ley del 10 de agosto de 1981 reserva a la editorial la fijación del precio del libro y limita al 5 % el descuento que un minorista puede conceder. El precio observado en un minorista puede por tanto diferir ligeramente, dentro de ese límite."
+        },
+        {
+          "heading": "Si algún día se abre la venta directa",
+          "body": "El día en que una compra pueda cerrarse en este sitio, se publicarán aquí unas condiciones generales de venta completas antes de su puesta en servicio, y se le presentarán antes de cualquier pago."
+        }
+      ]
     },
     "privacyPolicy": {
       "title": "Privacidad",
-      "body": "Contenido próximamente."
+      "body": "Contenido próximamente.",
+      "eyebrow": "Sus datos",
+      "lede": "Qué recoge este sitio, para qué, durante cuánto tiempo y cómo recuperar el control.",
+      "responsable": "Responsable del tratamiento",
+      "sections": [
+        {
+          "heading": "El principio",
+          "body": "Este sitio recoge lo estrictamente mínimo. No utiliza ninguna herramienta de medición de audiencia, ningún rastreador publicitario, y no carga ningún script procedente de otro dominio. El único dato personal recogido es la dirección de correo electrónico que usted deja, si lo desea, para estar al tanto de las publicaciones."
+        },
+        {
+          "heading": "La suscripción a los avisos de publicación",
+          "body": "El formulario recoge su dirección de correo electrónico y su consentimiento explícito, mediante una casilla que nunca está marcada de antemano. También puede indicar la obra cuya salida le interesa. No se solicita ninguna otra información, y ningún campo se deduce ni se completa sin su conocimiento."
+        },
+        {
+          "heading": "El doble consentimiento",
+          "body": "Su suscripción no se registra de inmediato. Se le envía un correo con un enlace válido durante cuarenta y ocho horas: mientras no lo abra, su dirección no se añade a ninguna lista. Ese enlace está firmado criptográficamente y lleva consigo la información, de modo que nada queda almacenado en nuestros servidores entre su solicitud y su confirmación."
+        },
+        {
+          "heading": "En qué se basa este tratamiento",
+          "body": "En su consentimiento, que usted da libremente y puede retirar en cualquier momento, sin tener que justificarse y sin consecuencia alguna."
+        },
+        {
+          "heading": "Quién recibe sus datos",
+          "body": "Su dirección se confía al proveedor que entrega nuestros correos, {fournisseur}, que actúa como encargado del tratamiento y únicamente para ese fin. No se vende, ni se alquila, ni se transmite a nadie más."
+        },
+        {
+          "heading": "Cuánto tiempo se conservan",
+          "body": "Su dirección se conserva mientras siga suscrito, y se borra dentro de los tres años siguientes a su último contacto con nosotros, conforme a la recomendación de la autoridad francesa de protección de datos en materia de prospección."
+        },
+        {
+          "heading": "Sus derechos",
+          "body": "Dispone de los derechos de acceso, rectificación, supresión, limitación, oposición y portabilidad. Puede darse de baja en cualquier momento mediante el enlace incluido en cada correo, o escribirnos a la dirección de contacto indicada más arriba. También puede presentar una reclamación ante la autoridad de control competente."
+        },
+        {
+          "heading": "Cookies",
+          "body": "Este sitio no deposita ninguna cookie de medición ni de publicidad. Solo existe una: recuerda la tienda de Amazon que usted elige en una ficha de libro, para no volver a preguntárselo en cada visita. Contiene únicamente un código de país, ningún identificador, y sirve solo al servicio que usted mismo ha solicitado. Puede eliminarla en cualquier momento desde su navegador."
+        },
+        {
+          "heading": "Qué ocurre cuando usted compra",
+          "body": "Las compras se cierran en Amazon. En cuanto abandona este sitio, se aplican la política de privacidad y las condiciones de Amazon, y nosotros no recibimos información alguna sobre su pedido."
+        }
+      ],
+      "fournisseurNonPrecise": "nuestro proveedor de envío de correos"
     },
     "shippingReturns": {
       "title": "Entrega y devoluciones",
-      "body": "Contenido próximamente."
+      "body": "Contenido próximamente.",
+      "eyebrow": "Pedidos",
+      "lede": "No dependen de este sitio.",
+      "sections": [
+        {
+          "heading": "Quién envía las obras",
+          "body": "Este sitio no envía nada. Los pedidos realizados desde los botones de compra los gestiona Amazon, que se encarga de la preparación, el envío y el seguimiento."
+        },
+        {
+          "heading": "Plazos y gastos de envío",
+          "body": "Los plazos anunciados, los gastos de envío y las modalidades de entrega son los de Amazon. Figuran en la página de la obra en el momento del pedido."
+        },
+        {
+          "heading": "Devoluciones, cambios y reembolsos",
+          "body": "Se tramitan con Amazon, según sus condiciones, incluido el ejercicio del derecho de desistimiento. La editorial no tiene acceso ni a su pedido ni a su expediente."
+        },
+        {
+          "heading": "Una obra dañada o no conforme",
+          "body": "Comuníquelo primero a Amazon, que es su vendedor y la única parte capaz de actuar sobre su pedido. También puede escribirnos: no sustituye ese paso, pero queremos saberlo."
+        }
+      ]
     }
   },
   "footer": {

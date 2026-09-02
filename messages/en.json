@@ -281,6 +281,7 @@
       "co_uk": "Amazon.co.uk",
       "com_au": "Amazon.com.au",
       "es": "Amazon.es",
+      "de": "Amazon.de",
       "com_mx": "Amazon.com.mx"
     },
     "amazonNotice": "The sale is completed by Amazon, on its own site and under its own terms. BARMAJATA is not involved in payment, delivery or after-sales service.",
@@ -324,20 +325,127 @@
   },
   "legal": {
     "legalNotice": {
-      "title": "Legal Notice",
-      "body": "Content coming soon."
+      "title": "Legal notice",
+      "body": "Content coming soon.",
+      "eyebrow": "Legal information",
+      "lede": "Who publishes this site, who is responsible for it, and where it is hosted.",
+      "editeur": "Site publisher",
+      "hebergement": "Hosting",
+      "sections": [
+        {
+          "heading": "Purpose of this site",
+          "body": "This site presents the publishing house's catalogue and its news. It sells nothing directly: each book is offered for purchase on Amazon, where the order, payment, delivery and after-sales service are governed by Amazon and its own terms."
+        },
+        {
+          "heading": "Intellectual property",
+          "body": "The texts, images, covers and graphic elements shown on this site are protected. Published works remain the property of their authors, within the limits of the rights assigned to the publishing house. Any reproduction or representation, in whole or in part, without prior written permission is prohibited."
+        },
+        {
+          "heading": "Links to third-party sites",
+          "body": "This site links to Amazon pages. Those pages are not published by the publishing house, which has no control over their content or over the terms that apply to them."
+        },
+        {
+          "heading": "Reporting content",
+          "body": "Any request concerning content published on this site may be sent to the contact address above. It will be handled as promptly as possible."
+        }
+      ],
+      "labelDirecteur": "Publication director",
+      "labelCapital": "Share capital",
+      "labelTva": "VAT"
     },
     "termsOfSale": {
-      "title": "Terms of Sale",
-      "body": "Content coming soon."
+      "title": "Terms of sale",
+      "body": "Content coming soon.",
+      "eyebrow": "Terms",
+      "lede": "This site does not sell directly. Here is what that means for you.",
+      "sections": [
+        {
+          "heading": "No sale is concluded on this site",
+          "body": "This site is a showcase. It offers no basket, no payment and no customer account. Your visit therefore creates no contract of sale between you and the publishing house."
+        },
+        {
+          "heading": "The sale is concluded by Amazon",
+          "body": "Every purchase button takes you to Amazon. There, the order, payment, invoicing, delivery, right of withdrawal and after-sales service are governed by Amazon's terms, Amazon being your seller. The publishing house takes part in none of these steps."
+        },
+        {
+          "heading": "The price shown",
+          "body": "The price shown on this site is the public price set by the publisher. In France, the law of 10 August 1981 reserves the setting of a book's price to its publisher and caps at 5% the discount a retailer may grant. The price seen at a retailer may therefore differ slightly, within that limit."
+        },
+        {
+          "heading": "If direct sale is ever opened",
+          "body": "On the day a purchase can be completed on this site, full terms of sale will be published here before it goes live, and shown to you before any payment."
+        }
+      ]
     },
     "privacyPolicy": {
-      "title": "Privacy Policy",
-      "body": "Content coming soon."
+      "title": "Privacy",
+      "body": "Content coming soon.",
+      "eyebrow": "Your data",
+      "lede": "What this site collects, why, for how long, and how to take back control.",
+      "responsable": "Data controller",
+      "sections": [
+        {
+          "heading": "The principle",
+          "body": "This site collects the bare minimum. It uses no analytics tool, no advertising tracker, and loads no script from any other domain. The only personal data collected is the email address you choose to leave in order to hear about new releases."
+        },
+        {
+          "heading": "Signing up for release announcements",
+          "body": "The form collects your email address and your explicit consent, through a box that is never pre-ticked. You may also indicate which book you are waiting for. No other information is requested, and no field is inferred or filled in without your knowledge."
+        },
+        {
+          "heading": "Double opt-in",
+          "body": "Your sign-up is not recorded straight away. You receive an email containing a link valid for forty-eight hours: until you follow it, your address is added to no list. That link is cryptographically signed and carries the information itself, so nothing is stored on our servers between your request and your confirmation."
+        },
+        {
+          "heading": "What this processing rests on",
+          "body": "Your consent, freely given, which you may withdraw at any time, without having to justify yourself and with no consequence."
+        },
+        {
+          "heading": "Who receives your data",
+          "body": "Your address is entrusted to the provider that delivers our emails, {fournisseur}, acting as a processor and for that sole purpose. It is neither sold, nor rented, nor passed on to anyone else."
+        },
+        {
+          "heading": "How long it is kept",
+          "body": "Your address is kept for as long as you remain subscribed, then erased within three years of your last contact with us, in line with the French data protection authority's recommendation on marketing."
+        },
+        {
+          "heading": "Your rights",
+          "body": "You have the right of access, rectification, erasure, restriction, objection and portability. You may unsubscribe at any time using the link in every email, or write to the contact address above. You may also lodge a complaint with a supervisory authority."
+        },
+        {
+          "heading": "Cookies",
+          "body": "This site sets no analytics or advertising cookie. Only one cookie exists: it remembers which Amazon store you choose on a book page, so that you are not asked again on every visit. It contains only a country code, no identifier, and serves only the service you asked for yourself. You may delete it from your browser at any time."
+        },
+        {
+          "heading": "What happens when you buy",
+          "body": "Purchases are completed on Amazon. The moment you leave this site, Amazon's privacy policy and terms apply, and we receive no information about your order."
+        }
+      ],
+      "fournisseurNonPrecise": "our email delivery provider"
     },
     "shippingReturns": {
-      "title": "Shipping & Returns",
-      "body": "Content coming soon."
+      "title": "Shipping and returns",
+      "body": "Content coming soon.",
+      "eyebrow": "Orders",
+      "lede": "They do not depend on this site.",
+      "sections": [
+        {
+          "heading": "Who ships the books",
+          "body": "This site ships nothing. Orders placed through the purchase buttons are handled by Amazon, which takes care of preparation, shipping and tracking."
+        },
+        {
+          "heading": "Times and shipping costs",
+          "body": "The stated times, shipping costs and delivery methods are Amazon's. They are shown on the book's page at the time of ordering."
+        },
+        {
+          "heading": "Returns, exchanges and refunds",
+          "body": "These are handled by Amazon, under its terms, including the exercise of the right of withdrawal. The publishing house has access neither to your order nor to your file."
+        },
+        {
+          "heading": "A damaged or incorrect book",
+          "body": "Report it first to Amazon, which is your seller and the only party able to act on your order. You may also write to us: it does not replace that step, but we want to know."
+        }
+      ]
     }
   },
   "footer": {
