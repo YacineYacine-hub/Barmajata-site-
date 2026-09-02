@@ -17,10 +17,18 @@ export function BlocAbonnement() {
   const tNav = useTranslations("nav");
 
   return (
-    <section className="border-t border-nuit-900/10 bg-lin-50">
+    /*
+     * `aria-labelledby` n'est pas décoratif : une <section> ne devient un
+     * repère (landmark) qu'à condition d'avoir un nom accessible. Sans lui,
+     * ce bloc était le seul contenu de la page hors de tout repère — relevé
+     * par l'audit axe du 2026-09-02, sur toutes les pages.
+     */
+    <section aria-labelledby="abonnement-titre" className="border-t border-nuit-900/10 bg-lin-50">
       <div className="mx-auto flex max-w-4xl flex-col gap-8 ps-6 pe-6 py-16 sm:flex-row sm:items-end sm:justify-between">
         <div className="text-start">
-          <h2 className="font-serif text-sous-titre text-nuit-900">{t("title")}</h2>
+          <h2 id="abonnement-titre" className="font-serif text-sous-titre text-nuit-900">
+            {t("title")}
+          </h2>
           <p className="mt-3 max-w-sm text-roche-700">{t("lede")}</p>
         </div>
 

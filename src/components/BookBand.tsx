@@ -461,11 +461,32 @@ export function BookBand({
     );
   }
 
+  /*
+   * PAS de `role="listbox"` / `role="option"` — motif retiré au terme du
+   * premier audit outillé (axe, 2026-09-02), qui relevait ici quatre
+   * violations dont deux critiques.
+   *
+   * La raison est de fond, pas de forme : un listbox est un widget de
+   * SÉLECTION, alors que cette bande est une liste de LIENS. Rien n'y est
+   * sélectionné — on clique, on navigue. Et l'ARIA interdit tout élément
+   * interactif à l'intérieur d'une option, ce qui rendait le motif et les
+   * `<Link>` mutuellement exclusifs. Les liens étant une contrainte dure
+   * (indexation, fonctionnement sans JavaScript), ce sont les rôles qui
+   * partent.
+   *
+   * Piège au passage : le `<ul className="contents">` était censé rendre
+   * la liste transparente au listbox. `display: contents` ne suffit pas —
+   * les options n'en étaient pas moins des petites-filles du listbox, d'où
+   * `aria-required-children` et `aria-required-parent`.
+   *
+   * Ce qui reste : une liste native, ses liens, et `aria-current` sur
+   * l'élément centré — la seule information que `aria-selected` portait
+   * réellement. Le conteneur garde son `tabIndex` et ses gestes.
+   */
   return (
     <div
-      role="listbox"
+      role="group"
       aria-label={t("label")}
-      aria-orientation="horizontal"
       tabIndex={0}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
@@ -483,8 +504,6 @@ export function BookBand({
             ref={(el) => {
               itemRefs.current[index] = el;
             }}
-            role="option"
-            aria-selected={index === centerIndex}
             className="absolute left-1/2 top-1/2 [transform-style:preserve-3d] will-change-transform"
             style={{
               width: ITEM_WIDTH_PX,
@@ -494,6 +513,7 @@ export function BookBand({
           >
             <Link
               href={lienDe(item)}
+              aria-current={index === centerIndex ? "true" : undefined}
               tabIndex={index === centerIndex ? 0 : -1}
               onClick={(event) => handleItemClick(event, index)}
               className="block"

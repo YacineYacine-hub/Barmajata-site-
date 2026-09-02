@@ -293,7 +293,17 @@ considération technique.
   `preventDefault` si la verticale domine — ne bloque jamais le scroll de
   la page), flèches clavier (sens inversé en RTL), calage amorti en fin de
   geste (`settleTo`, coupé net par `prefers-reduced-motion`).
-  `role="listbox"` / `role="option"` / `aria-selected`. Clic sur la
+  **Sémantique : `role="group"` + `aria-label` sur le conteneur, liste
+  native à l'intérieur, `aria-current="true"` sur le lien centré.** Le
+  motif `listbox`/`option`/`aria-selected` a été retiré au premier audit
+  outillé (axe, 2026-09-02) qui y relevait quatre violations dont deux
+  critiques — voir le commentaire de `BookBand.tsx` : un listbox est un
+  widget de sélection, la bande est une liste de liens, et l'ARIA interdit
+  tout élément interactif dans une option. Ne pas rétablir ces rôles.
+  **Défaut connu, non corrigé** : au clavier, le focus avance à chaque
+  flèche mais la position de la bande ne suit pas toujours — les deux
+  divergent d'un cran. Antérieur au retrait des rôles (la logique de
+  position n'a pas été touchée), à traiter à part. Clic sur la
   couverture centrale : navigation normale (comportement par défaut du
   `<Link>`). Clic sur une couverture latérale : `event.preventDefault()`
   + recentrage vers cette couverture (`settleTo`, plus court chemin
@@ -461,6 +471,15 @@ considération technique.
   transitoire n'est pas l'état évalué par un contrôle de contraste
   automatisé, et `or-500` reste pleinement conforme sur fond `nuit-900`
   (~5,8:1, déjà l'usage établi du Header/Footer/`SectionBanner`).
+- **Premier audit outillé le 2026-09-02** (axe-core 4.10.2, dans un vrai
+  navigateur, sur `/`, `/livres`, une fiche livre, `/club` et `/ar`) :
+  **zéro violation** après correction. Ce qu'il a trouvé et qui est
+  corrigé — les rôles ARIA de `BookBand` (voir plus haut), la ligne de
+  navigation du header devenue un `<nav aria-label>`, et le bloc
+  d'abonnement devenu un repère par `aria-labelledby`. Ce qu'il a
+  confirmé : aucun défaut de contraste nulle part (les calculs manuels du
+  Lot F tiennent), `BookSolid` propre, le formulaire du club correctement
+  étiqueté, et le logo non miroité en RTL.
 - Focus visible : l'anneau de focus n'est jamais supprimé pour un
   utilisateur au clavier. **Nuance introduite au Lot H10** : une seule
   règle globale, `:focus:not(:focus-visible) { outline: none }`, masque

@@ -153,7 +153,10 @@ export function Header() {
        *
        * Sur l'accueil, elle se retrouve en face du grand logo du hero.
        */}
-      <div className="mx-auto flex max-w-5xl items-center justify-end gap-5 ps-6 pe-6 pt-9">
+      <nav
+        aria-label={t("primary")}
+        className="mx-auto flex max-w-5xl items-center justify-end gap-5 ps-6 pe-6 pt-9"
+      >
         <Link href="/books" className="text-sm font-medium text-roche-700 hover:text-nuit-900">
           {t("books")}
         </Link>
@@ -192,7 +195,7 @@ export function Header() {
             <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />
           </svg>
         </button>
-      </div>
+      </nav>
 
       {isOpen && (
         <div
