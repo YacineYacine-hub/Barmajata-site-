@@ -1,6 +1,12 @@
 # Journal des lots — BARMAJATA
 
-Récit chronologique de la refonte visuelle (lots H0 à H43, 23–24 août 2026).
+Récit chronologique de la refonte visuelle, du lot H0 au lot H43
+(23–24 août 2026), puis des lots suivants.
+
+Le récit s'était arrêté au lot H12 alors que le code était au H43 : trente
+lots sans trace. Ils ont été rattrapés le 2026-09-02, à partir des messages
+de commit — c'est-à-dire de ce qui avait été écrit sur le moment, non
+reconstitué après coup.
 
 **Ce fichier n'est PAS chargé automatiquement** : contrairement à
 `CLAUDE.md`, il n'entre pas dans le contexte de chaque séance. Il est là
@@ -558,3 +564,256 @@ manque les mentions d'éditeur (SIRET, directeur de la publication,
 hébergeur) ainsi qu'une politique cookies — toutes choses qui exigent des
 informations d'entreprise réelles.
 
+
+---
+
+## Lot H13 — le livre en volume était coupé, et trois ajouts
+
+**Le défaut.** Le cadre du livre en volume valait 460×560, taillé pour un
+livre debout. Depuis que la rotation avait été libérée sur deux axes au
+Lot H10, il pouvait basculer dans des positions où sa projection débordait
+en largeur : il était rogné.
+
+La correction ne s'est pas faite à l'œil. Une rotation conserve la
+distance au centre : le sommet le plus éloigné reste à la demi-diagonale
+du pavé, quelle que soit l'orientation, et au pire il est aussi le plus
+proche de la caméra. D'où un cadre **carré** de 560 — carré parce qu'une
+rotation ne privilégie aucun axe.
+
+Trois ajouts au même lot : les icônes sociales en SVG inline (aucune police
+d'icônes, aucun paquet), la FAQ dans les trois langues, et le bloc
+d'abonnement au-dessus du pied de page. Ce dernier renvoie vers `/club`
+plutôt que de porter son propre formulaire : un second formulaire aurait
+dupliqué la logique de consentement RGPD à deux endroits.
+
+## Lot H14 — les avis partent chez Amazon
+
+Demande : recueillir les recommandations des lecteurs, avec une base
+d'avis maison.
+
+**Écartée pour risque juridique**, et c'est l'un des refus les mieux
+motivés du projet. L'article L111-7-2 du Code de la consommation s'applique
+à toute personne qui collecte, modère ou diffuse des avis en ligne, même à
+titre accessoire : information transparente, mention du contrôle effectué,
+date de chaque avis, motif de rejet communiqué à son auteur. Jusqu'à
+375 000 € pour une personne morale, et la DGCCRF contrôle activement.
+
+Le lecteur dépose donc son avis **chez Amazon**, où il a acheté : Amazon
+vérifie l'achat et porte ces obligations. Zéro base, zéro exposition, et
+l'avis atterrit là où il fait vendre.
+
+Le QR code, lui, existait déjà. Il gagne un champ `type` optionnel, donc
+rétrocompatible : `"bonus"` garde le comportement d'origine, `"livre"`
+mène à la fiche et donc au bloc d'avis.
+
+## Lot H15 — des coquilles visibles seulement en démonstration
+
+Trois états pour les icônes sociales, dont un qui n'existe pas :
+
+- liste remplie → de vrais liens ;
+- liste vide **et** contenu de démonstration → des coquilles atténuées,
+  rendues en `span` et non en `<a>` : rien à cliquer, donc aucun risque
+  d'envoyer un lecteur au mauvais compte ;
+- liste vide en production → **rien du tout**.
+
+Ce dernier point a été vérifié par un build de production réel dont le HTML
+a été inspecté, pas supposé.
+
+## Lots H16 et H17 — la bande se scinde, et un essai refusé
+
+Le bandeau portait tout. Il est allégé : il ne garde que le logo, les
+réseaux et les langues. « Livres » et le menu descendent sur une **ligne
+transparente**, rendue sur toutes les pages et non seulement l'accueil —
+sans elle, le catalogue et les pages professionnelles perdaient tout accès
+au menu.
+
+Le même lot déplaçait le symbole du hero à gauche du texte, en grand.
+**L'essai a été refusé au lot suivant** : le symbole revient au-dessus du
+texte, à sa taille d'origine. C'est la première trace d'un aller-retour qui
+va durer vingt lots.
+
+## Lots H18 à H36 — l'assemblage du symbole et du mot
+
+**Le plus long enchaînement du projet, et le plus instructif.** L'objectif
+tient en une phrase : que la courbe du symbole coiffe le M et le A de
+BARMAJATA, et que son point doré descende entre les deux lettres. Ce n'est
+pas un filigrane centré, c'est un assemblage typographique.
+
+### Ce qui a été essayé, et pourquoi chaque tentative a échoué
+
+| Lot | Méthode | Pourquoi elle tombe |
+|---|---|---|
+| H20 | Chasses de la police additionnées à la main : la jointure tomberait à 48,5 % de la largeur du mot | Une estimation ne tombe pas juste. Et à 4em le symbole dépassait la hauteur du hero, cercle rogné sur tout écran d'ordinateur |
+| H22, H24 | Le mot coupé en « BARM » et « AJATA », séparés par une ancre — c'est le navigateur qui place la jointure, avec les vraies chasses | L'ancre était un `inline-block`, qui **crée un point de coupure de ligne** : le mot se césurait à cet endroit |
+| H26, H28 | Fragments `inline` cette fois, jointure amenée au centre par une approche compensatoire | L'approche déformait le lettrage pour rattraper une erreur de calcul, et reposait elle-même sur des chasses estimées |
+| H29 | Un `span` inline vide comme ancre de positionnement | **Un span inline vide ne forme pas de bloc conteneur** : le symbole se rattachait à un ancêtre plus large, sortait du cadre et disparaissait |
+
+### Les trois écueils qui s'excluent mutuellement
+
+C'est le legs le plus utile de la série, et il est consigné dans `Hero.tsx`
+parce qu'on y retombe **en fuyant l'un des autres** :
+
+1. un `span` inline vide ne forme pas de bloc conteneur — le symbole
+   s'échappe du cadre et disparaît ;
+2. un `inline-block` crée un point de coupure de ligne — le mot se césure ;
+3. un conteneur plus large que le mot — le centre visé n'est pas le sien.
+
+La sortie a été trouvée au Lot H29 : le titre porte `w-fit mx-auto`, donc
+sa largeur est exactement celle du mot et il est centré. Un bloc forme
+toujours un bloc conteneur — c'est la propriété qui manquait.
+
+### L'aveu du Lot H30 : cesser de prétendre calculer
+
+Toutes les estimations de chasses sont retirées, remplacées par **un seul
+réglage**, `--decalage-mot`, en em donc proportionnel à la taille du titre.
+
+Le message du commit le dit sans détour : *« plus honnête que de prétendre
+calculer ce qui ne se calculait pas, et un seul endroit à corriger »*. La
+valeur a ensuite été réglée à l'œil — d'abord −0,08em, trop à gauche, puis
+bissectée à −0,03em — au moyen d'un filet rouge temporaire posé sur l'axe
+de la fenêtre, retiré une fois le calage validé.
+
+### La taille du symbole, et sa solidarité avec le rabaissement
+
+Un plafond de 2,4em est établi au Lot H21, **par le calcul et non à l'œil** :
+le rapport hauteur du hero / taille du mot vaut 2,71 à 1440px, 2,47 à 1024
+et 2,46 à 768. Au-delà, le cercle est rogné.
+
+Deux valeurs restent solidaires, et c'est contre-intuitif : agrandir le
+symbole sans le rabaisser davantage fait **remonter** son point au-dessus
+des lettres au lieu de le laisser entre elles. À 2,4em, un rabaissement de
+10 % le placerait à 0,68em, au-dessus des capitales qui montent à 0,66em ;
+à 16 %, il reste à 0,54em et la courbe culmine à 0,91em.
+
+Le plafond a fini par tomber au Lot H32, quand le recadrage du carrousel a
+été retiré : il ne servait qu'à masquer les diapositives voisines pendant
+le glissement, et avec une seule diapositive il ne masquait rien — il
+empêchait seulement le symbole de déborder vers le haut. **Réserve
+consignée** : le jour où le carrousel portera plusieurs diapositives, le
+recadrage reviendra et le symbole sera de nouveau rogné.
+
+### Lots H35 et H36 — tout passe en em
+
+L'utilisateur remarque que les proportions changent selon la fenêtre.
+Diagnostic : **trois lois de croissance incompatibles** cohabitaient. Le
+mot suivait un `clamp` qui le fige hors d'une plage ; la hauteur du hero
+suivait la largeur de la fenêtre sans plafond ; le bandeau et les marges
+étaient en pixels fixes.
+
+Mesure de l'écart entre le cercle et le bandeau : 212px à 390px de large,
+22 à 768, 9 à 1024, **moins 3 à 1280** — ils se touchaient — et 100 à 1920.
+
+Correction : la hauteur du hero devient une hauteur minimale en em, donc
+relative au mot. Puis le surtitre et le sous-titre, encore en tailles
+fixes, y passent aussi — rapporté au mot, le surtitre valait 0,208em à
+390px et 0,065em à 1440, un rapport de 1 à 3,2.
+
+**Une seule exception assumée** : le surtitre garde un plancher en rem. Une
+taille purement proportionnelle le ferait tomber à 4px sur un téléphone.
+La proportion cède alors à la lisibilité — c'est une contrainte du texte,
+pas un oubli.
+
+## Lot H37 — la recherche, et le prix payé
+
+Recherche dans le catalogue, affichée **uniquement** sur le catalogue :
+ailleurs elle n'aurait rien à chercher. La détection passe par le chemin
+*interne* de next-intl, jamais sa traduction, donc elle tient dans les
+trois langues.
+
+Le formulaire n'a **pas d'`action`** : il se soumet à l'URL courante, donc
+au catalogue dans sa langue, sans reconstruire de chemin traduit. En
+méthode GET, la recherche vit dans l'URL — partageable, et fonctionnelle
+sans JavaScript.
+
+Deux détails qui comptent sur un catalogue francophone : les diacritiques
+sont retirées avant comparaison, sans quoi « mere » ne trouverait pas
+« mère » ; et l'abaissement de casse est fait selon la locale, à cause du
+turc où le I majuscule ne s'abaisse pas en i.
+
+**Contrepartie assumée** : lire les paramètres d'URL rend le catalogue
+dynamique, il n'est plus prégénéré. Les fiches livre, elles, restent
+statiques.
+
+## Lot H38 — l'accueil cesse d'être un présentoir
+
+Changement de concept, pas de réglage. **La bande ne présente plus des
+livres mais des catégories.** Chaque élément mène au catalogue filtré, qui
+joue le rôle de page de catégorie.
+
+Trois genres sont ajoutés — enfance, développement personnel, poésie et
+pensées — portant la bande à neuf entrées avec « Tout » et « Nouveautés ».
+La même mécanique de défilement sert donc de présentoir sur le catalogue et
+de menu sur l'accueil, sans être dupliquée.
+
+Les visuels de catégorie ne contiennent **aucun texte** : gravé dans le
+SVG, un libellé serait resté figé en français.
+
+Deux défauts corrigés au passage, dont un grave : le filtre par catégorie
+n'agissait que sur la bande, côté navigateur, et la grille en dessous
+restait complète — intenable une fois les catégories devenues la navigation
+principale. Et les liens de la bande n'avaient **aucun nom accessible**.
+
+**Piège** : la constante du filtre « Nouveautés » vivait dans un module
+client. Next.js y substitue une référence client, et la constante importée
+depuis un composant serveur ne valait pas ce qu'on croyait — le filtre
+passait sans rien filtrer.
+
+## Lots H39 à H42 — la géométrie de la bande
+
+Quatre lots pour un problème d'espacement, résolu par la mesure à chaque
+fois.
+
+**H39** : agrandi au centre, un élément occupe 107px de demi-largeur tandis
+que son voisin en occupe encore 95 — soit 202px à loger dans 190
+d'espacement, d'où un chevauchement de 12px. Seule la première paire posait
+problème : au-delà, la réduction d'échelle creuse l'écart toute seule.
+
+**H40** : avec un espacement uniforme, une seule valeur commandait à la fois
+le dégagement du centre et le resserrement des côtés. 190px chevauchait le
+centre, 224 écartait tout, 206 dégageait le centre mais aérait trop les
+côtés. La position devient donc **progressive** — un exposant de 0,85 sur
+la distance : le premier écart reste à 206px, les suivants tombent à 165,
+153 et 145.
+
+**H41 a été annulé.** Il réduisait le chevauchement et corrigeait la
+transparence des couvertures ; l'annulation ne porte pas de motif écrit.
+
+**H42** : à droite du centre, un élément lointain passait **devant** un plus
+proche. Cause : les éléments sont bien reculés en profondeur, mais chacun
+porte une opacité inférieure à 1, ce qui l'aplatit en un plan — le tri en
+profondeur cesse alors de s'appliquer de façon fiable et le navigateur
+retombe sur l'ordre du document, lequel n'a aucun rapport avec la position
+courante puisque la bande boucle. Un ordre d'empilement explicite,
+décroissant avec la distance, rétablit la règle des deux côtés à la fois.
+
+## Lot H43 — les cartes composées comme des couvertures
+
+Les cartes du menu reprennent la composition d'un livre : le libellé en
+gros **au centre**, là où un livre porte son titre, et « Consulter » en bas,
+là où il porte son auteur. Le symbole s'intercale dans l'axe — il a ensuite
+été remonté en tête de carte, où il la coiffe.
+
+Le symbole vit dans le fond SVG, parce que c'est du dessin et que ça ne se
+traduit pas ; le libellé et « Consulter » restent en HTML, parce que gravés
+dans le SVG ils seraient figés en français.
+
+Et « Contenu à venir. » disparaît du hero au profit d'une vraie baseline :
+**« L'esprit du livre »**. Ce n'est plus un texte d'attente, c'est la
+première phrase réelle du site.
+
+## Ce que cette série enseigne
+
+Trois annulations en trente lots — H22, H33, H41 — et une bonne dizaine de
+réglages qui reviennent sur le lot précédent. Deux causes récurrentes :
+
+1. **Le calcul substitué à la mesure.** Les chasses estimées du Lot H20 ont
+   coûté huit lots. La sortie n'a pas été un meilleur calcul mais son
+   abandon, au profit d'un réglage unique assumé comme empirique.
+2. **Les valeurs solidaires non identifiées.** Taille du symbole et
+   rabaissement, dégagement du centre et resserrement des côtés,
+   espacement et courbe d'opacité : à chaque fois, un réglage seul ne
+   pouvait pas donner le résultat, et il a fallu un lot pour s'en
+   apercevoir.
+
+Depuis, chaque valeur de ce type porte dans le code la mention de celle
+dont elle dépend, avec les mesures qui la justifient.
