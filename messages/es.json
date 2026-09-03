@@ -460,7 +460,7 @@
       "sections": [
         {
           "heading": "El principio",
-          "body": "Este sitio recoge lo estrictamente mínimo. No utiliza ninguna herramienta de medición de audiencia, ningún rastreador publicitario, y no carga ningún script procedente de otro dominio. El único dato personal recogido es la dirección de correo electrónico que usted deja, si lo desea, para estar al tanto de las publicaciones."
+          "body": "Este sitio recoge lo estrictamente mínimo. El único dato personal recogido es la dirección de correo electrónico que usted deja, si lo desea, para estar al tanto de las publicaciones. No se solicita ninguna otra información."
         },
         {
           "heading": "La suscripción a los avisos de publicación",
@@ -488,7 +488,7 @@
         },
         {
           "heading": "Cookies",
-          "body": "Este sitio no deposita ninguna cookie de medición ni de publicidad. Solo existe una: recuerda la tienda de Amazon que usted elige en una ficha de libro, para no volver a preguntárselo en cada visita. Contiene únicamente un código de país, ningún identificador, y sirve solo al servicio que usted mismo ha solicitado. Puede eliminarla en cualquier momento desde su navegador."
+          "body": "Se utiliza una cookie: recuerda la tienda de Amazon que usted elige en una ficha de libro, para no volver a preguntárselo en cada visita. Contiene únicamente un código de país, ningún identificador, y sirve solo al servicio que usted mismo ha solicitado. Puede eliminarla en cualquier momento desde su navegador."
         },
         {
           "heading": "Qué ocurre cuando usted compra",

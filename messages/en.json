@@ -460,7 +460,7 @@
       "sections": [
         {
           "heading": "The principle",
-          "body": "This site collects the bare minimum. It uses no analytics tool, no advertising tracker, and loads no script from any other domain. The only personal data collected is the email address you choose to leave in order to hear about new releases."
+          "body": "This site collects the bare minimum. The only personal data collected is the email address you choose to leave in order to hear about new releases. No other information is requested."
         },
         {
           "heading": "Signing up for release announcements",
@@ -488,7 +488,7 @@
         },
         {
           "heading": "Cookies",
-          "body": "This site sets no analytics or advertising cookie. Only one cookie exists: it remembers which Amazon store you choose on a book page, so that you are not asked again on every visit. It contains only a country code, no identifier, and serves only the service you asked for yourself. You may delete it from your browser at any time."
+          "body": "One cookie is used: it remembers which Amazon store you choose on a book page, so that you are not asked again on every visit. It contains only a country code, no identifier, and serves only the service you asked for yourself. You may delete it from your browser at any time."
         },
         {
           "heading": "What happens when you buy",

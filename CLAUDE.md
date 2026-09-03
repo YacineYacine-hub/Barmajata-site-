@@ -1168,6 +1168,39 @@ en OKLab (`color-mix(in oklab, …)`, utilisé par `.reglure`).
 `nuit-950` s'ajoute pour la devanture « Encre » : un cran sous `nuit-900`,
 afin que `nuit-900` puisse servir de surface posée dessus.
 
+## Mesure d'audience : rien n'est décidé, et rien n'enferme
+
+**Décision D5, toujours ouverte.** Le site n'a aucun outil de mesure
+aujourd'hui.
+
+La politique de confidentialité affirmait auparavant qu'il n'en aurait
+« aucun ». **Ces promesses ont été retirées le 2026-09-03**, à la demande
+de l'utilisateur et à juste titre : un document légal ne doit pas enfermer
+une décision commerciale. Elle décrit désormais ce qui existe — une seule
+donnée, un seul cookie de préférence — sans rien promettre pour la suite.
+
+### Les deux faits qui restent vrais, quel que soit l'outil choisi
+
+1. **Le bandeau de consentement ne vient pas de ce texte, il vient de la
+   loi.** Google Analytics et tout outil déposant des traceurs exigent un
+   consentement préalable, avec un refus aussi simple que l'acceptation.
+   Retirer une phrase d'une politique de confidentialité ne retire pas
+   cette obligation. Seule une mesure **sans cookie** peut en être
+   exemptée, sous conditions.
+2. **La CSP bloque les scripts externes** (voir `next.config.ts`). Un
+   script d'analyse tiers ne se chargera pas tant que son origine n'est
+   pas ajoutée explicitement. C'est voulu : une telle décision doit passer
+   par une modification consciente du fichier, jamais par un script qui
+   s'installe sans qu'on le remarque.
+
+Et dans tous les cas, **la politique de confidentialité devra être mise à
+jour** : liste des cookies déposés, durée, destinataire, base légale. Une
+politique qui décrit faussement le site est un risque, quel que soit
+l'outil.
+
+`/sortie/amazon` (ci-dessous) mesure les clics d'achat **sans rien de tout
+cela**, et reste utile quel que soit l'outil retenu ensuite.
+
 ## Mesure des clics d'achat : `/sortie/amazon`
 
 Le bouton d'achat ne pointe pas directement chez Amazon : il passe par

@@ -29,6 +29,19 @@
  * doivent nommer l'éditrice réelle : l'autrice, personne physique, à qui
  * appartiennent les ISBN et les droits.
  *
+ * ⚠ **À METTRE À JOUR LE JOUR OÙ UN OUTIL DE MESURE EST AJOUTÉ.**
+ *
+ * La politique de confidentialité décrivait autrefois le site comme
+ * n'utilisant « aucun outil de mesure d'audience, aucun traceur
+ * publicitaire ». Ces promesses ont été retirées le 2026-09-03 : un
+ * document légal ne doit pas enfermer une décision commerciale à venir.
+ *
+ * Elle décrit désormais ce qui existe, sans rien promettre pour la suite.
+ * Mais **elle doit rester exacte** : le jour où une mesure d'audience est
+ * posée, il faut y ajouter la liste des cookies déposés, leur durée, leur
+ * destinataire et la base légale. Une politique qui décrit faussement le
+ * site est un risque, indépendamment de l'outil choisi.
+ *
  * **QUAND REMPLIR CE FICHIER : à la mise en ligne, pas avant.** C'est une
  * décision explicite (2026-09-03) : on prépare l'outil, on complète les
  * informations obligatoires au moment de la publication. Ne pas bloquer
