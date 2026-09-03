@@ -11,12 +11,21 @@
  * plutôt qu'un document à trous — voir `identiteLegaleComplete()`. Le jour
  * où ce fichier est rempli, les quatre pages s'écrivent d'elles-mêmes.
  *
- * Les champs d'immatriculation sont **optionnels et volontairement
- * neutres**, parce que la structure retenue n'est pas française : c'est
- * une **LLC américaine, non encore créée** au 2026-09-02. On y mettra donc
- * l'État de constitution et le numéro de dossier, là où une société
- * française porterait un SIREN. Ce qui compte n'est pas la forme du
- * numéro, c'est que le lecteur puisse identifier et joindre l'éditeur.
+ * **L'éditeur est aujourd'hui une personne physique**, pas une société
+ * (précisé le 2026-09-03) : les ouvrages sont publiés à titre personnel,
+ * avec un préfixe ISBN AFNIL obtenu personnellement, et seront concédés à
+ * BARMAJATA plus tard. Une LLC américaine a été envisagée puis ajournée.
+ *
+ * D'où des champs d'immatriculation **optionnels et volontairement
+ * neutres** : `raisonSociale` accueille aussi bien un nom de société qu'un
+ * nom de personne, et `formeJuridique`, `capital`, `juridiction` et `tva`
+ * restent vides tant qu'il n'y a pas de société. Le jour d'une
+ * constitution à l'étranger, `juridiction` portera l'État là où une
+ * société française porterait un SIREN. Ce qui compte n'est pas la forme
+ * du numéro, c'est que le lecteur puisse identifier et joindre l'éditeur.
+ *
+ * `BARMAJATA` reste le nom sous lequel le site se présente ; les mentions
+ * légales, elles, doivent nommer l'éditeur réel.
  */
 export type IdentiteLegale = {
   /** Dénomination sociale complète, telle qu'immatriculée. */

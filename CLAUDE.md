@@ -665,6 +665,29 @@ Le `rm -rf .next` n'est pas superflu : sans lui, la génération
 incrémentale conserve des pages du build précédent et le mélange persiste.
 Et le drapeau est nécessaire **au build ET au démarrage**.
 
+## Remises : un plafond par marché, jamais une valeur libre
+
+**Aucune remise sur un livre ne doit jamais être codée sans plafond.** Ce
+n'est pas un réglage commercial, c'est une contrainte légale, et elle
+diffère selon le marché :
+
+- **France** — loi Lang du 10 août 1981 : l'éditeur fixe le prix, et
+  aucun détaillant ne peut accorder plus de **5 %** de rabais. La gratuité
+  des frais de port sur un livre neuf est également interdite.
+- **Allemagne** — *Buchpreisbindung* : **aucune remise**, zéro. Plus
+  strict que la France, et facile à oublier puisqu'on y vend désormais
+  (Amazon.de est dans la table des marketplaces depuis le Lot H47).
+- Un **carnet vierge n'est pas un livre** et n'est soumis à rien de tout
+  cela — d'où l'importance de ne pas traiter tout le catalogue de la même
+  façon.
+
+État au 2026-09-03 : **les codes promo sont abandonnés**, non pour raison
+juridique mais parce que les marges ne les portent pas. Ils restent
+envisagés plus tard sur des articles ciblés. Rien n'est construit : une
+remise a besoin d'un tunnel de paiement, qui n'existe pas. Quand il
+existera, la logique doit naître **plafonnée par marché** plutôt qu'être
+corrigée après coup.
+
 ## Avis de lecteurs — recueillis chez Amazon, jamais ici
 
 Demande : « créer une ligne pour que les clients recommandent le livre,

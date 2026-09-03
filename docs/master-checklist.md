@@ -40,9 +40,29 @@ tranchées, avancer c'est deviner.
 | D3 | **Vente directe : oui, et à partir de quand ?** | Stripe, CGV opposables, rétractation, médiateur, SAV, tests, environnement de recette. Le plus gros bloc du programme. |
 | D4 | **Où atterrit l'exploitation BARMAJATA ?** | Bot Telegram, PDF, Lulu, logs. Trois dossiers annoncés, quatre besoins. |
 | D5 | **Mesure d'audience : avec ou sans traceurs ?** | Sans cookie, pas de bandeau. Avec les pixels Meta/TikTok, bandeau obligatoire et conforme. |
-| D6 | **Quelles langues ?** | Le site parle fr/en/ar. Les ISBN prévoient FR/EN/DE/ES/AR. Deux langues n'existent nulle part. |
+| ~~D6~~ | **Quelles langues ? → FR, EN, ES** *(tranché le 2026-09-02)* | L'arabe est retiré, l'espagnol le remplace. **L'allemand est écarté comme langue mais pas comme marché** : vendre en Allemagne demandait Amazon.de dans la table des marketplaces, pas une traduction. |
 | D7 | **Un bot, ou trois ?** | Telegram, ManyChat, assistant du site. Trois systèmes, trois tons, trois endroits où une réponse fausse peut sortir. |
 | D8 | **Le domaine définitif est-il arrêté ?** | Il part à l'encre dans chaque exemplaire. Après la première impression, il n'est plus changeable. |
+
+### Qui est l'éditeur, aujourd'hui
+
+**Une personne physique, pas une société** *(précisé le 2026-09-03)*. La
+LLC américaine est ajournée. Les ouvrages sont publiés à titre personnel,
+avec un **préfixe ISBN AFNIL déjà obtenu à titre personnel**, et seront
+concédés à BARMAJATA le moment venu.
+
+Trois conséquences, et la première est une bonne nouvelle :
+
+- **Les pages légales ne sont plus bloquées.** Elles attendaient une
+  société ; il suffit d'une identité d'éditeur, et elle existe. C'est le
+  premier bloquant de toute la liste qui tombe.
+- **L'alerte ISBN est levée pour l'instant** : l'AFNIL attribue aux
+  éditeurs établis en France, ce qui est le cas. Elle reviendra le jour de
+  la cession à une structure américaine — un préfixe AFNIL ne se transfère
+  pas à un éditeur étranger.
+- **Le dépôt légal BnF s'applique bien**, puisque l'éditeur est français.
+  La question du dépôt de l'imprimeur reste ouverte si l'impression est
+  faite à l'étranger.
 
 ### Ce que D1 ferme, et ce qu'elle ouvre
 
@@ -50,6 +70,18 @@ tranchées, avancer c'est deviner.
 
 - Aucun code promo au-delà de **5 %**. Le « OFFRE10 » de la Phase 3 est
   mort, ainsi que tout code de relance de panier au-delà du plafond.
+- **Décision du 2026-09-03 : les codes promo sont abandonnés**, non pour
+  raison juridique mais parce que les marges ne les portent pas. Ils
+  restent envisagés, plus tard, sur des articles ciblés. La capacité doit
+  donc exister sans être utilisée — **mais elle ne peut pas être
+  construite avant le tunnel de paiement** : une remise a besoin de
+  quelque chose à remiser. Ce qui est fait dès maintenant, c'est
+  d'inscrire la contrainte pour que la logique naisse plafonnée plutôt que
+  d'être corrigée après coup.
+- ⚠ **L'Allemagne est plus stricte que la France.** La
+  *Buchpreisbindung* n'autorise **aucune remise** sur un livre neuf — zéro,
+  pas cinq pour cent. Toute mécanique de réduction devra donc distinguer
+  le marché, pas seulement le produit.
 - **Frais de port jamais offerts** sur un livre neuf.
 - Le bot d'accueil et ManyChat ne peuvent proposer aucune remise
   supérieure à 5 %.
@@ -281,16 +313,22 @@ la session usine.
 
 Ce qui bloque le site figure ici ; le reste appartient à la maison.
 
-- [ ] 👤 Structure juridique, et **fiscalité à faire valider par un
-      comptable** : structure hors UE, clients européens, impression
-      possiblement en UE.
+- [ ] [?] **Structure juridique ajournée.** Une LLC américaine était
+      envisagée ; l'édition se fait pour l'instant à titre personnel. Le
+      jour où la structure est créée, la fiscalité transfrontalière devra
+      être validée par un comptable, et un représentant dans l'Union
+      désigné pour le RGPD (article 27) — obligations qui ne se posent pas
+      tant que l'éditeur est français.
 - [ ] 👤 **Contrat d'édition écrit pour chaque ouvrage.** Sans écrit, la
       cession de droits n'est pas valablement constituée.
 - [ ] 👤 Reddition de comptes annuelle aux auteurs — suppose de compter les
       ventes par canal et par format. *Le site doit fournir ces chiffres.*
 - [ ] 👤 Traçabilité des manuscrits reçus et des refus.
-- [ ] 👤 ISBN AFNIL : un par langue **et par reliure**. Le prix y figure —
-      donc après le calcul de coûts.
+- [x] **Préfixe ISBN AFNIL obtenu**, à titre personnel *(2026-09-03)*.
+- [ ] 👤 Attribuer un ISBN par langue **et par reliure**, et renseigner les
+      métadonnées. Le prix y figure — donc après le calcul de coûts.
+- [ ] [?] Le jour de la cession à une structure étrangère, revoir la
+      question : un préfixe AFNIL ne suit pas l'éditeur hors de France.
 - [ ] 👤 Dépôt légal BnF, éditeur **et** imprimeur — question à poser
       explicitement avec une impression à la demande étrangère.
 - [ ] 👤 Mentions obligatoires dans l'ouvrage : achevé d'imprimer, nom et
