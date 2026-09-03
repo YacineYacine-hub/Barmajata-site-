@@ -21,7 +21,8 @@
     "booksellers": "Libreros",
     "faq": "Preguntas frecuentes",
     "search": "Buscar",
-    "searchPlaceholder": "Título o autor"
+    "searchPlaceholder": "Título o autor",
+    "method": "El método"
   },
   "home": {
     "heroEyebrow": "Editorial",
@@ -50,6 +51,10 @@
       "journal": {
         "title": "Diario",
         "description": "Contenido próximamente."
+      },
+      "method": {
+        "title": "El método",
+        "description": "En qué se basan nuestros libros: las investigaciones y sus límites."
       }
     }
   },
@@ -82,6 +87,78 @@
           "body": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Texto de demostración, ningún contenido editorial real."
         }
       ]
+    },
+    "method": {
+      "eyebrow": "Lo que dice la investigación",
+      "title": "El método",
+      "lede": "Nuestros libros no son libros en los que se escribe un poco. Están construidos sobre dos mecanismos de memoria documentados desde hace décadas. Estos son, y hasta dónde llegan.",
+      "recit": [
+        "Usted ya ha leído un texto entero y ha cerrado el libro sin poder repetir tres frases. No es un fallo de atención. Es lo que hace la lectura sola: da la sensación de saber, que no es el saber.",
+        "El gesto de escribir rompe esa ilusión. Obliga a elegir una palabra, y por tanto a decidir; a formular, y por tanto a comprender. Lo que cuesta esfuerzo deja huella — y ninguna pantalla exige ese esfuerzo.",
+        "Nuestros libros se construyen sobre esto. Se lee un texto real, luego hay que volver a él para responder, después se escribe algo que solo pertenece a uno. Tres tiempos, en ese orden, cada uno por una razón precisa."
+      ],
+      "affirmations": [
+        {
+          "phrase": "Lo que usted produce, lo retiene. Lo que lee, solo lo reconoce.",
+          "source": "Slamecka y Graf, 1978 — el efecto de generación, establecido en cinco experimentos.",
+          "limite": ""
+        },
+        {
+          "phrase": "Ponerse a prueba supera a releer. Con el mismo tiempo.",
+          "source": "Roediger y Karpicke, 2006 — el efecto de prueba, uno de los resultados más sólidos de la psicología del aprendizaje.",
+          "limite": ""
+        },
+        {
+          "phrase": "Nuestros libros no activan un mecanismo. Activan dos.",
+          "source": "El efecto de generación y el efecto de prueba son fenómenos distintos. Escribir la respuesta y luego tener que recuperarla no es el mismo trabajo.",
+          "limite": ""
+        },
+        {
+          "phrase": "En pantalla se comprende menos. Y la diferencia ha aumentado con los años.",
+          "source": "Delgado, Vargas, Ackerman y Salmerón, 2018 — metaanálisis de 54 estudios y más de 170 000 participantes. La ventaja del papel crece a lo largo del periodo analizado: no es cuestión de generación, y los «nativos digitales» no son la excepción.",
+          "limite": "La diferencia afecta a los textos expositivos, los que se leen para aprender. En los textos narrativos, otro metaanálisis no encuentra diferencia. No pretendemos que el papel gane siempre."
+        },
+        {
+          "phrase": "Casi medio millón de lectores: leer en pantalla en el tiempo libre apenas mejora la comprensión.",
+          "source": "Altamura, Vargas y Salmerón, Review of Educational Research — 469 564 participantes. El efecto es casi nulo, mientras que los hábitos de lectura en papel muestran efectos medios. En los más jóvenes la relación es incluso negativa.",
+          "limite": "Es una correlación, no una prueba de causa. Leer mucho en pantalla no daña mecánicamente la comprensión: simplemente no la construye, a diferencia del papel."
+        },
+        {
+          "phrase": "Escribir a mano moviliza el cerebro más ampliamente que teclear.",
+          "source": "Van der Weel y Van der Meer, 2024 — electroencefalografía de 256 sensores.",
+          "limite": "Este estudio mide conectividad cerebral, no resultados de aprendizaje. Recibió un comentario crítico publicado en la misma revista. Lo citamos por lo que muestra, no por lo que nos gustaría que dijera."
+        },
+        {
+          "phrase": "Escribir lo que se siente se estudia desde hace cuarenta años. El efecto existe. Es pequeño.",
+          "source": "Paradigma de la escritura expresiva, abierto por Pennebaker. Un primer metaanálisis (Smyth, 1998) hallaba un efecto medio; sobre más de cien estudios acumulados desde entonces, la media baja a unos d = 0,16.",
+          "limite": "Los resultados se replican con dificultad y no se sabe qué condiciones son necesarias para obtenerlos. El compromiso real de quien escribe parece explicar parte de la diferencia. Lo decimos porque es cierto, no a pesar de ello."
+        },
+        {
+          "phrase": "El diario de gratitud se ha probado en ensayos controlados. 25 ensayos, 6745 participantes, efecto g = 0,22.",
+          "source": "Metaanálisis de ensayos aleatorizados sobre bienestar psicológico — satisfacción vital, afecto positivo, felicidad. La práctica se remonta a los trabajos de Emmons y McCullough (2003).",
+          "limite": "0,22 es un efecto pequeño. La literatura lo presenta como complemento, nunca como tratamiento. Un diario no cura una depresión."
+        },
+        {
+          "phrase": "Publicamos el tamaño de los efectos. Por eso podemos citarlos.",
+          "source": "Un efecto pequeño y medido vale más que uno espectacular e inverificable. Quienes escriben «científicamente probado» sin dar nunca una cifra cuentan con que nadie lo comprobará.",
+          "limite": ""
+        },
+        {
+          "phrase": "El estudio más citado sobre la escritura a mano nunca se replicó.",
+          "source": "Mueller y Oppenheimer, 2014 — el que hizo prohibir los portátiles en aulas enteras. En 2019, Morehead, Dunlosky y Rawson repitieron el protocolo: efecto pequeño y no significativo.",
+          "limite": "No lo utilizamos. Y sin embargo es el que se citaría en nuestro lugar."
+        },
+        {
+          "phrase": "Un libro no es una terapia.",
+          "source": "Nuestros libros para lectores mayores se inspiran en las prácticas de relato de vida, que sí están estudiadas. No las sustituyen.",
+          "limite": "No prometemos ninguna memoria preservada, ningún deterioro ralentizado, ningún beneficio médico. Quien se lo prometa, le miente."
+        }
+      ],
+      "regleTitre": "Nuestra regla",
+      "regle": "Cada afirmación lleva su fuente. Y su límite.",
+      "regleSuite": "Un competidor puede copiar un libro. No copiará esta exigencia, porque cuesta trabajo: hay que leer los estudios, incluidos los que nos contradicen.",
+      "limiteLabel": "El límite",
+      "sourceLabel": "Fuente"
     },
     "commitment": {
       "title": "Compromiso",

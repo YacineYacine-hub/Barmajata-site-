@@ -69,6 +69,37 @@ de connectivité cérébrale nettement plus étendus que la frappe au clavier.
 Donc : citable, avec ses limites. Jamais présentée comme une preuve que
 « écrire à la main fait mieux apprendre ».
 
+### 4. L'écriture expressive — réel, mais petit
+
+**Paradigme de Pennebaker.** Écrire ses pensées et émotions liées à un
+événement difficile, sur trois ou quatre séances de quinze à vingt
+minutes.
+
+Une première méta-analyse (Smyth, 1998, 14 études) trouvait un effet moyen
+(d ≈ 0,47). **Mais sur plus de cent études accumulées depuis, la moyenne
+tombe autour de d = 0,16** — un petit effet. Chez les adolescents, plus
+petit encore (≈ 0,13).
+
+**Réserves à afficher** : les résultats se répliquent difficilement, et
+l'on ignore quelles conditions sont nécessaires pour les obtenir.
+L'engagement réel de celui qui écrit semble expliquer une partie de
+l'écart.
+
+### 5. La gratitude — mesurée, et modeste
+
+**Emmons & McCullough (2003)** ouvrent la pratique du carnet de gratitude.
+Une méta-analyse de **25 essais randomisés, 6 745 participants**, trouve un
+effet de **g = 0,22** sur le bien-être psychologique — satisfaction de
+vie, affect positif, bonheur.
+
+**Réserve** : 0,22 est un petit effet, et la littérature présente ces
+interventions comme un **complément thérapeutique**, jamais comme un
+traitement. Un carnet ne soigne pas une dépression.
+
+**L'angle à retenir** : publier ces chiffres est plus fort que de les
+taire. Ceux qui écrivent « scientifiquement prouvé » sans jamais donner de
+taille d'effet comptent sur le fait que personne n'ira vérifier.
+
 ---
 
 ## Ce qu'il ne faut PAS utiliser
@@ -150,3 +181,8 @@ Alternatives qui disent vrai et valent autant pour le référencement :
 - [Roediger & Karpicke (2006) — l'effet de test](https://journals.sagepub.com/doi/10.1111/j.1745-6916.2006.00012.x)
 - [Revue générale sur la réminiscence chez les aînés (BMC Geriatrics, 2025)](https://link.springer.com/article/10.1186/s12877-025-06484-6)
 - [Méta-analyse récit de vie et dépression tardive](https://www.sciencedirect.com/science/article/abs/pii/S0165032723014180)
+- [Delgado, Vargas, Ackerman & Salmerón (2018) — papier contre écran](https://www.sciencedirect.com/science/article/abs/pii/S1747938X18300101)
+- [Altamura, Vargas & Salmerón — lecture numérique de loisir, 469 564 participants](https://journals.sagepub.com/doi/10.3102/00346543231216463)
+- [Méta-analyse contradictoire : pas d'écart sur les textes narratifs](https://www.tandfonline.com/doi/full/10.1080/15213269.2022.2070216)
+- [Pennebaker — l'écriture expressive en science psychologique](https://cssh.northeastern.edu/pandemic-teaching-initiative/wp-content/uploads/sites/43/2020/10/Pennebaker-Expressive-Writing-in-Psychological-Science.pdf)
+- [Méta-analyse des interventions de gratitude (25 essais, 6 745 participants)](https://link.springer.com/article/10.1007/s41042-023-00086-6)

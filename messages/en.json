@@ -21,7 +21,8 @@
     "booksellers": "Booksellers",
     "faq": "FAQ",
     "search": "Search",
-    "searchPlaceholder": "Title or author"
+    "searchPlaceholder": "Title or author",
+    "method": "The method"
   },
   "home": {
     "heroEyebrow": "Publishing house",
@@ -50,6 +51,10 @@
       "journal": {
         "title": "Journal",
         "description": "Content coming soon."
+      },
+      "method": {
+        "title": "The method",
+        "description": "What our books rest on: the research, and its limits."
       }
     }
   },
@@ -82,6 +87,78 @@
           "body": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Demo text, no real editorial content."
         }
       ]
+    },
+    "method": {
+      "eyebrow": "What the research says",
+      "title": "The method",
+      "lede": "Our books are not books you write in a little. They are built on two memory mechanisms documented for decades. Here they are — and how far they go.",
+      "recit": [
+        "You have read a text through, closed the book, and found you could not say three sentences about it. That is not a lapse of attention. It is what reading alone does: it gives the feeling of knowing, which is not knowing.",
+        "Writing breaks that illusion. It forces you to choose a word, and so to decide; to phrase a thought, and so to understand it. What costs effort leaves a trace — and no screen asks that effort of you.",
+        "Our books are built on this. You read a real text, then you must return to it to answer, then you write something that belongs to you alone. Three stages, in that order, each for a precise reason."
+      ],
+      "affirmations": [
+        {
+          "phrase": "What you produce, you remember. What you read, you merely recognise.",
+          "source": "Slamecka & Graf, 1978 — the generation effect, established across five experiments.",
+          "limite": ""
+        },
+        {
+          "phrase": "Testing yourself beats rereading. For the same time spent.",
+          "source": "Roediger & Karpicke, 2006 — the testing effect, one of the most robust findings in the psychology of learning.",
+          "limite": ""
+        },
+        {
+          "phrase": "Our books do not engage one mechanism. They engage two.",
+          "source": "The generation effect and the testing effect are distinct phenomena. Writing your answer, then having to retrieve it, is not the same work.",
+          "limite": ""
+        },
+        {
+          "phrase": "On screen, comprehension drops. And the gap has widened over the years.",
+          "source": "Delgado, Vargas, Ackerman & Salmerón, 2018 — a meta-analysis of 54 studies and over 170,000 participants. The paper advantage grows across the period analysed: this is not a generational matter, and digital natives are no exception.",
+          "limite": "The gap concerns expository texts, the ones read in order to learn. For narrative texts, another meta-analysis finds no difference. We do not claim paper always wins."
+        },
+        {
+          "phrase": "Nearly half a million readers: digital leisure reading barely improves comprehension.",
+          "source": "Altamura, Vargas & Salmerón, Review of Educational Research — 469,564 participants. The effect is close to nil, where print reading habits show medium effects. Among younger readers the relationship is even negative.",
+          "limite": "This is a correlation, not proof of cause. Reading a great deal on screen does not mechanically damage comprehension: it simply does not build it, as print does."
+        },
+        {
+          "phrase": "Writing by hand engages the brain more widely than typing.",
+          "source": "Van der Weel & Van der Meer, 2024 — high-density EEG, 256 sensors.",
+          "limite": "This study measures brain connectivity, not learning outcomes. It received a published critical commentary in the same journal. We cite it for what it shows, not for what we would like it to say."
+        },
+        {
+          "phrase": "Writing what you feel has been studied for forty years. The effect is real. It is small.",
+          "source": "The expressive writing paradigm, opened by Pennebaker. An early meta-analysis (Smyth, 1998) found a medium effect; across the hundred-plus studies accumulated since, the average falls to around d = 0.16.",
+          "limite": "The results replicate poorly, and it remains unclear which conditions are required to obtain them. The writer's actual engagement appears to explain part of the variation. We say so because it is true, not in spite of it."
+        },
+        {
+          "phrase": "The gratitude journal has been tested in controlled trials. 25 trials, 6,745 participants, effect g = 0.22.",
+          "source": "A meta-analysis of randomised trials on psychological wellbeing — life satisfaction, positive affect, happiness. The practice goes back to Emmons and McCullough (2003).",
+          "limite": "0.22 is a small effect. The literature presents it as a complement, never as a treatment. A journal does not cure depression."
+        },
+        {
+          "phrase": "We publish the effect sizes. That is why we are able to cite them.",
+          "source": "A small measured effect is worth more than a spectacular unverifiable one. Those who write « scientifically proven » without ever giving a figure are counting on nobody checking.",
+          "limite": ""
+        },
+        {
+          "phrase": "The most-cited study on handwriting was never replicated.",
+          "source": "Mueller & Oppenheimer, 2014 — the one that had laptops banned from entire lecture halls. In 2019, Morehead, Dunlosky and Rawson ran the protocol again: a small effect, and not significant.",
+          "limite": "We do not use it. It is nonetheless the one that would be cited in our place."
+        },
+        {
+          "phrase": "A book is not a therapy.",
+          "source": "Our books for older readers draw on life-review practices, which are studied. They do not replace them.",
+          "limite": "We promise no preserved memory, no slowed decline, no medical benefit. Anyone promising you that is lying."
+        }
+      ],
+      "regleTitre": "Our rule",
+      "regle": "Every claim carries its source. And its limit.",
+      "regleSuite": "A competitor can copy a book. They will not copy that discipline, because it costs work: you have to read the studies, including the ones that contradict you.",
+      "limiteLabel": "The limit",
+      "sourceLabel": "Source"
     },
     "commitment": {
       "title": "Commitment",

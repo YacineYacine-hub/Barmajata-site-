@@ -7,7 +7,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { LocaleSwitcher } from "./LocaleSwitcher";
 import { SocialLinks } from "./SocialLinks";
 
-type NavHref = "/authors" | "/house" | "/journal" | "/contact";
+type NavHref = "/method" | "/authors" | "/house" | "/journal" | "/contact";
 type ProHref = "/submissions" | "/press" | "/rights" | "/booksellers";
 
 const SCROLL_SHRINK_THRESHOLD = 80;
@@ -87,6 +87,10 @@ export function Header() {
   // tant que le partenariat n'est pas fixé, voir commitment/page.tsx.
   // "/books" n'est pas dans le panneau : lien direct dans le bandeau.
   const panelLinks: Array<{ href: NavHref; label: string }> = [
+    // « La méthode » en tête : c'est ce qui distingue la maison, pas son
+    // catalogue. Un visiteur qui comprend pourquoi les livres sont faits
+    // ainsi achète autrement.
+    { href: "/method", label: t("method") },
     { href: "/authors", label: t("authors") },
     { href: "/house", label: t("house") },
     { href: "/journal", label: t("journal") },

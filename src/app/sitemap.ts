@@ -11,6 +11,7 @@ const CANONICAL_PATHS = [
   "/authors",
   "/books",
   "/house",
+  "/method",
   "/club",
   "/journal",
   "/contact",

@@ -767,6 +767,30 @@ zéro stock, prix visé 22,90–24,90 €.
 Le site cesse d'être une vitrine pour devenir une **plateforme
 d'autorité** — un onglet « Le Lab » de vulgarisation, du SEO thématique.
 
+### La règle de toute affirmation publiée
+
+**Demande explicite de l'utilisateur : « base toujours sur des recherches
+approuvées ».** C'est une règle permanente, pas une consigne de séance.
+
+Toute affirmation publiée sur le site — page « La méthode », journal,
+argumentaire produit, texte de marque — doit :
+
+1. reposer sur une **recherche évaluée par les pairs**, cherchée et
+   vérifiée, **jamais citée de mémoire** ;
+2. porter **sa source** en clair ;
+3. porter **sa limite** quand elle en a une, y compris la taille d'effet
+   quand elle est petite.
+
+C'est la troisième ligne qui fait la valeur : n'importe qui aligne des
+affirmations, presque personne ne publie ce qui les affaiblit. Un
+concurrent copie un livre, il ne copie pas cette exigence — elle coûte du
+travail.
+
+Le corpus vérifié, avec ce qu'il faut citer **et ce qu'il ne faut pas**,
+est dans `docs/le-fondement-scientifique.md`. **Le lire avant d'écrire
+quoi que ce soit de scientifique** : il contient notamment l'étude la
+plus citée du domaine, qui n'a jamais été répliquée.
+
 ### ⚠ Deux choses à ne jamais écrire pour cette gamme
 
 1. **Aucun expert inventé.** La présentation proposait un « Professeur
@@ -782,6 +806,24 @@ d'autorité** — un onglet « Le Lab » de vulgarisation, du SEO thématique.
    le même, l'argumentaire seul change. Vaut aussi pour les chiffres :
    « on retient 300 % mieux » n'a pas de source. L'effet de génération est
    réel et se cite ; il ne s'invente pas.
+
+## La page « La méthode » (Lot H50)
+
+`/la-methode`, `/the-method`, `/el-metodo`. Le fondement documenté des
+ouvrages : un récit d'ouverture, onze affirmations courtes portant chacune
+sa source et sa limite, puis la règle du corpus.
+
+**Nommée « La méthode » et NON « Le Lab »**, comme le proposait la
+présentation initiale : un « laboratoire » laisse entendre qu'on **mène**
+des recherches alors qu'on en **lit**. C'est une version discrète du faux
+expert, refusée pour la même raison.
+
+Contenu dans `messages/*.json` → `pages.method`, avec `recit` (tableau de
+paragraphes) et `affirmations` (tableau de `{phrase, source, limite}`).
+Une `limite` vide n'affiche pas le bloc.
+
+Ajoutée au sitemap **à la main** — la liste `CANONICAL_PATHS` n'est pas
+automatique, voir le commentaire de `src/app/sitemap.ts`.
 
 ## Qui édite, et ce qu'est BARMAJATA
 

@@ -11,7 +11,7 @@ import { categoryToSlug, NEW_RELEASES_PARAM } from "@/lib/content/categories";
 
 // « Livres » n'y figure pas : le lien vit déjà dans la ligne de navigation,
 // juste au-dessus. Le répéter ici n'ajoutait rien.
-const PILLARS = ["authors", "house", "journal"] as const;
+const PILLARS = ["method", "authors", "house", "journal"] as const;
 
 export function generateMetadata(): Metadata {
   return { alternates: buildAlternates("/") };

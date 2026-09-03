@@ -21,7 +21,8 @@
     "booksellers": "Libraires",
     "faq": "FAQ",
     "search": "Rechercher",
-    "searchPlaceholder": "Titre ou auteur"
+    "searchPlaceholder": "Titre ou auteur",
+    "method": "La méthode"
   },
   "home": {
     "heroEyebrow": "Maison d'édition",
@@ -50,6 +51,10 @@
       "journal": {
         "title": "Journal",
         "description": "Contenu à venir."
+      },
+      "method": {
+        "title": "La méthode",
+        "description": "Sur quoi reposent nos livres : les recherches, et leurs limites."
       }
     }
   },
@@ -82,6 +87,78 @@
           "body": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Texte de démonstration, aucun contenu éditorial réel."
         }
       ]
+    },
+    "method": {
+      "eyebrow": "Ce que dit la recherche",
+      "title": "La méthode",
+      "lede": "Nos livres ne sont pas des livres où l'on écrit un peu. Ils sont construits sur deux mécanismes de mémoire documentés depuis des décennies. Voici lesquels, et jusqu'où ils vont.",
+      "recit": [
+        "Vous avez déjà lu un texte en entier, puis refermé le livre sans pouvoir en redire trois phrases. Ce n'est pas un défaut d'attention. C'est ce que fait la lecture seule : elle donne le sentiment de savoir, qui n'est pas le savoir.",
+        "Le geste d'écrire casse cette illusion. Il oblige à choisir un mot, donc à trancher ; à formuler, donc à comprendre. Ce qui coûte un effort laisse une trace — et cet effort, aucun écran ne le demande.",
+        "Nos livres sont bâtis là-dessus. On y lit un vrai texte, puis on doit y revenir pour répondre, puis on écrit quelque chose qui n'appartient qu'à soi. Trois temps, dans cet ordre, et pour une raison précise à chaque fois."
+      ],
+      "affirmations": [
+        {
+          "phrase": "Ce que vous produisez, vous le retenez. Ce que vous lisez, vous le reconnaissez.",
+          "source": "Slamecka & Graf, 1978 — l'effet de génération, établi sur cinq expériences.",
+          "limite": ""
+        },
+        {
+          "phrase": "Se tester bat relire. À temps égal.",
+          "source": "Roediger & Karpicke, 2006 — l'effet de test, l'un des résultats les plus robustes de la psychologie de l'apprentissage.",
+          "limite": ""
+        },
+        {
+          "phrase": "Nos livres n'activent pas un mécanisme. Ils en activent deux.",
+          "source": "L'effet de génération et l'effet de test sont deux phénomènes distincts. Écrire sa réponse, puis devoir la retrouver, ce n'est pas le même travail.",
+          "limite": ""
+        },
+        {
+          "phrase": "Sur écran, on comprend moins bien. Et l'écart se creuse avec les années.",
+          "source": "Delgado, Vargas, Ackerman & Salmerón, 2018 — méta-analyse de 54 études, plus de 170 000 participants. L'avantage du papier augmente au fil du temps analysé : ce n'est donc pas une affaire de génération, et les « natifs du numérique » n'y échappent pas.",
+          "limite": "L'écart concerne les textes explicatifs, ceux qu'on lit pour apprendre. Sur les textes narratifs, une autre méta-analyse ne trouve pas de différence. Nous ne prétendons donc pas que le papier gagne toujours."
+        },
+        {
+          "phrase": "Près d'un demi-million de lecteurs : lire sur écran pendant ses loisirs n'améliore presque pas la compréhension.",
+          "source": "Altamura, Vargas & Salmerón, Review of Educational Research — 469 564 participants. L'effet est quasi nul, là où les habitudes de lecture sur papier montrent des effets moyens. Chez les plus jeunes, la relation est même négative.",
+          "limite": "C'est une corrélation, pas une preuve de cause. Lire beaucoup sur écran n'abîme pas mécaniquement la compréhension : cela ne la construit simplement pas, contrairement au papier."
+        },
+        {
+          "phrase": "Écrire à la main mobilise plus largement le cerveau que taper.",
+          "source": "Van der Weel & Van der Meer, 2024 — électroencéphalographie à 256 capteurs.",
+          "limite": "Cette étude mesure de la connectivité cérébrale, pas des résultats d'apprentissage. Elle a reçu un commentaire critique publié dans la même revue. Nous la citons pour ce qu'elle montre, pas pour ce qu'on aimerait lui faire dire."
+        },
+        {
+          "phrase": "Écrire ce que l'on ressent est étudié depuis quarante ans. L'effet existe. Il est petit.",
+          "source": "Paradigme de l'écriture expressive, ouvert par Pennebaker. Une première méta-analyse (Smyth, 1998) trouvait un effet moyen ; sur plus de cent études accumulées depuis, la moyenne tombe autour de d = 0,16.",
+          "limite": "Les résultats se répliquent difficilement, et l'on ignore quelles conditions sont nécessaires pour les obtenir. L'engagement réel de celui qui écrit semble expliquer une partie de l'écart. Nous le disons parce que c'est vrai, pas malgré cela."
+        },
+        {
+          "phrase": "Le carnet de gratitude a été testé en essais contrôlés. 25 essais, 6 745 participants, effet g = 0,22.",
+          "source": "Méta-analyse d'essais randomisés sur le bien-être psychologique — satisfaction de vie, affect positif, bonheur. La pratique remonte aux travaux d'Emmons et McCullough (2003).",
+          "limite": "0,22 est un petit effet. La littérature le présente comme un complément, jamais comme un traitement. Un carnet ne soigne pas une dépression."
+        },
+        {
+          "phrase": "Nous publions la taille des effets. C'est pour cela que nous pouvons les citer.",
+          "source": "Un effet petit et mesuré vaut mieux qu'un effet spectaculaire et invérifiable. Ceux qui écrivent « scientifiquement prouvé » sans jamais donner un chiffre comptent sur le fait que personne n'ira vérifier.",
+          "limite": ""
+        },
+        {
+          "phrase": "L'étude la plus citée sur l'écriture manuscrite n'a jamais été répliquée.",
+          "source": "Mueller & Oppenheimer, 2014 — celle qui a fait interdire les ordinateurs dans des amphithéâtres entiers. En 2019, Morehead, Dunlosky et Rawson ont refait le protocole à l'identique : effet petit, et non significatif.",
+          "limite": "Nous ne nous en servons pas. C'est pourtant celle qu'on citerait à notre place."
+        },
+        {
+          "phrase": "Un livre n'est pas une thérapie.",
+          "source": "Nos ouvrages destinés aux aînés s'inspirent des pratiques de récit de vie, qui sont étudiées. Ils ne les remplacent pas.",
+          "limite": "Nous ne promettons aucune mémoire préservée, aucun déclin ralenti, aucun bienfait médical. Qui vous le promet vous ment."
+        }
+      ],
+      "regleTitre": "Notre règle",
+      "regle": "Chaque affirmation porte sa source. Et sa limite.",
+      "regleSuite": "Un concurrent peut copier un livre. Il ne copiera pas cette exigence, parce qu'elle coûte du travail : il faut lire les études, y compris celles qui nous contredisent.",
+      "limiteLabel": "La limite",
+      "sourceLabel": "Source"
     },
     "commitment": {
       "title": "Engagement",

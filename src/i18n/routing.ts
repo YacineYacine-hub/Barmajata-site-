@@ -43,6 +43,15 @@ export const routing = defineRouting({
       en: "/commitment",
       es: "/compromiso",
     },
+    // Page « La méthode » (Lot H50) : le fondement documenté des ouvrages.
+    // Le slug dit « méthode » et non « laboratoire » — on LIT la recherche,
+    // on n'en mène pas, et laisser croire l'inverse serait une version
+    // discrète du faux expert (voir CLAUDE.md).
+    "/method": {
+      fr: "/la-methode",
+      en: "/the-method",
+      es: "/el-metodo",
+    },
     "/journal": {
       fr: "/journal",
       en: "/journal",
