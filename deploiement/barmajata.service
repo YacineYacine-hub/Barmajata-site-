@@ -1,0 +1,53 @@
+# Unité systemd du site. À poser dans /etc/systemd/system/barmajata.service
+#
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now barmajata
+#
+# Le service tourne sous son PROPRE utilisateur, jamais root : le VPS
+# héberge aussi l'usine éditoriale et des bots de trading, et un dossier
+# n'est pas une frontière. Voir le rail D de docs/master-checklist.md.
+
+[Unit]
+Description=BARMAJATA — site vitrine (Next.js)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=barmajata
+Group=barmajata
+
+# `courant` est un lien vers la release en ligne. systemd le résout au
+# démarrage : un retour arrière consiste donc à repointer le lien et à
+# relancer le service, sans rien reconstruire.
+WorkingDirectory=/home/vps/02_BARMAJATA_WEB/courant
+ExecStart=/usr/bin/npm run start
+
+Environment=NODE_ENV=production
+Environment=PORT=3000
+# N'écoute QUE sur la boucle locale : c'est nginx qui fait face à
+# l'internet. Même avec un pare-feu, ne pas exposer le port applicatif.
+Environment=HOSTNAME=127.0.0.1
+# Les secrets vivent hors des releases, pour qu'un ménage ne les emporte pas.
+EnvironmentFile=-/home/vps/02_BARMAJATA_WEB/.env.production
+
+Restart=on-failure
+RestartSec=5
+
+# Limite mémoire : un site qui s'emballe ne doit pas faire tomber ce qui
+# partage la machine.
+MemoryMax=1G
+
+# Cloisonnement : le service ne voit qu'un système en lecture seule, ne
+# peut pas s'élever en privilèges, et n'écrit que là où on l'autorise.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/vps/02_BARMAJATA_WEB
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=multi-user.target

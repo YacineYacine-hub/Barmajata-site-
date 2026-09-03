@@ -151,9 +151,12 @@ la structure hors Union européenne.
       messagerie Hostinger est déjà en place (MX `mx1`/`mx2.hostinger.com`).
 - [ ] Surveillance de disponibilité **externe** — une alerte de panne ne
       peut pas partir du serveur en panne.
-- [ ] 👤 Rédiger les **mentions légales** et la **politique de
-      confidentialité**. Il me faut : raison sociale, forme, adresse,
-      identifiants d'entreprise, directeur de publication, hébergeur.
+- [~] **Mentions légales et confidentialité : ÉCRITES, EN ATTENTE.** Les
+      textes existent dans les trois langues ; les pages gardent leur état
+      d'attente tant que `src/lib/legal.ts` est vide. Il ne reste qu'à le
+      remplir — nom de l'éditeur, adresse, e-mail, hébergeur.
+      **Ne pas rebloquer la suite là-dessus** : la question de l'anonymat
+      et celle de la structure relèvent du rail C, pas du site.
 
 ### Bloc 2 — Mettre en ligne le site tel qu'il est
 
