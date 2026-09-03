@@ -168,8 +168,7 @@ la structure hors Union européenne.
 
 À faire en premier : aucune de ces lignes n'attend une décision.
 
-- [ ] Committer le `.gitignore` qui protège `DOSSIER ENV./` et `*.notepad`.
-      La protection n'existe aujourd'hui que sur une machine.
+- [x] `.gitignore` protégeant `DOSSIER ENV./` et `*.notepad` — commité.
 - [ ] Double authentification sur le **compte Hostinger** d'abord — il
       permet de réinitialiser root, d'ouvrir une console et de changer les
       DNS. Qui tient le compte tient le serveur, quel que soit SSH.
@@ -251,8 +250,8 @@ Le site n'existe aujourd'hui **qu'en local**. C'est la première marche.
       masquée.
 - [ ] Canaux d'alerte : e-mail prioritaire, WhatsApp, et un canal **séparé**
       pour les remontées clients. Définir les niveaux de gravité.
-- [ ] Audit d'accessibilité outillé — le niveau actuel n'a été vérifié
-      qu'à la main.
+- [x] **Audit d'accessibilité outillé** *(2026-09-02, axe-core)* : cinq
+      pages, trois langues, zéro violation après correction.
 - [x] **`CLAUDE.md`, `.env.example` et le journal des lots remis à jour**
       (2026-09-02). Huit décrochages corrigés dans la référence ; le
       journal, arrêté au lot H12 alors que le code était au H43, a été
@@ -286,8 +285,11 @@ destination modifiable, jamais de 404. *(Bloqué par D8 et le domaine.)*
       dépendance n'est installée pour cela aujourd'hui.
 - [ ] Registre : quel ouvrage, quel usage, quel tirage, quelle date.
 - [ ] **Scan réel sur l'épreuve imprimée**, jamais seulement à l'écran.
-- [ ] Décider ce que fait le redirecteur quand la fiche n'est pas encore
-      publiée — l'inscription au club serait le plus utile.
+- [x] **Tranché et implémenté** *(2026-09-03)* : un livre en brouillon
+      mène au club plutôt qu'à l'accueil. Et un défaut plus grave a été
+      corrigé au passage — un code pointant vers un slug inexistant menait
+      à une **404**, ce que la doctrine interdit. La décision est passée
+      dans une fonction pure testée (`resoudreCibleQr`).
 
 ### Bloc 5 — Base de données et back-office *(bloqué par D2)*
 
