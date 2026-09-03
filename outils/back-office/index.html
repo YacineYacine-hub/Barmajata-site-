@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Back-office BARMAJATA</title>
+<style>
+  /* Palette reprise du site (globals.css) : lin, sable, or, roche, nuit. */
+  :root {
+    --lin: #fbf8f2; --lin2: #f0e9dc; --sable: #d9c7a8; --or: #b99b72;
+    --roche: #5a5048; --nuit: #2a2521; --rouge: #9a3b28; --vert: #2a5148;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--lin); color: var(--nuit);
+         font: 15px/1.55 ui-sans-serif, system-ui, sans-serif; }
+  header { background: var(--nuit); color: var(--lin); padding: 14px 24px;
+           display: flex; align-items: baseline; gap: 16px; }
+  header h1 { margin: 0; font-size: 15px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+  header span { font-size: 12.5px; color: var(--sable); }
+  main { max-width: 1100px; margin: 0 auto; padding: 28px 24px 80px; display: grid; gap: 28px; }
+  @media (min-width: 900px) { main { grid-template-columns: 300px 1fr; align-items: start; } }
+
+  h2 { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+       color: var(--roche); margin: 0 0 12px; }
+  .panneau { background: #fff; border: 1px solid var(--lin2); padding: 20px; }
+
+  ul.liste { list-style: none; margin: 0; padding: 0; }
+  ul.liste li { border-bottom: 1px solid var(--lin2); }
+  ul.liste button { width: 100%; text-align: left; background: none; border: 0; padding: 10px 0;
+                    font: inherit; color: var(--nuit); cursor: pointer; }
+  ul.liste button:hover { color: var(--or); }
+  .badge { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--roche); }
+
+  label { display: block; margin-top: 16px; font-size: 12.5px; font-weight: 600;
+          letter-spacing: .06em; text-transform: uppercase; color: var(--roche); }
+  input, select, textarea { width: 100%; margin-top: 6px; padding: 9px 10px; font: inherit;
+                            border: 1px solid var(--sable); background: #fff; color: var(--nuit); }
+  textarea { min-height: 90px; resize: vertical; }
+  .aide { margin-top: 5px; font-size: 12.5px; color: var(--roche); }
+  .rang { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+
+  button.action { margin-top: 22px; padding: 11px 22px; font: inherit; font-weight: 600;
+                  background: var(--nuit); color: var(--lin); border: 0; cursor: pointer; }
+  button.action:hover { background: var(--roche); }
+  button.secondaire { background: none; border: 1px solid var(--sable); color: var(--nuit); }
+
+  .message { margin-top: 18px; padding: 12px 14px; font-size: 13.5px; border-inline-start: 3px solid; }
+  .message.ok { border-color: var(--vert); background: #f2f6f4; }
+  .message.ko { border-color: var(--rouge); background: #fbf3f1; }
+  .message ul { margin: 8px 0 0; padding-inline-start: 18px; }
+
+  .apercu { margin-top: 10px; display: flex; gap: 12px; align-items: flex-start; }
+  .apercu img { width: 96px; border: 1px solid var(--lin2); }
+  .onglet { padding: 8px 16px; font: inherit; font-size: 13px; background: none;
+            border: 1px solid var(--sable); color: var(--roche); cursor: pointer; }
+  .onglet.actif { background: var(--nuit); border-color: var(--nuit); color: var(--lin); }
+  .qr-apercu { margin-top: 16px; display: flex; gap: 18px; align-items: flex-start;
+               border: 1px solid var(--lin2); padding: 16px; }
+  .qr-apercu svg { width: 150px; height: 150px; }
+  fieldset { border: 1px solid var(--lin2); padding: 16px 18px 20px; margin: 22px 0 0; }
+  legend { font-size: 11.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--or); padding: 0 6px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>BARMAJATA</h1>
+  <span>Back-office local — rien n'est publié tant que tu n'as pas commité</span>
+</header>
+
+<main>
+  <section class="panneau">
+    <h2>Livres</h2>
+    <ul class="liste" id="liste-livres"></ul>
+    <button class="action" style="width:100%" onclick="nouveauLivre()">Nouveau livre</button>
+    <h2 style="margin-top:26px">Auteurs</h2>
+    <ul class="liste" id="liste-auteurs"></ul>
+  </section>
+
+  <section class="panneau">
+    <div style="display:flex;gap:6px;margin:-4px 0 20px">
+      <button class="onglet actif" data-vue="livre" onclick="vue('livre')">Livre</button>
+      <button class="onglet" data-vue="auteur" onclick="vue('auteur')">Auteur</button>
+      <button class="onglet" data-vue="qr" onclick="vue('qr')">QR codes</button>
+    </div>
+
+    <div id="vue-livre">
+    <h2 id="titre-formulaire">Nouveau livre</h2>
+
+    <div class="rang">
+      <div>
+        <label for="slug">Identifiant (slug)</label>
+        <input id="slug" placeholder="mon-livre">
+        <p class="aide">Sert de nom de fichier et d'adresse. Minuscules et tirets.</p>
+      </div>
+      <div>
+        <label for="auteurSlug">Auteur</label>
+        <select id="auteurSlug"></select>
+        <p class="aide">L'auteur doit exister, sinon le site refuse de se construire.</p>
+      </div>
+    </div>
+
+    <fieldset>
+      <legend>Édition française</legend>
+      <label for="titre">Titre</label>
+      <input id="titre">
+
+      <label for="statut">Statut</label>
+      <select id="statut">
+        <option value="brouillon">Brouillon — invisible partout</option>
+        <option value="a_paraitre">À paraître — fiche visible, bouton « être informé »</option>
+        <option value="publie">Publié — bouton d'achat</option>
+      </select>
+
+      <label for="resumeCourt">Résumé court</label>
+      <textarea id="resumeCourt" style="min-height:60px"></textarea>
+
+      <label for="resumeLong">Résumé long</label>
+      <textarea id="resumeLong"></textarea>
+
+      <div class="rang">
+        <div>
+          <label for="pages">Pages (broché)</label>
+          <input id="pages" type="number" min="1" placeholder="165">
+        </div>
+        <div>
+          <label for="prix">Prix public (€)</label>
+          <input id="prix" type="number" step="0.01" min="0" placeholder="22.90">
+        </div>
+      </div>
+      <p class="aide">Un livre « publié » exige au moins un format vendable, donc un prix.</p>
+
+      <div class="rang">
+        <div>
+          <label for="isbn">ISBN</label>
+          <input id="isbn" placeholder="978-2-XXXXX-XXX-X">
+        </div>
+        <div>
+          <label for="asin">ASIN Amazon</label>
+          <input id="asin" placeholder="B0XXXXXXXX">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Catégories</legend>
+      <div id="categories"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Visuel de couverture</legend>
+      <input type="file" id="fichier" accept=".jpg,.jpeg,.png,.webp,.svg">
+      <div class="apercu" id="apercu"></div>
+      <input id="couverture" placeholder="/couvertures/mon-livre.jpg" style="margin-top:12px">
+      <p class="aide">Le fichier est rangé dans <code>public/couvertures/</code>. Le champ se remplit tout seul.</p>
+    </fieldset>
+
+    <button class="action" onclick="enregistrer()">Enregistrer le livre</button>
+    <button class="action secondaire" onclick="nouveauLivre()">Vider</button>
+    </div>
+
+    <div id="vue-auteur" hidden>
+      <h2>Nouvel auteur</h2>
+      <p class="aide">Un livre ne peut pas exister sans son auteur : c'est la première fiche à créer.</p>
+      <div class="rang">
+        <div>
+          <label for="a-slug">Identifiant (slug)</label>
+          <input id="a-slug" placeholder="layla-daly">
+        </div>
+        <div>
+          <label for="a-nom">Nom affiché</label>
+          <input id="a-nom" placeholder="Layla Daly">
+        </div>
+      </div>
+      <label for="a-bio-fr">Biographie courte — français</label>
+      <textarea id="a-bio-fr" style="min-height:56px"></textarea>
+      <label for="a-bio-en">Biographie courte — anglais</label>
+      <textarea id="a-bio-en" style="min-height:56px"></textarea>
+      <label for="a-bio-es">Biographie courte — espagnol</label>
+      <textarea id="a-bio-es" style="min-height:56px"></textarea>
+      <label for="a-long-fr">Biographie longue — français</label>
+      <textarea id="a-long-fr"></textarea>
+      <label for="a-long-en">Biographie longue — anglais</label>
+      <textarea id="a-long-en"></textarea>
+      <label for="a-long-es">Biographie longue — espagnol</label>
+      <textarea id="a-long-es"></textarea>
+      <button class="action" onclick="enregistrerAuteur()">Enregistrer l'auteur</button>
+    </div>
+
+    <div id="vue-qr" hidden>
+      <h2>Créer un QR code</h2>
+      <p class="aide">Le code s'attribue <strong>avant</strong> la publication : le livre peut être en brouillon.
+         Ce qui est imprimé est l'adresse du redirecteur, jamais celle de la fiche — un QR déjà imprimé reste redirigeable.</p>
+      <div class="rang">
+        <div>
+          <label for="q-type">Usage</label>
+          <select id="q-type">
+            <option value="avis">Avis — dernière page</option>
+            <option value="livre">Fiche du livre — 4e de couverture</option>
+            <option value="bonus">Contenu bonus</option>
+          </select>
+        </div>
+        <div>
+          <label for="q-destination">Livre (ou slug du bonus)</label>
+          <select id="q-destination"></select>
+        </div>
+      </div>
+      <div class="rang">
+        <div>
+          <label for="q-libelle">Libellé</label>
+          <input id="q-libelle" placeholder="Donner son avis">
+        </div>
+        <div>
+          <label for="q-tirage">Tirage</label>
+          <input id="q-tirage" placeholder="1er tirage, 500 ex.">
+        </div>
+      </div>
+      <button class="action" onclick="creerQr()">Créer le code et son visuel</button>
+      <div id="qr-resultat"></div>
+      <h2 style="margin-top:30px">Codes existants</h2>
+      <ul class="liste" id="liste-qr"></ul>
+    </div>
+
+    <div id="message"></div>
+  </section>
+</main>
+
+<script>
+const CATEGORIES = ["enfance", "developpement-personnel", "recits", "poesie-pensees"];
+const $ = (id) => document.getElementById(id);
+let auteurs = [];
+
+function message(type, titre, lignes = []) {
+  $("message").innerHTML =
+    `<div class="message ${type}"><strong>${titre}</strong>` +
+    (lignes.length ? `<ul>${lignes.map((l) => `<li>${l}</li>`).join("")}</ul>` : "") + "</div>";
+}
+
+async function charger() {
+  const [livres, aut] = await Promise.all([
+    fetch("/api/livres").then((r) => r.json()),
+    fetch("/api/auteurs").then((r) => r.json()),
+  ]);
+  auteurs = aut;
+
+  $("liste-livres").innerHTML = livres.length
+    ? livres.map((l) => {
+        const e = (l.editions || [])[0] || {};
+        return `<li><button onclick='remplir(${JSON.stringify(JSON.stringify(l))})'>
+                  ${e.titre || l.slug}<br><span class="badge">${e.statut || "?"}</span>
+                </button></li>`;
+      }).join("")
+    : `<li><span class="badge">Aucun livre</span></li>`;
+
+  $("liste-auteurs").innerHTML = auteurs.length
+    ? auteurs.map((a) => `<li><button>${a.nom}<br><span class="badge">${a.slug}</span></button></li>`).join("")
+    : `<li><span class="badge">Aucun auteur — à créer avant tout livre</span></li>`;
+
+  $("auteurSlug").innerHTML = auteurs.length
+    ? auteurs.map((a) => `<option value="${a.slug}">${a.nom}</option>`).join("")
+    : `<option value="">— aucun auteur —</option>`;
+
+  $("categories").innerHTML = CATEGORIES.map(
+    (c) => `<label style="text-transform:none;font-weight:400;letter-spacing:0;margin-top:8px">
+              <input type="checkbox" value="${c}" style="width:auto;margin-inline-end:8px">${c}</label>`
+  ).join("");
+}
+
+function nouveauLivre() {
+  ["slug","titre","resumeCourt","resumeLong","pages","prix","isbn","asin","couverture"]
+    .forEach((id) => ($(id).value = ""));
+  $("statut").value = "brouillon";
+  $("apercu").innerHTML = "";
+  $("message").innerHTML = "";
+  $("titre-formulaire").textContent = "Nouveau livre";
+  document.querySelectorAll('#categories input').forEach((c) => (c.checked = false));
+}
+
+function remplir(brut) {
+  const l = JSON.parse(brut);
+  const e = (l.editions || [])[0] || {};
+  const broche = (e.formats || []).find((f) => f.type === "broche") || {};
+  $("slug").value = l.slug || "";
+  $("auteurSlug").value = l.auteurSlug || "";
+  $("couverture").value = l.couverture || "";
+  $("titre").value = e.titre || "";
+  $("statut").value = e.statut || "brouillon";
+  $("resumeCourt").value = e.resumeCourt || "";
+  $("resumeLong").value = e.resumeLong || "";
+  $("pages").value = broche.pages || "";
+  $("prix").value = broche.prixIndicatif || "";
+  $("isbn").value = broche.isbn || "";
+  $("asin").value = broche.asin || "";
+  document.querySelectorAll('#categories input').forEach((c) => (c.checked = (l.categories || []).includes(c.value)));
+  $("apercu").innerHTML = l.couverture ? `<img src="${l.couverture}" alt="">` : "";
+  $("titre-formulaire").textContent = "Modifier — " + (e.titre || l.slug);
+  $("message").innerHTML = "";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+$("fichier").addEventListener("change", async (ev) => {
+  const f = ev.target.files[0];
+  if (!f) return;
+  const slug = $("slug").value.trim();
+  if (!slug) return message("ko", "Renseigne d'abord l'identifiant du livre.",
+    ["Le visuel est rangé sous ce nom, pour qu'on le retrouve."]);
+  const ext = f.name.slice(f.name.lastIndexOf("."));
+  const donneesBase64 = await new Promise((ok) => {
+    const r = new FileReader(); r.onload = () => ok(r.result); r.readAsDataURL(f);
+  });
+  const rep = await fetch("/api/visuel", {
+    method: "POST", headers: { "content-type": "application/json" },
+    body: JSON.stringify({ nom: slug + ext, donneesBase64 }),
+  }).then((r) => r.json());
+  if (rep.erreur) return message("ko", "Visuel refusé", rep.details);
+  $("couverture").value = rep.chemin;
+  $("apercu").innerHTML = `<img src="${rep.chemin}" alt="">`;
+  message("ok", "Visuel déposé", [rep.chemin]);
+});
+
+async function enregistrer() {
+  const prix = parseFloat($("prix").value);
+  const pages = parseInt($("pages").value, 10);
+
+  const format = { type: "broche" };
+  if (!Number.isNaN(prix)) format.prixIndicatif = prix;
+  if (!Number.isNaN(pages)) format.pages = pages;
+  if ($("isbn").value.trim()) format.isbn = $("isbn").value.trim();
+  if ($("asin").value.trim()) format.asin = $("asin").value.trim();
+
+  const edition = {
+    langue: "fr",
+    titre: $("titre").value.trim(),
+    resumeCourt: $("resumeCourt").value.trim(),
+    resumeLong: $("resumeLong").value.trim(),
+    statut: $("statut").value,
+  };
+  if (format.prixIndicatif !== undefined) edition.formats = [format];
+
+  const livre = {
+    slug: $("slug").value.trim(),
+    auteurSlug: $("auteurSlug").value,
+    editions: [edition],
+  };
+  if ($("couverture").value.trim()) livre.couverture = $("couverture").value.trim();
+  const cats = [...document.querySelectorAll('#categories input:checked')].map((c) => c.value);
+  if (cats.length) livre.categories = cats;
+
+  const rep = await fetch("/api/livre", {
+    method: "POST", headers: { "content-type": "application/json" },
+    body: JSON.stringify(livre),
+  }).then((r) => r.json());
+
+  if (rep.erreur) return message("ko", "Refusé — le site n'aurait pas pu se construire", rep.details);
+  message("ok", "Enregistré", [rep.chemin, "Pense à committer : rien n'est publié avant."]);
+  charger();
+}
+
+function vue(nom) {
+  for (const v of ["livre", "auteur", "qr"]) {
+    $("vue-" + v).hidden = v !== nom;
+    document.querySelector(`.onglet[data-vue="${v}"]`).classList.toggle("actif", v === nom);
+  }
+  $("message").innerHTML = "";
+  if (nom === "qr") chargerQr();
+}
+
+async function enregistrerAuteur() {
+  const auteur = {
+    slug: $("a-slug").value.trim(),
+    nom: $("a-nom").value.trim(),
+    bioCourte: { fr: $("a-bio-fr").value.trim(), en: $("a-bio-en").value.trim(), es: $("a-bio-es").value.trim() },
+    bioLongue: { fr: $("a-long-fr").value.trim(), en: $("a-long-en").value.trim(), es: $("a-long-es").value.trim() },
+  };
+  const rep = await fetch("/api/auteur", {
+    method: "POST", headers: { "content-type": "application/json" },
+    body: JSON.stringify(auteur),
+  }).then((r) => r.json());
+  if (rep.erreur) return message("ko", "Refusé — le site n'aurait pas pu se construire", rep.details);
+  message("ok", "Auteur enregistré", [rep.chemin, "Pense à committer : rien n'est publié avant."]);
+  charger();
+}
+
+async function chargerQr() {
+  const [codes, livres] = await Promise.all([
+    fetch("/api/qr").then((r) => r.json()),
+    fetch("/api/livres").then((r) => r.json()),
+  ]);
+  $("q-destination").innerHTML = livres.length
+    ? livres.map((l) => `<option value="${l.slug}">${(l.editions?.[0]?.titre) || l.slug}</option>`).join("")
+    : `<option value="">— aucun livre —</option>`;
+  $("liste-qr").innerHTML = codes.length
+    ? codes.map((c) => `<li style="padding:10px 0">
+        <code>${c.code}</code> — ${c.libelle}
+        <br><span class="badge">${c.type || "bonus"} → ${c.destination} · ${c.actif ? "actif" : "désactivé"}${c.tirage ? " · " + c.tirage : ""}</span>
+        <br><button class="onglet" style="margin-top:6px" onclick="basculer('${c.code}', ${!c.actif})">
+          ${c.actif ? "Désactiver" : "Réactiver"}</button></li>`).join("")
+    : `<li><span class="badge">Aucun code</span></li>`;
+}
+
+async function basculer(code, actif) {
+  // Jamais de suppression : un code retiré pourrait être réattribué, et
+  // les exemplaires déjà vendus mèneraient au mauvais livre.
+  await fetch("/api/qr/actif", { method: "POST", headers: { "content-type": "application/json" },
+    body: JSON.stringify({ code, actif }) });
+  chargerQr();
+}
+
+async function creerQr() {
+  const rep = await fetch("/api/qr", {
+    method: "POST", headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      type: $("q-type").value, destination: $("q-destination").value,
+      libelle: $("q-libelle").value.trim(), tirage: $("q-tirage").value.trim(),
+    }),
+  }).then((r) => r.json());
+
+  if (rep.erreur) { $("qr-resultat").innerHTML = ""; return message("ko", "Code non créé", rep.details); }
+
+  $("qr-resultat").innerHTML = `<div class="qr-apercu">${rep.svg}
+      <div><strong>${rep.code}</strong>
+      <p class="aide" style="margin-top:6px">URL encodée : <code>${rep.url}</code></p>
+      <p class="aide">Fichier vectoriel : <code>${rep.fichier}</code> — à envoyer à l'imprimeur.</p>
+      <p class="aide"><strong>Scanner l'épreuve imprimée, pas l'écran.</strong> Un code validé sur un
+      moniteur et raté au vernis se découvre sur le tirage entier.</p></div></div>`;
+  message("ok", "Code créé", ["Pense à committer src/content/qr/codes.json."]);
+  chargerQr();
+}
+
+charger();
+</script>
+</body>
+</html>

@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "admin": "node outils/back-office/serveur.mjs",
     "lint": "eslint .",
     "test": "vitest run"
   },

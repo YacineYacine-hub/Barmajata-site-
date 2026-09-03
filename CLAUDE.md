@@ -1168,6 +1168,48 @@ en OKLab (`color-mix(in oklab, …)`, utilisé par `.reglure`).
 `nuit-950` s'ajoute pour la devanture « Encre » : un cran sous `nuit-900`,
 afin que `nuit-900` puisse servir de surface posée dessus.
 
+## Back-office : LOCAL, et hors du site
+
+`npm run admin` → http://localhost:4317
+
+**Décision D2, tranchée le 2026-09-03 : back-office local, pas en ligne.**
+L'utilisateur est seul à publier ; un back-office en ligne existe pour
+qu'une équipe travaille à distance, ce qui n'est pas son problème. Monter
+une base de données, une authentification et un serveur exposé pour un
+catalogue vide, c'est entretenir pour toujours un coût qu'on n'a pas.
+
+### Trois propriétés à ne jamais casser
+
+1. **Il vit dans `outils/back-office/`, hors de `src/app/`.** Il ne peut
+   donc pas être déployé par accident avec le site. Un back-office qui ne
+   traverse jamais la frontière de production ne peut pas fuiter.
+2. **Il n'écoute que sur `127.0.0.1`.** C'est ce qui rend l'absence
+   d'authentification acceptable : la protection est physique. Ne jamais
+   passer en `0.0.0.0` « pour tester depuis le téléphone ».
+3. **Il valide avec le MÊME schéma Zod que le build.** Un livre refusé
+   ici aurait fait échouer le déploiement : l'erreur se découvre en la
+   saisissant. Il vérifie en plus que l'auteur référencé existe, ce que le
+   schéma seul ne peut pas faire.
+
+### Ce qu'il fait
+
+Auteurs, livres (édition française, formats, prix, ISBN, ASIN,
+catégories), dépôt des visuels dans `public/couvertures/`, et les QR codes
+avec leur visuel vectoriel. Aucune base : il écrit les fichiers de
+`src/content/`, et **git reste l'historique et l'annulation**.
+
+Rien n'est publié tant que l'utilisateur n'a pas commité — l'interface le
+répète à chaque enregistrement.
+
+Port **4317** et non 4000, qui était déjà occupé sur la machine.
+Surchargeable par `BARMAJATA_ADMIN_PORT`.
+
+### Si un accès distant devient nécessaire
+
+L'interface est déjà écrite : il n'y aurait qu'à la déployer derrière une
+authentification forte (clé d'accès, pas OTP — voir la master checklist).
+Ne pas repartir de zéro.
+
 ## Routes techniques hors préfixe locale
 
 - `/b/[code]` — redirection 302 QR code (`src/app/b/[code]/route.ts`),
