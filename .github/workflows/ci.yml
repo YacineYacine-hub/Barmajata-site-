@@ -20,6 +20,12 @@ jobs:
       - run: npx tsc --noEmit
       - run: npm run lint
 
+      # Les tests avant le build : ils durent deux dixièmes de seconde et
+      # portent sur la logique qui décide de ce qu'un visiteur voit et de
+      # ce qu'un jeton de confirmation accepte. Échouer ici coûte moins
+      # cher qu'échouer après trois minutes de build.
+      - run: npm test
+
       # `next build` imprime certaines erreurs et sort quand même en 0 :
       # une clé de traduction manquante produit « Error: MISSING_MESSAGE »
       # pendant la génération statique sans faire échouer le build. Se fier

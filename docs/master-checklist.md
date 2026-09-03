@@ -265,8 +265,13 @@ Stripe, **c'est nous le vendeur**, plus Amazon.
       encaissement laisse un client qui a payé sans rien recevoir.
 - [ ] Webhooks Stripe et Lulu : signature vérifiée, traitement idempotent.
 - [ ] Second canal Amazon, avec redirection contournable par le visiteur.
-- [ ] Tests automatisés sur le prix, le paiement et la commande
-      d'impression. Le projet n'en a **aucun** aujourd'hui.
+- [x] **Premiers tests automatisés** *(2026-09-03)* : 49 tests sur le
+      jeton du club, les liens Amazon, le choix d'édition, le prix affiché
+      et les catégories. Ajoutés à la CI et au garde-fou de push. Leur
+      capacité à détecter un vrai défaut a été prouvée en introduisant
+      trois régressions volontaires — six tests sont tombés.
+- [ ] Étendre aux tests du paiement et de la commande d'impression quand
+      ils existeront.
 - [ ] Environnement de recette : Stripe en mode test, Lulu en bac à sable.
 - [ ] Facturation : mentions obligatoires, numérotation sans trou,
       conservation dix ans.

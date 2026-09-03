@@ -606,6 +606,47 @@ un layout racine et de convertir `[locale]/layout.tsx` et
 arbitrer séparément. Le 410 n'est pas concerné : il sort du middleware,
 entièrement rendu côté serveur.
 
+## Tests
+
+`npm test` — Vitest, 49 tests, moins de deux dixièmes de seconde. Lancé
+par la CI et par `.claude/push-si-vert.sh`, entre `eslint` et `next build`.
+
+**Ce qui est testé, et pourquoi ceux-là.** De la logique pure, choisie
+pour une raison commune : **elle n'a aucune trace visible quand elle se
+trompe**. Un livre disparaît du catalogue, un bouton mène à la mauvaise
+boutique, un jeton falsifié est accepté — rien ne s'affiche en rouge.
+
+- `src/lib/club/token.test.ts` — le seul mécanisme cryptographique du
+  projet, et il tient lieu de base de données. Les tests portent surtout
+  sur ce qu'il doit REFUSER : signature falsifiée, charge utile modifiée
+  en conservant la signature, autre secret, jeton malformé, expiration à
+  la minute près. Plus les deux comportements dissymétriques voulus : la
+  vérification ne lance **jamais** sans secret, la création **si**.
+- `src/lib/amazon/marketplaces.test.ts` — les seules URL par lesquelles
+  le site envoie acheter. Domaines composés, absence de balise
+  d'affiliation non demandée, et le fait qu'aucune locale ne pointe vers
+  une boutique désactivée.
+- `src/lib/content/schema.test.ts` — le choix de l'édition affichée (dont
+  le cas piégeux : un brouillon dans la bonne langue ne doit jamais
+  l'emporter sur une édition publiée dans une autre), le prix minimum, la
+  dérivation d'épaisseur, et les cinq refus du filtre « Nouveautés ».
+- `src/lib/content/categories.test.ts` — aller-retour catégorie/slug dans
+  les trois langues, unicité des slugs, et l'étanchéité entre langues.
+
+**Ce qui n'est PAS testé, et volontairement** : aucun composant React,
+aucun DOM. La documentation de Next propose `jsdom`,
+`@testing-library/react` et `@vitejs/plugin-react` — quatre paquets qui ne
+sont pas installés. `vite-tsconfig-paths` a lui-même été retiré après
+installation, Vite résolvant les alias nativement. Le jour où un composant
+devra être testé, la documentation dit quoi ajouter ; ne pas l'ajouter
+avant.
+
+**Les tests ont été éprouvés par mutation** : trois régressions
+volontaires — garde-fou « parution future » retiré, brouillons acceptés
+par `resolveEdition`, comparaison de signature court-circuitée — ont fait
+tomber six tests. Une suite qui passe toujours ne prouve rien ; refaire ce
+contrôle après toute extension importante.
+
 ## Piège : `next build` sort en 0 malgré des erreurs
 
 **Mesuré sur ce projet, pas supposé.** Retirer `pages.books.description`

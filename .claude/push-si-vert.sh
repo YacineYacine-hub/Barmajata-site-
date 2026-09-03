@@ -77,7 +77,7 @@ echouer() {
 # build de démonstration d'un serveur local en cours d'exécution, qui se met
 # alors à servir une page d'erreur 500 (fragments JavaScript disparus).
 # Voir le commentaire de `distDir` dans next.config.ts.
-for controle in "npx tsc --noEmit" "npm run lint" "NEXT_DIST_DIR=.next-verif npm run build"; do
+for controle in "npx tsc --noEmit" "npm run lint" "npm test" "NEXT_DIST_DIR=.next-verif npm run build"; do
   if ! eval "$controle" >"$JOURNAL" 2>&1; then
     echouer "« $controle » a échoué."
   fi
