@@ -1037,6 +1037,21 @@ qui a été corrigé aux lots H35 et H36. Seule exception assumée : le surtitre
 garde un **plancher en rem**, une taille purement proportionnelle le
 faisant tomber à 4px sur un téléphone.
 
+### Piège : un letter-spacing en `em` s'hérite en PIXELS
+
+Consigné parce qu'il est invisible et qu'il a mordu deux fois.
+
+L'échelle `text-enseigne` déclare `letter-spacing: -0.02em`. Un `em` de
+letter-spacing se résout sur la taille de l'élément **qui le déclare**,
+puis la valeur en **pixels** est héritée telle quelle par les descendants.
+Sur un titre de ~100px, cela fait −2px — appliqués ensuite à une baseline
+de 15px, soit −13 % de chasse : les lettres se touchent.
+
+Mesuré au navigateur le 2026-09-03 (−1,9992px sur 15,2px) et corrigé par
+un `tracking-normal` explicite sur le sous-titre du hero. **Tout petit
+texte placé sous un titre à l'échelle « enseigne » doit remettre son
+propre espacement.**
+
 ### Où trouver le reste
 
 `docs/journal-des-lots.md` retrace lot par lot *pourquoi* chaque décision a

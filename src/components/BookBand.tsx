@@ -565,6 +565,32 @@ export function BookBand({
   );
 }
 
+/*
+ * Réduction du libellé quand un MOT est trop long pour la carte.
+ *
+ * Le problème n'est pas la longueur du libellé — il se répartit sur deux
+ * lignes — mais celle du mot le plus long, qui ne peut pas se couper. Un
+ * mot plus large que la carte était écrêté par l'`overflow-hidden` :
+ * « Développement personnel » perdait ses dernières lettres. Constaté à
+ * l'écran après le passage à quatre catégories (Lot H51).
+ *
+ * Le seuil porte donc sur le mot le plus long, et non sur le nombre total
+ * de caractères : réduire « Poésie et pensées », qui tient très bien, pour
+ * la même raison qu'on réduit « Développement », n'aurait aucun sens.
+ *
+ * 11 caractères : « Développement » (13) passe en petit, « Nouveautés »
+ * (10) reste en grand. Aucun libellé anglais ni espagnol n'atteint le
+ * seuil aujourd'hui — c'est le français qui contraint.
+ *
+ * `overflow-wrap: anywhere` reste posé en filet de sécurité : un libellé
+ * futur plus long encore se couperait plutôt que d'être tronqué.
+ */
+const SEUIL_MOT_LONG = 11;
+
+function motLePlusLong(titre: string): number {
+  return titre.split(/\s+/).reduce((max, mot) => Math.max(max, mot.length), 0);
+}
+
 function BandCover({ item, consulterLabel }: { item: BandItem; consulterLabel: string }) {
   // Le titre est TOUJOURS rendu, au moins pour les lecteurs d'écran : le
   // visuel porte `alt=""`, donc sans ce texte le lien n'aurait aucun nom
@@ -591,7 +617,11 @@ function BandCover({ item, consulterLabel }: { item: BandItem; consulterLabel: s
              * `scale`, mais le texte doit rester proportionné à la carte
              * quelle que soit la largeur d'écran.
              */}
-            <span className="absolute inset-0 z-10 flex items-center justify-center px-4 text-center font-serif text-[1.35rem] leading-tight text-lin-50">
+            <span
+              className={`absolute inset-0 z-10 flex items-center justify-center px-4 text-center font-serif leading-tight text-lin-50 [overflow-wrap:anywhere] ${
+                motLePlusLong(item.title) > SEUIL_MOT_LONG ? "text-[1.05rem]" : "text-[1.35rem]"
+              }`}
+            >
               {item.title}
             </span>
             <span className="absolute inset-x-0 bottom-[7%] z-10 text-center text-[0.62rem] font-medium uppercase tracking-[0.22em] text-or-500">

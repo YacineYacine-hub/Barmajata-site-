@@ -260,8 +260,24 @@ export function Hero({ slides }: HeroProps) {
                       texte doit se caler à droite tout seul. Le bloc parent
                       est un inline-block dont la largeur est celle du mot,
                       donc « début de ligne » y désigne bien le B. */}
+                  {/*
+                    * `tracking-normal` n'est PAS décoratif : sans lui, la
+                    * baseline se rendait lettres collées.
+                    *
+                    * Le conteneur porte `text-enseigne`, dont l'échelle
+                    * définit `letter-spacing: -0.02em`. Un `em` de
+                    * letter-spacing se résout sur la taille de l'élément
+                    * QUI LE DÉCLARE, puis la valeur en PIXELS est héritée
+                    * telle quelle : -0,02em de ~100px font -2px, appliqués
+                    * ensuite à un texte de 15px. Soit -13 % de chasse, ce
+                    * qui écrase le mot.
+                    *
+                    * Mesuré au navigateur le 2026-09-03 : -1,9992px sur
+                    * 15,2px. Le piège vaut pour tout texte petit placé sous
+                    * un titre à l'échelle « enseigne ».
+                    */}
                   {slide.subtitle && (
-                    <p className="mt-[0.14em] max-w-md text-start text-[clamp(0.95rem,0.1em,1.35rem)] text-roche-700">
+                    <p className="mt-[0.14em] max-w-md text-start text-[clamp(0.95rem,0.1em,1.35rem)] tracking-normal text-roche-700">
                       {slide.subtitle}
                     </p>
                   )}
