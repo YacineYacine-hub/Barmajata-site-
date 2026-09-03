@@ -24,8 +24,16 @@
  * société française porterait un SIREN. Ce qui compte n'est pas la forme
  * du numéro, c'est que le lecteur puisse identifier et joindre l'éditeur.
  *
- * `BARMAJATA` reste le nom sous lequel le site se présente ; les mentions
- * légales, elles, doivent nommer l'éditeur réel.
+ * `BARMAJATA` reste le nom sous lequel le site se présente — c'est une
+ * **marque déposée**, pas une société. Les mentions légales, elles,
+ * doivent nommer l'éditrice réelle : l'autrice, personne physique, à qui
+ * appartiennent les ISBN et les droits.
+ *
+ * **QUAND REMPLIR CE FICHIER : à la mise en ligne, pas avant.** C'est une
+ * décision explicite (2026-09-03) : on prépare l'outil, on complète les
+ * informations obligatoires au moment de la publication. Ne pas bloquer
+ * le travail du site en attendant — les pages tiennent leur état
+ * d'attente toutes seules.
  */
 export type IdentiteLegale = {
   /** Dénomination sociale complète, telle qu'immatriculée. */

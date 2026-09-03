@@ -44,18 +44,46 @@ tranchées, avancer c'est deviner.
 | D7 | **Un bot, ou trois ?** | Telegram, ManyChat, assistant du site. Trois systèmes, trois tons, trois endroits où une réponse fausse peut sortir. |
 | D8 | **Le domaine définitif est-il arrêté ?** | Il part à l'encre dans chaque exemplaire. Après la première impression, il n'est plus changeable. |
 
-### Qui est l'éditeur, aujourd'hui
+### Qui est l'éditeur, et ce qu'est BARMAJATA
 
-**Une personne physique, pas une société** *(précisé le 2026-09-03)*. La
-LLC américaine est ajournée. Les ouvrages sont publiés à titre personnel,
-avec un **préfixe ISBN AFNIL déjà obtenu à titre personnel**, et seront
-concédés à BARMAJATA le moment venu.
+**Stratégie arrêtée le 2026-09-03 : auto-édition sous label.**
 
-Trois conséquences, et la première est une bonne nouvelle :
+- **L'éditrice est l'autrice elle-même**, personne physique. ISBN AFNIL à
+  son nom, compte Amazon KDP à son nom, **droits jamais cédés**.
+- **BARMAJATA est une marque déposée à l'INPI**, utilisée comme label
+  d'imprint sur les ouvrages et comme nom commercial du site. Pas une
+  société, et il n'y en a pas.
+- La LLC américaine est abandonnée, et la maison d'édition avec — trop
+  complexe et trop coûteuse pour ce qu'elle apporterait aujourd'hui.
 
-- **Les pages légales ne sont plus bloquées.** Elles attendaient une
-  société ; il suffit d'une identité d'éditeur, et elle existe. C'est le
-  premier bloquant de toute la liste qui tombe.
+**La ligne qui obligera à une structure n'est ni la marque, ni le site,
+ni Amazon : c'est la vente directe.** Tant que l'achat se conclut chez
+Amazon, rien n'est requis. Le jour où le site encaisse par Stripe, la
+vente régulière en nom propre devient une activité à déclarer, et
+**Stripe exige un SIRET**. Une micro-entreprise suffit — gratuite, sans
+capital ni comptable. Ne pas confondre « structure » et « société ».
+
+- [ ] 👤 **Vérifier les classes du dépôt INPI.** Pour une marque de
+      livres, ce sont les classes **16** (produits imprimés) et **41**
+      (services d'édition). La **42** est l'informatique — si le dépôt a
+      été fait dessus, la marque ne couvre pas l'activité d'édition.
+- [ ] ⚠ Ne jamais produire de récit de sélection éditoriale — « retenue
+      par les éditions… », comité de lecture, catalogue d'auteurs
+      inexistants. Utiliser le nom comme label est irréprochable ; laisser
+      croire à une maison qui choisit ses auteurs est une pratique
+      commerciale trompeuse. Vaut pour `/la-maison`, `/manuscrits` et tout
+      texte de marque.
+
+Quatre conséquences, dont deux bonnes :
+
+- **Les pages légales ne sont plus bloquées par une société.** Il suffit
+  d'une identité d'éditrice, et elle existe. **Décision : on prépare
+  l'outil, on remplit les informations obligatoires à la mise en ligne,
+  pas avant.** Le code est bâti pour — `src/lib/legal.ts` vide, pages en
+  attente. **Ne plus rebloquer le travail du site là-dessus.**
+- **La question de l'anonymat se résout d'elle-même** : c'est l'autrice
+  qui est nommée comme éditrice, sur les ISBN, chez KDP et dans les
+  mentions. Personne d'autre n'apparaît.
 - **L'alerte ISBN est levée pour l'instant** : l'AFNIL attribue aux
   éditeurs établis en France, ce qui est le cas. Elle reviendra le jour de
   la cession à une structure américaine — un préfixe AFNIL ne se transfère

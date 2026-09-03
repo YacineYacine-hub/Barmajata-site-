@@ -718,6 +718,54 @@ Le `rm -rf .next` n'est pas superflu : sans lui, la génération
 incrémentale conserve des pages du build précédent et le mélange persiste.
 Et le drapeau est nécessaire **au build ET au démarrage**.
 
+## Qui édite, et ce qu'est BARMAJATA
+
+**Stratégie arrêtée le 2026-09-03.** À connaître avant d'écrire la moindre
+ligne de texte institutionnel, parce qu'elle contredit ce que le mot
+« maison d'édition » laisse croire.
+
+- **L'éditrice est une personne physique** : l'autrice elle-même. Les ISBN
+  sont enregistrés à son nom auprès de l'AFNIL, le compte Amazon KDP est
+  le sien, et **les droits lui appartiennent** — ils ne sont cédés à
+  personne.
+- **BARMAJATA est une marque**, déposée à l'INPI, utilisée comme **label
+  d'imprint** sur les ouvrages et comme nom commercial du site. Ce n'est
+  pas une société, et il n'y en a pas.
+- C'est donc de l'**auto-édition sous label** : courant, légal, et sans
+  structure à constituer. Production au nom de l'autrice, promotion sous
+  la marque.
+
+### ⚠ Ce qu'il ne faut jamais écrire
+
+Un label d'auto-édition ne « sélectionne » pas d'auteurs. Ne jamais
+produire de récit de sélection éditoriale — « retenue par les éditions… »,
+comité de lecture, catalogue d'auteurs qui n'existent pas. Utiliser le nom
+comme label est irréprochable ; laisser croire à une maison qui choisit
+ses auteurs bascule dans la pratique commerciale trompeuse. Cela vaut
+pour `/la-maison`, `/manuscrits`, le journal et tout texte de marque.
+
+### Où est la ligne qui obligera à une structure
+
+Ce n'est ni la marque, ni le site, ni Amazon. **C'est la vente directe.**
+Tant que l'achat se conclut chez Amazon, l'autrice touche des redevances
+et rien n'est requis. Le jour où le site encaisse par Stripe, la vente
+régulière en nom propre devient une activité professionnelle à déclarer —
+et **Stripe exige un SIRET**, ce qui n'est pas contournable. Une
+micro-entreprise suffit : gratuite, sans capital ni comptable. Ne pas
+confondre « structure » et « société ».
+
+### Le principe : on prépare l'outil, on remplit à la mise en ligne
+
+Les informations obligatoires — identité de l'éditrice, adresse, contact,
+hébergeur — **ne sont pas inscrites tant que le site n'est pas mis en
+ligne**. C'est délibéré, et le code est bâti pour : `src/lib/legal.ts` est
+vide, et les quatre pages légales gardent leur texte d'attente jusqu'à ce
+qu'il soit rempli. Rien d'autre à modifier ce jour-là.
+
+Corollaire pour toute séance : **ne pas rebloquer le travail du site sur
+ces informations**. Elles arrivent au moment de la mise en ligne, pas
+avant.
+
 ## Remises : un plafond par marché, jamais une valeur libre
 
 **Aucune remise sur un livre ne doit jamais être codée sans plafond.** Ce
