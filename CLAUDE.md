@@ -518,6 +518,18 @@ c'est l'erreur classique.
 - `Strict-Transport-Security` deux ans, sous-domaines compris,
   **volontairement sans `preload`** : l'inscription sur la liste des
   navigateurs est longue à défaire.
+  **Il n'est envoyé QUE depuis le domaine de production** (règle `has` sur
+  l'hôte). Envoyé partout, il partait aussi depuis `localhost` : le
+  navigateur y forçait alors le HTTPS, où aucun certificat n'existe, et le
+  site devenait inaccessible — pendant que `curl`, qui ignore l'en-tête,
+  continuait de répondre, ce qui rendait le diagnostic trompeur. La
+  contrainte porte de plus sur l'hôte entier, donc elle cassait aussi tout
+  autre projet servi sur `localhost`. Défaut introduit le 2026-09-02 et
+  corrigé le lendemain, après que l'utilisateur a signalé un site
+  inaccessible. **Si le domaine change, changer aussi cette valeur**,
+  sinon le HSTS cesse silencieusement d'être envoyé. Pour désamorcer un
+  navigateur déjà contaminé : `chrome://net-internals/#hsts`, « Delete
+  domain security policies », `localhost`.
 - `X-Content-Type-Options: nosniff`, `Referrer-Policy:
   strict-origin-when-cross-origin`, `Permissions-Policy` refusant caméra,
   micro, géolocalisation, paiement et USB, `X-Frame-Options: DENY`

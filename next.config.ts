@@ -58,17 +58,36 @@ const CSP = [
   "upgrade-insecure-requests",
 ].join("; ");
 
+/*
+ * HSTS — À PART DES AUTRES, ET SEULEMENT SUR LE VRAI DOMAINE.
+ *
+ * Défaut introduit puis corrigé le 2026-09-03. Envoyé sur toutes les
+ * réponses, cet en-tête part aussi depuis `localhost` en développement.
+ * Un navigateur qui l'accepte force ensuite le HTTPS sur `localhost`, où
+ * aucun certificat n'existe : le site devient inaccessible dans le
+ * navigateur alors que `curl`, qui ignore l'en-tête, continue de
+ * répondre — d'où un diagnostic trompeur. Pire, la contrainte porte sur
+ * l'hôte entier : elle casse aussi tout autre projet servi sur
+ * `localhost`.
+ *
+ * Il est donc conditionné à l'hôte de production. Si le domaine change,
+ * changer aussi cette valeur, sinon le HSTS cesse silencieusement d'être
+ * envoyé.
+ *
+ * Pour désamorcer un navigateur déjà contaminé :
+ * `chrome://net-internals/#hsts` → « Delete domain security policies » →
+ * `localhost`.
+ *
+ * Deux ans, sous-domaines compris, volontairement SANS `preload` :
+ * l'inscription sur la liste des navigateurs est longue à défaire et
+ * interdirait tout sous-domaine en HTTP simple.
+ */
+const HSTS = {
+  key: "Strict-Transport-Security",
+  value: "max-age=63072000; includeSubDomains",
+};
+
 const EN_TETES = [
-  {
-    /*
-     * HSTS : deux ans, sous-domaines compris. Volontairement SANS
-     * `preload` — l'inscription sur la liste des navigateurs est longue à
-     * défaire, et elle interdirait tout sous-domaine en HTTP simple. À
-     * n'ajouter qu'une fois le déploiement stabilisé.
-     */
-    key: "Strict-Transport-Security",
-    value: "max-age=63072000; includeSubDomains",
-  },
   // Empêche le navigateur de deviner un type MIME différent de celui
   // annoncé — la porte d'entrée classique d'un fichier téléversé exécuté
   // comme un script.
@@ -106,7 +125,15 @@ const nextConfig: NextConfig = {
   // connue. Aucun intérêt à le publier.
   poweredByHeader: false,
   async headers() {
-    return [{ source: "/:chemin*", headers: EN_TETES }];
+    return [
+      { source: "/:chemin*", headers: EN_TETES },
+      // HSTS uniquement depuis le domaine de production — voir plus haut.
+      {
+        source: "/:chemin*",
+        has: [{ type: "host", value: "(www\\.)?barmajata\\.com" }],
+        headers: [HSTS],
+      },
+    ];
   },
   ...(process.env.NEXT_DIST_DIR ? { distDir: process.env.NEXT_DIST_DIR } : {}),
 };
