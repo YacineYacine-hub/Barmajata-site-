@@ -745,6 +745,44 @@ Le `rm -rf .next` n'est pas superflu : sans lui, la génération
 incrémentale conserve des pages du build précédent et le mélange persiste.
 Et le drapeau est nécessaire **au build ET au démarrage**.
 
+## Ce que Barmajata publie : des livres à complément d'écriture
+
+Direction produit présentée le 2026-09-03, détaillée dans
+`docs/strategie-ancrage-cognitif.md`.
+
+**Ce ne sont pas des carnets** — précision explicite de l'utilisateur, et
+elle commande le droit applicable. Chaque titre fait environ 165 pages et
+comporte **une grande partie de lecture**, complétée par de l'écriture.
+C'est un livre : **loi Lang, ISBN, dépôt légal s'appliquent**, rien ne
+change de ce qui est bâti. *(Le critère, pour un titre futur, est la
+proportion de contenu par rapport à l'espace laissé vierge, et il
+s'apprécie titre par titre.)*
+
+Trois gammes : **enfants** (mémorisation de poésies et leçons),
+**développement personnel** (ancrage positif, gratitude), **seniors**
+(« Roman-Miroir » : un bloc narratif, un questionnement de rappel actif,
+puis un espace d'écriture reliant le récit au vécu). Print-on-demand,
+zéro stock, prix visé 22,90–24,90 €.
+
+Le site cesse d'être une vitrine pour devenir une **plateforme
+d'autorité** — un onglet « Le Lab » de vulgarisation, du SEO thématique.
+
+### ⚠ Deux choses à ne jamais écrire pour cette gamme
+
+1. **Aucun expert inventé.** La présentation proposait un « Professeur
+   Barmajata », explicitement « pas un homme réel », servant de « caution
+   scientifique ». C'est une pratique commerciale trompeuse au sens de
+   l'art. L121-2 du Code de la consommation — inventer l'expertise d'une
+   personne pour déterminer un achat. Un narrateur **ouvertement fictif**
+   est possible ; un professeur qui atteste ne l'est pas.
+2. **Aucune promesse de mémoire ou de santé**, en particulier vers les
+   seniors : « lutter contre le déclin », « stimulation cognitive » sont
+   des promesses thérapeutiques. Écrire le plaisir du récit, la
+   transmission, la mémoire de vie qu'on laisse aux siens — le produit est
+   le même, l'argumentaire seul change. Vaut aussi pour les chiffres :
+   « on retient 300 % mieux » n'a pas de source. L'effet de génération est
+   réel et se cite ; il ne s'invente pas.
+
 ## Qui édite, et ce qu'est BARMAJATA
 
 **Stratégie arrêtée le 2026-09-03.** À connaître avant d'écrire la moindre
