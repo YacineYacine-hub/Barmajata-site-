@@ -18,12 +18,15 @@ export function StickyBuyBar({
   asin,
   urlOverride,
   locale,
+  livreSlug,
 }: {
   title: string;
   price?: string;
   asin?: string;
   urlOverride?: string;
   locale: ContentLocale;
+  /** Transmis au bouton pour la ligne de journal de `/sortie/amazon`. */
+  livreSlug?: string;
 }) {
   const [visible, setVisible] = useState(false);
 
@@ -47,7 +50,7 @@ export function StickyBuyBar({
           <p className="truncate text-sm font-medium text-nuit-900">{title}</p>
           {price && <p className="text-sm text-roche-700">{price}</p>}
         </div>
-        <AmazonBuyButton asin={asin} urlOverride={urlOverride} locale={locale} />
+        <AmazonBuyButton asin={asin} urlOverride={urlOverride} locale={locale} livreSlug={livreSlug} />
       </div>
     </div>
   );

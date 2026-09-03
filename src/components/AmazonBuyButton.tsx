@@ -40,10 +40,14 @@ export function AmazonBuyButton({
   asin,
   urlOverride,
   locale,
+  livreSlug,
 }: {
   asin?: string;
   urlOverride?: string;
   locale: ContentLocale;
+  /** Purement indicatif, pour la ligne de journal de `/sortie/amazon`.
+   *  N'entre jamais dans l'URL construite vers Amazon. */
+  livreSlug?: string;
 }) {
   const t = useTranslations("books");
   const active = getActiveMarketplaces();
@@ -68,6 +72,13 @@ export function AmazonBuyButton({
   const marketplace =
     override ?? (cookieIsValid ? (cookieMarketplace as MarketplaceCode) : DEFAULT_MARKETPLACE_BY_LOCALE[locale]);
 
+  /*
+   * `urlOverride` reste un lien DIRECT, donc non mesuré. C'est une URL
+   * libre : la faire passer par la sortie mesurée obligerait à rediriger
+   * vers une adresse reçue, c'est-à-dire à ouvrir exactement la brèche
+   * que cette route existe pour éviter. Échappatoire rare, mesure perdue,
+   * sécurité gardée.
+   */
   if (urlOverride) {
     return (
       <a
@@ -92,8 +103,21 @@ export function AmazonBuyButton({
 
   return (
     <div className="flex flex-col items-start gap-2">
+      {/*
+        * Le lien passe par `/sortie/amazon` et non directement chez
+        * Amazon : le clic devient une ligne dans le journal du serveur,
+        * ce qui donne le rapport visites / clics d'achat **sans traceur,
+        * sans cookie et sans script**.
+        *
+        * La route ne redirige jamais vers une URL reçue : elle valide
+        * l'ASIN et la boutique, puis reconstruit l'adresse elle-même —
+        * sans quoi ce serait une redirection ouverte. Voir
+        * src/app/sortie/amazon/route.ts.
+        */}
       <a
-        href={buildAmazonUrl(asin, marketplace)}
+        href={`/sortie/amazon?asin=${encodeURIComponent(asin)}&m=${encodeURIComponent(marketplace)}${
+          livreSlug ? `&livre=${encodeURIComponent(livreSlug)}` : ""
+        }`}
         target="_blank"
         rel="nofollow sponsored noopener"
         className="inline-block rounded-md bg-nuit-900 px-6 py-3 text-sm font-medium text-lin-50 hover:bg-roche-700"

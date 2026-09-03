@@ -1168,6 +1168,47 @@ en OKLab (`color-mix(in oklab, …)`, utilisé par `.reglure`).
 `nuit-950` s'ajoute pour la devanture « Encre » : un cran sous `nuit-900`,
 afin que `nuit-900` puisse servir de surface posée dessus.
 
+## Mesure des clics d'achat : `/sortie/amazon`
+
+Le bouton d'achat ne pointe pas directement chez Amazon : il passe par
+`/sortie/amazon?asin=…&m=…&livre=…`, qui journalise puis redirige.
+
+**Pourquoi** : le clic devient une ligne dans le journal du serveur, ce
+qui donne le rapport visites / clics d'achat **sans traceur, sans cookie
+et sans script**. La mesure se fait côté serveur, où elle ne regarde
+personne — et aucun bloqueur de publicité ne peut la masquer.
+
+Ce que cela mesure : les clics **vers** Amazon. Ce qui se passe ensuite
+échappe au site — Amazon ne renvoie rien. Le taux calculable est donc
+« visites → clic d'achat », pas « visites → vente ». Le vrai taux de
+conversion n'existera qu'avec la vente directe.
+
+### ⚠ Redirection ouverte — la seule route à risque du site
+
+C'est le seul endroit qui redirige d'après des paramètres d'URL. Une
+route qui ferait confiance à ces paramètres deviendrait une **redirection
+ouverte** : une adresse en `barmajata.com` menant chez n'importe qui, avec
+la caution du domaine.
+
+**Le principe : on ne redirige JAMAIS vers une URL reçue.** On reçoit un
+ASIN et un code de boutique, `validerSortieAmazon()`
+(`src/lib/amazon/sortie.ts`) les valide, et l'URL est **reconstruite** par
+`buildAmazonUrl()`. Tout le reste part à l'accueil — jamais une erreur, un
+lien d'achat malformé ne doit pas laisser un acheteur devant un message
+technique.
+
+La validation est extraite de la route et **testée à part** (16 cas, dont
+les URL complètes glissées en paramètre et les propriétés héritées du
+prototype comme `toString`). Ne jamais la remettre en ligne dans la route.
+
+**`urlOverride` reste un lien direct, donc non mesuré** : c'est une URL
+libre, la faire passer par ici obligerait à rediriger vers une adresse
+reçue. Échappatoire rare, mesure perdue, sécurité gardée.
+
+Le matcher de `src/proxy.ts` doit exclure `sortie/` comme `b/` et
+`bonus/`, sinon next-intl la préfixe en `/fr/sortie/...` et elle répond
+404.
+
 ## Back-office : LOCAL, et hors du site
 
 `npm run admin` → http://localhost:4317

@@ -183,6 +183,7 @@ export default async function BookPage({
                     asin={format.asin}
                     urlOverride={format.urlOverride}
                     locale={contentLocale}
+                    livreSlug={book.slug}
                   />
                 </div>
               ))}
@@ -389,6 +390,7 @@ export default async function BookPage({
           asin={primarySellableFormat.asin}
           urlOverride={primarySellableFormat.urlOverride}
           locale={contentLocale}
+          livreSlug={book.slug}
         />
       )}
     </main>

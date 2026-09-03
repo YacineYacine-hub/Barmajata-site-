@@ -116,5 +116,9 @@ export const config = {
   // generated sitemap/robots files, and files with an extension (static
   // assets). Those are intentionally kept outside the locale-prefixed
   // routing scheme.
-  matcher: ["/((?!api|_next|_vercel|b/|bonus/|sitemap\\.xml|robots\\.txt|.*\\..*).*)"],
+  // `sortie/` s'ajoute à `b/` et `bonus/` : ces routes vivent hors du
+  // préfixe de locale, et le middleware next-intl les préfixerait en
+  // `/fr/sortie/...` — elles répondraient alors 404 (piège déjà rencontré
+  // avec /bonus, voir CLAUDE.md).
+  matcher: ["/((?!api|_next|_vercel|b/|bonus/|sortie/|sitemap\\.xml|robots\\.txt|.*\\..*).*)"],
 };
