@@ -175,8 +175,14 @@ Le site n'existe aujourd'hui **qu'en local**. C'est la première marche.
       posés côté Next, ils se perdent si un intermédiaire les remplace.
 - [ ] Sauvegardes automatiques hors du VPS, **et une restauration de test
       réellement effectuée**.
-- [ ] Déploiement reproductible et retour arrière en une commande. La CI ne
-      fait aujourd'hui que construire.
+- [x] **Kit de déploiement écrit** *(2026-09-03, dossier `deploiement/`)* :
+      releases horodatées avec bascule atomique, retour arrière en une
+      commande qui ne reconstruit rien, unité systemd sous utilisateur
+      dédié et écoute locale seule, façade nginx. **Non exécuté sur le
+      VPS**, qui n'était pas accessible — première installation à éprouver
+      à la main.
+- [ ] Éprouver le kit sur le VPS, puis déclencher le déploiement depuis la
+      CI plutôt qu'à la main.
 - [ ] 👤 Contenu réel minimal : au moins un auteur et un livre. Le
       catalogue est vide, tout ce qu'on voit en local est factice.
 - [ ] 👤 Les quatre URL de réseaux sociaux, ou le maintien de la rangée
