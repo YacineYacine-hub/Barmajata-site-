@@ -124,6 +124,21 @@ export function getVisibleBookBySlug(slug: string): Book | undefined {
   return getAllBooks().find((book) => book.slug === slug && hasVisibleEdition(book));
 }
 
+/**
+ * Un livre, **visible ou non**. À n'utiliser que là où l'existence du
+ * slug importe indépendamment de sa visibilité — c'est le cas du
+ * redirecteur de QR codes, qui doit distinguer un ouvrage encore en
+ * brouillon (« masqué », donc on propose d'être prévenu) d'un slug qui
+ * n'existe pas du tout (« absent », donc accueil).
+ *
+ * **Ne jamais s'en servir pour afficher une page** : un brouillon doit
+ * rester invisible partout, y compris par URL directe. Pour cela,
+ * `getVisibleBookBySlug()`.
+ */
+export function getBookBySlug(slug: string): Book | undefined {
+  return getAllBooks().find((book) => book.slug === slug);
+}
+
 /** Livres publiquement affichables d'un auteur donné. */
 export function getBooksByAuthor(auteurSlug: string): Book[] {
   return getVisibleBooks({ auteurSlug });

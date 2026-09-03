@@ -854,6 +854,37 @@ exposition, et les avis atterrissent là où ils font vendre.
 si le code est inconnu ou désactivé (**jamais une 404** : le support
 physique survit à la désactivation).
 
+**La règle valait pour un code inconnu, pas pour une destination
+inconnue** — défaut mesuré le 2026-09-03 : un code de type `livre`
+pointant vers un slug inexistant construisait l'URL de la fiche sans
+vérifier, et la fiche répondait 404. Exactement ce que la doctrine
+interdit, et au pire moment : un exemplaire déjà imprimé.
+
+La décision vit désormais dans `resoudreCibleQr()`
+(`src/lib/content/qr.ts`), **séparée de la route pour être testable** —
+une promesse faite à un objet imprimé ne doit pas exiger un serveur pour
+être vérifiée. Quatre cas :
+
+| Situation | Destination |
+|---|---|
+| Code inconnu ou désactivé | accueil |
+| Type `bonus` (ou absent) | `/bonus/<destination>` |
+| Type `livre`, livre visible | la fiche |
+| Type `livre`, livre en **brouillon** | `/club?book=<slug>` |
+| Type `livre`, slug **inexistant** | accueil |
+
+Nuance à ne pas perdre : **`a_paraitre` est un statut visible.** Un
+ouvrage annoncé mène donc à sa fiche, où l'attend déjà le bouton « Être
+informé·e de la sortie ». Le repli vers le club ne concerne que le
+brouillon — situation réelle, puisque le code est attribué dès la
+création de la fiche. Le club y répond génériquement, sans afficher le
+titre : sa liste ne contient que les éditions visibles, et un brouillon ne
+doit fuiter nulle part, pas même par son titre. Vérifié au navigateur.
+
+`getBookBySlug()` a été ajouté pour cela — il renvoie un livre **visible
+ou non**, ce qui permet de distinguer « masqué » d'« absent ». **Ne jamais
+s'en servir pour afficher une page** : pour cela, `getVisibleBookBySlug()`.
+
 Étendu au Lot H14 d'un champ `type` :
 - `"bonus"` (défaut, rétrocompatible) → `/bonus/<destination>` ;
 - `"livre"` → la fiche du livre, donc son bloc d'avis. C'est le cas du QR
