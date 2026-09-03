@@ -291,7 +291,10 @@ export default async function BookPage({
             * consommation. Voir CLAUDE.md, « Avis de lecteurs ».
             */}
           {edition.statut === "publie" && primarySellableFormat?.asin && (
-            <section className="mt-12 border border-nuit-900/15 p-6">
+            /* `id="avis"` : cible du QR code de type « avis », imprimé en
+               fin d'ouvrage. `scroll-mt` pour que le bandeau collant ne
+               recouvre pas le bloc à l'arrivée. */
+            <section id="avis" className="mt-12 scroll-mt-24 border border-nuit-900/15 p-6">
               <h2 className="font-serif text-xl text-nuit-900 text-start">
                 {t("review.title")}
               </h2>

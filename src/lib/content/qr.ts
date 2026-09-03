@@ -21,7 +21,7 @@ import type { QrCode } from "./schema";
 export type CibleQr =
   | { type: "accueil" }
   | { type: "bonus"; destination: string }
-  | { type: "livre"; slug: string }
+  | { type: "livre"; slug: string; ancre?: string }
   /**
    * Le livre existe mais **aucune de ses éditions n'est visible** — donc
    * `brouillon`, et `brouillon` seulement.
@@ -54,13 +54,17 @@ export function resoudreCibleQr(
   // Code inconnu, ou désactivé après impression : accueil.
   if (!entry?.actif) return { type: "accueil" };
 
-  if (entry.type !== "livre") {
+  if (entry.type !== "livre" && entry.type !== "avis") {
     return { type: "bonus", destination: entry.destination };
   }
 
+  // Un code « avis » mène à la même fiche, ancrée sur son bloc d'avis.
+  // C'est le QR de fin d'ouvrage : il évite au lecteur de chercher.
+  const ancre = entry.type === "avis" ? "avis" : undefined;
+
   switch (etatLivre) {
     case "visible":
-      return { type: "livre", slug: entry.destination };
+      return { type: "livre", slug: entry.destination, ancre };
     case "masque":
       return { type: "club", slug: entry.destination };
     default:

@@ -249,7 +249,18 @@ export type Author = z.infer<typeof authorSchema>;
 /** Où mène un QR code physique. "bonus" (défaut) ouvre la page de contenu
  *  déverrouillé ; "livre" mène à la fiche du livre, donc à son bloc d'avis
  *  — c'est le cas d'usage « QR imprimé dans l'ouvrage ». */
-export const QR_DESTINATION_TYPES = ["bonus", "livre"] as const;
+/*
+ * Usages d'un QR code. Un même ouvrage en porte plusieurs, à des endroits
+ * différents de l'objet imprimé — d'où un type par usage et non un code
+ * unique par livre.
+ *
+ * - `bonus` — contenu déverrouillé (défaut, rétrocompatible) ;
+ * - `livre` — la fiche de l'ouvrage ;
+ * - `avis`  — la fiche, ancrée sur son bloc d'avis. C'est le QR de fin
+ *   d'ouvrage : « vous avez lu ce livre ? ». Il mène chez Amazon, où
+ *   l'achat est vérifié (voir CLAUDE.md, « Avis de lecteurs »).
+ */
+export const QR_DESTINATION_TYPES = ["bonus", "livre", "avis"] as const;
 export type QrDestinationType = (typeof QR_DESTINATION_TYPES)[number];
 
 export const qrCodeSchema = z.object({
@@ -259,5 +270,15 @@ export const qrCodeSchema = z.object({
   actif: z.boolean(),
   // Absent = "bonus", pour que les entrées existantes restent valides.
   type: z.enum(QR_DESTINATION_TYPES).optional(),
+
+  /*
+   * Registre d'impression. Purement documentaire — jamais lu par le site,
+   * jamais affiché. Sa raison d'être est qu'on saura, dans deux ans, ce
+   * que pointe un code trouvé sur un exemplaire : quel tirage, quelle
+   * date. Sans cela, un QR imprimé devient une énigme.
+   */
+  tirage: z.string().min(1).optional(),
+  imprimeLe: z.string().min(1).optional(),
+  note: z.string().min(1).optional(),
 });
 export type QrCode = z.infer<typeof qrCodeSchema>;

@@ -18,3 +18,8 @@ build.log
 # Notes contenant des jetons — ne doit jamais partir dans un commit
 DOSSIER ENV./
 *.notepad
+
+# Visuels QR produits par outils/creer-code-qr.mjs — destinés à l'imprimeur,
+# pas au dépôt. La table src/content/qr/codes.json, elle, est versionnée :
+# c'est elle qui fait autorité, le SVG se régénère.
+qr-a-imprimer/

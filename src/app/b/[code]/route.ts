@@ -27,7 +27,7 @@ export async function GET(
   // « masqué », pas « absent » : la nuance décide entre le club et
   // l'accueil.
   let etatLivre: "visible" | "masque" | "absent" | undefined;
-  if (entry?.type === "livre") {
+  if (entry?.type === "livre" || entry?.type === "avis") {
     const book = getBookBySlug(entry.destination);
     etatLivre = !book ? "absent" : hasVisibleEdition(book) ? "visible" : "masque";
   }
@@ -42,6 +42,7 @@ export async function GET(
         locale,
         href: { pathname: "/books/[slug]", params: { slug: cible.slug } },
       });
+      if (cible.ancre) target += `#${cible.ancre}`;
       break;
     case "club":
       // Le livre existe mais n'est pas encore publié : plutôt que de

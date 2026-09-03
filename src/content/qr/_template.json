@@ -14,5 +14,16 @@
 
   // false → /b/<code> redirige vers l'accueil (jamais une 404), et
   // /bonus/<destination> reste introuvable (notFound()) même par URL directe.
-  "actif": true
+  "actif": true,
+
+  // Usage du code : "bonus" (défaut), "livre" (la fiche) ou "avis" (la
+  // fiche, ancrée sur son bloc d'avis — c'est le QR de fin d'ouvrage).
+  "type": "bonus",
+
+  // Registre d'impression, purement documentaire : jamais lu par le site.
+  // Sa raison d'être est qu'on sache, dans deux ans, ce que pointe un code
+  // trouvé sur un exemplaire.
+  "tirage": "",
+  "imprimeLe": "",
+  "note": ""
 }

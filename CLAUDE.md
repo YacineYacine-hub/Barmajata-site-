@@ -982,8 +982,41 @@ est exempté — d'où le `getPathname()` dans la route.
 
 **L'URL à encoder dans le QR imprimé** est `https://www.barmajata.com/b/<code>`,
 jamais l'adresse finale : elle reste ainsi redirigeable après impression.
-Aucun générateur d'image QR n'est installé sur la machine et aucune
-dépendance n'a été ajoutée pour cela.
+
+### Créer un code : `outils/creer-code-qr.mjs`
+
+```bash
+node outils/creer-code-qr.mjs --type avis --destination mon-livre \
+     --libelle "Donner son avis" --tirage "1er tirage, 500 ex."
+```
+
+Écrit l'entrée dans `codes.json` **et** le visuel vectoriel dans
+`qr-a-imprimer/` (dossier ignoré par git : c'est la table qui fait
+autorité, le SVG se régénère). `qrcode` est une **dépendance de
+développement** — l'outil tourne en local, rien n'est ajouté au site.
+
+**SVG et correction d'erreur « H »** : une image matricielle se dégrade à
+l'impression, et un QR imprimé vit dans le monde réel — encre qui bave,
+pliure, vernis, doigts. La marge de 4 modules est la zone de silence
+exigée par la norme : la réduire pour gagner de la place fait échouer des
+lecteurs.
+
+### L'alphabet des codes, et pourquoi il est ce qu'il est
+
+`2346789bcdfghjkmnpqrtvwxz` — 25 signes, tirés cryptographiquement,
+jamais séquentiels (un code prévisible se scannerait avant publication et
+révélerait le catalogue à venir).
+
+- **Aucune voyelle**, `y` compris : un code imprimé dans un livre pour
+  enfants ne doit pas composer un mot par accident. *L'oubli du `y` a été
+  rattrapé par le test, pas par la relecture.*
+- **Aucun caractère ambigu** — ni `0/O`, ni `1/I/l`, ni `5/S` : un code
+  finit toujours par être recopié à la main par quelqu'un dont le
+  téléphone ne scanne pas.
+- Tirage **par rejet** et non par modulo, qui favoriserait les premiers
+  signes de l'alphabet.
+- **Jamais réutilisé**, même après retrait : l'outil vérifie contre TOUS
+  les codes ayant existé, actifs ou non.
 
 ### Si une base d'avis maison devient nécessaire
 

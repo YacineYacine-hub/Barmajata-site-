@@ -279,11 +279,17 @@ Le redirecteur `/b/<code>` **existe déjà** et répond au besoin : code figé,
 destination modifiable, jamais de 404. *(Bloqué par D8 et le domaine.)*
 
 - [ ] Attribuer le code **dès la création de la fiche**, en brouillon.
-- [ ] Plusieurs codes par ouvrage, par usage — étendre le champ `type`.
-- [ ] Codes opaques, non séquentiels, jamais réutilisés.
-- [ ] Générer le visuel **en vectoriel** pour l'imprimeur ; aucune
-      dépendance n'est installée pour cela aujourd'hui.
-- [ ] Registre : quel ouvrage, quel usage, quel tirage, quelle date.
+- [x] **Plusieurs codes par ouvrage, par usage** : `bonus`, `livre` et
+      `avis` — ce dernier menant à la fiche ancrée sur son bloc d'avis,
+      c'est le QR de fin d'ouvrage.
+- [x] **Codes opaques, non séquentiels, jamais réutilisés** : 25 signes
+      sans voyelle ni caractère ambigu, tirés cryptographiquement, vérifiés
+      contre tous les codes ayant existé.
+- [x] **Visuel vectoriel généré** par `outils/creer-code-qr.mjs`, en
+      correction d'erreur « H » et zone de silence normalisée.
+- [x] **Registre** : champs `tirage`, `imprimeLe` et `note` au schéma,
+      purement documentaires — pour qu'on sache dans deux ans ce que pointe
+      un code trouvé sur un exemplaire.
 - [ ] **Scan réel sur l'épreuve imprimée**, jamais seulement à l'écran.
 - [x] **Tranché et implémenté** *(2026-09-03)* : un livre en brouillon
       mène au club plutôt qu'à l'accueil. Et un défaut plus grave a été
