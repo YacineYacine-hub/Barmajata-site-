@@ -19,7 +19,7 @@
  * finale : c'est ce qui permet de rediriger un QR déjà imprimé. Voir
  * src/lib/content/qr.ts.
  */
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
+import { readFileSync, readdirSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import QRCode from "qrcode";
@@ -50,6 +50,38 @@ if (!destination || !libelle) {
 if (!["bonus", "livre", "avis"].includes(type)) {
   console.error(`✗ Type inconnu : ${type}. Attendu : bonus, livre ou avis.`);
   process.exit(1);
+}
+
+/*
+ * Pour un code qui vise un livre, on vérifie que le slug existe VRAIMENT.
+ *
+ * Sans ce contrôle, une faute de frappe produit un QR qui redirige vers
+ * l'accueil — silencieusement, et découvert seulement après impression.
+ * On avertit sans bloquer : le livre peut légitimement être encore en
+ * brouillon, ce qui est même le cas normal, puisqu'un code s'attribue dès
+ * la création de la fiche.
+ */
+if (type === "livre" || type === "avis") {
+  const dossiers = [
+    join(RACINE, "src/content/books"),
+    join(RACINE, "src/content/_demo/books"),
+  ].filter(existsSync);
+  const slugs = dossiers.flatMap((d) =>
+    readdirSync(d)
+      .filter((f) => f.endsWith(".json") && !f.startsWith("_"))
+      .map((f) => f.replace(/\.json$/, "")),
+  );
+  if (!slugs.includes(destination)) {
+    console.error(`✗ Aucun livre nommé « ${destination} » dans src/content/books/.`);
+    console.error("  Un QR vers un slug inexistant redirige vers l'accueil — et");
+    console.error("  cela ne se découvre qu'après impression.");
+    console.error("");
+    console.error("  Crée d'abord la fiche du livre, même en brouillon :");
+    console.error("    cp src/content/books/_template.json src/content/books/" + destination + ".json");
+    console.error("");
+    if (slugs.length) console.error("  Livres existants : " + slugs.join(", "));
+    process.exit(1);
+  }
 }
 
 const codes = JSON.parse(readFileSync(TABLE, "utf-8"));

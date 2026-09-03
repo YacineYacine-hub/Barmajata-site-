@@ -985,6 +985,11 @@ jamais l'adresse finale : elle reste ainsi redirigeable après impression.
 
 ### Créer un code : `outils/creer-code-qr.mjs`
 
+**Marche à suivre complète — du slug au fichier envoyé à l'imprimeur —
+dans `docs/creer-un-qr-code.md`.** Y renvoyer plutôt que de réexpliquer :
+la question « où fait-on le QR d'un livre ? » a été posée, et la réponse
+n'était écrite nulle part.
+
 ```bash
 node outils/creer-code-qr.mjs --type avis --destination mon-livre \
      --libelle "Donner son avis" --tirage "1er tirage, 500 ex."
