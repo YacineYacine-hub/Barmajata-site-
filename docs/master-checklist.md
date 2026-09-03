@@ -92,6 +92,40 @@ Quatre conséquences, dont deux bonnes :
   La question du dépôt de l'imprimeur reste ouverte si l'impression est
   faite à l'étranger.
 
+### Arbitrage en cours : société émiratie avant publication
+
+Annoncé le 2026-09-03. Une société d'édition sera créée **aux Émirats
+avant la publication**. Deux voies envisagées, et elles ne mènent pas au
+même endroit :
+
+**(a)** publier sous l'ISBN AFNIL de l'autrice, puis céder les droits à
+BARMAJATA — **(b)** attendre un ISBN émirati et publier une seule fois.
+
+**Le fait qui tranche : un préfixe ISBN ne se transfère pas.** Il
+appartient à l'éditeur qui l'a obtenu, et la cession de droits ne le fait
+pas suivre. La voie (a) ne devient donc jamais la voie (b) : elle crée
+**deux éditions** du même livre.
+
+**Le coût caché : Amazon KDP.** Déplacer un titre d'un compte vers un
+autre est impossible — il faut dépublier et republier. On perd les avis,
+le classement et l'historique de ventes, définitivement. Or les avis sont
+ce sur quoi repose toute la stratégie arrêtée au Lot H14.
+
+- [ ] [?] **Trancher (a) ou (b).** Recommandation : publier **une seule
+      fois, sous l'éditeur définitif**. Attendre coûte du délai ; migrer
+      coûte des avis, et ça ne se récupère pas. La voie (a) reste
+      acceptable si le délai émirati est long — mais comme choix assumé
+      (première édition à son nom, seconde sous la marque), pas comme un
+      accident découvert après coup.
+- [ ] ⚠ Une structure hors UE réactive trois points : **représentant dans
+      l'Union** exigé par l'article 27 du RGPD dès que le club collecte
+      des e-mails européens ; **loi Lang**, où c'est alors l'importateur
+      qui fixe le prix pour la France ; **TVA** d'une société hors UE
+      vendant à des consommateurs européens.
+- [x] Pour le site, cela ne change presque rien : seuls le fichier
+      d'identité et deux paragraphes de la politique de confidentialité
+      bougeront. Le reste est déjà écrit et tient quelle que soit l'issue.
+
 ### Ce que D1 ferme, et ce qu'elle ouvre
 
 **Fermé, définitivement.** Le levier prix n'existe quasiment plus :
