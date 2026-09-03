@@ -297,12 +297,9 @@
   "categories": {
     "all": "Todo",
     "new": "Novedades",
-    "famille": "Familia",
-    "psychologie": "Psicología",
-    "thriller": "Thriller",
-    "histoire-vraie": "Historia real",
     "enfance": "Infancia",
     "developpement-personnel": "Desarrollo personal",
+    "recits": "Relatos",
     "poesie-pensees": "Poesía y pensamientos",
     "consult": "Ver"
   },

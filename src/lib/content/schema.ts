@@ -23,19 +23,29 @@ export const BOOK_FORMAT_TYPES = ["broche", "epub", "pdf"] as const;
 export type BookFormatType = (typeof BOOK_FORMAT_TYPES)[number];
 
 /**
- * Genres figés. Distinct du champ `formats[].type` (broché/epub/
+ * Genres figés — **quatre depuis le Lot H51**, alignés sur les gammes
+ * réellement publiées (voir CLAUDE.md, « Ce que Barmajata publie »).
+ *
+ * Les quatre genres de fiction d'origine — famille, psychologie, thriller,
+ * histoire-vraie — ont été retirés : ils décrivaient une maison qui publie
+ * des romans, ce que BARMAJATA ne fait pas. `recits` les remplace, et il
+ * est volontairement large : il accueille le « Roman-Miroir » aujourd'hui
+ * et tout texte narratif demain, sans qu'il faille rouvrir cette liste.
+ *
+ * Retirer un genre est simple tant que le catalogue réel est vide. Ce ne
+ * le sera plus quand des livres y seront rangés : un genre supprimé
+ * laisserait des fiches sans catégorie, et une URL de filtre morte.
+ *
+ * Distinct du champ `formats[].type` (broché/epub/
  * pdf, le format physique/numérique) : la catégorie ne touche jamais à
  * ce champ. Slugs canoniques utilisés dans les fichiers de contenu — la
  * traduction par locale (URL du filtre `?categorie=`) vit dans
  * `src/lib/content/categories.ts`.
  */
 export const BOOK_CATEGORIES = [
-  "famille",
-  "psychologie",
-  "thriller",
-  "histoire-vraie",
   "enfance",
   "developpement-personnel",
+  "recits",
   "poesie-pensees",
 ] as const;
 export type BookCategory = (typeof BOOK_CATEGORIES)[number];

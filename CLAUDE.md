@@ -244,9 +244,16 @@ considération technique.
 - Couvertures 2D (`book.couverture`) affichées sur la carte catalogue via
   `<img>` — champ optionnel, pas de rendu si absent. La fiche livre, elle,
   affiche `BookSolid` (voir plus bas) à la place.
-- Genres (`book.categories`, **sept** valeurs figées, dans cet ordre :
-  `famille` | `psychologie` | `thriller` | `histoire-vraie` | `enfance` |
-  `developpement-personnel` | `poesie-pensees`) : un livre peut en porter
+- Genres (`book.categories`, **quatre** valeurs figées depuis le Lot H51,
+  dans cet ordre : `enfance` | `developpement-personnel` | `recits` |
+  `poesie-pensees`). Les quatre genres de fiction d'origine — famille,
+  psychologie, thriller, histoire-vraie — ont été retirés : ils décrivaient
+  une maison publiant des romans, ce que BARMAJATA ne fait pas. `recits`
+  les remplace et reste **volontairement large**, pour accueillir le
+  « Roman-Miroir » aujourd'hui et tout texte narratif demain sans rouvrir
+  la liste. **Retirer un genre ne sera plus anodin** une fois le catalogue
+  rempli : les fiches concernées perdraient leur catégorie et l'URL de
+  filtre correspondante mourrait : un livre peut en porter
   plusieurs, champ optionnel. La liste fait autorité dans
   `BOOK_CATEGORIES` (`schema.ts`) et l'accueil la parcourt pour composer
   son menu — ajouter un genre y ajoute une carte, et exige un visuel

@@ -12,30 +12,21 @@ import { BOOK_CATEGORIES, type BookCategory, type ContentLocale } from "./schema
  */
 export const CATEGORY_SLUGS: Record<ContentLocale, Record<BookCategory, string>> = {
   fr: {
-    famille: "famille",
-    psychologie: "psychologie",
-    thriller: "thriller",
-    "histoire-vraie": "histoire-vraie",
-    "enfance": "enfance",
+    enfance: "enfance",
     "developpement-personnel": "developpement-personnel",
+    recits: "recits",
     "poesie-pensees": "poesie-pensees",
   },
   en: {
-    famille: "family",
-    psychologie: "psychology",
-    thriller: "thriller",
-    "histoire-vraie": "true-story",
-    "enfance": "childhood",
+    enfance: "childhood",
     "developpement-personnel": "personal-growth",
+    recits: "stories",
     "poesie-pensees": "poetry-thoughts",
   },
   es: {
-    famille: "familia",
-    psychologie: "psicologia",
-    thriller: "thriller",
-    "histoire-vraie": "historia-real",
-    "enfance": "infancia",
+    enfance: "infancia",
     "developpement-personnel": "desarrollo-personal",
+    recits: "relatos",
     "poesie-pensees": "poesia-pensamientos",
   },
 };
