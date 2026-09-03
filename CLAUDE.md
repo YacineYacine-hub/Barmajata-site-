@@ -452,8 +452,35 @@ considération technique.
   sur le logo du header (visible immédiatement sur chaque page) et sur le
   premier slide du `Hero` (déjà en place avant ce lot).
 - Polices (`next/font/google`, `[locale]/layout.tsx` et
-  `bonus/layout.tsx`) : `display: "swap"` sur les trois (Cormorant,
-  Inter), sous-ensemble latin. Noto Naskh Arabic a été retirée au Lot H46.
+  `bonus/layout.tsx`) : `display: "swap"`, sous-ensemble latin. Noto Naskh
+  Arabic a été retirée au Lot H46.
+  **Cormorant Garamond est chargée en police VARIABLE** (aucun `weight`
+  déclaré) depuis le Lot H48 : une seule requête couvre 300 à 700. Ne pas
+  y remettre une liste de graisses — elle avait `["400","500","600","700"]`,
+  et le titre du hero, qui demande `font-light` (300), retombait
+  silencieusement sur 400, soit exactement la graisse que le commentaire du
+  composant dit être trop lourde à cette taille. Défaut invisible : rien
+  n'échoue, le texte s'affiche simplement dans la mauvaise graisse.
+  Le passage en variable n'a **rien coûté** — 84 Ko de polices avant comme
+  après, mesuré au navigateur.
+
+### Poids mesuré, pour comparaison future
+
+Relevé au navigateur le 2026-09-03 sur `/` en build de production, première
+visite sans cache (`encodedBodySize`, donc ce qui passe réellement sur le
+réseau) :
+
+| Poste | Poids |
+|---|---|
+| HTML | 13 Ko |
+| JavaScript | 164 Ko |
+| Polices (2 fichiers) | 84 Ko |
+| CSS | 9 Ko |
+| **Total** | **≈ 271 Ko**, 17 requêtes |
+
+C'est léger, et c'est un socle : toute addition — pixels publicitaires,
+widget de discussion, bibliothèque tierce — se mesure contre ces chiffres
+plutôt que contre une impression.
 - `title` : `[locale]/layout.tsx` définit un `template` (`"%s — " + nom
   du site`) ; chaque page fournit désormais son propre titre court via
   `generateMetadata()` (résolu dynamiquement pour les pages `[slug]` —
